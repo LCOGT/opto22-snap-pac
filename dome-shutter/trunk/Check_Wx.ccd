@@ -1,0 +1,144 @@
+: 9_0
+1 JUMP ;
+: 9_37
+  *Wx_Handle   ?STREAM.KEY
+  ^Wx_Handle_CharCountWaiting @! 
+16 JUMP ;
+: 9_38
+  *Wx_Handle   OPEN
+  ^WxCommEstablished @! 
+12 JUMP ;
+: 9_39
+  *WxGETstring 
+  *Wx_Handle   PRT$
+  ^WxGETstringSent @! 
+12 JUMP ;
+: 9_41
+  *WxHTML 
+  *Wx_Handle   GET$
+  ^WxHTML_received @! 
+15 JUMP ;
+: 9_51
+  1000    DELAY
+-4 JUMP ;
+: 9_60
+-6 JUMP ;
+: 9_63
+  *Wx_Handle   CLOSE
+  ^WxClosed @! 
+0 JUMP ;
+: 9_70
+  1000    DELAY
+-7 JUMP ;
+: 9_75
+  10    DELAY
+-9 JUMP ;
+: 9_81
+  *Wx_Handle   STREAM.CLEAR.BUF
+-4 JUMP ;
+: 9_91
+  ^Time_defWxWdogTimer @@ 
+  ^Timer_WxWdog   SetTimer
+  ^Timer_WxWdog   StartTimer
+-5 JUMP ;
+: 9_101
+  *Wx_Handle   STREAM.CLEAR.BUF
+-6 JUMP ;
+: 9_105
+  " tcp:10.0.8.50:80" 
+ 
+  *Wx_Handle   $MOVE
+9 JUMP ;
+: 9_106
+  13  
+  *WxGETstring   $APPEND
+  10  
+  *WxGETstring   $APPEND
+  13  
+  *WxGETstring   $APPEND
+  10  
+  *WxGETstring   $APPEND
+8 JUMP ;
+: 9_50
+FALSE
+  ^WxCommEstablished @@ 
+  0    =
+LOR
+  ^WxCommEstablished @@ 
+  -47    =
+LOR
+IF -13 ELSE -11 THEN JUMP ;
+: 9_56
+TRUE
+  ^WxGETstringSent @@ 
+  0    =
+LAND
+IF -11 ELSE -12 THEN JUMP ;
+: 9_66
+FALSE
+  ^Wx_Handle_CharCountWaiting @@ 
+  -37    =
+LOR
+  ^Wx_Handle_CharCountWaiting @@ 
+  -39    =
+LOR
+IF -9 ELSE -11 THEN JUMP ;
+: 9_67
+TRUE
+  ^Wx_Handle_CharCountWaiting @@ 
+  0    >
+LAND
+IF 3 ELSE 0 THEN JUMP ;
+: 9_68
+TRUE
+  ^Wx_Handle_CharCountWaiting @@ 
+  0    <
+LAND
+IF -3 ELSE -11 THEN JUMP ;
+: 9_84
+TRUE
+  ^WxHTML_received @@ 
+  0    =
+LAND
+IF 0 ELSE -11 THEN JUMP ;
+: 9_89
+TRUE
+  *WxHTML
+ 
+  " OKTOOPEN" 
+   $=
+LAND
+IF -11 ELSE -21 THEN JUMP ;
+: 9_96
+TRUE
+  ^Wx_Handle_CharCountWaiting @@ 
+  1    =
+LAND
+IF -11 ELSE -19 THEN JUMP ;
+T: T9
+DUMMY
+9_0
+9_37
+9_38
+9_39
+9_41
+9_51
+9_60
+9_63
+9_70
+9_75
+9_81
+9_91
+9_101
+9_105
+9_106
+9_50
+9_56
+9_66
+9_67
+9_68
+9_84
+9_89
+9_96
+T;
+&Check_Wx ' T9 SETTASK
