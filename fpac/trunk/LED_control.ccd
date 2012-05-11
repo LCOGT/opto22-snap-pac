@@ -1,0 +1,41 @@
+: 11_0
+0 JUMP ;
+: 11_1
+
+1 LINE.NUM
+ GetSystemTime  ^Blinker @! 
+
+2 LINE.NUM
+  ^Blinker @@ 
+  2    MOD
+  ^Blinker @! 
+2 JUMP ;
+: 11_2
+2 JUMP ;
+: 11_9
+
+1 LINE.NUM
+  &Door_dim   START.T
+  ^DimResponse @! 
+
+2 LINE.NUM
+  &Panel_dim   START.T
+  ^DimResponse @! 
+1 JUMP ;
+: 11_3
+TRUE
+
+1 LINE.NUM
+  ^Blinker @@ 
+  1    =
+LAND
+IF -2 ELSE -3 THEN JUMP ;
+T: T11
+DUMMY
+11_0
+11_1
+11_2
+11_9
+11_3
+T;
+&LED_control ' T11 SETTASK

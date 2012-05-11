@@ -1,0 +1,73 @@
+: 0_0
+0 JUMP ;
+: 0_1
+
+1 LINE.NUM
+  &Test_HVAC   START.T
+  ^Test_HVAC_Status @! 
+
+2 LINE.NUM
+  &Master_Comm   START.T
+  ^MasterCommEstablished @! 
+
+3 LINE.NUM
+  &Test_Front_Panel   START.T
+  ^Test_Front_Panel_Status @! 
+
+4 LINE.NUM
+  &WhiteLights   START.T
+  ^WhiteLights_Chart @! 
+1 JUMP ;
+: 0_5
+
+1 LINE.NUM
+  ^Heartbeat_Timer   StopTimer
+
+2 LINE.NUM
+  2.0    FDELAY
+0 JUMP ;
+: 0_10
+
+1 LINE.NUM
+  90.0  
+  ^Heartbeat_Timer   SetTimer
+
+2 LINE.NUM
+  ^Heartbeat_Timer   StartTimer
+2 JUMP ;
+: 0_13
+
+1 LINE.NUM
+  1000    DELAY
+1 JUMP ;
+: 0_15
+-2 JUMP ;
+: 0_18
+1 JUMP ;
+: 0_8
+TRUE
+
+1 LINE.NUM
+  ^Heartbeat_Timer   T0=
+LAND
+IF -4 ELSE -4 THEN JUMP ;
+: 0_17
+TRUE
+
+1 LINE.NUM
+  ~LAMP_TEST   ?ON
+LAND
+IF -4 ELSE -2 THEN JUMP ;
+T: T0
+DUMMY
+0_0
+0_1
+0_5
+0_10
+0_13
+0_15
+0_18
+0_8
+0_17
+T;
+&Powerup ' T0 SETTASK

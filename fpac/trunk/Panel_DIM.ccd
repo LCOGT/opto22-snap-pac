@@ -1,0 +1,36 @@
+: 9_0
+1 JUMP ;
+: 9_1
+
+1 LINE.NUM
+  10    DELAY
+5 JUMP ;
+: 9_2
+-2 JUMP ;
+: 9_7
+5 JUMP ;
+: 9_8
+3 JUMP ;
+: 9_14
+3 JUMP ;
+: 9_15
+2 JUMP ;
+: 9_3
+TRUE
+IF -4 ELSE 0 THEN JUMP ;
+: 9_10
+TRUE
+IF -7 ELSE -3 THEN JUMP ;
+T: T9
+DUMMY
+9_0
+9_1
+9_2
+9_7
+9_8
+9_14
+9_15
+9_3
+9_10
+T;
+&Panel_dim ' T9 SETTASK
