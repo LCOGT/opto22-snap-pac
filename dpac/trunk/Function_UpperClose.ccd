@@ -1,0 +1,704 @@
+: 6_0
+111 JUMP ;
+: 6_5
+  ~DO_upperClose   ON
+112 JUMP ;
+: 6_12
+  ~DO_upperClose   OFF
+94 JUMP ;
+: 6_24
+  &Function_UpperClose   STOP.T
+143 JUMP ;
+: 6_32
+  ~DO_upperClose   OFF
+87 JUMP ;
+: 6_34
+  ~DO_upperClose   ON
+120 JUMP ;
+: 6_39
+  &Function_UpperClose   STOP.T
+140 JUMP ;
+: 6_40
+  &Function_UpperClose   STOP.T
+139 JUMP ;
+: 6_48
+  ~DO_upperOpen   ON
+128 JUMP ;
+: 6_49
+51 JUMP ;
+: 6_72
+  &Function_LowerOpen   STOP.T
+  &Function_LowerClose   STOP.T
+  100    DELAY
+  ~DO_upperOpen   OFF
+  ~DO_upperClose   OFF
+  ~DO_pumpMotor   OFF
+  ~DO_lowerOpenValve   OFF
+  ~DO_lowerCloseValve   OFF
+0 JUMP ;
+: 6_74
+-3 JUMP ;
+: 6_104
+  ~DO_upperOpen   OFF
+0 JUMP ;
+: 6_105
+  ^FLT_K1on   TRUE@!
+0 JUMP ;
+: 6_108
+  &Function_UpperClose   STOP.T
+132 JUMP ;
+: 6_111
+  &Function_UpperClose   STOP.T
+131 JUMP ;
+: 6_113
+  ^FLT_K2on   TRUE@!
+-2 JUMP ;
+: 6_114
+  ~DO_upperClose   OFF
+-2 JUMP ;
+: 6_121
+  ^Time_defUpperOperate @@ 
+  ^Timer_UpperOperate   SetTimer
+  ^Time_defContactorOperate @@ 
+  ^Timer_UpperContactor   SetTimer
+  ^Timer_UpperOperate   StartTimer
+  ^Timer_UpperContactor   StartTimer
+-18 JUMP ;
+: 6_132
+  ^FLT_K2off   TRUE@!
+1 JUMP ;
+: 6_133
+  ~DO_upperClose   OFF
+102 JUMP ;
+: 6_135
+  &Function_UpperClose   STOP.T
+125 JUMP ;
+: 6_143
+  ^FLT_K2on   TRUE@!
+-17 JUMP ;
+: 6_154
+  ^FLT_K2on   TRUE@!
+1 JUMP ;
+: 6_158
+  ~DO_upperClose   OFF
+73 JUMP ;
+: 6_160
+  ^FLT_UpCloseTimeout   TRUE@!
+0 JUMP ;
+: 6_163
+  &Function_UpperClose   STOP.T
+120 JUMP ;
+: 6_168
+  &Function_UpperClose   STOP.T
+119 JUMP ;
+: 6_171
+  ^FLT_K9overload   TRUE@!
+-2 JUMP ;
+: 6_172
+  ~DO_upperClose   OFF
+69 JUMP ;
+: 6_176
+  ^FLT_K2on   TRUE@!
+-3 JUMP ;
+: 6_184
+  ^FLT_K2on   TRUE@!
+1 JUMP ;
+: 6_188
+  ~DO_upperClose   OFF
+67 JUMP ;
+: 6_189
+  ^FLT_UpCloseOT   TRUE@!
+0 JUMP ;
+: 6_192
+  &Function_UpperClose   STOP.T
+112 JUMP ;
+: 6_218
+  ^FLT_SLOT08fuse   TRUE@!
+0 JUMP ;
+: 6_221
+  &Function_UpperClose   STOP.T
+110 JUMP ;
+: 6_229
+  ^Time_defUpperOperate @@ 
+  ^Timer_UpperOperate   SetTimer
+  ^Time_defContactorOperate @@ 
+  ^Timer_UpperContactor   SetTimer
+  ^Timer_UpperOperate   StartTimer
+  ^Timer_UpperContactor   StartTimer
+-33 JUMP ;
+: 6_238
+  &Function_UpperClose   STOP.T
+108 JUMP ;
+: 6_239
+  ^FLT_SLOT08fuse   TRUE@!
+-2 JUMP ;
+: 6_241
+  &Function_UpperClose   STOP.T
+106 JUMP ;
+: 6_243
+  ~DO_upperClose   OFF
+82 JUMP ;
+: 6_244
+  ^FLT_K2off   TRUE@!
+-3 JUMP ;
+: 6_254
+  ^FLT_K2on   TRUE@!
+13 JUMP ;
+: 6_262
+  &Function_UpperClose   STOP.T
+102 JUMP ;
+: 6_266
+  ~DO_upperClose   OFF
+14 JUMP ;
+: 6_270
+  ^FLT_K2on   TRUE@!
+-3 JUMP ;
+: 6_278
+  ^FLT_K2on   TRUE@!
+1 JUMP ;
+: 6_282
+  ~DO_upperClose   OFF
+46 JUMP ;
+: 6_283
+  ^FLT_K9overload   TRUE@!
+0 JUMP ;
+: 6_286
+  &Function_UpperClose   STOP.T
+96 JUMP ;
+: 6_291
+  &Function_UpperClose   STOP.T
+95 JUMP ;
+: 6_294
+  ^FLT_UpCloseTimeout   TRUE@!
+-2 JUMP ;
+: 6_296
+  ~DO_upperClose   OFF
+40 JUMP ;
+: 6_300
+  ^FLT_K2on   TRUE@!
+-3 JUMP ;
+: 6_312
+  ^FLT_K2on   TRUE@!
+2 JUMP ;
+: 6_315
+  ~DO_upperClose   OFF
+2 JUMP ;
+: 6_321
+  &Function_UpperClose   STOP.T
+89 JUMP ;
+: 6_322
+  &Function_UpperClose   STOP.T
+88 JUMP ;
+: 6_325
+  ^FLT_ClearSW   TRUE@!
+33 JUMP ;
+: 6_329
+  ^FLT_ClearSW   TRUE@!
+  ^FLT_UpCloseOT   TRUE@!
+35 JUMP ;
+: 6_335
+  2000    DELAY
+73 JUMP ;
+: 6_340
+  &Function_UpperClose   STOP.T
+84 JUMP ;
+: 6_342
+  ^Time_defUpperOperate @@ 
+  ^Timer_UpperOperate   SetTimer
+  ^Time_defContactorOperate @@ 
+  ^Timer_UpperContactor   SetTimer
+  ^Timer_UpperOperate   StartTimer
+  ^Timer_UpperContactor   StartTimer
+-56 JUMP ;
+: 6_348
+  ^FLT_SLOT08fuse   TRUE@!
+3 JUMP ;
+: 6_353
+  ^FLT_K1off   TRUE@!
+1 JUMP ;
+: 6_354
+  ~DO_upperOpen   OFF
+69 JUMP ;
+: 6_359
+  &Function_UpperClose   STOP.T
+79 JUMP ;
+: 6_360
+  &Function_UpperClose   STOP.T
+78 JUMP ;
+: 6_373
+  ~DO_upperOpen   OFF
+21 JUMP ;
+: 6_377
+  ^FLT_K1on   TRUE@!
+0 JUMP ;
+: 6_379
+  ^FLT_UpOpenOT   TRUE@!
+10 JUMP ;
+: 6_382
+  ^FLT_K8overload   TRUE@!
+8 JUMP ;
+: 6_384
+  ^FLT_K1on   TRUE@!
+-2 JUMP ;
+: 6_389
+  ~DO_upperOpen   OFF
+15 JUMP ;
+: 6_395
+  ^FLT_K1on   TRUE@!
+1 JUMP ;
+: 6_398
+  ~DO_upperOpen   OFF
+12 JUMP ;
+: 6_399
+  ^FLT_UpOpenTimeout   TRUE@!
+2 JUMP ;
+: 6_409
+  ^FLT_K1on   TRUE@!
+-72 JUMP ;
+: 6_412
+  ~DO_upperOpen   OFF
+7 JUMP ;
+: 6_417
+  &Function_UpperClose   STOP.T
+66 JUMP ;
+: 6_418
+  &Function_UpperClose   STOP.T
+65 JUMP ;
+: 6_419
+  &Function_UpperClose   STOP.T
+64 JUMP ;
+: 6_423
+  ~DO_upperOpen   OFF
+4 JUMP ;
+: 6_427
+  ^FLT_K1on   TRUE@!
+1 JUMP ;
+: 6_431
+  &Function_UpperClose   STOP.T
+61 JUMP ;
+: 6_440
+  ^FLT_ClearSW   TRUE@!
+-2 JUMP ;
+: 6_445
+  ^Time_defContactorRelease @@   DELAY
+57 JUMP ;
+: 6_446
+  ^Time_defContactorRelease @@   DELAY
+57 JUMP ;
+: 6_447
+  ^Time_defContactorRelease @@   DELAY
+53 JUMP ;
+: 6_448
+  ^Time_defContactorRelease @@   DELAY
+50 JUMP ;
+: 6_449
+  ^Time_defContactorRelease @@   DELAY
+47 JUMP ;
+: 6_460
+  ^Time_defContactorRelease @@   DELAY
+34 JUMP ;
+: 6_461
+  ^Time_defContactorRelease @@   DELAY
+40 JUMP ;
+: 6_462
+  ^Time_defContactorRelease @@   DELAY
+37 JUMP ;
+: 6_463
+  ^Time_defContactorRelease @@   DELAY
+34 JUMP ;
+: 6_464
+  ^Time_defContactorRelease @@   DELAY
+31 JUMP ;
+: 6_475
+  ^Time_defContactorRelease @@   DELAY
+18 JUMP ;
+: 6_476
+  ^Time_defContactorRelease @@   DELAY
+19 JUMP ;
+: 6_477
+  ^Time_defContactorRelease @@   DELAY
+20 JUMP ;
+: 6_478
+  ^Time_defContactorRelease @@   DELAY
+21 JUMP ;
+: 6_2
+TRUE
+  ~SW_upperCloseLimit   ?OFF
+LAND
+IF -99 ELSE 0 THEN JUMP ;
+: 6_3
+TRUE
+  ~SW_lowerCloseLimit   ?OFF
+LAND
+IF 0 ELSE -85 THEN JUMP ;
+: 6_4
+TRUE
+  ~SW_upperShutterClear   ?ON
+LAND
+IF -67 ELSE -101 THEN JUMP ;
+: 6_11
+TRUE
+  ~SW_upperCloseLimit   ?OFF
+LAND
+IF -103 ELSE 12 THEN JUMP ;
+: 6_13
+TRUE
+  ~SW_upperShutterClear   ?OFF
+LAND
+IF -102 ELSE 5 THEN JUMP ;
+: 6_46
+TRUE
+  ~SW_upperShutterClear   ?ON
+LAND
+IF -28 ELSE 1 THEN JUMP ;
+: 6_53
+TRUE
+  ~SW_lowerCloseLimit   ?ON
+LAND
+IF -4 ELSE -3 THEN JUMP ;
+: 6_59
+TRUE
+  ~SW_upperOpenLimit   ?OFF
+LAND
+IF -26 ELSE 35 THEN JUMP ;
+: 6_64
+TRUE
+  ~SW_lowerCloseLimit   ?OFF
+LAND
+IF 0 ELSE -6 THEN JUMP ;
+: 6_67
+TRUE
+  ~SW_upperShutterClear   ?ON
+LAND
+IF -6 ELSE -101 THEN JUMP ;
+: 6_77
+TRUE
+  ~SW_upperCloseLimit   ?OFF
+LAND
+IF -56 ELSE 21 THEN JUMP ;
+: 6_106
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -101 ELSE 0 THEN JUMP ;
+: 6_112
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -97 ELSE -13 THEN JUMP ;
+: 6_127
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -11 ELSE 0 THEN JUMP ;
+: 6_134
+TRUE
+  ^Timer_UpperContactor   T0=
+LAND
+IF -96 ELSE -2 THEN JUMP ;
+: 6_144
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -95 ELSE -111 THEN JUMP ;
+: 6_150
+TRUE
+  ^Timer_UpperOperate   T0=
+LAND
+IF -94 ELSE 1 THEN JUMP ;
+: 6_153
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -96 ELSE -94 THEN JUMP ;
+: 6_165
+TRUE
+  ~FLT_upperMotorOverload   ?OFF
+LAND
+IF -91 ELSE 1 THEN JUMP ;
+: 6_177
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -91 ELSE -93 THEN JUMP ;
+: 6_180
+TRUE
+  ~FLT_upperCloseOvrTrvl   ?OFF
+LAND
+IF -90 ELSE -13 THEN JUMP ;
+: 6_183
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -92 ELSE -90 THEN JUMP ;
+: 6_223
+TRUE
+  ~FB_slot08Fuse   ?ON
+LAND
+IF -105 ELSE -89 THEN JUMP ;
+: 6_236
+TRUE
+  ~FB_slot08Fuse   ?ON
+LAND
+IF -83 ELSE -86 THEN JUMP ;
+: 6_242
+TRUE
+  ^Timer_UpperContactor   T0=
+LAND
+IF -85 ELSE 0 THEN JUMP ;
+: 6_246
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -22 ELSE -2 THEN JUMP ;
+: 6_253
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -85 ELSE -119 THEN JUMP ;
+: 6_271
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -83 ELSE -120 THEN JUMP ;
+: 6_274
+TRUE
+  ~FLT_upperCloseOvrTrvl   ?OFF
+LAND
+IF -85 ELSE -23 THEN JUMP ;
+: 6_277
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -84 ELSE -82 THEN JUMP ;
+: 6_289
+TRUE
+  ~FLT_upperMotorOverload   ?OFF
+LAND
+IF -84 ELSE -3 THEN JUMP ;
+: 6_301
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -79 ELSE -81 THEN JUMP ;
+: 6_303
+TRUE
+  ^Timer_UpperOperate   T0=
+LAND
+IF -81 ELSE -3 THEN JUMP ;
+: 6_313
+TRUE
+  ~FB_upperClose   ?OFF
+LAND
+IF -80 ELSE -126 THEN JUMP ;
+: 6_338
+TRUE
+  ~SW_upperOpenLimit   ?OFF
+LAND
+IF -74 ELSE -73 THEN JUMP ;
+: 6_347
+TRUE
+  ~FB_slot08Fuse   ?ON
+LAND
+IF -72 ELSE -73 THEN JUMP ;
+: 6_351
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -32 ELSE 0 THEN JUMP ;
+: 6_355
+TRUE
+  ^Timer_UpperContactor   T0=
+LAND
+IF -73 ELSE -2 THEN JUMP ;
+: 6_376
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -70 ELSE -69 THEN JUMP ;
+: 6_381
+TRUE
+  ~FLT_upperOpenOvrTrvl   ?OFF
+LAND
+IF -72 ELSE -35 THEN JUMP ;
+: 6_385
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -69 ELSE -70 THEN JUMP ;
+: 6_391
+TRUE
+  ~FLT_upperMotorOverload   ?OFF
+LAND
+IF -69 ELSE -3 THEN JUMP ;
+: 6_394
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -69 ELSE -67 THEN JUMP ;
+: 6_400
+TRUE
+  ^Timer_UpperOperate   T0=
+LAND
+IF -69 ELSE -3 THEN JUMP ;
+: 6_410
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -68 ELSE -139 THEN JUMP ;
+: 6_426
+TRUE
+  ~FB_upperOpen   ?OFF
+LAND
+IF -63 ELSE -61 THEN JUMP ;
+T: T6
+DUMMY
+6_0
+6_5
+6_12
+6_24
+6_32
+6_34
+6_39
+6_40
+6_48
+6_49
+6_72
+6_74
+6_104
+6_105
+6_108
+6_111
+6_113
+6_114
+6_121
+6_132
+6_133
+6_135
+6_143
+6_154
+6_158
+6_160
+6_163
+6_168
+6_171
+6_172
+6_176
+6_184
+6_188
+6_189
+6_192
+6_218
+6_221
+6_229
+6_238
+6_239
+6_241
+6_243
+6_244
+6_254
+6_262
+6_266
+6_270
+6_278
+6_282
+6_283
+6_286
+6_291
+6_294
+6_296
+6_300
+6_312
+6_315
+6_321
+6_322
+6_325
+6_329
+6_335
+6_340
+6_342
+6_348
+6_353
+6_354
+6_359
+6_360
+6_373
+6_377
+6_379
+6_382
+6_384
+6_389
+6_395
+6_398
+6_399
+6_409
+6_412
+6_417
+6_418
+6_419
+6_423
+6_427
+6_431
+6_440
+6_445
+6_446
+6_447
+6_448
+6_449
+6_460
+6_461
+6_462
+6_463
+6_464
+6_475
+6_476
+6_477
+6_478
+6_2
+6_3
+6_4
+6_11
+6_13
+6_46
+6_53
+6_59
+6_64
+6_67
+6_77
+6_106
+6_112
+6_127
+6_134
+6_144
+6_150
+6_153
+6_165
+6_177
+6_180
+6_183
+6_223
+6_236
+6_242
+6_246
+6_253
+6_271
+6_274
+6_277
+6_289
+6_301
+6_303
+6_313
+6_338
+6_347
+6_351
+6_355
+6_376
+6_381
+6_385
+6_391
+6_394
+6_400
+6_410
+6_426
+T;
+&Function_UpperClose ' T6 SETTASK
