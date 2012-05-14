@@ -2,7 +2,7 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\eng\Desktop\Fix FPAC\1m PAC Panel2.6\1mFPAC.idb
+# NAME :         C:\Users\eng\Desktop\fpac\1m PAC Panel2.6\1mFPAC.idb
 # VERSION :      R9.1a
 # TIME/DATE :    21:49:52 5/11/2012
 # 
