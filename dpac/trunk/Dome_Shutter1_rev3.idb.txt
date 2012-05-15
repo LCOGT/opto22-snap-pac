@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\eng\Desktop\Dome Code\Rev3\Dome_Shutter1_rev3.idb
+# NAME :         C:\Users\eng\Desktop\dpac\Dome_Shutter1_rev3.idb
 # VERSION :      R9.1a
-# TIME/DATE :    22:20:37 4/24/2012
+# TIME/DATE :    19:38:20 5/14/2012
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
