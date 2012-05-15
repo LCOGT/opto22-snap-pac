@@ -9,33 +9,82 @@
   ^Blinker @@ 
   2    MOD
   ^Blinker @! 
-2 JUMP ;
+5 JUMP ;
 : 11_2
-2 JUMP ;
-: 11_9
 
 1 LINE.NUM
-  &Door_dim   START.T
-  ^DimResponse @! 
+  ~DoorGrnLED   OFF
 
 2 LINE.NUM
-  &Panel_dim   START.T
-  ^DimResponse @! 
-1 JUMP ;
+  ~DoorRedLED   OFF
+
+3 LINE.NUM
+  ~PanelGrnLED   OFF
+
+4 LINE.NUM
+  ~PanelRedLed   OFF
+3 JUMP ;
+: 11_12
+
+1 LINE.NUM
+  ~DoorGrnLED   OFF
+
+2 LINE.NUM
+  ~DoorRedLED   OFF
+
+3 LINE.NUM
+  ~PanelGrnLED   OFF
+
+4 LINE.NUM
+  ~PanelRedLed   OFF
+0 JUMP ;
+: 11_13
+
+1 LINE.NUM
+  9    DELAY
+0 JUMP ;
+: 11_14
+1 LINE.NUM ^DoorGrnFlag @@ ~DoorGrnLED @! 
+2 LINE.NUM ^DoorRedFlag @@ ~DoorRedLED @! 
+3 LINE.NUM ^PanelGrnFlag @@ ~PanelGrnLED @! 
+4 LINE.NUM ^PanelRedFlag @@ ~PanelRedLed @! 
+0 JUMP ;
+: 11_20
+
+1 LINE.NUM
+  2    DELAY
+-6 JUMP ;
 : 11_3
 TRUE
 
 1 LINE.NUM
+  ^LEDsBlink @@ 
+  1    =
+LAND
+
+2 LINE.NUM
   ^Blinker @@ 
   1    =
 LAND
-IF -2 ELSE -3 THEN JUMP ;
+IF -6 ELSE 0 THEN JUMP ;
+: 11_11
+TRUE
+
+1 LINE.NUM
+  ^Dim @@ 
+  1    =
+LAND
+IF -6 ELSE -4 THEN JUMP ;
 T: T11
 DUMMY
 11_0
 11_1
 11_2
-11_9
+11_12
+11_13
+11_14
+11_20
 11_3
+11_11
 T;
 &LED_control ' T11 SETTASK

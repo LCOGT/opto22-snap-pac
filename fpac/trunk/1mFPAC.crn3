@@ -266,7 +266,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.03"
+" 001.04"
  *SWVersion $MOVE
 " "
  *TimeString $MOVE
