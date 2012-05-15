@@ -286,13 +286,13 @@
 
 122 LINE.NUM THEN 
 124 LINE.NUM ~S26_4 @@I 1 = IF 
-125 LINE.NUM " , PanelRedTrapKeySecured=TRUE" *EnviroString $CAT 
+125 LINE.NUM " , PanelRedTrapKeySecured=FALSE" *EnviroString $CAT 
 
 126 LINE.NUM ELSE 
-127 LINE.NUM " , PanelRedTrapKeySecured=FALSE" *EnviroString $CAT 
+127 LINE.NUM " , PanelRedTrapKeySecured=TRUE" *EnviroString $CAT 
 
 128 LINE.NUM THEN 
-130 LINE.NUM ~S26_4_1 @@I 1 = ~S26_4 @@I 1 = LOR  ~S26_7 @@I 1 = LOR  IF 
+130 LINE.NUM ~S26_4_1 @@I 1 = ~S26_4 @@I 1 <> LOR  ~S26_7 @@I 1 = LOR  IF 
 131 LINE.NUM " , GoFastState=TRUE" *EnviroString $CAT 
 
 132 LINE.NUM ELSE 
