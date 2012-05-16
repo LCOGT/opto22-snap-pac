@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Documents and Settings\Wayne Rosing\Desktop\fpac\1mFPAC.idb
 # VERSION :      R9.1a
-# TIME/DATE :    19:8:54 5/15/2012
+# TIME/DATE :    19:13:51 5/16/2012
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -92,10 +92,8 @@
 
 # TAG1,NAME,ID,BITMASK_0,BITMASK_1,BITMASK_2,BITMASK_3,TABLE_LENGTH,STRING_WIDTH
 
-TAG1,Door_dim                                          ,7    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,LED_control                                       ,11   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Master_Comm                                       ,5    ,00000000,00000100,00000000,00000000,0    ,0   
-TAG1,Panel_dim                                         ,9    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Powerup                                           ,0    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Test_Front_Panel                                  ,1    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Test_HVAC                                         ,2    ,00000000,00000100,00000000,00000000,0    ,0   
