@@ -21,7 +21,7 @@
 5 LINE.NUM
   &WhiteLights   START.T
   ^WhiteLights_Chart @! 
-1 JUMP ;
+5 JUMP ;
 : 0_5
 
 1 LINE.NUM
@@ -47,21 +47,27 @@
 : 0_15
 -2 JUMP ;
 : 0_18
-1 JUMP ;
+2 JUMP ;
+: 0_22
+
+1 LINE.NUM
+  10.0  
+  ~CABINET_FAN_CTRL @!   
+-5 JUMP ;
 : 0_8
 TRUE
 
 1 LINE.NUM
   ^Heartbeat_Timer   T0=
 LAND
-IF -4 ELSE -4 THEN JUMP ;
+IF -5 ELSE -5 THEN JUMP ;
 : 0_17
 TRUE
 
 1 LINE.NUM
   ~LAMP_TEST   ?ON
 LAND
-IF -4 ELSE -2 THEN JUMP ;
+IF -5 ELSE -2 THEN JUMP ;
 T: T0
 DUMMY
 0_0
@@ -71,6 +77,7 @@ DUMMY
 0_13
 0_15
 0_18
+0_22
 0_8
 0_17
 T;
