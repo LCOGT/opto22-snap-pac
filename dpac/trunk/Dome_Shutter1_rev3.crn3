@@ -177,8 +177,6 @@ CREATE P.ARRAY
 ~AI_lowerClosePressure ,
 ~AI_lowerOpenPressure ,
 ~AO_cabinetFanCtrl ,
-~Humidity ,
-~Temperature ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -191,7 +189,7 @@ CREATE E/RGROUP.ARRAY
 : W_INIT_IO
 CONFIG_PORTS
 $0000000000000000.. %A_1mFPAC ENABLES!
-$31133737FFFFFFFF.. %Local_IO ENABLES!
+$01133737FFFFFFFF.. %Local_IO ENABLES!
 " %A_1mFPAC  (1/2)" *_HSV_INIT_IO $MOVE 1 ^_HNV_INIT_IO @!
 %A_1mFPAC ENABLE
 " %Local_IO  (2/2)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
