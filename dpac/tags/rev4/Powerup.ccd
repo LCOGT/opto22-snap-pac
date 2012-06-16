@@ -1,0 +1,30 @@
+: 0_0
+1 JUMP ;
+: 0_5
+  &Main   START.T
+  ^MainChartStarted @! 
+  &Master_Comm   START.T
+  ^Master_CommStarted @! 
+  &White_Lights   START.T
+  ^White_Lights_Chart @! 
+  &Status_Monitor   START.T
+  ^Status_Monitor_Started @! 
+  &Powerup   STOP.T
+2 JUMP ;
+: 0_12
+  ~DO_slot08Fuse   ON
+  ~DO_slot09Fuse   ON
+0 JUMP ;
+: 0_33
+  10 I>F 
+  1 I>F 
+  ~AO_cabinetFanCtrl   F!RAMP
+-3 JUMP ;
+T: T0
+DUMMY
+0_0
+0_5
+0_12
+0_33
+T;
+&Powerup ' T0 SETTASK
