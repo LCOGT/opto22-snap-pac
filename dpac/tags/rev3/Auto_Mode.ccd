@@ -1,0 +1,433 @@
+: 3_0
+53 JUMP ;
+: 3_41
+  ^Timer_HeartbeatWdog   StartTimer
+8 JUMP ;
+: 3_121
+  &Function_UpperOpen   START.T
+  ^Function_UpperOpen_Started @! 
+32 JUMP ;
+: 3_122
+  &Function_UpperClose   STOP.T
+  100    DELAY
+  ~DO_upperClose   OFF
+  2000    DELAY
+-2 JUMP ;
+: 3_132
+  &Function_UpperClose   START.T
+  ^Function_UpperClose_Started @! 
+31 JUMP ;
+: 3_134
+  &Function_UpperOpen   STOP.T
+  100    DELAY
+  ~DO_upperOpen   OFF
+  2000    DELAY
+-2 JUMP ;
+: 3_144
+  &Function_LowerClose   STOP.T
+  100    DELAY
+  ~DO_lowerCloseValve   OFF
+  ~DO_pumpMotor   OFF
+  2000    DELAY
+0 JUMP ;
+: 3_146
+  &Function_LowerOpen   START.T
+  ^Function_LowerOpen_Started @! 
+29 JUMP ;
+: 3_157
+  &Function_LowerClose   START.T
+  ^Function_LowerClose_Started @! 
+29 JUMP ;
+: 3_159
+  &Function_LowerOpen   STOP.T
+  100    DELAY
+  ~DO_lowerOpenValve   OFF
+  ~DO_pumpMotor   OFF
+  2000    DELAY
+-2 JUMP ;
+: 3_194
+-11 JUMP ;
+: 3_230
+-12 JUMP ;
+: 3_231
+  &Function_UpperOpen   STOP.T
+  &Function_UpperClose   STOP.T
+  &Function_LowerOpen   STOP.T
+  &Function_LowerClose   STOP.T
+  &Function_Close   STOP.T
+  &Function_Open   STOP.T
+  100    DELAY
+  ~DO_upperOpen   OFF
+  ~DO_upperClose   OFF
+  ~DO_pumpMotor   OFF
+  ~DO_lowerOpenValve   OFF
+  ~DO_lowerCloseValve   OFF
+0 JUMP ;
+: 3_232
+  ^Time_defContactorRelease @@   DELAY
+0 JUMP ;
+: 3_233
+~FB_upperOpen @@I 0 = IF 
+1 ^FLT_K1on @! 
+ELSE 
+~FB_upperClose @@I 0 = IF 
+1 ^FLT_K2on @! 
+ELSE 
+~FB_pumpMotor @@I 0 = IF 
+1 ^FLT_K5on @! 
+THEN THEN THEN 
+-4 JUMP ;
+: 3_240
+0 ^CmdHEARTBEAT @! 
+-15 JUMP ;
+: 3_254
+0 ^CmdOPEN @! 
+48 JUMP ;
+: 3_273
+-18 JUMP ;
+: 3_279
+  &Function_Open   START.T
+  ^Function_Open_Started @! 
+-2 JUMP ;
+: 3_284
+  &Function_Close   STOP.T
+  100    DELAY
+-2 JUMP ;
+: 3_288
+0 ^CmdCLOSE @! 
+45 JUMP ;
+: 3_291
+  &Function_Open   STOP.T
+  100    DELAY
+0 JUMP ;
+: 3_292
+  &Function_Close   START.T
+  ^Function_Close_Started @! 
+0 JUMP ;
+: 3_298
+-24 JUMP ;
+: 3_301
+-25 JUMP ;
+: 3_305
+  &Function_Close   START.T
+  ^Function_Close_Started @! 
+-2 JUMP ;
+: 3_306
+  &Function_Open   STOP.T
+  100    DELAY
+-2 JUMP ;
+: 3_318
+0 ^CmdUPPER_OPEN @! 
+40 JUMP ;
+: 3_319
+0 ^CmdUPPER_CLOSE @! 
+41 JUMP ;
+: 3_320
+0 ^CmdLOWER_OPEN @! 
+39 JUMP ;
+: 3_321
+0 ^CmdLOWER_CLOSE @! 
+40 JUMP ;
+: 3_327
+  &Function_Close   STOP.T
+  100    DELAY
+26 JUMP ;
+: 3_330
+  &Function_Close   STOP.T
+  100    DELAY
+29 JUMP ;
+: 3_333
+  &Function_Open   STOP.T
+  100    DELAY
+26 JUMP ;
+: 3_336
+  &Function_Open   STOP.T
+  100    DELAY
+29 JUMP ;
+: 3_341
+-36 JUMP ;
+: 3_342
+-37 JUMP ;
+: 3_343
+-38 JUMP ;
+: 3_344
+-39 JUMP ;
+: 3_345
+-40 JUMP ;
+: 3_387
+  &Function_Open   STOP.T
+  100    DELAY
+0 JUMP ;
+: 3_388
+  &Function_Close   START.T
+  ^Function_Close_Started @! 
+0 JUMP ;
+: 3_392
+-43 JUMP ;
+: 3_409
+0 ^CmdTOGGLE_LIGHTS @! 
+33 JUMP ;
+: 3_413
+-45 JUMP ;
+: 3_417
+  ^LightToggle   FALSE@!
+-2 JUMP ;
+: 3_418
+  ^LightToggle   TRUE@!
+-3 JUMP ;
+: 3_429
+0 ^CmdSTOP @! 
+2 JUMP ;
+: 3_432
+~FB_upperOpen @@I 0 = IF 
+1 ^FLT_K1on @! 
+ELSE 
+~FB_upperClose @@I 0 = IF 
+1 ^FLT_K2on @! 
+ELSE 
+~FB_pumpMotor @@I 0 = IF 
+1 ^FLT_K5on @! 
+THEN THEN THEN 
+2 JUMP ;
+: 3_433
+  ^Time_defContactorRelease @@   DELAY
+-2 JUMP ;
+: 3_434
+  &Function_UpperOpen   STOP.T
+  &Function_UpperClose   STOP.T
+  &Function_LowerOpen   STOP.T
+  &Function_LowerClose   STOP.T
+  &Function_Close   STOP.T
+  &Function_Open   STOP.T
+  100    DELAY
+  ~DO_upperOpen   OFF
+  ~DO_upperClose   OFF
+  ~DO_pumpMotor   OFF
+  ~DO_lowerOpenValve   OFF
+  ~DO_lowerCloseValve   OFF
+-2 JUMP ;
+: 3_435
+-52 JUMP ;
+: 3_38
+TRUE
+  ^CmdHEARTBEAT @@ 
+  1    =
+LAND
+IF -38 ELSE 0 THEN JUMP ;
+: 3_45
+TRUE
+  ^Timer_HeartbeatWdog   T0=
+LAND
+IF 18 ELSE 24 THEN JUMP ;
+: 3_58
+TRUE
+  ~SW_stop   ?OFF
+LAND
+IF -43 ELSE -3 THEN JUMP ;
+: 3_66
+TRUE
+  ^CmdOPEN @@   0<>
+LAND
+IF -40 ELSE 0 THEN JUMP ;
+: 3_94
+TRUE
+  ^CmdCLOSE @@   0<>
+LAND
+IF -37 ELSE 0 THEN JUMP ;
+: 3_114
+TRUE
+  ^CmdUPPER_OPEN @@   0<>
+LAND
+IF -31 ELSE 1 THEN JUMP ;
+: 3_123
+TRUE
+  &Function_UpperClose   ?RUNNING
+LAND
+IF -56 ELSE -57 THEN JUMP ;
+: 3_127
+TRUE
+  ^CmdUPPER_CLOSE @@   0<>
+LAND
+IF -32 ELSE 1 THEN JUMP ;
+: 3_135
+TRUE
+  &Function_UpperOpen   ?RUNNING
+LAND
+IF -56 ELSE -57 THEN JUMP ;
+: 3_140
+TRUE
+  ^CmdLOWER_OPEN @@   0<>
+LAND
+IF -33 ELSE 1 THEN JUMP ;
+: 3_143
+TRUE
+  &Function_LowerClose   ?RUNNING
+LAND
+IF -57 ELSE -56 THEN JUMP ;
+: 3_153
+TRUE
+  ^CmdLOWER_CLOSE @@   0<>
+LAND
+IF -34 ELSE 12 THEN JUMP ;
+: 3_160
+TRUE
+  &Function_LowerOpen   ?RUNNING
+LAND
+IF -56 ELSE -57 THEN JUMP ;
+: 3_282
+TRUE
+  &Function_Close   ?RUNNING
+LAND
+IF -47 ELSE -48 THEN JUMP ;
+: 3_290
+TRUE
+  &Function_Open   ?RUNNING
+LAND
+IF -46 ELSE -45 THEN JUMP ;
+: 3_307
+TRUE
+  &Function_Open   ?RUNNING
+LAND
+IF -42 ELSE -43 THEN JUMP ;
+: 3_328
+TRUE
+  &Function_Close   ?RUNNING
+LAND
+IF -38 ELSE -11 THEN JUMP ;
+: 3_331
+TRUE
+  &Function_Close   ?RUNNING
+LAND
+IF -38 ELSE -8 THEN JUMP ;
+: 3_334
+TRUE
+  &Function_Open   ?RUNNING
+LAND
+IF -38 ELSE -11 THEN JUMP ;
+: 3_337
+TRUE
+  &Function_Open   ?RUNNING
+LAND
+IF -38 ELSE -8 THEN JUMP ;
+: 3_365
+TRUE
+  ~SW_upperCloseLimit   ?OFF
+LAND
+  ~SW_lowerCloseLimit   ?ON
+LAND
+IF -49 ELSE -6 THEN JUMP ;
+: 3_385
+TRUE
+  ~SW_lowerCloseLimit   ?ON
+LAND
+  ~SW_upperCloseLimit   ?OFF
+LAND
+IF -32 ELSE 0 THEN JUMP ;
+: 3_386
+TRUE
+  &Function_Open   ?RUNNING
+LAND
+IF -35 ELSE -34 THEN JUMP ;
+: 3_394
+TRUE
+  ^Timer_WxWdog   T0=
+LAND
+IF -3 ELSE 3 THEN JUMP ;
+: 3_406
+TRUE
+  ^CmdTOGGLE_LIGHTS @@   0<>
+LAND
+IF -34 ELSE -38 THEN JUMP ;
+: 3_415
+TRUE
+  ^LightToggle @@   0<>
+LAND
+IF -33 ELSE -32 THEN JUMP ;
+: 3_437
+TRUE
+  ^CmdSTOP @@   0<>
+LAND
+IF -32 ELSE -24 THEN JUMP ;
+T: T3
+DUMMY
+3_0
+3_41
+3_121
+3_122
+3_132
+3_134
+3_144
+3_146
+3_157
+3_159
+3_194
+3_230
+3_231
+3_232
+3_233
+3_240
+3_254
+3_273
+3_279
+3_284
+3_288
+3_291
+3_292
+3_298
+3_301
+3_305
+3_306
+3_318
+3_319
+3_320
+3_321
+3_327
+3_330
+3_333
+3_336
+3_341
+3_342
+3_343
+3_344
+3_345
+3_387
+3_388
+3_392
+3_409
+3_413
+3_417
+3_418
+3_429
+3_432
+3_433
+3_434
+3_435
+3_38
+3_45
+3_58
+3_66
+3_94
+3_114
+3_123
+3_127
+3_135
+3_140
+3_143
+3_153
+3_160
+3_282
+3_290
+3_307
+3_328
+3_331
+3_334
+3_337
+3_365
+3_385
+3_386
+3_394
+3_406
+3_415
+3_437
+T;
+&Auto_Mode ' T3 SETTASK
