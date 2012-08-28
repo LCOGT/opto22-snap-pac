@@ -1,8 +1,6 @@
 CREATE T.ARRAY
-&Door_dim ,
 &LED_control ,
 &Master_Comm ,
-&Panel_dim ,
 &Powerup ,
 &Test_Front_Panel ,
 &Test_HVAC ,
@@ -89,7 +87,6 @@ CREATE P.ARRAY
 ~A_555 ,
 ~AZ_CONTACTORS ,
 ~AZ_DISABLED ,
-~AzAvail ,
 ~B32_2 ,
 ~DoorGrnLED ,
 ~DoorRedLED ,
@@ -170,8 +167,10 @@ CREATE P.ARRAY
 ~XT22_12_STATUS ,
 ~XT22_4_STATUS ,
 ~XT22_8_STATUS ,
+~ai_A_1mFPAC_1501 ,
 ~Cabinet_FAN ,
 ~CABINET_FAN_CTRL ,
+~Coolant_temp ,
 ~DCS_SENSE ,
 ~DomeExitAir ,
 ~Fan2 ,
@@ -266,7 +265,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.04"
+" 001.05"
  *SWVersion $MOVE
 " "
  *TimeString $MOVE

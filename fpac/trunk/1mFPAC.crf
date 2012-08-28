@@ -15,10 +15,8 @@ _END NEW $$$.RUN
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
 0 TASK  &_INIT_IO
-0 TASK &Door_dim
 0 TASK &LED_control
 0 TASK &Master_Comm
-0 TASK &Panel_dim
 0 TASK &Powerup
 0 TASK &Test_Front_Panel
 0 TASK &Test_HVAC
@@ -189,7 +187,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2  1 APOINT -200.0000 10  1 13 %A_1mFPAC 0 POINT.TNG ~DomeExitAir
  2  1 APOINT    0.0000 69  0 14 %A_1mFPAC 0 POINT.TNG ~Cabinet_FAN
  2  1 APOINT    0.0000 69  1 14 %A_1mFPAC 0 POINT.TNG ~Fan2
- 4  1 SPOINT 0.0     INPUT  0 15 %A_1mFPAC 0 POINT.TNG ~AzAvail
+ 2  1 APOINT -200.0000 10  0 15 %A_1mFPAC 0 POINT.TNG ~Coolant_temp
+ 2  1 APOINT -200.0000 10  1 15 %A_1mFPAC 0 POINT.TNG ~ai_A_1mFPAC_1501
 : 11_0
 0 JUMP ;
 : 11_1
@@ -539,150 +538,155 @@ T;
 99 LINE.NUM ~DomeExitAir @@ 4 1 *EnviroTemp  FF.R$ 
 100 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-101 LINE.NUM ~S30_7_NO @@I 1 = IF 
-102 LINE.NUM " , HVACSwitchState=AUTO" *EnviroString $CAT 
+101 LINE.NUM " , CoolantTemp=" *EnviroString $CAT 
 
-103 LINE.NUM ELSE 
-104 LINE.NUM " , HVACSwitchState=STOP" *EnviroString $CAT 
+102 LINE.NUM ~Coolant_temp @@ 4 1 *EnviroTemp  FF.R$ 
+103 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-105 LINE.NUM THEN 
-106 LINE.NUM ~HVAC_CTRL @@I 1 = IF 
-107 LINE.NUM " , HVACOn=TRUE" *EnviroString $CAT 
+104 LINE.NUM ~S30_7_NO @@I 1 = IF 
+105 LINE.NUM " , HVACSwitchState=AUTO" *EnviroString $CAT 
 
-108 LINE.NUM ELSE 
-109 LINE.NUM " , HVACOn=FALSE" *EnviroString $CAT 
+106 LINE.NUM ELSE 
+107 LINE.NUM " , HVACSwitchState=STOP" *EnviroString $CAT 
 
-110 LINE.NUM THEN 
-112 LINE.NUM ~S26_7 @@I 1 = IF 
-113 LINE.NUM " , DoorRedTrapKeySecured=TRUE" *EnviroString $CAT 
+108 LINE.NUM THEN 
+109 LINE.NUM ~HVAC_CTRL @@I 1 = IF 
+110 LINE.NUM " , HVACOn=TRUE" *EnviroString $CAT 
 
-114 LINE.NUM ELSE 
-115 LINE.NUM " , DoorRedTrapKeySecured=FALSE" *EnviroString $CAT 
+111 LINE.NUM ELSE 
+112 LINE.NUM " , HVACOn=FALSE" *EnviroString $CAT 
 
-116 LINE.NUM THEN 
-118 LINE.NUM ~S26_4_1 @@I 1 = IF 
-119 LINE.NUM " , GoFastButton=TRUE" *EnviroString $CAT 
+113 LINE.NUM THEN 
+115 LINE.NUM ~S26_7 @@I 1 = IF 
+116 LINE.NUM " , DoorRedTrapKeySecured=TRUE" *EnviroString $CAT 
 
-120 LINE.NUM ELSE 
-121 LINE.NUM " , GoFastButton=FALSE" *EnviroString $CAT 
+117 LINE.NUM ELSE 
+118 LINE.NUM " , DoorRedTrapKeySecured=FALSE" *EnviroString $CAT 
 
-122 LINE.NUM THEN 
-124 LINE.NUM ~S26_4 @@I 1 = IF 
-125 LINE.NUM " , PanelRedTrapKeySecured=FALSE" *EnviroString $CAT 
+119 LINE.NUM THEN 
+121 LINE.NUM ~S26_4_1 @@I 1 = IF 
+122 LINE.NUM " , GoFastButton=TRUE" *EnviroString $CAT 
 
-126 LINE.NUM ELSE 
-127 LINE.NUM " , PanelRedTrapKeySecured=TRUE" *EnviroString $CAT 
+123 LINE.NUM ELSE 
+124 LINE.NUM " , GoFastButton=FALSE" *EnviroString $CAT 
 
-128 LINE.NUM THEN 
-130 LINE.NUM ~S26_4_1 @@I 1 = ~S26_4 @@I 1 <> LOR  ~S26_7 @@I 1 = LOR  IF 
-131 LINE.NUM " , GoFastState=TRUE" *EnviroString $CAT 
+125 LINE.NUM THEN 
+127 LINE.NUM ~S26_4 @@I 1 = IF 
+128 LINE.NUM " , PanelRedTrapKeySecured=FALSE" *EnviroString $CAT 
 
-132 LINE.NUM ELSE 
-133 LINE.NUM " , GoFastState=FALSE" *EnviroString $CAT 
+129 LINE.NUM ELSE 
+130 LINE.NUM " , PanelRedTrapKeySecured=TRUE" *EnviroString $CAT 
 
-134 LINE.NUM THEN 
-136 LINE.NUM ~S33_3_NO @@I 1 = IF 
-137 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
+131 LINE.NUM THEN 
+133 LINE.NUM ~S26_4_1 @@I 1 = ~S26_4 @@I 1 <> LOR  ~S26_7 @@I 1 = LOR  IF 
+134 LINE.NUM " , GoFastState=TRUE" *EnviroString $CAT 
 
-138 LINE.NUM ELSE 
-139 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
+135 LINE.NUM ELSE 
+136 LINE.NUM " , GoFastState=FALSE" *EnviroString $CAT 
 
-140 LINE.NUM THEN 
-142 LINE.NUM ~B32_2 @@I 0 = IF 
-143 LINE.NUM " , EnclosureDoor1Closed=FALSE, EnclosureDoor2Closed=FALSE" *EnviroString $CAT 
+137 LINE.NUM THEN 
+139 LINE.NUM ~S33_3_NO @@I 1 = IF 
+140 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
 
-144 LINE.NUM ELSE 
-145 LINE.NUM " , EnclosureDoor1Closed=TRUE, EnclosureDoor2Closed=TRUE" *EnviroString $CAT 
+141 LINE.NUM ELSE 
+142 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
 
-146 LINE.NUM THEN 
-153 LINE.NUM ~RED_LT_SEN @@ 110 I>F F> IF 
-154 LINE.NUM " , RedLightSwitchOn=TRUE" *EnviroString $CAT 
+143 LINE.NUM THEN 
+145 LINE.NUM ~B32_2 @@I 0 = IF 
+146 LINE.NUM " , EnclosureDoor1Closed=FALSE, EnclosureDoor2Closed=FALSE" *EnviroString $CAT 
 
-155 LINE.NUM " , RedLightState=TRUE" *EnviroString $CAT 
+147 LINE.NUM ELSE 
+148 LINE.NUM " , EnclosureDoor1Closed=TRUE, EnclosureDoor2Closed=TRUE" *EnviroString $CAT 
 
-156 LINE.NUM ELSE 
-157 LINE.NUM " , RedLightSwitchON=FALSE" *EnviroString $CAT 
+149 LINE.NUM THEN 
+156 LINE.NUM ~RED_LT_SEN @@ 110 I>F F> IF 
+157 LINE.NUM " , RedLightSwitchOn=TRUE" *EnviroString $CAT 
 
-158 LINE.NUM " , RedLightState=FALSE" *EnviroString $CAT 
+158 LINE.NUM " , RedLightState=TRUE" *EnviroString $CAT 
 
-159 LINE.NUM THEN 
-160 LINE.NUM ~S30_7_1 @@I 1 = IF 
-161 LINE.NUM " , PanelDoorClosed=FALSE" *EnviroString $CAT 
+159 LINE.NUM ELSE 
+160 LINE.NUM " , RedLightSwitchON=FALSE" *EnviroString $CAT 
 
-162 LINE.NUM ELSE 
-163 LINE.NUM " , PanelDoorClosed=TRUE" *EnviroString $CAT 
+161 LINE.NUM " , RedLightState=FALSE" *EnviroString $CAT 
 
-164 LINE.NUM THEN 
-165 LINE.NUM ~S33_1_STATUS @@I 1 = IF 
-166 LINE.NUM " , WhiteLightSwitchOn=TRUE" *EnviroString $CAT 
+162 LINE.NUM THEN 
+163 LINE.NUM ~S30_7_1 @@I 1 = IF 
+164 LINE.NUM " , PanelDoorClosed=FALSE" *EnviroString $CAT 
 
-167 LINE.NUM ELSE 
-168 LINE.NUM " , WhiteLightSwitchOn=FALSE" *EnviroString $CAT 
+165 LINE.NUM ELSE 
+166 LINE.NUM " , PanelDoorClosed=TRUE" *EnviroString $CAT 
 
-169 LINE.NUM THEN 
-170 LINE.NUM ^whiteLightState @@ 1 = IF 
-171 LINE.NUM " , WhiteLightState=TRUE" *EnviroString $CAT 
+167 LINE.NUM THEN 
+168 LINE.NUM ~S33_1_STATUS @@I 1 = IF 
+169 LINE.NUM " , WhiteLightSwitchOn=TRUE" *EnviroString $CAT 
 
-172 LINE.NUM ELSE 
-173 LINE.NUM " , WhiteLightState=FALSE" *EnviroString $CAT 
+170 LINE.NUM ELSE 
+171 LINE.NUM " , WhiteLightSwitchOn=FALSE" *EnviroString $CAT 
 
-174 LINE.NUM THEN 
-177 LINE.NUM ^PanelGrnFlag @@ 1 = ^PanelRedFlag @@ 0 = LAND  IF 
-178 LINE.NUM " , PanelLedColor=Green" *EnviroString $CAT 
+172 LINE.NUM THEN 
+173 LINE.NUM ^whiteLightState @@ 1 = IF 
+174 LINE.NUM " , WhiteLightState=TRUE" *EnviroString $CAT 
 
-179 LINE.NUM ELSE 
-179 LINE.NUM ^PanelGrnFlag @@ 0 = ^PanelRedFlag @@ 1 = LAND  IF 
-180 LINE.NUM " , PanelLedColor=Red" *EnviroString $CAT 
+175 LINE.NUM ELSE 
+176 LINE.NUM " , WhiteLightState=FALSE" *EnviroString $CAT 
 
-181 LINE.NUM ELSE 
-181 LINE.NUM ^PanelGrnFlag @@ 1 = ^PanelRedFlag @@ 1 = LAND  IF 
-182 LINE.NUM " , PanelLedColor=Yellow" *EnviroString $CAT 
+177 LINE.NUM THEN 
+180 LINE.NUM ^PanelGrnFlag @@ 1 = ^PanelRedFlag @@ 0 = LAND  IF 
+181 LINE.NUM " , PanelLedColor=Green" *EnviroString $CAT 
 
-183 LINE.NUM ELSE 
-184 LINE.NUM " , PanelLedColor=OFF" *EnviroString $CAT 
+182 LINE.NUM ELSE 
+182 LINE.NUM ^PanelGrnFlag @@ 0 = ^PanelRedFlag @@ 1 = LAND  IF 
+183 LINE.NUM " , PanelLedColor=Red" *EnviroString $CAT 
 
-185 LINE.NUM THEN THEN THEN 
-187 LINE.NUM ^Dim @@ 0 = IF 
-188 LINE.NUM " , LedState=BRIGHT" *EnviroString $CAT 
+184 LINE.NUM ELSE 
+184 LINE.NUM ^PanelGrnFlag @@ 1 = ^PanelRedFlag @@ 1 = LAND  IF 
+185 LINE.NUM " , PanelLedColor=Yellow" *EnviroString $CAT 
 
-189 LINE.NUM ELSE 
-190 LINE.NUM " , LedState=DIM" *EnviroString $CAT 
+186 LINE.NUM ELSE 
+187 LINE.NUM " , PanelLedColor=OFF" *EnviroString $CAT 
 
-191 LINE.NUM THEN 
-193 LINE.NUM ^DoorGrnFlag @@ 1 = ^DoorRedFlag @@ 0 = LAND  IF 
-194 LINE.NUM " , DoorLedColor=Green" *EnviroString $CAT 
+188 LINE.NUM THEN THEN THEN 
+190 LINE.NUM ^Dim @@ 0 = IF 
+191 LINE.NUM " , LedState=BRIGHT" *EnviroString $CAT 
 
-195 LINE.NUM ELSE 
-195 LINE.NUM ^DoorGrnFlag @@ 0 = ^DoorRedFlag @@ 1 = LAND  IF 
-196 LINE.NUM " , DoorLedColor=Red" *EnviroString $CAT 
+192 LINE.NUM ELSE 
+193 LINE.NUM " , LedState=DIM" *EnviroString $CAT 
 
-197 LINE.NUM ELSE 
-197 LINE.NUM ^DoorGrnFlag @@ 1 = ^DoorRedFlag @@ 1 = LAND  IF 
-198 LINE.NUM " , DoorLedColor=Yellow" *EnviroString $CAT 
+194 LINE.NUM THEN 
+196 LINE.NUM ^DoorGrnFlag @@ 1 = ^DoorRedFlag @@ 0 = LAND  IF 
+197 LINE.NUM " , DoorLedColor=Green" *EnviroString $CAT 
 
-199 LINE.NUM ELSE 
-200 LINE.NUM " , DoorLedColor=OFF" *EnviroString $CAT 
+198 LINE.NUM ELSE 
+198 LINE.NUM ^DoorGrnFlag @@ 0 = ^DoorRedFlag @@ 1 = LAND  IF 
+199 LINE.NUM " , DoorLedColor=Red" *EnviroString $CAT 
 
-201 LINE.NUM THEN THEN THEN 
-203 LINE.NUM ~SONALERT @@I 1 = IF 
-204 LINE.NUM " , SonalertState=TRUE" *EnviroString $CAT 
+200 LINE.NUM ELSE 
+200 LINE.NUM ^DoorGrnFlag @@ 1 = ^DoorRedFlag @@ 1 = LAND  IF 
+201 LINE.NUM " , DoorLedColor=Yellow" *EnviroString $CAT 
 
-205 LINE.NUM ELSE 
-206 LINE.NUM " , SonalertState=FALSE" *EnviroString $CAT 
+202 LINE.NUM ELSE 
+203 LINE.NUM " , DoorLedColor=OFF" *EnviroString $CAT 
 
-207 LINE.NUM THEN 
-208 LINE.NUM ^LEDsBlink @@ 1 = IF 
-209 LINE.NUM " , LedMode=BLINK" *EnviroString $CAT 
+204 LINE.NUM THEN THEN THEN 
+206 LINE.NUM ~SONALERT @@I 1 = IF 
+207 LINE.NUM " , SonalertState=TRUE" *EnviroString $CAT 
 
-210 LINE.NUM ELSE 
-211 LINE.NUM " , LedMode=STEADY" *EnviroString $CAT 
+208 LINE.NUM ELSE 
+209 LINE.NUM " , SonalertState=FALSE" *EnviroString $CAT 
 
-212 LINE.NUM THEN 
-214 LINE.NUM *EnviroString *SentString  $MOVE 
-215 LINE.NUM *SentString *StatusString  $MOVE 
-216 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-217 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-218 LINE.NUM " " *MasterCommand  $MOVE 
+210 LINE.NUM THEN 
+211 LINE.NUM ^LEDsBlink @@ 1 = IF 
+212 LINE.NUM " , LedMode=BLINK" *EnviroString $CAT 
+
+213 LINE.NUM ELSE 
+214 LINE.NUM " , LedMode=STEADY" *EnviroString $CAT 
+
+215 LINE.NUM THEN 
+217 LINE.NUM *EnviroString *SentString  $MOVE 
+218 LINE.NUM *SentString *StatusString  $MOVE 
+219 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+220 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+221 LINE.NUM " " *MasterCommand  $MOVE 
 3 JUMP ;
 : 5_142
 
@@ -1513,10 +1517,8 @@ DUMMY
 T;
 &WhiteLights ' T3 SETTASK
 CREATE T.ARRAY
-&Door_dim ,
 &LED_control ,
 &Master_Comm ,
-&Panel_dim ,
 &Powerup ,
 &Test_Front_Panel ,
 &Test_HVAC ,
@@ -1603,7 +1605,6 @@ CREATE P.ARRAY
 ~A_555 ,
 ~AZ_CONTACTORS ,
 ~AZ_DISABLED ,
-~AzAvail ,
 ~B32_2 ,
 ~DoorGrnLED ,
 ~DoorRedLED ,
@@ -1684,8 +1685,10 @@ CREATE P.ARRAY
 ~XT22_12_STATUS ,
 ~XT22_4_STATUS ,
 ~XT22_8_STATUS ,
+~ai_A_1mFPAC_1501 ,
 ~Cabinet_FAN ,
 ~CABINET_FAN_CTRL ,
+~Coolant_temp ,
 ~DCS_SENSE ,
 ~DomeExitAir ,
 ~Fan2 ,
@@ -1780,7 +1783,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.04"
+" 001.05"
  *SWVersion $MOVE
 " "
  *TimeString $MOVE
@@ -1801,9 +1804,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 06/04/12 " ;
-: TIMESTAMP ." 19:56:15 " ;
-: CRCSTAMP  ." E1FC1F7A44EBA065845C72E6D3A92D55 " ;
+: DATESTAMP ." 08/09/12 " ;
+: TIMESTAMP ." 13:53:46 " ;
+: CRCSTAMP  ." 87CEDDE7ADC32A7BFD6269350BC908CF " ;
 MAKECHECK
 CLEAR.BREAKS
 
