@@ -55,7 +55,7 @@
 : 1_15
 
 1 LINE.NUM
-  60    DELAY
+  500    DELAY
 3 JUMP ;
 : 1_59
 
@@ -68,6 +68,26 @@
 1 LINE.NUM
   2  
   ^FanSwMode @!   
+
+2 LINE.NUM
+  ^TempFanSpeed @@F 
+  2.0  
+  ~M6_3_CTRL   F!RAMP
+
+3 LINE.NUM
+  ^TempFanSpeed @@F 
+  2.0  
+  ~M6_5_CTRL   F!RAMP
+
+4 LINE.NUM
+  ^TempFanSpeed @@F 
+  2.0  
+  ~M6_7_CTRL   F!RAMP
+
+5 LINE.NUM
+  ^TempPanelSpeed @@F 
+  2.0  
+  ~CABINET_FAN_CTRL   F!RAMP
 -3 JUMP ;
 : 1_63
 

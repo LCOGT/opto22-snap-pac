@@ -37,14 +37,13 @@
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^Response
 0 TVAR ^Socket_Timer
+0 IVAR ^TempFanSpeed
+0 IVAR ^TempPanelSpeed
 0 IVAR ^Test_Front_Panel_Status
 0 IVAR ^Test_HVAC_Status
 0 TVAR ^Timer_GetChar
-0 IVAR ^White_LT_Flag
 0 IVAR ^WhiteLights_Chart
-0 IVAR ^whiteLightState
-0 IVAR ^WT_LT_Scratch
-0 IVAR ^WT_LT_Unscratch
+0 IVAR ^WT_LT_Status
 12 0 $VAR *DateString 
 12 0 $VAR *ElapsedString 
 1024 0 $VAR *EnviroString 

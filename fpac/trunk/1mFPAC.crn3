@@ -37,13 +37,12 @@ CREATE V.ARRAY
 ^Position ,
 ^PriorHeartbeatTime ,
 ^Response ,
+^TempFanSpeed ,
+^TempPanelSpeed ,
 ^Test_Front_Panel_Status ,
 ^Test_HVAC_Status ,
-^White_LT_Flag ,
 ^WhiteLights_Chart ,
-^whiteLightState ,
-^WT_LT_Scratch ,
-^WT_LT_Unscratch ,
+^WT_LT_Status ,
 *DateString ,
 *ElapsedString ,
 *EnviroString ,
@@ -228,14 +227,13 @@ CONFIG_PORTS
 120 ^PriorHeartbeatTime @!
 0 ^Response @!
 0.0 ^Socket_Timer @!
+0 ^TempFanSpeed @!
+0 ^TempPanelSpeed @!
 0 ^Test_Front_Panel_Status @!
 0 ^Test_HVAC_Status @!
 0.0 ^Timer_GetChar @!
-0 ^White_LT_Flag @!
 0 ^WhiteLights_Chart @!
-0 ^whiteLightState @!
-0 ^WT_LT_Scratch @!
-0 ^WT_LT_Unscratch @!
+0 ^WT_LT_Status @!
 " "
  *DateString $MOVE
 " "
@@ -264,7 +262,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.06"
+" 001.08"
  *SWVersion $MOVE
 " "
  *TimeString $MOVE
