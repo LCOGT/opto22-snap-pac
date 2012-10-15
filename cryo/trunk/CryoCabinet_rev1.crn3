@@ -19,6 +19,7 @@ CREATE V.ARRAY
 ^Position ,
 ^PriorHeartbeatTime ,
 ^Response ,
+^StartupStatus ,
 *date2String ,
 *dateDatum ,
 *DateString ,
@@ -122,6 +123,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
 -1 ^Position @!
 120 ^PriorHeartbeatTime @!
 0 ^Response @!
+0 ^StartupStatus @!
 0.0 ^Timer_GetChar @!
 " "
  *date2String $MOVE
@@ -159,7 +161,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *SentString $MOVE
 " Status"
  *StatusString $MOVE
-" 000.01"
+" 000.03"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE

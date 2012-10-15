@@ -33,12 +33,12 @@
   ~ThermoPWR_Upper_M3_7   OFF
 
 11 LINE.NUM
-  2 I>F 
+  4 I>F 
   1 I>F 
   ~Exhaust_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  2 I>F 
+  4 I>F 
   1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 

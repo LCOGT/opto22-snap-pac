@@ -18,6 +18,7 @@
 0 IVAR ^Position
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^Response
+0 IVAR ^StartupStatus
 0 TVAR ^Timer_GetChar
 10 0 $VAR *date2String 
 10 0 $VAR *dateDatum 

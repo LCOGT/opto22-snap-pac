@@ -24,6 +24,7 @@ _END NEW $$$.RUN
 0 IVAR ^Position
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^Response
+0 IVAR ^StartupStatus
 0 TVAR ^Timer_GetChar
 10 0 $VAR *date2String 
 10 0 $VAR *dateDatum 
@@ -168,7 +169,7 @@ APOINT  -10.0000 12 55 %Local_IO
 
 1 LINE.NUM
   10    DELAY
-22 JUMP ;
+21 JUMP ;
 : 1_60
 
 1 LINE.NUM
@@ -193,12 +194,12 @@ APOINT  -10.0000 12 55 %Local_IO
   ^PriorHeartbeatTime F@!   
 
 3 LINE.NUM
-  120.0  
+  300.  
   ^Heartbeat_Timer   SetTimer
 
 4 LINE.NUM
   ^Heartbeat_Timer   StartTimer
-9 JUMP ;
+27 JUMP ;
 : 1_108
 
 1 LINE.NUM
@@ -254,11 +255,11 @@ APOINT  -10.0000 12 55 %Local_IO
   ^MasterCommandStringRcvd @! 
 35 JUMP ;
 : 1_119
-1 LINE.NUM " Success=FALSE" *StatusString  $MOVE 
+1 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
 2 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
 3 LINE.NUM *MasterCommand *LastCommand  $MOVE 
 4 LINE.NUM " " *MasterCommand  $MOVE 
-13 JUMP ;
+22 JUMP ;
 : 1_122
 
 1 LINE.NUM
@@ -273,7 +274,7 @@ APOINT  -10.0000 12 55 %Local_IO
 2 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
 3 LINE.NUM *MasterCommand *LastCommand  $MOVE 
 4 LINE.NUM " " *MasterCommand  $MOVE 
-12 JUMP ;
+11 JUMP ;
 : 1_140
 1 LINE.NUM " Success=True, ICDVersion=" *StatusString  $MOVE 
 2 LINE.NUM *ICDVersion *StatusString $CAT 
@@ -589,12 +590,10 @@ APOINT  -10.0000 12 55 %Local_IO
 -24 JUMP ;
 : 1_205
 -25 JUMP ;
-: 1_206
--26 JUMP ;
 : 1_207
--27 JUMP ;
+-26 JUMP ;
 : 1_214
--28 JUMP ;
+-27 JUMP ;
 : 1_292
 
 1 LINE.NUM
@@ -603,7 +602,7 @@ APOINT  -10.0000 12 55 %Local_IO
   ^indexStep @@ 
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-20 JUMP ;
+21 JUMP ;
 : 1_297
 
 1 LINE.NUM
@@ -612,29 +611,24 @@ APOINT  -10.0000 12 55 %Local_IO
   0  
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-22 JUMP ;
+23 JUMP ;
 : 1_299
 
 1 LINE.NUM
   1  
   ^indexStep @!   
 -3 JUMP ;
-: 1_310
-
-1 LINE.NUM
-  *Master_Handle   STREAM.CLEAR.BUF
-23 JUMP ;
 : 1_313
 
 1 LINE.NUM
   *Master_Handle   STREAM.CLEAR.BUF
--17 JUMP ;
+-15 JUMP ;
 : 1_320
 
 1 LINE.NUM
   *Master_Handle   CLOSE
   ^Master_CommClosed @! 
--32 JUMP ;
+-30 JUMP ;
 : 1_332
 
 1 LINE.NUM
@@ -643,17 +637,17 @@ APOINT  -10.0000 12 55 %Local_IO
 
 2 LINE.NUM
   ^Timer_GetChar   StartTimer
-8 JUMP ;
+10 JUMP ;
 : 1_336
 1 LINE.NUM 0 ^ErrorFlag @! 
 2 LINE.NUM 0 ^FaultFlag @! 
 3 LINE.NUM " " *ErrorReport  $MOVE 
 8 LINE.NUM ~F4_3_Status @@I 0 = IF 
 9 LINE.NUM 1 ^ErrorFlag @! 
-10 LINE.NUM " , MiscPowerBreakerTripped = TRUE" *ErrorReport $CAT 
+10 LINE.NUM " , ErrorMiscPowerBreakerTripped = TRUE" *ErrorReport $CAT 
 
 11 LINE.NUM ELSE 
-12 LINE.NUM " , MiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
+12 LINE.NUM " , ErrorMiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
 
 13 LINE.NUM THEN 
 15 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
@@ -664,15 +658,36 @@ APOINT  -10.0000 12 55 %Local_IO
 20 LINE.NUM THEN 
 21 LINE.NUM ~ThermoTemp_Lower_M3_3 @@ ^CoolantDemand @@F F< IF 
 22 LINE.NUM 1 ^ErrorFlag @! 
-23 LINE.NUM " , LowerCoolantTooCold = TRUE" *ErrorReport $CAT 
+23 LINE.NUM " , WarnLowerCoolantTooCold = TRUE" *ErrorReport $CAT 
 
 24 LINE.NUM ELSE 
-25 LINE.NUM " , LowerCoolantTooCold = FALSE" *ErrorReport $CAT 
+25 LINE.NUM " , WarnLowerCoolantTooCold = FALSE" *ErrorReport $CAT 
 
 26 LINE.NUM THEN 
-31 LINE.NUM " , UpperCoolantTooCold = FALSE" *ErrorReport $CAT 
+31 LINE.NUM " , WarnUpperCoolantTooCold = FALSE" *ErrorReport $CAT 
 
--21 JUMP ;
+-19 JUMP ;
+: 1_339
+
+1 LINE.NUM
+  1500    DELAY
+
+2 LINE.NUM
+  &Master_Comm   STOP.T
+
+3 LINE.NUM
+  500    DELAY
+
+4 LINE.NUM
+  &Powerup   START.T
+  ^StartupStatus @! 
+20 JUMP ;
+: 1_342
+3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
+5 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+6 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+7 LINE.NUM " " *MasterCommand  $MOVE 
+-19 JUMP ;
 : 1_7
 FALSE
 
@@ -714,7 +729,7 @@ TRUE
   ^Master_Handle_CharNumWaiting @@ 
   0    >
 LAND
-IF -6 ELSE 4 THEN JUMP ;
+IF -8 ELSE 4 THEN JUMP ;
 : 1_25
 FALSE
 
@@ -735,7 +750,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   0    =
 LAND
-IF -10 ELSE 0 THEN JUMP ;
+IF -12 ELSE 0 THEN JUMP ;
 : 1_39
 FALSE
 
@@ -763,7 +778,7 @@ TRUE
 1 LINE.NUM
   ^Timer_GetChar   T0=
 LAND
-IF -12 ELSE -7 THEN JUMP ;
+IF -14 ELSE -7 THEN JUMP ;
 : 1_110
 TRUE
 
@@ -803,7 +818,7 @@ FALSE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LOR
-IF -43 ELSE -15 THEN JUMP ;
+IF -43 ELSE -17 THEN JUMP ;
 : 1_195
 TRUE
 
@@ -819,7 +834,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -22 ELSE -23 THEN JUMP ;
+IF -23 ELSE -24 THEN JUMP ;
 : 1_300
 TRUE
 
@@ -827,7 +842,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -23 ELSE -25 THEN JUMP ;
+IF -24 ELSE -26 THEN JUMP ;
 : 1_325
 TRUE
 
@@ -835,7 +850,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   0    <=
 LAND
-IF 1 ELSE -22 THEN JUMP ;
+IF 1 ELSE -24 THEN JUMP ;
 : 1_330
 TRUE
 
@@ -875,17 +890,17 @@ DUMMY
 1_197
 1_201
 1_205
-1_206
 1_207
 1_214
 1_292
 1_297
 1_299
-1_310
 1_313
 1_320
 1_332
 1_336
+1_339
+1_342
 1_7
 1_14
 1_17
@@ -942,12 +957,12 @@ T;
   ~ThermoPWR_Upper_M3_7   OFF
 
 11 LINE.NUM
-  2 I>F 
+  4 I>F 
   1 I>F 
   ~Exhaust_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  2 I>F 
+  4 I>F 
   1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
@@ -983,6 +998,7 @@ CREATE V.ARRAY
 ^Position ,
 ^PriorHeartbeatTime ,
 ^Response ,
+^StartupStatus ,
 *date2String ,
 *dateDatum ,
 *DateString ,
@@ -1086,6 +1102,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
 -1 ^Position @!
 120 ^PriorHeartbeatTime @!
 0 ^Response @!
+0 ^StartupStatus @!
 0.0 ^Timer_GetChar @!
 " "
  *date2String $MOVE
@@ -1123,7 +1140,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *SentString $MOVE
 " Status"
  *StatusString $MOVE
-" 000.01"
+" 000.03"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
@@ -1144,8 +1161,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/04/12 " ;
-: TIMESTAMP ." 23:35:48 " ;
+: DATESTAMP ." 10/15/12 " ;
+: TIMESTAMP ." 18:54:52 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
