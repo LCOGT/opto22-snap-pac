@@ -1,0 +1,55 @@
+: 0_0
+
+1 LINE.NUM
+  ~Honeysucker_CTRL   ON
+
+2 LINE.NUM
+  300.0  
+  ^Heartbeat_Timer   SetTimer
+
+3 LINE.NUM
+  &Master_Comm   START.T
+  ^MasterCommEstablished @! 
+
+4 LINE.NUM
+  ~CryoTigPWR_Lower_M2_3   ON
+
+5 LINE.NUM
+  1500    DELAY
+
+6 LINE.NUM
+  ~CryoTigPWR_Upper_M2_7   OFF
+
+7 LINE.NUM
+  1500    DELAY
+
+8 LINE.NUM
+  ~ThermoPWR_Lower_M3_3   ON
+
+9 LINE.NUM
+  1500    DELAY
+
+10 LINE.NUM
+  ~ThermoPWR_Upper_M3_7   OFF
+
+11 LINE.NUM
+  2 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
+
+12 LINE.NUM
+  2 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
+
+13 LINE.NUM
+  3000    DELAY
+
+14 LINE.NUM
+  ~Honeysucker_CTRL   OFF
+0 JUMP ;
+T: T0
+DUMMY
+0_0
+T;
+&Powerup ' T0 SETTASK

@@ -1,0 +1,108 @@
+0 TASK  &_INIT_IO
+0 TASK &Master_Comm
+0 TASK &Powerup
+0 IVAR ^CoolantDemand
+0 IVAR ^CoolantSetpoint
+0 IVAR ^DewpointMinimum
+0 IVAR ^ErrorFlag
+0 IVAR ^FanSwMode
+0 IVAR ^FaultFlag
+0 TVAR ^Heartbeat_Timer
+0 IVAR ^indexStep
+0 IVAR ^ListeningForMaster
+0 IVAR ^Master_CommClosed
+0 IVAR ^Master_Handle_CharNumWaiting
+0 IVAR ^MasterCommandStringRcvd
+0 IVAR ^MasterCommEstablished
+0 IVAR ^MasterXmitStatus
+0 IVAR ^Position
+0 IVAR ^PriorHeartbeatTime
+0 IVAR ^Response
+0 TVAR ^Timer_GetChar
+10 0 $VAR *date2String 
+10 0 $VAR *dateDatum 
+12 0 $VAR *DateString 
+2 0 $VAR *dayString 
+12 0 $VAR *ElapsedString 
+1024 0 $VAR *EnviroString 
+6 0 $VAR *EnviroTemp 
+1024 0 $VAR *ErrorReport 
+6 0 $VAR *FWVersion 
+2 0 $VAR *hourString 
+6 0 $VAR *ICDVersion 
+1024 0 $VAR *LastCommand 
+32 0 $VAR *MasterCommand 
+2 0 $VAR *minString 
+2 0 $VAR *monthString 
+2 0 $VAR *secString 
+1024 0 $VAR *SentString 
+1024 0 $VAR *StatusString 
+6 0 $VAR *SWVersion 
+8 0 $VAR *timeDatum 
+12 0 $VAR *TimeString 
+4 0 $VAR *yearString 
+1024 0 COMVAR *Master_Handle 
+
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %Local_IO
+SPOINT 0.0 OUTPUT 4 %Local_IO
+    0 POINT ~CryoTigPWR_Lower_M2_3
+SPOINT 0.0 OUTPUT 5 %Local_IO
+    0 POINT ~CryoTigPWR_Upper_M2_7
+SPOINT 0.0 OUTPUT 8 %Local_IO
+    0 POINT ~ThermoPWR_Lower_M3_3
+SPOINT 0.0 OUTPUT 9 %Local_IO
+    0 POINT ~ThermoPWR_Upper_M3_7
+SPOINT 0.0 OUTPUT 10 %Local_IO
+    0 POINT ~Honeysucker_CTRL
+SPOINT 0.0 OUTPUT 11 %Local_IO
+    0 POINT ~F4_3_Reset
+APOINT    0.0000 165 12 %Local_IO 0 POINT ~Exhaust_Fan_CTRL
+APOINT    0.0000 165 13 %Local_IO 0 POINT ~Intake_Fan_CTRL
+APOINT    0.0000 69 16 %Local_IO
+    0 POINT ~Exhaust_Fan_SPD
+APOINT    0.0000 69 17 %Local_IO
+    0 POINT ~Intake_Fan_SPD
+APOINT    0.0000 69 20 %Local_IO
+    0 POINT ~Honeysucker_SPD
+APOINT    0.0000 70 24 %Local_IO
+    0 POINT ~CryoTigVolt_Lower_M2_3
+APOINT    0.0000 70 25 %Local_IO
+    0 POINT ~CryoTigVolt_Upper_M2_7
+SPOINT 0.0 INPUT 28 %Local_IO
+    0 POINT ~F4_3_Status
+APOINT -200.0000 10 32 %Local_IO
+    0 POINT ~Exhaust_Fan_Temp_Unused
+APOINT -200.0000 10 36 %Local_IO
+    0 POINT ~ThermoTemp_Lower_M3_3
+APOINT -200.0000 10 37 %Local_IO
+    0 POINT ~ThermoTemp_Upper_M3_7
+APOINT -150.0000 0 40 %Local_IO
+    0 POINT ~Intake_Fan_Humidity
+ 100.0000 -150.0000 ~Intake_Fan_Humidity SET.SCALE
+APOINT -190.0000 0 41 %Local_IO
+    0 POINT ~Intake_Fan_Temp
+  60.0000 -190.0000 ~Intake_Fan_Temp SET.SCALE
+APOINT  -20.0000 64 42 %Local_IO
+    0 POINT ~ThermoDiffPress_Lower_M3_3
+APOINT  -20.0000 64 43 %Local_IO
+    0 POINT ~ThermoDiffPress_Upper_M3_7
+APOINT  -20.0000 64 44 %Local_IO
+    0 POINT ~CryoTigCurrent_Lower_M2_3
+APOINT  -20.0000 64 45 %Local_IO
+    0 POINT ~CryoTigCurrent_Upper_M2_7
+APOINT  -20.0000 64 46 %Local_IO
+    0 POINT ~ThermoCurrent_Lower_M3_3
+APOINT  -20.0000 64 47 %Local_IO
+    0 POINT ~ThermoCurrent_Upper_M3_7
+APOINT  -20.0000 69 48 %Local_IO
+    0 POINT ~ThermoFlow_Lower_M3_3
+APOINT  -20.0000 69 49 %Local_IO
+    0 POINT ~ThermoFlow_Upper_M3_7
+APOINT  -10.0000 12 52 %Local_IO
+    0 POINT ~CryoTigOutputPress_Lower_M2_3
+APOINT  -10.0000 12 53 %Local_IO
+    0 POINT ~CryoTigReturnPress_Lower_M2_3
+APOINT  -10.0000 12 54 %Local_IO
+    0 POINT ~CryoTigOutputPress_Upper_M2_7
+APOINT  -10.0000 12 55 %Local_IO
+    0 POINT ~CryoTigReturnPress_Upper_M2_7
