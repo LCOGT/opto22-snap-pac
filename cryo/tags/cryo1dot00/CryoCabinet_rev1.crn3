@@ -1,0 +1,184 @@
+CREATE T.ARRAY
+&Master_Comm ,
+&Powerup ,
+ 0 ,
+CREATE V.ARRAY
+^CoolantDemand ,
+^CoolantSetpoint ,
+^DewpointMinimum ,
+^ErrorFlag ,
+^FanSwMode ,
+^FaultFlag ,
+^indexStep ,
+^ListeningForMaster ,
+^Master_CommClosed ,
+^Master_Handle_CharNumWaiting ,
+^MasterCommandStringRcvd ,
+^MasterCommEstablished ,
+^MasterXmitStatus ,
+^Position ,
+^PriorHeartbeatTime ,
+^Response ,
+^StartupStatus ,
+*date2String ,
+*dateDatum ,
+*DateString ,
+*dayString ,
+*ElapsedString ,
+*EnviroString ,
+*EnviroTemp ,
+*ErrorReport ,
+*FWVersion ,
+*hourString ,
+*ICDVersion ,
+*LastCommand ,
+*MasterCommand ,
+*minString ,
+*monthString ,
+*secString ,
+*SentString ,
+*StatusString ,
+*SWVersion ,
+*timeDatum ,
+*TimeString ,
+*yearString ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*Master_Handle ,
+ 0 ,
+CREATE TI.ARRAY
+^Heartbeat_Timer ,
+^Timer_GetChar ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%Local_IO ,
+ 0 ,
+CREATE P.ARRAY
+~CryoTigPWR_Lower_M2_3 ,
+~CryoTigPWR_Upper_M2_7 ,
+~F4_3_Reset ,
+~F4_3_Status ,
+~Honeysucker_CTRL ,
+~ThermoPWR_Lower_M3_3 ,
+~ThermoPWR_Upper_M3_7 ,
+~CryoTigCurrent_Lower_M2_3 ,
+~CryoTigCurrent_Upper_M2_7 ,
+~CryoTigOutputPress_Lower_M2_3 ,
+~CryoTigOutputPress_Upper_M2_7 ,
+~CryoTigReturnPress_Lower_M2_3 ,
+~CryoTigReturnPress_Upper_M2_7 ,
+~CryoTigVolt_Lower_M2_3 ,
+~CryoTigVolt_Upper_M2_7 ,
+~Exhaust_Fan_CTRL ,
+~Exhaust_Fan_SPD ,
+~Exhaust_Fan_Temp_Unused ,
+~Honeysucker_SPD ,
+~Intake_Fan_CTRL ,
+~Intake_Fan_Humidity ,
+~Intake_Fan_SPD ,
+~Intake_Fan_Temp ,
+~ThermoCurrent_Lower_M3_3 ,
+~ThermoCurrent_Upper_M3_7 ,
+~ThermoDiffPress_Lower_M3_3 ,
+~ThermoDiffPress_Upper_M3_7 ,
+~ThermoFlow_Lower_M3_3 ,
+~ThermoFlow_Upper_M3_7 ,
+~ThermoTemp_Lower_M3_3 ,
+~ThermoTemp_Upper_M3_7 ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+$00F3FF3113133F30.. %Local_IO ENABLES!
+" %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%Local_IO ENABLE
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^CoolantDemand @!
+20 ^CoolantSetpoint @!
+0 ^DewpointMinimum @!
+0 ^ErrorFlag @!
+-1 ^FanSwMode @!
+0 ^FaultFlag @!
+0.0 ^Heartbeat_Timer @!
+0 ^indexStep @!
+0 ^ListeningForMaster @!
+0 ^Master_CommClosed @!
+0 ^Master_Handle_CharNumWaiting @!
+0 ^MasterCommandStringRcvd @!
+0 ^MasterCommEstablished @!
+0 ^MasterXmitStatus @!
+-1 ^Position @!
+120 ^PriorHeartbeatTime @!
+0 ^Response @!
+0 ^StartupStatus @!
+0.0 ^Timer_GetChar @!
+" "
+ *date2String $MOVE
+" "
+ *dateDatum $MOVE
+" "
+ *DateString $MOVE
+" "
+ *dayString $MOVE
+" "
+ *ElapsedString $MOVE
+" Enviro"
+ *EnviroString $MOVE
+" "
+ *EnviroTemp $MOVE
+" ''"
+ *ErrorReport $MOVE
+" 001.02"
+ *FWVersion $MOVE
+" "
+ *hourString $MOVE
+" 001.01"
+ *ICDVersion $MOVE
+" "
+ *LastCommand $MOVE
+" "
+ *MasterCommand $MOVE
+" "
+ *minString $MOVE
+" "
+ *monthString $MOVE
+" "
+ *secString $MOVE
+" Null"
+ *SentString $MOVE
+" Status"
+ *StatusString $MOVE
+" 001.00"
+ *SWVersion $MOVE
+" "
+ *timeDatum $MOVE
+" "
+ *TimeString $MOVE
+" "
+ *yearString $MOVE
+" tcp:22004"
+ *Master_Handle $MOVE
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;
