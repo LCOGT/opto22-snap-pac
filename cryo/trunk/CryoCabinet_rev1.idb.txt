@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\eng\Desktop\cryo\CryoCabinet_rev1.idb
+# NAME :         C:\Documents and Settings\eng\Desktop\opto22\cryo\trunk\CryoCabinet_rev1.idb
 # VERSION :      R9.1a
-# TIME/DATE :    19:27:43 10/15/2012
+# TIME/DATE :    19:28:20 10/16/2012
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 

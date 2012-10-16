@@ -340,7 +340,7 @@ APOINT  -10.0000 12 55 %Local_IO
 
 48 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
 
-49 LINE.NUM ~Honeysucker_SPD @@ 2.780000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+49 LINE.NUM ~Honeysucker_SPD @@ 3.230000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 50 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 51 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
@@ -1140,7 +1140,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *SentString $MOVE
 " Status"
  *StatusString $MOVE
-" 000.03"
+" 001.00"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
@@ -1161,8 +1161,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/15/12 " ;
-: TIMESTAMP ." 18:54:52 " ;
+: DATESTAMP ." 10/16/12 " ;
+: TIMESTAMP ." 19:28:20 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

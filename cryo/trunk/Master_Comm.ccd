@@ -225,7 +225,7 @@
 
 48 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
 
-49 LINE.NUM ~Honeysucker_SPD @@ 2.780000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+49 LINE.NUM ~Honeysucker_SPD @@ 3.230000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 50 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 51 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
