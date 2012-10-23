@@ -557,7 +557,7 @@
 
 40 LINE.NUM " , FenceBlueKeyStowed=" *StatusString $CAT 
 
-41 LINE.NUM ~FenceKey @@I 1 = IF 
+41 LINE.NUM ~FenceKey @@I 0 = IF 
 42 LINE.NUM " TRUE" *StatusString $CAT 
 
 43 LINE.NUM ELSE 
@@ -566,7 +566,7 @@
 45 LINE.NUM THEN 
 46 LINE.NUM " , EnclABlueKeyStowed=" *StatusString $CAT 
 
-47 LINE.NUM ~EnclosureAKey @@I 1 = IF 
+47 LINE.NUM ~EnclosureAKey @@I 0 = IF 
 48 LINE.NUM " TRUE" *StatusString $CAT 
 
 49 LINE.NUM ELSE 
@@ -593,7 +593,7 @@
 63 LINE.NUM THEN 
 64 LINE.NUM " , EnclDBlueKeyStowed=" *StatusString $CAT 
 
-65 LINE.NUM ~EnclosureDKey @@I 1 = IF 
+65 LINE.NUM ~EnclosureDKey @@I 0 = IF 
 66 LINE.NUM " TRUE" *StatusString $CAT 
 
 67 LINE.NUM ELSE 
@@ -708,7 +708,7 @@
 
 178 LINE.NUM THEN 
 181 LINE.NUM *StatusString *EnviroString  $MOVE 
-182 LINE.NUM ~Ladder_stowed @@I 1 = IF 
+182 LINE.NUM ~Ladder_stowed @@I 0 = IF 
 183 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
 
 184 LINE.NUM ELSE 
@@ -722,7 +722,7 @@
 191 LINE.NUM " , EntryDoorClosed=TRUE" *EnviroString $CAT 
 
 192 LINE.NUM THEN 
-194 LINE.NUM ~SmokeAlarm @@I 0 = IF 
+194 LINE.NUM ~SmokeAlarm @@I 1 = IF 
 195 LINE.NUM " , SmokeAlarm=TRUE" *EnviroString $CAT 
 
 196 LINE.NUM ELSE 
