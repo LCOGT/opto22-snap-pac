@@ -297,7 +297,7 @@ APOINT  -10.0000 12 55 %Local_IO
 
 6 LINE.NUM *SWVersion *StatusString $CAT 
 
-8 LINE.NUM " , DateDMY:TimeHMS$=" *StatusString $CAT 
+8 LINE.NUM " , Timestamp=" *StatusString $CAT 
 
 10 LINE.NUM *DateString  -1 DATE>$ 
 11 LINE.NUM *DateString 6 4 *yearString  $SUB 
@@ -967,12 +967,12 @@ T;
   ~ThermoPWR_Upper_M3_7   OFF
 
 11 LINE.NUM
-  4 I>F 
+  5 I>F 
   1 I>F 
   ~Exhaust_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  4 I>F 
+  5 I>F 
   1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
@@ -980,7 +980,7 @@ T;
   3000    DELAY
 
 14 LINE.NUM
-  ~Honeysucker_CTRL   OFF
+  ~Honeysucker_CTRL   ON
 0 JUMP ;
 T: T0
 DUMMY
@@ -1150,7 +1150,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *SentString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.00"
+" 001.01"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
@@ -1171,9 +1171,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/16/12 " ;
-: TIMESTAMP ." 19:28:20 " ;
-: CRCSTAMP  ." 51BB2E78CD6AE144C3CD147DC8FAC5DB " ;
+: DATESTAMP ." 10/23/12 " ;
+: TIMESTAMP ." 20:25:39 " ;
+: CRCSTAMP  ." 517692B9A1C0653A87ABB3E8306B01F3 " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -172,7 +172,7 @@
 
 6 LINE.NUM *SWVersion *StatusString $CAT 
 
-8 LINE.NUM " , DateDMY:TimeHMS$=" *StatusString $CAT 
+8 LINE.NUM " , Timestamp=" *StatusString $CAT 
 
 10 LINE.NUM *DateString  -1 DATE>$ 
 11 LINE.NUM *DateString 6 4 *yearString  $SUB 

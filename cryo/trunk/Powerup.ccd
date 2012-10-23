@@ -33,12 +33,12 @@
   ~ThermoPWR_Upper_M3_7   OFF
 
 11 LINE.NUM
-  4 I>F 
+  5 I>F 
   1 I>F 
   ~Exhaust_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  4 I>F 
+  5 I>F 
   1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
@@ -46,7 +46,7 @@
   3000    DELAY
 
 14 LINE.NUM
-  ~Honeysucker_CTRL   OFF
+  ~Honeysucker_CTRL   ON
 0 JUMP ;
 T: T0
 DUMMY
