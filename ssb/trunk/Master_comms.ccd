@@ -850,9 +850,14 @@
 297 LINE.NUM ~SSB_Exhaust_Fan_Speed @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
 298 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-301 LINE.NUM *EnviroString *StatusString  $MOVE 
-303 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-304 LINE.NUM " " *MasterCommand  $MOVE 
+300 LINE.NUM " , UtilityCurrent=" *EnviroString $CAT 
+
+301 LINE.NUM ~Utility_Current @@ 4 1 *EnviroTemp  FF.R$ 
+302 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+304 LINE.NUM *EnviroString *StatusString  $MOVE 
+306 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+307 LINE.NUM " " *MasterCommand  $MOVE 
 -5 JUMP ;
 : 6_370
 

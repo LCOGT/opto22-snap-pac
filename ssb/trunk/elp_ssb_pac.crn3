@@ -171,7 +171,6 @@ CREATE P.ARRAY
 ~ACP_Fups_VAC ,
 ~Acp_Panel_Fan_Speed ,
 ~ACP_Utility_VAC ,
-~ai_acp_1001 ,
 ~ai_acp_1002 ,
 ~ai_acp_1003 ,
 ~Air_Dewpoint1 ,
@@ -195,6 +194,7 @@ CREATE P.ARRAY
 ~SSB_Panel_Temp ,
 ~Unused_01 ,
 ~Unused_02 ,
+~Utility_Current ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -272,7 +272,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.04"
+" 001.05"
  *SWVersion $MOVE
 " "
  *TempServoState $MOVE

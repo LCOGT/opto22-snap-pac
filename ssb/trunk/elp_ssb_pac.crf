@@ -187,7 +187,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT 30  9 %acp 0 POINT.TNG ~di_acp_0930
 32  1 SPOINT 0.0     INPUT 31  9 %acp 0 POINT.TNG ~di_acp_0931
  4  1 APOINT  -20.0000 64  0 10 %acp 0 POINT.TNG ~AirPressure
- 4  1 APOINT  -20.0000 64  1 10 %acp 0 POINT.TNG ~ai_acp_1001
+ 4  1 APOINT -150.0000 0  1 10 %acp 0 POINT.TNG ~Utility_Current
+ 100.0000 -150.0000 ~Utility_Current SET.SCALE
  4  1 APOINT  -20.0000 64  2 10 %acp 0 POINT.TNG ~ai_acp_1002
  4  1 APOINT  -20.0000 64  3 10 %acp 0 POINT.TNG ~ai_acp_1003
  2  1 APOINT    0.0000 70  0 11 %acp 0 POINT.TNG ~ACP_Utility_VAC
@@ -1052,9 +1053,14 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 297 LINE.NUM ~SSB_Exhaust_Fan_Speed @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
 298 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-301 LINE.NUM *EnviroString *StatusString  $MOVE 
-303 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-304 LINE.NUM " " *MasterCommand  $MOVE 
+300 LINE.NUM " , UtilityCurrent=" *EnviroString $CAT 
+
+301 LINE.NUM ~Utility_Current @@ 4 1 *EnviroTemp  FF.R$ 
+302 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+304 LINE.NUM *EnviroString *StatusString  $MOVE 
+306 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+307 LINE.NUM " " *MasterCommand  $MOVE 
 -5 JUMP ;
 : 6_370
 
@@ -1603,7 +1609,6 @@ CREATE P.ARRAY
 ~ACP_Fups_VAC ,
 ~Acp_Panel_Fan_Speed ,
 ~ACP_Utility_VAC ,
-~ai_acp_1001 ,
 ~ai_acp_1002 ,
 ~ai_acp_1003 ,
 ~Air_Dewpoint1 ,
@@ -1627,6 +1632,7 @@ CREATE P.ARRAY
 ~SSB_Panel_Temp ,
 ~Unused_01 ,
 ~Unused_02 ,
+~Utility_Current ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -1704,7 +1710,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.04"
+" 001.05"
  *SWVersion $MOVE
 " "
  *TempServoState $MOVE
@@ -1721,9 +1727,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/23/12 " ;
-: TIMESTAMP ." 02:11:29 " ;
-: CRCSTAMP  ." 30D3332333E8ACAD865906CE4F5648EE " ;
+: DATESTAMP ." 10/24/12 " ;
+: TIMESTAMP ." 21:01:28 " ;
+: CRCSTAMP  ." FE19AC6EAD28153BC36D8E6B55B98894 " ;
 MAKECHECK
 CLEAR.BREAKS
 
