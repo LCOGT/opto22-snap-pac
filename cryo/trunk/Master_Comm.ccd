@@ -355,12 +355,12 @@
 10 LINE.NUM THEN 
 11 LINE.NUM " INLET_FAN_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 12 LINE.NUM ^Position @@ -1 >= IF 
-13 LINE.NUM 7 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+13 LINE.NUM 6 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 14 LINE.NUM 1 ^Response @! 
 15 LINE.NUM THEN 
 16 LINE.NUM " INLET_FAN_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 17 LINE.NUM ^Position @@ -1 >= IF 
-18 LINE.NUM 4 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+18 LINE.NUM 3 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 19 LINE.NUM 1 ^Response @! 
 20 LINE.NUM THEN 
 21 LINE.NUM " INLET_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -375,12 +375,12 @@
 30 LINE.NUM THEN 
 31 LINE.NUM " OUTLET_FAN_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 32 LINE.NUM ^Position @@ -1 >= IF 
-33 LINE.NUM 7 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+33 LINE.NUM 6 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 34 LINE.NUM 1 ^Response @! 
 35 LINE.NUM THEN 
 36 LINE.NUM " OUTLET_FAN_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 37 LINE.NUM ^Position @@ -1 >= IF 
-38 LINE.NUM 4 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+38 LINE.NUM 3 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 39 LINE.NUM 1 ^Response @! 
 40 LINE.NUM THEN 
 41 LINE.NUM " OUTLET_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 

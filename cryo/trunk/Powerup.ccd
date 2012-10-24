@@ -33,12 +33,12 @@
   ~ThermoPWR_Upper_M3_7   OFF
 
 11 LINE.NUM
-  5 I>F 
+  10 I>F 
   1 I>F 
   ~Exhaust_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  5 I>F 
+  10 I>F 
   1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
@@ -47,6 +47,16 @@
 
 14 LINE.NUM
   ~Honeysucker_CTRL   ON
+
+15 LINE.NUM
+  6 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
+
+16 LINE.NUM
+  6 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
 0 JUMP ;
 T: T0
 DUMMY

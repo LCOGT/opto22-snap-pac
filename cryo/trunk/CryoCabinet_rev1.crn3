@@ -161,7 +161,7 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *SentString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.01"
+" 001.02"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
