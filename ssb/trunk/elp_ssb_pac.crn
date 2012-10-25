@@ -887,10 +887,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 167 LINE.NUM *TempServoState *StatusString $CAT 
 
 169 LINE.NUM ~HVAC_Cool_Voltage @@ 10 I>F F> IF 
-170 LINE.NUM " , HvacCooling=TRUE" *StatusString $CAT 
+170 LINE.NUM " , HvacCooling=FALSE" *StatusString $CAT 
 
 171 LINE.NUM ELSE 
-172 LINE.NUM " , HvacCooling=FALSE" *StatusString $CAT 
+172 LINE.NUM " , HvacCooling=TRUE" *StatusString $CAT 
 
 173 LINE.NUM THEN 
 174 LINE.NUM ~HVAC_Fan_Voltage @@ 9.000000e-001 F< IF 
@@ -1700,7 +1700,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.05"
+" 001.06"
  *SWVersion $MOVE
 " "
  *TempServoState $MOVE
@@ -1717,8 +1717,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/24/12 " ;
-: TIMESTAMP ." 21:01:28 " ;
+: DATESTAMP ." 10/25/12 " ;
+: TIMESTAMP ." 17:13:26 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
