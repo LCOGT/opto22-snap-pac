@@ -1,5 +1,6 @@
 0 TASK  &_INIT_IO
 0 TASK &Master_comms
+0 TASK &Monitor
 0 TASK &Powerup
 0 FVAR ^AdjustTach
 0 IVAR ^AQ_Go_Fast_Ok
@@ -122,10 +123,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0    OUTPUT 31  1 %acp 0 POINT.TNG ~Spare_Output_1
  4  1 APOINT  -20.0000 64  0  2 %acp 0 POINT.TNG ~Air_Dewpoint1
  4  1 APOINT  -20.0000 64  1  2 %acp 0 POINT.TNG ~Air_Dewpoint2
- 4  1 APOINT -150.0000 0  2  2 %acp 0 POINT.TNG ~SSB_Internal_Humidity
- 100.0000 -150.0000 ~SSB_Internal_Humidity SET.SCALE
- 4  1 APOINT -190.0000 0  3  2 %acp 0 POINT.TNG ~SSB_Internal_Temp
+ 4  1 APOINT -190.0000 0  2  2 %acp 0 POINT.TNG ~SSB_Internal_Temp
   60.0000 -190.0000 ~SSB_Internal_Temp SET.SCALE
+ 4  1 APOINT -150.0000 0  3  2 %acp 0 POINT.TNG ~SSB_Internal_Humidity
+ 100.0000 -150.0000 ~SSB_Internal_Humidity SET.SCALE
  2  1 APOINT -200.0000 10  0  3 %acp 0 POINT.TNG ~SSB_Incoming_Air_Temp
  2  1 APOINT -200.0000 10  1  3 %acp 0 POINT.TNG ~SSB_Outgoing_Temp
  2  1 APOINT -200.0000 10  0  4 %acp 0 POINT.TNG ~SSB_Panel_Temp

@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\eng\Desktop\opto22\ssb\trunk\elp_ssb_pac.idb
+# NAME :         C:\Users\eng\Desktop\ssb\trunk\elp_ssb_pac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    17:13:26 10/25/2012
+# TIME/DATE :    19:23:22 12/10/2012
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -93,6 +93,7 @@
 # TAG1,NAME,ID,BITMASK_0,BITMASK_1,BITMASK_2,BITMASK_3,TABLE_LENGTH,STRING_WIDTH
 
 TAG1,Master_comms                                      ,6    ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,Monitor                                           ,7    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Powerup                                           ,0    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,acp                                               ,0    ,00000000,00000000,10000000,00000000,0    ,0   
 TAG1,A_acp_01                                          ,107  ,40000000,00000000,00000000,00000000,0    ,0   
@@ -212,8 +213,8 @@ TAG1,SSB_Fan_M27_Tach                                  ,8    ,00000000,00000001,
 TAG1,SSB_Fan_M32_Tach                                  ,10   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,SSB_Fan_M35_Tach                                  ,11   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,SSB_Incoming_Air_Temp                             ,4    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,SSB_Internal_Humidity                             ,2    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,SSB_Internal_Temp                                 ,3    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,SSB_Internal_Humidity                             ,3    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,SSB_Internal_Temp                                 ,2    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,SSB_Outgoing_Temp                                 ,5    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,SSB_Panel_Temp                                    ,18   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Unused_01                                         ,28   ,00000000,00000001,00000000,00000000,0    ,0   

@@ -28,7 +28,7 @@
 21 LINE.NUM ~FAN_M2_7_ON  OFF 
 22 LINE.NUM ~FAN_M3_2_ON  OFF 
 23 LINE.NUM ~FAN_M3_5_ON  OFF 
-24 LINE.NUM 5 I>F ~Acp_Panel_Fan_Speed @! 
+24 LINE.NUM 7 I>F ~Acp_Panel_Fan_Speed @! 
 25 LINE.NUM 0 I>F ~SSB_Exhaust_Fan_Speed @! 
 26 LINE.NUM " UNTRIGGERED" *TempServoState  $MOVE 
 27 LINE.NUM 0 ^TempLatch @! 
@@ -54,6 +54,10 @@
 : 0_35
 
 1 LINE.NUM
+  &Monitor   START.T
+  ^ChartSTATUS I@! 
+
+2 LINE.NUM
   &Master_comms   START.T
   ^MasterXmitStatus @! 
 -3 JUMP ;

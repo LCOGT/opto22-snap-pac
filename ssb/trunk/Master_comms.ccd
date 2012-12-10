@@ -635,17 +635,17 @@
 94 LINE.NUM 0 ~Fan_Red_LED @! 
 95 LINE.NUM " AUTO" *StatusString $CAT 
 
-97 LINE.NUM ^TempLatch @@ 0 = ~IT_Rack_Back_Temp @@ 36 I>F F> ~SSB_Internal_Temp @@ 31 I>F F> LOR  LAND  IF 
+97 LINE.NUM ^TempLatch @@ 0 = ~IT_Rack_Back_Temp @@ 36 I>F F> ~SSB_Internal_Humidity @@ 31 I>F F> LOR  LAND  IF 
 103 LINE.NUM 1 ^TempLatch @! 
 104 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
 105 LINE.NUM THEN 
-106 LINE.NUM ^TempLatch @@ 1 = ~IT_Rack_Back_Temp @@ 33 I>F F< ~SSB_Internal_Temp @@ 28 I>F F< LAND  LAND  IF 
+106 LINE.NUM ^TempLatch @@ 1 = ~IT_Rack_Back_Temp @@ 33 I>F F< ~SSB_Internal_Humidity @@ 28 I>F F< LAND  LAND  IF 
 112 LINE.NUM 0 ^TempLatch @! 
 113 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
 114 LINE.NUM THEN 
-116 LINE.NUM ~SSB_Internal_Temp @@ 26 I>F F> ~SSB_External_Shaded_Temp @@ 1.500000e+000 F+ ~SSB_Internal_Temp @@ F< LAND  IF 
+116 LINE.NUM ~SSB_Internal_Humidity @@ 26 I>F F> ~SSB_External_Shaded_Temp @@ 1.500000e+000 F+ ~SSB_Internal_Humidity @@ F< LAND  IF 
 124 LINE.NUM THEN 
-125 LINE.NUM ~SSB_Internal_Temp @@ 12 I>F F< IF 
+125 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
 126 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
 127 LINE.NUM 0 ~FAN_M2_4_ON @! 
 128 LINE.NUM 0 ~FAN_M2_7_ON @! 
@@ -708,13 +708,8 @@
 
 178 LINE.NUM THEN 
 181 LINE.NUM *StatusString *EnviroString  $MOVE 
-182 LINE.NUM ~Ladder_stowed @@I 0 = IF 
-183 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
-
-184 LINE.NUM ELSE 
 185 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
 
-186 LINE.NUM THEN 
 188 LINE.NUM ~SSBdoorSwitch @@I 0 = IF 
 189 LINE.NUM " , EntryDoorClosed=FALSE" *EnviroString $CAT 
 
@@ -722,13 +717,8 @@
 191 LINE.NUM " , EntryDoorClosed=TRUE" *EnviroString $CAT 
 
 192 LINE.NUM THEN 
-194 LINE.NUM ~SmokeAlarm @@I 1 = IF 
-195 LINE.NUM " , SmokeAlarm=TRUE" *EnviroString $CAT 
-
-196 LINE.NUM ELSE 
 197 LINE.NUM " , SmokeAlarm=FALSE" *EnviroString $CAT 
 
-198 LINE.NUM THEN 
 201 LINE.NUM ~Acp_Panel_Closed @@I IF 
 202 LINE.NUM " , AcpPanelClosed=TRUE" *EnviroString $CAT 
 
@@ -738,22 +728,22 @@
 205 LINE.NUM THEN 
 207 LINE.NUM " , UtilityVac=" *EnviroString $CAT 
 
-208 LINE.NUM ~ACP_Utility_VAC @@ 5 0 *EnviroTemp  FF.R$ 
+208 LINE.NUM 2.080000e+002 5 0 *EnviroTemp  FF.R$ 
 209 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 210 LINE.NUM " , FupsVac=" *EnviroString $CAT 
 
-211 LINE.NUM ~ACP_Fups_VAC @@ 5 0 *EnviroTemp  FF.R$ 
+211 LINE.NUM 2.080000e+002 5 0 *EnviroTemp  FF.R$ 
 212 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 214 LINE.NUM " , ExternalShadedTemp=" *EnviroString $CAT 
 
-215 LINE.NUM ~SSB_External_Shaded_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+215 LINE.NUM ~SSB_Incoming_Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
 216 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 217 LINE.NUM " , ExternalHumidity=" *EnviroString $CAT 
 
-218 LINE.NUM ~SSB_External_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
+218 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
 219 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 221 LINE.NUM " , IncomingTemp=" *EnviroString $CAT 
@@ -763,12 +753,12 @@
 
 224 LINE.NUM " , InternalTemp=" *EnviroString $CAT 
 
-225 LINE.NUM ~SSB_Internal_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+225 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
 226 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 227 LINE.NUM " , InternalHumidity=" *EnviroString $CAT 
 
-228 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
+228 LINE.NUM ~SSB_Internal_Temp @@ 4 1 *EnviroTemp  FF.R$ 
 229 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 230 LINE.NUM " , AcpPanelTemp=" *EnviroString $CAT 
@@ -778,7 +768,7 @@
 
 233 LINE.NUM " , ItRackBackTemp=" *EnviroString $CAT 
 
-234 LINE.NUM ~IT_Rack_Back_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+234 LINE.NUM ~SSB_Outgoing_Temp @@ 4.000000e+000 F+ 4 1 *EnviroTemp  FF.R$ 
 235 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 236 LINE.NUM " , OutgoingTemp=" *EnviroString $CAT 

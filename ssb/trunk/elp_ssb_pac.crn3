@@ -1,5 +1,6 @@
 CREATE T.ARRAY
 &Master_comms ,
+&Monitor ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
@@ -262,7 +263,7 @@ CONFIG_PORTS
  *ErrorString $MOVE
 " Fault"
  *FaultString $MOVE
-" 001.02"
+" 001.04"
  *FWVersion $MOVE
 " 001.01"
  *ICDVersion $MOVE
