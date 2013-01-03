@@ -1408,7 +1408,7 @@ T;
   ~FAN_M3_5_ON   ON
 
 2 LINE.NUM
-  ~FAN_M3_2_ON   OFF
+  ~FAN_M3_2_ON   ON
 
 3 LINE.NUM
   ~FAN_M2_7_ON   ON
@@ -1417,7 +1417,7 @@ T;
   ~FAN_M2_4_ON   OFF
 
 5 LINE.NUM
-  6.0  
+  7.0  
   2.0  
   ~SSB_Exhaust_Fan_Speed   F!RAMP
 -6 JUMP ;
@@ -1436,7 +1436,7 @@ TRUE
   ~SSB_Incoming_Air_Temp @@ 
   25.0    F<=
 LAND
-IF -6 ELSE -3 THEN JUMP ;
+IF -8 ELSE -3 THEN JUMP ;
 T: T7
 DUMMY
 7_0
@@ -1482,7 +1482,7 @@ T;
 21 LINE.NUM ~FAN_M2_7_ON  OFF 
 22 LINE.NUM ~FAN_M3_2_ON  OFF 
 23 LINE.NUM ~FAN_M3_5_ON  OFF 
-24 LINE.NUM 7 I>F ~Acp_Panel_Fan_Speed @! 
+24 LINE.NUM 6 I>F ~Acp_Panel_Fan_Speed @! 
 25 LINE.NUM 0 I>F ~SSB_Exhaust_Fan_Speed @! 
 26 LINE.NUM " UNTRIGGERED" *TempServoState  $MOVE 
 27 LINE.NUM 0 ^TempLatch @! 
@@ -1789,7 +1789,7 @@ CONFIG_PORTS
  *ErrorString $MOVE
 " Fault"
  *FaultString $MOVE
-" 001.04"
+" 001.07"
  *FWVersion $MOVE
 " 001.01"
  *ICDVersion $MOVE
@@ -1816,8 +1816,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 12/10/12 " ;
-: TIMESTAMP ." 19:23:22 " ;
+: DATESTAMP ." 12/11/12 " ;
+: TIMESTAMP ." 21:30:42 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

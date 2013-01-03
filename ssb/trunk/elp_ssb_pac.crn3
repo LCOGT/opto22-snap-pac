@@ -263,7 +263,7 @@ CONFIG_PORTS
  *ErrorString $MOVE
 " Fault"
  *FaultString $MOVE
-" 001.04"
+" 001.07"
  *FWVersion $MOVE
 " 001.01"
  *ICDVersion $MOVE
