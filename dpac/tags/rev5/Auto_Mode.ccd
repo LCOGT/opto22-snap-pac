@@ -1,6 +1,8 @@
 : 3_0
 54 JUMP ;
 : 3_41
+  ^Time_defHeartbeatWdog @@ 
+  ^Timer_HeartbeatWdog @!   
   ^Timer_HeartbeatWdog   StartTimer
 8 JUMP ;
 : 3_121
@@ -79,7 +81,7 @@ THEN THEN THEN
 -4 JUMP ;
 : 3_240
 0 ^CmdHEARTBEAT @! 
-36 JUMP ;
+-15 JUMP ;
 : 3_254
 0 ^CmdOPEN @! 
 49 JUMP ;
@@ -220,7 +222,7 @@ ELSE
 ELSE 
 ^Time_defHeartbeatWdog @@ 3 I>F F* ^Timer_HeartbeatWdog @! 
 THEN THEN THEN 
--52 JUMP ;
+27 JUMP ;
 : 3_38
 TRUE
   ^CmdHEARTBEAT @@ 
