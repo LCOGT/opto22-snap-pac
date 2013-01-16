@@ -1,0 +1,93 @@
+: 13_0
+12 JUMP ;
+: 13_6
+  &Function_LowerOpen   START.T
+  ^Function_LowerOpen_Started @! 
+6 JUMP ;
+: 13_8
+  &Function_LowerClose   STOP.T
+  100    DELAY
+  ~DO_lowerCloseValve   OFF
+  ~DO_pumpMotor   OFF
+  2000    DELAY
+-2 JUMP ;
+: 13_19
+  &Function_UpperOpen   START.T
+  ^Function_UpperOpen_Started @! 
+2 JUMP ;
+: 13_26
+  &Function_UpperClose   STOP.T
+  100    DELAY
+  ~DO_upperClose   OFF
+  ~DO_upperOpen   OFF
+  2000    DELAY
+-2 JUMP ;
+: 13_34
+  10    DELAY
+9 JUMP ;
+: 13_35
+  ^Time_defOpenClear @@ 
+  ^Timer_OpenClear   SetTimer
+  ^Timer_OpenClear   StartTimer
+5 JUMP ;
+: 13_43
+  ^FLT_OpenClearTimeout   TRUE@!
+0 JUMP ;
+: 13_44
+  &Function_Open   STOP.T
+7 JUMP ;
+: 13_46
+  &Function_UpperOpen   STOP.T
+  100    DELAY
+  ~DO_upperOpen   OFF
+-3 JUMP ;
+: 13_9
+TRUE
+  &Function_LowerClose   ?RUNNING
+LAND
+IF -9 ELSE -10 THEN JUMP ;
+: 13_11
+TRUE
+  &Function_LowerOpen   ?RUNNING
+LAND
+IF -4 ELSE -2 THEN JUMP ;
+: 13_14
+TRUE
+  ~SW_upperShutterClear   ?ON
+LAND
+IF -2 ELSE -8 THEN JUMP ;
+: 13_23
+TRUE
+  &Function_UpperOpen   ?RUNNING
+LAND
+IF -8 ELSE 0 THEN JUMP ;
+: 13_25
+TRUE
+  &Function_UpperClose   ?RUNNING
+LAND
+IF -11 ELSE -12 THEN JUMP ;
+: 13_41
+TRUE
+  ^Timer_OpenClear   T0=
+LAND
+IF -7 ELSE -4 THEN JUMP ;
+T: T13
+DUMMY
+13_0
+13_6
+13_8
+13_19
+13_26
+13_34
+13_35
+13_43
+13_44
+13_46
+13_9
+13_11
+13_14
+13_23
+13_25
+13_41
+T;
+&Function_Open ' T13 SETTASK
