@@ -1,0 +1,11 @@
+: 4_0
+0 JUMP ;
+: 4_1
+  1000    DELAY
+-1 JUMP ;
+T: T4
+DUMMY
+4_0
+4_1
+T;
+&Fault_Mode ' T4 SETTASK
