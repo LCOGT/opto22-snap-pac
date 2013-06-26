@@ -17,6 +17,7 @@ _END NEW $$$.RUN
 0 IVAR ^EncAGrnFlag
 0 IVAR ^EncARedFlag
 0 IVAR ^ErrorFlag
+0 FVAR ^FamMemory
 0 IVAR ^FanSwMode
 0 IVAR ^FaultFlag
 0 IVAR ^FenceBlink
@@ -829,24 +830,27 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 94 LINE.NUM 0 ~Fan_Red_LED @! 
 95 LINE.NUM " AUTO" *StatusString $CAT 
 
-97 LINE.NUM ^TempLatch @@ 0 = ~IT_Rack_Back_Temp @@ 36 I>F F> ~SSB_Internal_Humidity @@ 31 I>F F> LOR  LAND  IF 
+97 LINE.NUM ~SSB_Panel_Temp @@ 30 I>F F> IF 
+98 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+99 LINE.NUM 1 ~FAN_M2_4_ON @! 
+100 LINE.NUM 1 ~FAN_M2_7_ON @! 
+101 LINE.NUM 1 ~FAN_M3_2_ON @! 
+102 LINE.NUM 1 ~FAN_M3_5_ON @! 
 103 LINE.NUM 1 ^TempLatch @! 
 104 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
 105 LINE.NUM THEN 
-106 LINE.NUM ^TempLatch @@ 1 = ~IT_Rack_Back_Temp @@ 33 I>F F< ~SSB_Internal_Humidity @@ 28 I>F F< LAND  LAND  IF 
+106 LINE.NUM ^TempLatch @@ 1 = ~SSB_Panel_Temp @@ 31 I>F F< LAND  IF 
+107 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+108 LINE.NUM 0 ~FAN_M2_4_ON @! 
+109 LINE.NUM 0 ~FAN_M2_7_ON @! 
+110 LINE.NUM 0 ~FAN_M3_2_ON @! 
+111 LINE.NUM 0 ~FAN_M3_5_ON @! 
 112 LINE.NUM 0 ^TempLatch @! 
 113 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
 114 LINE.NUM THEN 
 116 LINE.NUM ~SSB_Internal_Humidity @@ 26 I>F F> ~SSB_External_Shaded_Temp @@ 1.500000e+000 F+ ~SSB_Internal_Humidity @@ F< LAND  IF 
 124 LINE.NUM THEN 
 125 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
-126 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-127 LINE.NUM 0 ~FAN_M2_4_ON @! 
-128 LINE.NUM 0 ~FAN_M2_7_ON @! 
-129 LINE.NUM 0 ~FAN_M3_2_ON @! 
-130 LINE.NUM 0 ~FAN_M3_5_ON @! 
-131 LINE.NUM 0 ^TempLatch @! 
-132 LINE.NUM " TOO_COLD" *TempServoState  $MOVE 
 133 LINE.NUM THEN 
 135 LINE.NUM ELSE 
 135 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 1 = LAND  IF 
@@ -1352,104 +1356,70 @@ T;
 : 7_0
 2 JUMP ;
 : 7_1
-9 JUMP ;
+3 JUMP ;
 : 7_2
-8 JUMP ;
+2 JUMP ;
 : 7_3
 
 1 LINE.NUM
   30.0    FDELAY
-5 JUMP ;
-: 7_7
-
-1 LINE.NUM
-  ~FAN_M3_5_ON   ON
-
-2 LINE.NUM
-  ~FAN_M3_2_ON   ON
-
-3 LINE.NUM
-  ~FAN_M2_7_ON   ON
-
-4 LINE.NUM
-  ~FAN_M2_4_ON   ON
-
-5 LINE.NUM
-  10.0  
-  2.0  
-  ~SSB_Exhaust_Fan_Speed   F!RAMP
+0 JUMP ;
+: 7_32
+1 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 0 = LAND  IF 
+2 LINE.NUM 2 ^FanSwMode @! 
+3 LINE.NUM 1 ~Fan_Green_LED @! 
+4 LINE.NUM 0 ~Fan_Red_LED @! 
+5 LINE.NUM ~SSB_Panel_Temp @@ 30 I>F F> IF 
+6 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+7 LINE.NUM 1 ~FAN_M2_4_ON @! 
+8 LINE.NUM 1 ~FAN_M2_7_ON @! 
+9 LINE.NUM 1 ~FAN_M3_2_ON @! 
+10 LINE.NUM 1 ~FAN_M3_5_ON @! 
+11 LINE.NUM 1 ^TempLatch @! 
+12 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
+13 LINE.NUM THEN 
+14 LINE.NUM ^TempLatch @@ 1 = ~SSB_Panel_Temp @@ 31 I>F F< LAND  IF 
+15 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+16 LINE.NUM 0 ~FAN_M2_4_ON @! 
+17 LINE.NUM 0 ~FAN_M2_7_ON @! 
+18 LINE.NUM 0 ~FAN_M3_2_ON @! 
+19 LINE.NUM 0 ~FAN_M3_5_ON @! 
+20 LINE.NUM 0 ^TempLatch @! 
+21 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
+22 LINE.NUM THEN 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 1 = LAND  IF 
+26 LINE.NUM 0 ^FanSwMode @! 
+27 LINE.NUM 1 ~Fan_Green_LED @! 
+28 LINE.NUM 1 ~Fan_Red_LED @! 
+29 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+30 LINE.NUM 0 ~FAN_M2_4_ON @! 
+31 LINE.NUM 0 ~FAN_M2_7_ON @! 
+32 LINE.NUM 0 ~FAN_M3_2_ON @! 
+33 LINE.NUM 0 ~FAN_M3_5_ON @! 
+34 LINE.NUM 0 ^TempLatch @! 
+35 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
+36 LINE.NUM ELSE 
+36 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 1 = LAND  IF 
+37 LINE.NUM 1 ^FanSwMode @! 
+38 LINE.NUM 0 ~Fan_Green_LED @! 
+39 LINE.NUM 1 ~Fan_Red_LED @! 
+40 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+41 LINE.NUM 1 ~FAN_M2_4_ON @! 
+42 LINE.NUM 0 ~FAN_M2_7_ON @! 
+43 LINE.NUM 1 ~FAN_M3_2_ON @! 
+44 LINE.NUM 0 ~FAN_M3_5_ON @! 
+45 LINE.NUM 0 ^TempLatch @! 
+46 LINE.NUM " MANUAL_FANS" *TempServoState  $MOVE 
+47 LINE.NUM THEN THEN THEN 
 -2 JUMP ;
-: 7_9
-
-1 LINE.NUM
-  ~FAN_M3_5_ON   OFF
-
-2 LINE.NUM
-  ~FAN_M3_2_ON   OFF
-
-3 LINE.NUM
-  ~FAN_M2_7_ON   OFF
-
-4 LINE.NUM
-  ~FAN_M2_4_ON   OFF
-
-5 LINE.NUM
-  0.0  
-  2.0  
-  ~SSB_Exhaust_Fan_Speed   F!RAMP
--3 JUMP ;
-: 7_17
-4 JUMP ;
-: 7_18
-3 JUMP ;
-: 7_19
-
-1 LINE.NUM
-  ~FAN_M3_5_ON   ON
-
-2 LINE.NUM
-  ~FAN_M3_2_ON   ON
-
-3 LINE.NUM
-  ~FAN_M2_7_ON   ON
-
-4 LINE.NUM
-  ~FAN_M2_4_ON   OFF
-
-5 LINE.NUM
-  7.0  
-  2.0  
-  ~SSB_Exhaust_Fan_Speed   F!RAMP
--6 JUMP ;
-: 7_4
-TRUE
-
-1 LINE.NUM
-  ~SSB_Incoming_Air_Temp @@ 
-  29.0    F>=
-LAND
-IF -6 ELSE 0 THEN JUMP ;
-: 7_14
-TRUE
-
-1 LINE.NUM
-  ~SSB_Incoming_Air_Temp @@ 
-  25.0    F<=
-LAND
-IF -8 ELSE -3 THEN JUMP ;
 T: T7
 DUMMY
 7_0
 7_1
 7_2
 7_3
-7_7
-7_9
-7_17
-7_18
-7_19
-7_4
-7_14
+7_32
 T;
 &Monitor ' T7 SETTASK
 : 0_0
@@ -1539,6 +1509,7 @@ CREATE V.ARRAY
 ^EncAGrnFlag ,
 ^EncARedFlag ,
 ^ErrorFlag ,
+^FamMemory ,
 ^FanSwMode ,
 ^FaultFlag ,
 ^FenceBlink ,
@@ -1747,6 +1718,7 @@ CONFIG_PORTS
 0 ^EncAGrnFlag @!
 0 ^EncARedFlag @!
 0 ^ErrorFlag @!
+0.00000000 ^FamMemory @!
 -1 ^FanSwMode @!
 0 ^FaultFlag @!
 0 ^FenceBlink @!
@@ -1799,7 +1771,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.06"
+" 001.08"
  *SWVersion $MOVE
 " "
  *TempServoState $MOVE
@@ -1816,8 +1788,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 12/11/12 " ;
-: TIMESTAMP ." 21:30:42 " ;
+: DATESTAMP ." 06/26/13 " ;
+: TIMESTAMP ." 21:17:46 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

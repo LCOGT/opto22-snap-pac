@@ -11,6 +11,7 @@
 0 IVAR ^EncAGrnFlag
 0 IVAR ^EncARedFlag
 0 IVAR ^ErrorFlag
+0 FVAR ^FamMemory
 0 IVAR ^FanSwMode
 0 IVAR ^FaultFlag
 0 IVAR ^FenceBlink

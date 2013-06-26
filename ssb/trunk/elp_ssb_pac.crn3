@@ -13,6 +13,7 @@ CREATE V.ARRAY
 ^EncAGrnFlag ,
 ^EncARedFlag ,
 ^ErrorFlag ,
+^FamMemory ,
 ^FanSwMode ,
 ^FaultFlag ,
 ^FenceBlink ,
@@ -221,6 +222,7 @@ CONFIG_PORTS
 0 ^EncAGrnFlag @!
 0 ^EncARedFlag @!
 0 ^ErrorFlag @!
+0.00000000 ^FamMemory @!
 -1 ^FanSwMode @!
 0 ^FaultFlag @!
 0 ^FenceBlink @!
@@ -273,7 +275,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.06"
+" 001.08"
  *SWVersion $MOVE
 " "
  *TempServoState $MOVE

@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\eng\Desktop\ssb\trunk\elp_ssb_pac.idb
+# NAME :         C:\Documents and Settings\eng\Desktop\ssb\elp_ssb_pac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    21:30:42 12/11/2012
+# TIME/DATE :    21:17:46 6/26/2013
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -229,6 +229,7 @@ TAG1,EncABlink                                         ,61   ,00000000,00000000,
 TAG1,EncAGrnFlag                                       ,65   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,EncARedFlag                                       ,50   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ErrorFlag                                         ,77   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FamMemory                                         ,79   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,FanSwMode                                         ,51   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FaultFlag                                         ,76   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FenceBlink                                        ,54   ,00000000,00000000,00000000,00000008,0    ,0   

@@ -635,24 +635,27 @@
 94 LINE.NUM 0 ~Fan_Red_LED @! 
 95 LINE.NUM " AUTO" *StatusString $CAT 
 
-97 LINE.NUM ^TempLatch @@ 0 = ~IT_Rack_Back_Temp @@ 36 I>F F> ~SSB_Internal_Humidity @@ 31 I>F F> LOR  LAND  IF 
+97 LINE.NUM ~SSB_Panel_Temp @@ 30 I>F F> IF 
+98 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+99 LINE.NUM 1 ~FAN_M2_4_ON @! 
+100 LINE.NUM 1 ~FAN_M2_7_ON @! 
+101 LINE.NUM 1 ~FAN_M3_2_ON @! 
+102 LINE.NUM 1 ~FAN_M3_5_ON @! 
 103 LINE.NUM 1 ^TempLatch @! 
 104 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
 105 LINE.NUM THEN 
-106 LINE.NUM ^TempLatch @@ 1 = ~IT_Rack_Back_Temp @@ 33 I>F F< ~SSB_Internal_Humidity @@ 28 I>F F< LAND  LAND  IF 
+106 LINE.NUM ^TempLatch @@ 1 = ~SSB_Panel_Temp @@ 31 I>F F< LAND  IF 
+107 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+108 LINE.NUM 0 ~FAN_M2_4_ON @! 
+109 LINE.NUM 0 ~FAN_M2_7_ON @! 
+110 LINE.NUM 0 ~FAN_M3_2_ON @! 
+111 LINE.NUM 0 ~FAN_M3_5_ON @! 
 112 LINE.NUM 0 ^TempLatch @! 
 113 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
 114 LINE.NUM THEN 
 116 LINE.NUM ~SSB_Internal_Humidity @@ 26 I>F F> ~SSB_External_Shaded_Temp @@ 1.500000e+000 F+ ~SSB_Internal_Humidity @@ F< LAND  IF 
 124 LINE.NUM THEN 
 125 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
-126 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-127 LINE.NUM 0 ~FAN_M2_4_ON @! 
-128 LINE.NUM 0 ~FAN_M2_7_ON @! 
-129 LINE.NUM 0 ~FAN_M3_2_ON @! 
-130 LINE.NUM 0 ~FAN_M3_5_ON @! 
-131 LINE.NUM 0 ^TempLatch @! 
-132 LINE.NUM " TOO_COLD" *TempServoState  $MOVE 
 133 LINE.NUM THEN 
 135 LINE.NUM ELSE 
 135 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 1 = LAND  IF 
