@@ -644,7 +644,7 @@
 103 LINE.NUM 1 ^TempLatch @! 
 104 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
 105 LINE.NUM THEN 
-106 LINE.NUM ^TempLatch @@ 1 = ~SSB_Panel_Temp @@ 31 I>F F< LAND  IF 
+106 LINE.NUM ^TempLatch @@ 1 = ~SSB_Panel_Temp @@ 26 I>F F< LAND  IF 
 107 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
 108 LINE.NUM 0 ~FAN_M2_4_ON @! 
 109 LINE.NUM 0 ~FAN_M2_7_ON @! 
