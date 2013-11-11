@@ -4,7 +4,7 @@
   ~Honeysucker_CTRL   ON
 
 2 LINE.NUM
-  300.0  
+  ^HeartbeatPreset @@ 
   ^Heartbeat_Timer   SetTimer
 
 3 LINE.NUM
@@ -49,17 +49,129 @@
   ~Honeysucker_CTRL   ON
 
 15 LINE.NUM
-  6 I>F 
+  5 I>F 
   1 I>F 
   ~Exhaust_Fan_CTRL   F!RAMP
 
 16 LINE.NUM
-  6 I>F 
+  5 I>F 
   1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
+
+17 LINE.NUM
+  3000    DELAY
+
+18 LINE.NUM
+  ~Honeysucker_CTRL   OFF
 0 JUMP ;
+: 0_1
+
+1 LINE.NUM
+  1.0    FDELAY
+0 JUMP ;
+: 0_6
+2 LINE.NUM ~MasterTemp @@ ~Intake_Fan_Temp @@ F> IF 
+3 LINE.NUM ~MasterTemp @@ ^FusedTemp F@! 
+4 LINE.NUM ELSE 
+5 LINE.NUM ~Intake_Fan_Temp @@ ^FusedTemp F@! 
+6 LINE.NUM THEN 
+8 LINE.NUM ^FusedTemp @@ 0 < IF 
+9 LINE.NUM 1.500000e+000 ^InletFanSpeed F@! 
+10 LINE.NUM ^HoneysuckerSpeed @@ 1 = IF 
+11 LINE.NUM 4 ^OutletFanSpeed @! 
+12 LINE.NUM ELSE 
+13 LINE.NUM 3 ^OutletFanSpeed @! 
+14 LINE.NUM THEN 
+15 LINE.NUM -1 ^ServoLevel @! 
+16 LINE.NUM ^LowerCryoTigPWR @@ ~CryoTigPWR_Lower_M2_3 @! 
+17 LINE.NUM ^UpperCryoTigPWR @@ ~CryoTigPWR_Upper_M2_7 @! 
+18 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+19 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+21 LINE.NUM ELSE 
+21 LINE.NUM ^FusedTemp @@ 25 < IF 
+23 LINE.NUM ^LowerCryoTigPWR @@ ~CryoTigPWR_Lower_M2_3 @! 
+24 LINE.NUM ^UpperCryoTigPWR @@ ~CryoTigPWR_Upper_M2_7 @! 
+25 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+26 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+27 LINE.NUM 0 ^ServoLevel @! 
+28 LINE.NUM ^HeartFailure @@ 1 = IF 
+29 LINE.NUM 5 ^InletFanSpeed @! 
+30 LINE.NUM 5 ^OutletFanSpeed @! 
+31 LINE.NUM 0 ^HoneysuckerSpeed @! 
+32 LINE.NUM THEN 
+34 LINE.NUM ELSE 
+34 LINE.NUM ^FusedTemp @@F 2.750000e+001 F< IF 
+35 LINE.NUM 5.500000e+000 ^InletFanSpeed F@! 
+36 LINE.NUM 6 ^OutletFanSpeed @! 
+37 LINE.NUM ^LowerCryoTigPWR @@ ~CryoTigPWR_Lower_M2_3 @! 
+38 LINE.NUM ^UpperCryoTigPWR @@ ~CryoTigPWR_Upper_M2_7 @! 
+39 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+40 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+41 LINE.NUM 1 ^ServoLevel @! 
+42 LINE.NUM ^HeartFailure @@ 1 = IF 
+43 LINE.NUM 7.500000e+000 ^InletFanSpeed F@! 
+44 LINE.NUM 9 ^OutletFanSpeed @! 
+45 LINE.NUM THEN 
+46 LINE.NUM ELSE 
+46 LINE.NUM ^FusedTemp @@ 30 < IF 
+47 LINE.NUM 6.500000e+000 ^InletFanSpeed F@! 
+48 LINE.NUM 7 ^OutletFanSpeed @! 
+49 LINE.NUM ^LowerCryoTigPWR @@ ~CryoTigPWR_Lower_M2_3 @! 
+50 LINE.NUM ^UpperCryoTigPWR @@ ~CryoTigPWR_Upper_M2_7 @! 
+51 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+52 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+53 LINE.NUM 2 ^ServoLevel @! 
+54 LINE.NUM ^HeartFailure @@ 1 = IF 
+55 LINE.NUM 9 ^InletFanSpeed @! 
+56 LINE.NUM 1 ^HoneysuckerSpeed @! 
+57 LINE.NUM 10 ^OutletFanSpeed @! 
+58 LINE.NUM THEN 
+59 LINE.NUM ELSE 
+59 LINE.NUM ^FusedTemp @@F 3.250000e+001 F< IF 
+60 LINE.NUM 8 ^InletFanSpeed @! 
+61 LINE.NUM 1 ^HoneysuckerSpeed @! 
+62 LINE.NUM 10 ^OutletFanSpeed @! 
+63 LINE.NUM ^LowerCryoTigPWR @@ ~CryoTigPWR_Lower_M2_3 @! 
+64 LINE.NUM ^UpperCryoTigPWR @@ ~CryoTigPWR_Upper_M2_7 @! 
+65 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+66 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+67 LINE.NUM 3 ^ServoLevel @! 
+68 LINE.NUM ^HeartFailure @@ 1 = IF 
+69 LINE.NUM 10 ^InletFanSpeed @! 
+70 LINE.NUM 10 ^OutletFanSpeed @! 
+71 LINE.NUM THEN 
+73 LINE.NUM ELSE 
+73 LINE.NUM ^FusedTemp @@ 35 < IF 
+74 LINE.NUM 10 ^InletFanSpeed @! 
+75 LINE.NUM 10 ^OutletFanSpeed @! 
+76 LINE.NUM 1 ^HoneysuckerSpeed @! 
+77 LINE.NUM ^LowerCryoTigPWR @@ ~CryoTigPWR_Lower_M2_3 @! 
+78 LINE.NUM ^UpperCryoTigPWR @@ ~CryoTigPWR_Upper_M2_7 @! 
+79 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+80 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+81 LINE.NUM 4 ^ServoLevel @! 
+82 LINE.NUM ^HeartFailure @@ 1 = IF 
+83 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+84 LINE.NUM 0 ~CryoTigPWR_Upper_M2_7 @! 
+85 LINE.NUM THEN 
+87 LINE.NUM ELSE 
+88 LINE.NUM 10 ^InletFanSpeed @! 
+89 LINE.NUM 10 ^OutletFanSpeed @! 
+90 LINE.NUM 1 ^HoneysuckerSpeed @! 
+91 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+92 LINE.NUM 0 ~CryoTigPWR_Upper_M2_7 @! 
+93 LINE.NUM ^LowerThermoPwr @@ ~ThermoPWR_Lower_M3_3 @! 
+94 LINE.NUM ^UpperThermoPWR @@ ~ThermoPWR_Upper_M3_7 @! 
+95 LINE.NUM 5 ^ServoLevel @! 
+97 LINE.NUM THEN THEN THEN THEN THEN THEN 
+101 LINE.NUM ^InletFanSpeed @@F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+103 LINE.NUM ^OutletFanSpeed @@F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+105 LINE.NUM ^HoneysuckerSpeed @@ ~Honeysucker_CTRL @! 
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
+0_1
+0_6
 T;
 &Powerup ' T0 SETTASK

@@ -79,7 +79,7 @@
   ^PriorHeartbeatTime F@!   
 
 3 LINE.NUM
-  300.  
+  ^HeartbeatPreset @@ 
   ^Heartbeat_Timer   SetTimer
 
 4 LINE.NUM
@@ -172,7 +172,7 @@
 
 6 LINE.NUM *SWVersion *StatusString $CAT 
 
-8 LINE.NUM " , Timestamp=" *StatusString $CAT 
+8 LINE.NUM " , DateDMY:TimeHMS$=" *StatusString $CAT 
 
 10 LINE.NUM *DateString  -1 DATE>$ 
 11 LINE.NUM *DateString 6 4 *yearString  $SUB 
@@ -195,7 +195,7 @@
 
 24 LINE.NUM " , SystemUpTime=" *StatusString $CAT 
 
-25 LINE.NUM  GetSystemTime I>F  10 0 *ElapsedString  FF.R$ 
+25 LINE.NUM  GetSystemTime 86400 / I>F 10 0 *ElapsedString  FF.R$ 
 26 LINE.NUM *ElapsedString *StatusString $CAT 
 
 28 LINE.NUM " , HeartBeatDownTimer=" *StatusString $CAT 
@@ -203,121 +203,140 @@
 29 LINE.NUM ^Heartbeat_Timer @@F 6 2 *ElapsedString  FF.R$ 
 30 LINE.NUM *ElapsedString *StatusString $CAT 
 
-32 LINE.NUM " , Fault=FALSE" *StatusString $CAT 
+32 LINE.NUM ^FaultFlag @@ IF 
+33 LINE.NUM " , Fault=TRUE" *StatusString $CAT 
 
-34 LINE.NUM ^ErrorFlag @@ IF 
-35 LINE.NUM " , Error=TRUE" *StatusString $CAT 
+34 LINE.NUM ELSE 
+35 LINE.NUM " , Fault=FALSE" *StatusString $CAT 
 
-36 LINE.NUM ELSE 
-37 LINE.NUM " , Error=FALSE" *StatusString $CAT 
+36 LINE.NUM THEN 
+38 LINE.NUM ^ErrorFlag @@ IF 
+39 LINE.NUM " , Error=TRUE" *StatusString $CAT 
 
-38 LINE.NUM THEN 
-40 LINE.NUM *StatusString *EnviroString  $MOVE 
-42 LINE.NUM " , OutletFanTach=" *EnviroString $CAT 
+40 LINE.NUM ELSE 
+41 LINE.NUM " , Error=FALSE" *StatusString $CAT 
 
-43 LINE.NUM ~Exhaust_Fan_SPD @@ 1.330000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-44 LINE.NUM *EnviroTemp *EnviroString $CAT 
+42 LINE.NUM THEN 
+44 LINE.NUM " , Temp Servo=" *StatusString $CAT 
 
-45 LINE.NUM " , InletFanTach=" *EnviroString $CAT 
+45 LINE.NUM *ServoString *StatusString $CAT 
 
-46 LINE.NUM ~Intake_Fan_SPD @@ 1.420000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-47 LINE.NUM *EnviroTemp *EnviroString $CAT 
+47 LINE.NUM *StatusString *EnviroString  $MOVE 
+49 LINE.NUM " , OutletFanTach=" *EnviroString $CAT 
 
-48 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
+50 LINE.NUM ~Exhaust_Fan_SPD @@ 1.330000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+51 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-49 LINE.NUM ~Honeysucker_SPD @@ 3.230000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-50 LINE.NUM *EnviroTemp *EnviroString $CAT 
+52 LINE.NUM " , InletFanTach=" *EnviroString $CAT 
 
-51 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
+53 LINE.NUM ~Intake_Fan_SPD @@ 1.420000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+54 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-52 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
-53 LINE.NUM *EnviroTemp *EnviroString $CAT 
+55 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
 
-54 LINE.NUM " , UpperCryotigerVoltage=" *EnviroString $CAT 
+56 LINE.NUM ~Honeysucker_SPD @@ 3.230000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+57 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-55 LINE.NUM ~CryoTigVolt_Upper_M2_7 @@ 5 1 *EnviroTemp  FF.R$ 
-56 LINE.NUM *EnviroTemp *EnviroString $CAT 
+58 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
 
-57 LINE.NUM " , LowerThermorackTemp=" *EnviroString $CAT 
+59 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+60 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-58 LINE.NUM ~ThermoTemp_Lower_M3_3 @@ 5 1 *EnviroTemp  FF.R$ 
-59 LINE.NUM *EnviroTemp *EnviroString $CAT 
+61 LINE.NUM " , UpperCryotigerVoltage=" *EnviroString $CAT 
 
-60 LINE.NUM " , UpperThermorackTemp=0.0" *EnviroString $CAT 
+62 LINE.NUM ~CryoTigVolt_Upper_M2_7 @@ 5 1 *EnviroTemp  FF.R$ 
+63 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-63 LINE.NUM " , CabinetHumidity=" *EnviroString $CAT 
+64 LINE.NUM " , LowerThermorackTemp=" *EnviroString $CAT 
 
-64 LINE.NUM ~Intake_Fan_Humidity @@ 5 1 *EnviroTemp  FF.R$ 
-65 LINE.NUM *EnviroTemp *EnviroString $CAT 
+65 LINE.NUM ~ThermoTemp_Lower_M3_3 @@ 5 1 *EnviroTemp  FF.R$ 
+66 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-66 LINE.NUM " , CabinetTemperature=" *EnviroString $CAT 
+67 LINE.NUM " , UpperThermorackTemp=0.0" *EnviroString $CAT 
 
-67 LINE.NUM ~Intake_Fan_Temp @@ 5 1 *EnviroTemp  FF.R$ 
-68 LINE.NUM *EnviroTemp *EnviroString $CAT 
+70 LINE.NUM " , ExhaustTemp=0" *EnviroString $CAT 
 
-69 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
+71 LINE.NUM ~Exhaust_Fan_Temp @@ 5 1 *EnviroTemp  FF.R$ 
+72 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-70 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
-72 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
-73 LINE.NUM *EnviroTemp *EnviroString $CAT 
+73 LINE.NUM " , CabinetHumidity=" *EnviroString $CAT 
 
-74 LINE.NUM " , CoolantDemand=" *EnviroString $CAT 
+74 LINE.NUM ~Intake_Fan_Humidity @@ 5 1 *EnviroTemp  FF.R$ 
+75 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-75 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantSetpoint @@ > IF 
-76 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantDemand @! 
-77 LINE.NUM ELSE 
-78 LINE.NUM ^CoolantSetpoint @@ ^CoolantDemand @! 
-79 LINE.NUM THEN 
-80 LINE.NUM ^CoolantDemand @@F 5 1 *EnviroTemp  FF.R$ 
-81 LINE.NUM *EnviroTemp *EnviroString $CAT 
+76 LINE.NUM " , CabinetTemperature=" *EnviroString $CAT 
 
-83 LINE.NUM " , LowerThermorackDifferentialPressure=" *EnviroString $CAT 
+77 LINE.NUM ~Intake_Fan_Temp @@ 5 1 *EnviroTemp  FF.R$ 
+78 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-84 LINE.NUM ~ThermoDiffPress_Lower_M3_3 @@ 5 1 *EnviroTemp  FF.R$ 
-85 LINE.NUM *EnviroTemp *EnviroString $CAT 
+79 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
 
-86 LINE.NUM " , UpperThermorackDifferentialPressure=0.0" *EnviroString $CAT 
+80 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
+82 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
+83 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-89 LINE.NUM " , LowerCryotigerCurrent=" *EnviroString $CAT 
+84 LINE.NUM " , CoolantDemand=" *EnviroString $CAT 
 
-90 LINE.NUM ~CryoTigCurrent_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+85 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantSetpoint @@ > IF 
+86 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantDemand @! 
+87 LINE.NUM ELSE 
+88 LINE.NUM ^CoolantSetpoint @@ ^CoolantDemand @! 
+89 LINE.NUM THEN 
+90 LINE.NUM ^CoolantDemand @@F 5 1 *EnviroTemp  FF.R$ 
 91 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-92 LINE.NUM " , UpperCryotigerCurrent=0.0" *EnviroString $CAT 
+93 LINE.NUM " , LowerThermorackDifferentialPressure=" *EnviroString $CAT 
 
-95 LINE.NUM " , LowerThermorackCurrent=" *EnviroString $CAT 
+94 LINE.NUM ~ThermoDiffPress_Lower_M3_3 @@ 5 1 *EnviroTemp  FF.R$ 
+95 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-96 LINE.NUM ~ThermoCurrent_Lower_M3_3 @@ 5 1 *EnviroTemp  FF.R$ 
-97 LINE.NUM *EnviroTemp *EnviroString $CAT 
+96 LINE.NUM " , UpperThermorackDifferentialPressure=0.0" *EnviroString $CAT 
 
-98 LINE.NUM " , UpperThermorackCurrent= 0.0" *EnviroString $CAT 
+99 LINE.NUM " , LowerCryotigerCurrent=" *EnviroString $CAT 
 
-101 LINE.NUM " , LowerThermorackFlow=" *EnviroString $CAT 
+100 LINE.NUM ~CryoTigCurrent_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+101 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.600000e-001 F/ 5 1 *EnviroTemp  FF.R$ 
-103 LINE.NUM *EnviroTemp *EnviroString $CAT 
+102 LINE.NUM " , UpperCryotigerCurrent=0.0" *EnviroString $CAT 
 
-104 LINE.NUM " , UpperThermorackFlow=0.0" *EnviroString $CAT 
+105 LINE.NUM " , LowerThermorackCurrent=" *EnviroString $CAT 
 
-107 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
+106 LINE.NUM ~ThermoCurrent_Lower_M3_3 @@ 5 1 *EnviroTemp  FF.R$ 
+107 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-108 LINE.NUM ~CryoTigOutputPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
-109 LINE.NUM *EnviroTemp *EnviroString $CAT 
+108 LINE.NUM " , UpperThermorackCurrent= 0.0" *EnviroString $CAT 
 
-110 LINE.NUM " , LowerCryotigerReturnPressure=" *EnviroString $CAT 
+111 LINE.NUM " , LowerThermorackFlow=" *EnviroString $CAT 
 
-111 LINE.NUM ~CryoTigOutputPress_Upper_M2_7 @@ 5 1 *EnviroTemp  FF.R$ 
-112 LINE.NUM *EnviroTemp *EnviroString $CAT 
+112 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.600000e-001 F/ 5 1 *EnviroTemp  FF.R$ 
+113 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-113 LINE.NUM " , UpperCryotigerOutputPressure=0.0" *EnviroString $CAT 
+114 LINE.NUM " , UpperThermorackFlow=0.0" *EnviroString $CAT 
 
-116 LINE.NUM " , UpperCryotigerReturnPressure=0.0" *EnviroString $CAT 
+117 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
 
-120 LINE.NUM *EnviroString *SentString  $MOVE 
-121 LINE.NUM *SentString *StatusString  $MOVE 
-122 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-123 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-124 LINE.NUM " " *MasterCommand  $MOVE 
+118 LINE.NUM ~CryoTigOutputPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+119 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+120 LINE.NUM " , LowerCryotigerReturnPressure=" *EnviroString $CAT 
+
+121 LINE.NUM ~CryoTigOutputPress_Upper_M2_7 @@ 5 1 *EnviroTemp  FF.R$ 
+122 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+123 LINE.NUM " , UpperCryotigerOutputPressure=0.0" *EnviroString $CAT 
+
+126 LINE.NUM " , UpperCryotigerReturnPressure=0.0" *EnviroString $CAT 
+
+129 LINE.NUM " , ServoLevel=" *EnviroString $CAT 
+
+130 LINE.NUM ^ServoLevel @@F 4 0 *EnviroTemp  FF.R$ 
+131 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+133 LINE.NUM *EnviroString *SentString  $MOVE 
+134 LINE.NUM *SentString *StatusString  $MOVE 
+135 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+136 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+137 LINE.NUM " " *MasterCommand  $MOVE 
 3 JUMP ;
 : 1_142
 
@@ -350,92 +369,92 @@
 4 LINE.NUM 0 ^Response @! 
 6 LINE.NUM " INLET_FAN_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 7 LINE.NUM ^Position @@ -1 >= IF 
-8 LINE.NUM 10 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+8 LINE.NUM 10 ^InletFanSpeed @! 
 9 LINE.NUM 1 ^Response @! 
 10 LINE.NUM THEN 
 11 LINE.NUM " INLET_FAN_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 12 LINE.NUM ^Position @@ -1 >= IF 
-13 LINE.NUM 6 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+13 LINE.NUM 7 ^InletFanSpeed @! 
 14 LINE.NUM 1 ^Response @! 
 15 LINE.NUM THEN 
 16 LINE.NUM " INLET_FAN_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 17 LINE.NUM ^Position @@ -1 >= IF 
-18 LINE.NUM 3 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+18 LINE.NUM 4 ^InletFanSpeed @! 
 19 LINE.NUM 1 ^Response @! 
 20 LINE.NUM THEN 
 21 LINE.NUM " INLET_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 22 LINE.NUM ^Position @@ -1 >= IF 
-23 LINE.NUM 0 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+23 LINE.NUM 0 ^InletFanSpeed @! 
 24 LINE.NUM 1 ^Response @! 
 25 LINE.NUM THEN 
 26 LINE.NUM " OUTLET_FAN_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 27 LINE.NUM ^Position @@ -1 >= IF 
-28 LINE.NUM 10 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+28 LINE.NUM 10 ^OutletFanSpeed @! 
 29 LINE.NUM 1 ^Response @! 
 30 LINE.NUM THEN 
 31 LINE.NUM " OUTLET_FAN_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 32 LINE.NUM ^Position @@ -1 >= IF 
-33 LINE.NUM 6 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+33 LINE.NUM 7 ^OutletFanSpeed @! 
 34 LINE.NUM 1 ^Response @! 
 35 LINE.NUM THEN 
 36 LINE.NUM " OUTLET_FAN_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 37 LINE.NUM ^Position @@ -1 >= IF 
-38 LINE.NUM 3 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+38 LINE.NUM 4 ^OutletFanSpeed @! 
 39 LINE.NUM 1 ^Response @! 
 40 LINE.NUM THEN 
 41 LINE.NUM " OUTLET_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 42 LINE.NUM ^Position @@ -1 >= IF 
-43 LINE.NUM 0 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+43 LINE.NUM 0 ^OutletFanSpeed @! 
 44 LINE.NUM 1 ^Response @! 
 45 LINE.NUM THEN 
 46 LINE.NUM " HONEYSUCKER_FAN_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 47 LINE.NUM ^Position @@ -1 >= IF 
-48 LINE.NUM 1 ~Honeysucker_CTRL @! 
+48 LINE.NUM 1 ^HoneysuckerSpeed @! 
 49 LINE.NUM 1 ^Response @! 
 50 LINE.NUM THEN 
 51 LINE.NUM " HONEYSUCKER_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 52 LINE.NUM ^Position @@ -1 >= IF 
-53 LINE.NUM 0 ~Honeysucker_CTRL @! 
+53 LINE.NUM 0 ^HoneysuckerSpeed @! 
 54 LINE.NUM 1 ^Response @! 
 55 LINE.NUM THEN 
 56 LINE.NUM " LOWER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 57 LINE.NUM ^Position @@ -1 >= IF 
-58 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+58 LINE.NUM 1 ^LowerCryoTigPWR @! 
 59 LINE.NUM 1 ^Response @! 
 60 LINE.NUM THEN 
 61 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 62 LINE.NUM ^Position @@ -1 >= IF 
-63 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+63 LINE.NUM 0 ^LowerCryoTigPWR @! 
 64 LINE.NUM 1 ^Response @! 
 65 LINE.NUM THEN 
 66 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 67 LINE.NUM ^Position @@ -1 >= IF 
-68 LINE.NUM 1 ~CryoTigPWR_Upper_M2_7 @! 
+68 LINE.NUM 1 ^UpperCryoTigPWR @! 
 69 LINE.NUM 1 ^Response @! 
 70 LINE.NUM THEN 
 71 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 72 LINE.NUM ^Position @@ -1 >= IF 
-73 LINE.NUM 0 ~CryoTigPWR_Upper_M2_7 @! 
+73 LINE.NUM 0 ^UpperCryoTigPWR @! 
 74 LINE.NUM 1 ^Response @! 
 75 LINE.NUM THEN 
 76 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 77 LINE.NUM ^Position @@ -1 >= IF 
-78 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
+78 LINE.NUM 1 ^LowerThermoPwr @! 
 79 LINE.NUM 1 ^Response @! 
 80 LINE.NUM THEN 
 81 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 82 LINE.NUM ^Position @@ -1 >= IF 
-83 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
+83 LINE.NUM 0 ^LowerThermoPwr @! 
 84 LINE.NUM 1 ^Response @! 
 85 LINE.NUM THEN 
 86 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 87 LINE.NUM ^Position @@ -1 >= IF 
-88 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
+88 LINE.NUM 1 ^UpperThermoPWR @! 
 89 LINE.NUM 1 ^Response @! 
 90 LINE.NUM THEN 
 91 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 92 LINE.NUM ^Position @@ -1 >= IF 
-93 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
+93 LINE.NUM 0 ^UpperThermoPWR @! 
 94 LINE.NUM 1 ^Response @! 
 95 LINE.NUM THEN 
 96 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -527,20 +546,20 @@
 1 LINE.NUM 0 ^ErrorFlag @! 
 2 LINE.NUM 0 ^FaultFlag @! 
 3 LINE.NUM " " *ErrorReport  $MOVE 
-8 LINE.NUM ~F4_3_Status @@I 0 = IF 
-9 LINE.NUM 1 ^ErrorFlag @! 
-10 LINE.NUM " , ErrorMiscPowerBreakerTripped = TRUE" *ErrorReport $CAT 
+7 LINE.NUM ~F4_3_Status @@I 0 = IF 
+8 LINE.NUM 1 ^FaultFlag @! 
+9 LINE.NUM " , ErrorMiscPowerBreakerTripped = TRUE" *ErrorReport $CAT 
 
-11 LINE.NUM ELSE 
-12 LINE.NUM " , ErrorMiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
+10 LINE.NUM ELSE 
+11 LINE.NUM " , ErrorMiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
 
-13 LINE.NUM THEN 
-15 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
-16 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantSetpoint @@ > IF 
-17 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantDemand @! 
-18 LINE.NUM ELSE 
-19 LINE.NUM ^CoolantSetpoint @@ ^CoolantDemand @! 
-20 LINE.NUM THEN 
+12 LINE.NUM THEN 
+14 LINE.NUM ~MasterTemp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
+15 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantSetpoint @@ > IF 
+16 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantDemand @! 
+17 LINE.NUM ELSE 
+18 LINE.NUM ^CoolantSetpoint @@ ^CoolantDemand @! 
+19 LINE.NUM THEN 
 21 LINE.NUM ~ThermoTemp_Lower_M3_3 @@ ^CoolantDemand @@F F< IF 
 22 LINE.NUM 1 ^ErrorFlag @! 
 23 LINE.NUM " , WarnLowerCoolantTooCold = TRUE" *ErrorReport $CAT 
@@ -549,8 +568,54 @@
 25 LINE.NUM " , WarnLowerCoolantTooCold = FALSE" *ErrorReport $CAT 
 
 26 LINE.NUM THEN 
-31 LINE.NUM " , WarnUpperCoolantTooCold = FALSE" *ErrorReport $CAT 
+27 LINE.NUM ~ThermoTemp_Lower_M3_3 @@ ^CoolantDemand @@ 20 + I>F F> IF 
+28 LINE.NUM 1 ^ErrorFlag @! 
+29 LINE.NUM " , WarnLowerCoolantTooWarm = TRUE" *ErrorReport $CAT 
 
+30 LINE.NUM ELSE 
+31 LINE.NUM " , WarnLowerCoolantTooWarm = FALSE" *ErrorReport $CAT 
+
+32 LINE.NUM THEN 
+35 LINE.NUM " , WarnUpperCoolantTooWarm = FALSE" *ErrorReport $CAT 
+
+37 LINE.NUM " , WarnUpperCoolantTooCold = FALSE" *ErrorReport $CAT 
+
+40 LINE.NUM ~Exhaust_Fan_Temp @@ 45 I>F F> IF 
+41 LINE.NUM 1 ^ErrorFlag @! 
+42 LINE.NUM " , WarnExhaustOver45C = TRUE" *ErrorReport $CAT 
+
+43 LINE.NUM ELSE 
+44 LINE.NUM " , WarnExhaustOver45C  = FALSE" *ErrorReport $CAT 
+
+45 LINE.NUM THEN 
+47 LINE.NUM ^ServoLevel @@ -1 = IF 
+48 LINE.NUM " -1, Too Cold, Slowing intake." *ServoString  $MOVE 
+49 LINE.NUM 1 ^ErrorFlag @! 
+50 LINE.NUM ELSE 
+50 LINE.NUM ^ServoLevel @@ 0 = IF 
+51 LINE.NUM "  0, PubSub has the control." *ServoString  $MOVE 
+52 LINE.NUM ELSE 
+52 LINE.NUM ^ServoLevel @@ 1 = IF 
+53 LINE.NUM "  1, Slight Fan Boost." *ServoString  $MOVE 
+54 LINE.NUM 1 ^ErrorFlag @! 
+55 LINE.NUM ELSE 
+55 LINE.NUM ^ServoLevel @@ 2 = IF 
+56 LINE.NUM "  2, Boosting Fans 1." *ServoString  $MOVE 
+57 LINE.NUM 1 ^ErrorFlag @! 
+58 LINE.NUM ELSE 
+58 LINE.NUM ^ServoLevel @@ 3 = IF 
+59 LINE.NUM "  3, Boosting Fans 2." *ServoString  $MOVE 
+60 LINE.NUM 1 ^ErrorFlag @! 
+61 LINE.NUM ELSE 
+61 LINE.NUM ^ServoLevel @@ 4 = IF 
+62 LINE.NUM "  4, Serious Overheating or Ambient!" *ServoString  $MOVE 
+63 LINE.NUM 1 ^ErrorFlag @! 
+64 LINE.NUM ELSE 
+64 LINE.NUM ^ServoLevel @@ 5 = IF 
+65 LINE.NUM "  5, !!DANGER!! Cryotigers Shut Down." *ServoString  $MOVE 
+66 LINE.NUM 1 ^ErrorFlag @! 
+67 LINE.NUM 1 ^FaultFlag @! 
+68 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
 -19 JUMP ;
 : 1_339
 

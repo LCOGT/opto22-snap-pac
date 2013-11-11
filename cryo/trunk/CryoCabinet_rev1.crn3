@@ -9,17 +9,28 @@ CREATE V.ARRAY
 ^ErrorFlag ,
 ^FanSwMode ,
 ^FaultFlag ,
+^FusedTemp ,
+^HeartbeatPreset ,
+^HeartFailure ,
+^HoneysuckerSpeed ,
 ^indexStep ,
+^InletFanSpeed ,
 ^ListeningForMaster ,
+^LowerCryoTigPWR ,
+^LowerThermoPwr ,
 ^Master_CommClosed ,
 ^Master_Handle_CharNumWaiting ,
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
 ^MasterXmitStatus ,
+^OutletFanSpeed ,
 ^Position ,
 ^PriorHeartbeatTime ,
 ^Response ,
+^ServoLevel ,
 ^StartupStatus ,
+^UpperCryoTigPWR ,
+^UpperThermoPWR ,
 *date2String ,
 *dateDatum ,
 *DateString ,
@@ -28,6 +39,7 @@ CREATE V.ARRAY
 *EnviroString ,
 *EnviroTemp ,
 *ErrorReport ,
+*FaultReport ,
 *FWVersion ,
 *hourString ,
 *ICDVersion ,
@@ -37,6 +49,7 @@ CREATE V.ARRAY
 *monthString ,
 *secString ,
 *SentString ,
+*ServoString ,
 *StatusString ,
 *SWVersion ,
 *timeDatum ,
@@ -77,12 +90,13 @@ CREATE P.ARRAY
 ~CryoTigVolt_Upper_M2_7 ,
 ~Exhaust_Fan_CTRL ,
 ~Exhaust_Fan_SPD ,
-~Exhaust_Fan_Temp_Unused ,
+~Exhaust_Fan_Temp ,
 ~Honeysucker_SPD ,
 ~Intake_Fan_CTRL ,
 ~Intake_Fan_Humidity ,
 ~Intake_Fan_SPD ,
 ~Intake_Fan_Temp ,
+~MasterTemp ,
 ~ThermoCurrent_Lower_M3_3 ,
 ~ThermoCurrent_Upper_M3_7 ,
 ~ThermoDiffPress_Lower_M3_3 ,
@@ -102,7 +116,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
-$00F3FF3113133F30.. %Local_IO ENABLES!
+$00F3FF3313133F30.. %Local_IO ENABLES!
 " %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE
@@ -112,19 +126,30 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
 0 ^ErrorFlag @!
 -1 ^FanSwMode @!
 0 ^FaultFlag @!
+20 ^FusedTemp @!
 0.0 ^Heartbeat_Timer @!
+500.00000 ^HeartbeatPreset @!
+0 ^HeartFailure @!
+0 ^HoneysuckerSpeed @!
 0 ^indexStep @!
+5 ^InletFanSpeed @!
 0 ^ListeningForMaster @!
+1 ^LowerCryoTigPWR @!
+1 ^LowerThermoPwr @!
 0 ^Master_CommClosed @!
 0 ^Master_Handle_CharNumWaiting @!
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
 0 ^MasterXmitStatus @!
+5 ^OutletFanSpeed @!
 -1 ^Position @!
 120 ^PriorHeartbeatTime @!
 0 ^Response @!
+0 ^ServoLevel @!
 0 ^StartupStatus @!
 0.0 ^Timer_GetChar @!
+0 ^UpperCryoTigPWR @!
+0 ^UpperThermoPWR @!
 " "
  *date2String $MOVE
 " "
@@ -139,8 +164,10 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *EnviroString $MOVE
 " "
  *EnviroTemp $MOVE
-" ''"
+" ''No Errors""
  *ErrorReport $MOVE
+" "No Faults""
+ *FaultReport $MOVE
 " 001.02"
  *FWVersion $MOVE
 " "
@@ -159,9 +186,11 @@ $00F3FF3113133F30.. %Local_IO ENABLES!
  *secString $MOVE
 " Null"
  *SentString $MOVE
+" "unitialized""
+ *ServoString $MOVE
 " Status"
  *StatusString $MOVE
-" 001.02"
+" 000.04exp"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE

@@ -7,19 +7,30 @@
 0 IVAR ^ErrorFlag
 0 IVAR ^FanSwMode
 0 IVAR ^FaultFlag
+0 IVAR ^FusedTemp
 0 TVAR ^Heartbeat_Timer
+0 FVAR ^HeartbeatPreset
+0 IVAR ^HeartFailure
+0 IVAR ^HoneysuckerSpeed
 0 IVAR ^indexStep
+0 IVAR ^InletFanSpeed
 0 IVAR ^ListeningForMaster
+0 IVAR ^LowerCryoTigPWR
+0 IVAR ^LowerThermoPwr
 0 IVAR ^Master_CommClosed
 0 IVAR ^Master_Handle_CharNumWaiting
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
 0 IVAR ^MasterXmitStatus
+0 IVAR ^OutletFanSpeed
 0 IVAR ^Position
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^Response
+0 IVAR ^ServoLevel
 0 IVAR ^StartupStatus
 0 TVAR ^Timer_GetChar
+0 IVAR ^UpperCryoTigPWR
+0 IVAR ^UpperThermoPWR
 10 0 $VAR *date2String 
 10 0 $VAR *dateDatum 
 12 0 $VAR *DateString 
@@ -28,6 +39,7 @@
 1024 0 $VAR *EnviroString 
 6 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorReport 
+1024 0 $VAR *FaultReport 
 6 0 $VAR *FWVersion 
 2 0 $VAR *hourString 
 6 0 $VAR *ICDVersion 
@@ -37,8 +49,9 @@
 2 0 $VAR *monthString 
 2 0 $VAR *secString 
 1024 0 $VAR *SentString 
+64 0 $VAR *ServoString 
 1024 0 $VAR *StatusString 
-6 0 $VAR *SWVersion 
+9 0 $VAR *SWVersion 
 8 0 $VAR *timeDatum 
 12 0 $VAR *TimeString 
 4 0 $VAR *yearString 
@@ -72,7 +85,9 @@ APOINT    0.0000 70 25 %Local_IO
 SPOINT 0.0 INPUT 28 %Local_IO
     0 POINT ~F4_3_Status
 APOINT -200.0000 10 32 %Local_IO
-    0 POINT ~Exhaust_Fan_Temp_Unused
+    0 POINT ~Exhaust_Fan_Temp
+APOINT -200.0000 10 33 %Local_IO
+    0 POINT ~MasterTemp
 APOINT -200.0000 10 36 %Local_IO
     0 POINT ~ThermoTemp_Lower_M3_3
 APOINT -200.0000 10 37 %Local_IO
