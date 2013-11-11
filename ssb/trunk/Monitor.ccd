@@ -1,69 +1,103 @@
 : 7_0
 2 JUMP ;
 : 7_1
-3 JUMP ;
+9 JUMP ;
 : 7_2
-2 JUMP ;
+8 JUMP ;
 : 7_3
 
 1 LINE.NUM
   30.0    FDELAY
-0 JUMP ;
-: 7_32
-1 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 0 = LAND  IF 
-2 LINE.NUM 2 ^FanSwMode @! 
-3 LINE.NUM 1 ~Fan_Green_LED @! 
-4 LINE.NUM 0 ~Fan_Red_LED @! 
-5 LINE.NUM ~SSB_Panel_Temp @@ 30 I>F F> IF 
-6 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-7 LINE.NUM 1 ~FAN_M2_4_ON @! 
-8 LINE.NUM 1 ~FAN_M2_7_ON @! 
-9 LINE.NUM 1 ~FAN_M3_2_ON @! 
-10 LINE.NUM 1 ~FAN_M3_5_ON @! 
-11 LINE.NUM 1 ^TempLatch @! 
-12 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
-13 LINE.NUM THEN 
-14 LINE.NUM ^TempLatch @@ 1 = ~SSB_Panel_Temp @@ 26 I>F F< LAND  IF 
-15 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-16 LINE.NUM 0 ~FAN_M2_4_ON @! 
-17 LINE.NUM 0 ~FAN_M2_7_ON @! 
-18 LINE.NUM 0 ~FAN_M3_2_ON @! 
-19 LINE.NUM 0 ~FAN_M3_5_ON @! 
-20 LINE.NUM 0 ^TempLatch @! 
-21 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
-22 LINE.NUM THEN 
-25 LINE.NUM ELSE 
-25 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 1 = LAND  IF 
-26 LINE.NUM 0 ^FanSwMode @! 
-27 LINE.NUM 1 ~Fan_Green_LED @! 
-28 LINE.NUM 1 ~Fan_Red_LED @! 
-29 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-30 LINE.NUM 0 ~FAN_M2_4_ON @! 
-31 LINE.NUM 0 ~FAN_M2_7_ON @! 
-32 LINE.NUM 0 ~FAN_M3_2_ON @! 
-33 LINE.NUM 0 ~FAN_M3_5_ON @! 
-34 LINE.NUM 0 ^TempLatch @! 
-35 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
-36 LINE.NUM ELSE 
-36 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 1 = LAND  IF 
-37 LINE.NUM 1 ^FanSwMode @! 
-38 LINE.NUM 0 ~Fan_Green_LED @! 
-39 LINE.NUM 1 ~Fan_Red_LED @! 
-40 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-41 LINE.NUM 1 ~FAN_M2_4_ON @! 
-42 LINE.NUM 0 ~FAN_M2_7_ON @! 
-43 LINE.NUM 1 ~FAN_M3_2_ON @! 
-44 LINE.NUM 0 ~FAN_M3_5_ON @! 
-45 LINE.NUM 0 ^TempLatch @! 
-46 LINE.NUM " MANUAL_FANS" *TempServoState  $MOVE 
-47 LINE.NUM THEN THEN THEN 
+5 JUMP ;
+: 7_7
+
+1 LINE.NUM
+  ~FAN_M3_5_ON   ON
+
+2 LINE.NUM
+  ~FAN_M3_2_ON   ON
+
+3 LINE.NUM
+  ~FAN_M2_7_ON   ON
+
+4 LINE.NUM
+  ~FAN_M2_4_ON   ON
+
+5 LINE.NUM
+  10.0  
+  2.0  
+  ~SSB_Exhaust_Fan_Speed   F!RAMP
 -2 JUMP ;
+: 7_9
+
+1 LINE.NUM
+  ~FAN_M3_5_ON   OFF
+
+2 LINE.NUM
+  ~FAN_M3_2_ON   OFF
+
+3 LINE.NUM
+  ~FAN_M2_7_ON   OFF
+
+4 LINE.NUM
+  ~FAN_M2_4_ON   OFF
+
+5 LINE.NUM
+  0.0  
+  2.0  
+  ~SSB_Exhaust_Fan_Speed   F!RAMP
+-3 JUMP ;
+: 7_17
+4 JUMP ;
+: 7_18
+3 JUMP ;
+: 7_19
+
+1 LINE.NUM
+  ~FAN_M3_5_ON   ON
+
+2 LINE.NUM
+  ~FAN_M3_2_ON   ON
+
+3 LINE.NUM
+  ~FAN_M2_7_ON   ON
+
+4 LINE.NUM
+  ~FAN_M2_4_ON   OFF
+
+5 LINE.NUM
+  7.0  
+  2.0  
+  ~SSB_Exhaust_Fan_Speed   F!RAMP
+-6 JUMP ;
+: 7_4
+TRUE
+
+1 LINE.NUM
+  ~SSB_Incoming_Air_Temp @@ 
+  29.0    F>=
+LAND
+IF -6 ELSE 0 THEN JUMP ;
+: 7_14
+TRUE
+
+1 LINE.NUM
+  ~SSB_Incoming_Air_Temp @@ 
+  25.0    F<=
+LAND
+IF -8 ELSE -3 THEN JUMP ;
 T: T7
 DUMMY
 7_0
 7_1
 7_2
 7_3
-7_32
+7_7
+7_9
+7_17
+7_18
+7_19
+7_4
+7_14
 T;
 &Monitor ' T7 SETTASK

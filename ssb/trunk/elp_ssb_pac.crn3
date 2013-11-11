@@ -1,19 +1,17 @@
 CREATE T.ARRAY
 &Master_comms ,
 &Monitor ,
+&Mute_Test_Manager ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
 ^AdjustTach ,
-^AQ_Go_Fast_Ok ,
 ^ChartSTATUS ,
 ^Comm_status ,
-^DateTemp ,
 ^EncABlink ,
 ^EncAGrnFlag ,
 ^EncARedFlag ,
 ^ErrorFlag ,
-^FamMemory ,
 ^FanSwMode ,
 ^FaultFlag ,
 ^FenceBlink ,
@@ -35,6 +33,7 @@ CREATE V.ARRAY
 ^SiteBlink ,
 ^SiteGrnFlag ,
 ^SiteRedFlag ,
+^SonalertFlag ,
 ^TempLatch ,
 ^Total_Inflow ,
 ^WeatherBlink ,
@@ -81,8 +80,6 @@ CREATE P.ARRAY
 ~di_acp_0901 ,
 ~di_acp_0906 ,
 ~di_acp_0907 ,
-~di_acp_0912 ,
-~di_acp_0913 ,
 ~di_acp_0914 ,
 ~di_acp_0915 ,
 ~di_acp_0918 ,
@@ -99,6 +96,10 @@ CREATE P.ARRAY
 ~di_acp_0929 ,
 ~di_acp_0930 ,
 ~di_acp_0931 ,
+~DUPS_Alarm ,
+~DUPS_BatteryNormal ,
+~DUPS_LineOK ,
+~DUPS_on_bypass ,
 ~Enclosure_A_Green_LED ,
 ~Enclosure_A_Red_LED ,
 ~Enclosure_B_Green_LED ,
@@ -139,13 +140,10 @@ CREATE P.ARRAY
 ~Fence_Red_LED ,
 ~FenceKey ,
 ~FUPS_Alarm ,
-~FUPS_BatteryLow ,
 ~FUPS_BatteryNormal ,
-~FUPS_Line_failure ,
 ~FUPS_LineOK ,
-~FUPS_Normal_OnInverter ,
 ~FUPS_on_bypass ,
-~FUPS_ON_OK ,
+~HI_TEMP_ALARM ,
 ~Keyring_Status_Green_LED ,
 ~Keyring_Status_Red_LED ,
 ~Ladder_stowed ,
@@ -160,7 +158,8 @@ CREATE P.ARRAY
 ~Shutdown_Status_Red_LED ,
 ~ShutdownStatusKey ,
 ~SiteStatusKey ,
-~SmokeAlarm ,
+~SMOKE_ALARM ,
+~SmokeAlarmOK ,
 ~Sonalert ,
 ~Spare3 ,
 ~Spare4 ,
@@ -170,21 +169,17 @@ CREATE P.ARRAY
 ~Weather_status_Green_LED ,
 ~Weather_status_Red_LED ,
 ~ACP_Fan_Tach ,
-~ACP_Fups_VAC ,
 ~Acp_Panel_Fan_Speed ,
-~ACP_Utility_VAC ,
-~ai_acp_1002 ,
 ~ai_acp_1003 ,
-~Air_Dewpoint1 ,
-~Air_Dewpoint2 ,
+~Air_Dewpoint ,
+~Air_Temp ,
 ~AirPressure ,
+~BARD_Current ,
 ~HVAC_Cool_Voltage ,
 ~HVAC_Fan_Voltage ,
 ~IT_Rack_Back_Temp ,
 ~Spare_Tach ,
 ~SSB_Exhaust_Fan_Speed ,
-~SSB_External_Humidity ,
-~SSB_External_Shaded_Temp ,
 ~SSB_Fan_M24_Tach ,
 ~SSB_Fan_M27_Tach ,
 ~SSB_Fan_M32_Tach ,
@@ -194,8 +189,6 @@ CREATE P.ARRAY
 ~SSB_Internal_Temp ,
 ~SSB_Outgoing_Temp ,
 ~SSB_Panel_Temp ,
-~Unused_01 ,
-~Unused_02 ,
 ~Utility_Current ,
  0 ,
 CREATE PID.ARRAY
@@ -214,15 +207,12 @@ CONFIG_PORTS
  0 ~Enclosure_B_Red_LED @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0.00000000 ^AdjustTach @!
-0 ^AQ_Go_Fast_Ok @!
 0.00000000 ^ChartSTATUS @!
 0 ^Comm_status @!
-0 ^DateTemp @!
 0 ^EncABlink @!
 0 ^EncAGrnFlag @!
 0 ^EncARedFlag @!
 0 ^ErrorFlag @!
-0.00000000 ^FamMemory @!
 -1 ^FanSwMode @!
 0 ^FaultFlag @!
 0 ^FenceBlink @!
@@ -246,6 +236,7 @@ CONFIG_PORTS
 0 ^SiteGrnFlag @!
 0 ^SiteRedFlag @!
 0.0 ^Socket_Timer @!
+0 ^SonalertFlag @!
 0 ^TempLatch @!
 0.00000000 ^Total_Inflow @!
 0 ^WeatherBlink @!
@@ -265,7 +256,7 @@ CONFIG_PORTS
  *ErrorString $MOVE
 " Fault"
  *FaultString $MOVE
-" 001.07"
+" Opto R9.1b"
  *FWVersion $MOVE
 " 001.01"
  *ICDVersion $MOVE
@@ -275,7 +266,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.08"
+" 001.2"
  *SWVersion $MOVE
 " "
  *TempServoState $MOVE
