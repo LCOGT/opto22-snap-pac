@@ -1,0 +1,102 @@
+: 0_0
+
+1 LINE.NUM
+  ~Honeysucker_CTRL   ON
+
+2 LINE.NUM
+  ^HeartbeatPreset @@ 
+  ^Heartbeat_Timer   SetTimer
+
+3 LINE.NUM
+  &Master_Comm   START.T
+  ^MasterCommEstablished @! 
+
+4 LINE.NUM
+  1500    DELAY
+
+5 LINE.NUM
+  ~CryoTigPWR_Lower_M2_3   OFF
+
+6 LINE.NUM
+  ~CryoTigPWR_Upper_M2_7   OFF
+
+7 LINE.NUM
+  1500    DELAY
+
+8 LINE.NUM
+  ~ThermoPWR_Lower_M3_3   ON
+
+9 LINE.NUM
+  1500    DELAY
+
+10 LINE.NUM
+  ~ThermoPWR_Upper_M3_7   OFF
+
+11 LINE.NUM
+  10 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
+
+12 LINE.NUM
+  10 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
+
+13 LINE.NUM
+  3000    DELAY
+
+14 LINE.NUM
+  ~Honeysucker_CTRL   ON
+
+15 LINE.NUM
+  6 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
+
+16 LINE.NUM
+  6 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
+
+17 LINE.NUM
+  3000    DELAY
+
+18 LINE.NUM
+  ~Honeysucker_CTRL   OFF
+1 JUMP ;
+: 0_1
+1 LINE.NUM ^Heartbeat_Timer @@F 0 I>F F<= IF 
+2 LINE.NUM 1 ^HeartFailure @! 
+3 LINE.NUM ELSE 
+4 LINE.NUM 0 ^HeartFailure @! 
+5 LINE.NUM THEN 
+7 LINE.NUM ^HeartFailure @@ IF 
+8 LINE.NUM 5 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+9 LINE.NUM 5 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+11 LINE.NUM THEN 
+13 LINE.NUM ~Unused @@ ~Intake_Fan_Temp @@ F>= IF 
+14 LINE.NUM ~Unused @@ ^MergedTemp @! 
+15 LINE.NUM ELSE 
+16 LINE.NUM ~Intake_Fan_Temp @@ ^MergedTemp @! 
+17 LINE.NUM THEN 
+19 LINE.NUM ^MergedTemp @@ 30 I>F F> IF 
+20 LINE.NUM 10 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+21 LINE.NUM 10 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+22 LINE.NUM 1 ^OverTemp @! 
+23 LINE.NUM ELSE 
+25 LINE.NUM 0 ^OverTemp @! 
+26 LINE.NUM THEN 
+28 LINE.NUM ~CryoTig_Lower_Deadman @@I ~CryoTigPWR_Lower_M2_3 @! 
+0 JUMP ;
+: 0_2
+
+1 LINE.NUM
+  1000    DELAY
+-2 JUMP ;
+T: T0
+DUMMY
+0_0
+0_1
+0_2
+T;
+&Powerup ' T0 SETTASK
