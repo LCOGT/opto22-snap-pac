@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\131210-P132rev2-1\BPLaqwaNew.idb
 # VERSION :      R9.1a
-# TIME/DATE :    18:17:26 12/11/2013
+# TIME/DATE :    10:59:21 12/13/2013
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -102,7 +102,6 @@ TAG1,Powerup                                           ,0    ,00000000,00000100,
 TAG1,SYSTEM_READY                                      ,17   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Tail                                              ,13   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,encPacInternal                                    ,2    ,00000000,00000000,20000000,00000000,0    ,0   
-TAG1,encPacInternal_Old                                ,1    ,00000000,00000000,20000000,00000000,0    ,0   
 TAG1,DI_24vCtrl_MCB                                    ,84   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_24vPSU_OK                                      ,87   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_CabinetDoor_LS                                 ,75   ,40000000,00000000,00000000,00000000,0    ,0   
@@ -171,7 +170,6 @@ TAG1,DO_TailFans_MCB                                   ,97   ,10000000,00000000,
 TAG1,DO_TailGoFast_NO                                  ,7    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_TailStop_NO                                    ,6    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_Webcam_RLA                                     ,99   ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,GO_FAST_PB_MONITOR                                ,57   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,AI_AqHumidity_SEN                                 ,18   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_AqTemp_SEN                                     ,19   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CabExhaust_RTD                                 ,16   ,00000000,00000001,00000000,00000000,0    ,0   

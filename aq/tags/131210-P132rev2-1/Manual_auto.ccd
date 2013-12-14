@@ -3,16 +3,16 @@
 : 3_32
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 
 5 LINE.NUM
   ^Heartbeat   StopTimer
@@ -109,7 +109,7 @@
 TRUE
 
 1 LINE.NUM
-  ~OPERATE_DISABLE   ?OFF
+  ~DI_RoofDisable_SW   ?ON
 LAND
 
 2 LINE.NUM
@@ -117,29 +117,29 @@ LAND
 LAND
 
 3 LINE.NUM
-  ~OPERATE_AUTO   ?OFF
+  ~DI_RoofAuto_SW   ?OFF
 LAND
 IF -6 ELSE -2 THEN JUMP ;
 : 3_2
 TRUE
 
 1 LINE.NUM
-  ~OPERATE_AUTO   ?OFF
+  ~DI_RoofAuto_SW   ?OFF
 LAND
 
 2 LINE.NUM
-  ~OPERATE_DISABLE   ?ON
+  ~DI_RoofDisable_SW   ?OFF
 LAND
 IF -9 ELSE 0 THEN JUMP ;
 : 3_122
 TRUE
 
 1 LINE.NUM
-  ~OPERATE_AUTO   ?ON
+  ~DI_RoofAuto_SW   ?ON
 LAND
 
 2 LINE.NUM
-  ~OPERATE_DISABLE   ?OFF
+  ~DI_RoofDisable_SW   ?ON
 LAND
 
 3 LINE.NUM

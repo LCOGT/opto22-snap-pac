@@ -64,16 +64,16 @@
 : 5_46
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 -2 JUMP ;
 : 5_52
 
@@ -89,36 +89,28 @@
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_SELECT   ?ON
+  ~DI_PoleSelect_SW   ?OFF
 LAND
 IF -10 ELSE -8 THEN JUMP ;
 : 5_12
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_SELECT   ?ON
+  ~DI_TailSelect_SW   ?ON
 LAND
 IF -10 ELSE -2 THEN JUMP ;
 : 5_28
 TRUE
 
 1 LINE.NUM
-  ~PENDANT_OPEN   ?ON
-LAND
-
-2 LINE.NUM
-  ~RESET_PB_MONITOR   ?OFF
+  ~DI_PendantOpen_SW   ?ON
 LAND
 IF -9 ELSE -5 THEN JUMP ;
 : 5_29
 TRUE
 
 1 LINE.NUM
-  ~RESET_PB_MONITOR   ?OFF
-LAND
-
-2 LINE.NUM
-  ~PENDANT_CLOSE   ?ON
+  ~DI_PendantClose_SW   ?ON
 LAND
 IF -9 ELSE -7 THEN JUMP ;
 T: T5

@@ -3,38 +3,38 @@
 : 13_2
 
 1 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 2 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 
 3 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 4 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 15 JUMP ;
 : 13_10
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 8 JUMP ;
 : 13_13
 
 1 LINE.NUM
-  ~TAIL_GO_FAST   ON
+  ~DO_TailGoFast_NO   ON
 
 2 LINE.NUM
-  ~TAIL_DIR   ON
+  ~DO_TailDirection_NO   ON
 0 JUMP ;
 : 13_14
 
@@ -44,10 +44,10 @@
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_STOP   OFF
+  ~DO_TailStop_NO   OFF
 
 3 LINE.NUM
-  ~TAIL_ENABLE   ON
+  ~DO_TailEnable_NO   ON
 6 JUMP ;
 : 13_17
 
@@ -57,15 +57,15 @@
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 
 3 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 5 JUMP ;
 : 13_21
 
 1 LINE.NUM
-  ~TAIL_DIR   OFF
+  ~DO_TailDirection_NO   OFF
 9 JUMP ;
 : 13_24
 
@@ -75,20 +75,20 @@
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 3 JUMP ;
 : 13_28
 
 1 LINE.NUM
-  ~TAIL_GO_FAST   OFF
+  ~DO_TailGoFast_NO   OFF
 1 JUMP ;
 : 13_31
 
 1 LINE.NUM
-  ~TAIL_GO_FAST   ON
+  ~DO_TailGoFast_NO   ON
 0 JUMP ;
 : 13_33
 
@@ -98,10 +98,10 @@
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_STOP   OFF
+  ~DO_TailStop_NO   OFF
 
 3 LINE.NUM
-  ~TAIL_ENABLE   ON
+  ~DO_TailEnable_NO   ON
 0 JUMP ;
 : 13_38
 
@@ -134,21 +134,21 @@ IF 1 ELSE -12 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~TAIL_OPEN_NOT_REACHED   ?ON
+  ~DI_Tail_Open_LS   ?ON
 LAND
 IF -12 ELSE -10 THEN JUMP ;
 : 13_19
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_CLOSED   ?OFF
+  ~DI_Tail_Closed_LS   ?ON
 LAND
 IF -10 ELSE -9 THEN JUMP ;
 : 13_20
 TRUE
 
 1 LINE.NUM
-  ~TAIL_CAN_GO_FAST   ?OFF
+  ~DI_Tail_Fast_LS   ?OFF
 LAND
 IF -9 ELSE -8 THEN JUMP ;
 T: T13

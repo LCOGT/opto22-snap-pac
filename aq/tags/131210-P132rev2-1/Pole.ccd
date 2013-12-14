@@ -3,24 +3,24 @@
 : 11_9
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 8 JUMP ;
 : 11_12
 
 1 LINE.NUM
-  ~POLE_GO_FAST   ON
+  ~DO_PoleGoFast_NO   ON
 
 2 LINE.NUM
-  ~POLE_DIR   ON
+  ~DO_PoleDirection_NO   ON
 0 JUMP ;
 : 11_13
 
@@ -30,15 +30,15 @@
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   OFF
+  ~DO_PoleStop_NO   OFF
 
 3 LINE.NUM
-  ~POLE_ENABLE   ON
+  ~DO_PoleEnable_NO   ON
 6 JUMP ;
 : 11_18
 
 1 LINE.NUM
-  ~POLE_DIR   OFF
+  ~DO_PoleDirection_NO   OFF
 10 JUMP ;
 : 11_20
 
@@ -48,10 +48,10 @@
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 4 JUMP ;
 : 11_24
 
@@ -61,20 +61,20 @@
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 3 JUMP ;
 : 11_29
 
 1 LINE.NUM
-  ~POLE_GO_FAST   OFF
+  ~DO_PoleGoFast_NO   OFF
 1 JUMP ;
 : 11_31
 
 1 LINE.NUM
-  ~POLE_GO_FAST   ON
+  ~DO_PoleGoFast_NO   ON
 0 JUMP ;
 : 11_33
 
@@ -84,10 +84,10 @@
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   OFF
+  ~DO_PoleStop_NO   OFF
 
 3 LINE.NUM
-  ~POLE_ENABLE   ON
+  ~DO_PoleEnable_NO   ON
 0 JUMP ;
 : 11_42
 
@@ -120,21 +120,21 @@ IF 1 ELSE -12 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~POLE_OPEN_NOT_REACHED   ?ON
+  ~DI_Pole_Open_LS   ?ON
 LAND
 IF -12 ELSE -9 THEN JUMP ;
 : 11_16
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_CLOSED   ?OFF
+  ~DI_Pole_Closed_LS   ?ON
 LAND
 IF -11 ELSE -9 THEN JUMP ;
 : 11_17
 TRUE
 
 1 LINE.NUM
-  ~POLE_CAN_GO_FAST   ?OFF
+  ~DI_Pole_Fast_LS   ?OFF
 LAND
 IF -9 ELSE -8 THEN JUMP ;
 T: T11

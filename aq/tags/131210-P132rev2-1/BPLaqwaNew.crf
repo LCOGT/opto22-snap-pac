@@ -68,13 +68,13 @@ _END NEW $$$.RUN
 0 FVAR ^OLD_COOLING_FAN_FREQ
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
-0 IVAR ^OVROK
 0 IVAR ^PANEL_FANS_OK
 0 IVAR ^Second_reading
 0 IVAR ^Server_Ok_To_Go_Fast
 0 TVAR ^Socket_Timer
 0 FVAR ^SocketElapsed
 0 FVAR ^SocketUpTime
+0 IVAR ^SPD_OK
 0 IVAR ^status
 0 IVAR ^switchAccum
 0 IVAR ^System_Health_Status
@@ -99,106 +99,87 @@ _END NEW $$$.RUN
 1024 1073741824 COMVAR *Master_Handle 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %encPacInternal
-32  1 SPOINT 0.0     INPUT  0  0 %encPacInternal 0 POINT.TNG ~DI_EstopOK
-32  1 SPOINT 0.0     INPUT  2  0 %encPacInternal 0 POINT.TNG ~RIGHT_DOOR
-32  1 SPOINT 0.0     INPUT  3  0 %encPacInternal 0 POINT.TNG ~LEFT_DOOR
-32  1 SPOINT 0.0     INPUT  4  0 %encPacInternal 0 POINT.TNG ~GO_FAST_BUTTON
-32  1 SPOINT 0.0     INPUT  5  0 %encPacInternal 0 POINT.TNG ~RESET_BUTTON
-32  1 SPOINT 0.0     INPUT  6  0 %encPacInternal 0 POINT.TNG ~PADDLE_IN_PLACE
-32  1 SPOINT 0.0     INPUT  7  0 %encPacInternal 0 POINT.TNG ~TRAP_KEY_IN
-32  1 SPOINT 0.0     INPUT  8  0 %encPacInternal 0 POINT.TNG ~UPS_AC_1
-32  1 SPOINT 0.0     INPUT  9  0 %encPacInternal 0 POINT.TNG ~UPS_AC_2
-32  1 SPOINT 0.0     INPUT 10  0 %encPacInternal 0 POINT.TNG ~UPS_AC_3_LIGHTS
-32  1 SPOINT 0.0     INPUT 11  0 %encPacInternal 0 POINT.TNG ~UPS_AC_4
-32  1 SPOINT 0.0     INPUT 12  0 %encPacInternal 0 POINT.TNG ~UPS_AC_MAIN
-32  1 SPOINT 0.0     INPUT 13  0 %encPacInternal 0 POINT.TNG ~UTIL_BREAKER_1
-32  1 SPOINT 0.0     INPUT 14  0 %encPacInternal 0 POINT.TNG ~UTIL_AC_2_PANEL_LIGHT
-32  1 SPOINT 0.0     INPUT 15  0 %encPacInternal 0 POINT.TNG ~UTIL_AC_3_24VDC_SUPPLY
-32  1 SPOINT 0.0     INPUT 16  0 %encPacInternal 0 POINT.TNG ~UTIL_AC_MAIN
-32  1 SPOINT 0.0     INPUT 17  0 %encPacInternal 0 POINT.TNG ~UTIL_BREAKER_5
-32  1 SPOINT 0.0     INPUT 18  0 %encPacInternal 0 POINT.TNG ~q11
-32  1 SPOINT 0.0     INPUT 19  0 %encPacInternal 0 POINT.TNG ~q12
-32  1 SPOINT 0.0     INPUT 20  0 %encPacInternal 0 POINT.TNG ~q13
-32  1 SPOINT 0.0     INPUT 21  0 %encPacInternal 0 POINT.TNG ~q14
-32  1 SPOINT 0.0     INPUT 22  0 %encPacInternal 0 POINT.TNG ~q15
-32  1 SPOINT 0.0     INPUT 23  0 %encPacInternal 0 POINT.TNG ~OVR1
-32  1 SPOINT 0.0     INPUT 24  0 %encPacInternal 0 POINT.TNG ~OVR2
-32  1 SPOINT 0.0     INPUT 25  0 %encPacInternal 0 POINT.TNG ~OVR3
-32  1 SPOINT 0.0     INPUT 26  0 %encPacInternal 0 POINT.TNG ~OVR4
-32  1 SPOINT 0.0     INPUT 27  0 %encPacInternal 0 POINT.TNG ~FenceSecure
-32  1 SPOINT 0.0     INPUT 28  0 %encPacInternal 0 POINT.TNG ~ETH_SWITCH
-32  1 SPOINT 0.0     INPUT 29  0 %encPacInternal 0 POINT.TNG ~RIGHT_STORM_LOCK
-32  1 SPOINT 0.0     INPUT 30  0 %encPacInternal 0 POINT.TNG ~LEFT_STORM_LOCK
-32  1 SPOINT 0.0     INPUT 31  0 %encPacInternal 0 POINT.TNG ~TOP_JOIN_CLOSED
-32  1 SPOINT 0.0     INPUT  2  1 %encPacInternal 0 POINT.TNG ~LIGHTS_ENTER
-32  1 SPOINT 0.0     INPUT  3  1 %encPacInternal 0 POINT.TNG ~LIGHTS_EXIT
-32  1 SPOINT 0.0     INPUT  4  1 %encPacInternal 0 POINT.TNG ~COOLANT_AUTO
-32  1 SPOINT 0.0     INPUT  5  1 %encPacInternal 0 POINT.TNG ~COOLANT_STOP
-32  1 SPOINT 0.0     INPUT  6  1 %encPacInternal 0 POINT.TNG ~FANS_AUTO
-32  1 SPOINT 0.0     INPUT  7  1 %encPacInternal 0 POINT.TNG ~FANS_STOP
-32  1 SPOINT 0.0     INPUT  8  1 %encPacInternal 0 POINT.TNG ~POLE_OPEN_NOT_REACHED
-32  1 SPOINT 0.0     INPUT  9  1 %encPacInternal 0 POINT.TNG ~POLE_SIDE_CLOSED
-32  1 SPOINT 0.0     INPUT 10  1 %encPacInternal 0 POINT.TNG ~POLE_CAN_GO_FAST
-32  1 SPOINT 0.0     INPUT 11  1 %encPacInternal 0 POINT.TNG ~TAIL_OPEN_NOT_REACHED
-32  1 SPOINT 0.0     INPUT 12  1 %encPacInternal 0 POINT.TNG ~TAIL_SIDE_CLOSED
-32  1 SPOINT 0.0     INPUT 13  1 %encPacInternal 0 POINT.TNG ~TAIL_CAN_GO_FAST
-32  1 SPOINT 0.0     INPUT 14  1 %encPacInternal 0 POINT.TNG ~OPERATE_AUTO
-32  1 SPOINT 0.0     INPUT 15  1 %encPacInternal 0 POINT.TNG ~OPERATE_DISABLE
-32  1 SPOINT 0.0     INPUT 16  1 %encPacInternal 0 POINT.TNG ~POLE_SIDE_SELECT
-32  1 SPOINT 0.0     INPUT 17  1 %encPacInternal 0 POINT.TNG ~TAIL_SIDE_SELECT
-32  1 SPOINT 0.0     INPUT 18  1 %encPacInternal 0 POINT.TNG ~GO_FAST_PB_MONITOR
-32  1 SPOINT 0.0     INPUT 19  1 %encPacInternal 0 POINT.TNG ~RESET_PB_MONITOR
-32  1 SPOINT 0.0     INPUT 20  1 %encPacInternal 0 POINT.TNG ~PENDANT_IS_STOWED
-32  1 SPOINT 0.0     INPUT 21  1 %encPacInternal 0 POINT.TNG ~PENDANT_CLOSE
-32  1 SPOINT 0.0     INPUT 22  1 %encPacInternal 0 POINT.TNG ~PENDANT_OPEN
-32  1 SPOINT 0.0     INPUT 23  1 %encPacInternal 0 POINT.TNG ~ESTOP_OK_TO_RUN
-32  1 SPOINT 0.0     INPUT 24  1 %encPacInternal 0 POINT.TNG ~CABINET_DOOR_CLOSED
-32  1 SPOINT 0.0     INPUT 25  1 %encPacInternal 0 POINT.TNG ~q1
-32  1 SPOINT 0.0     INPUT 26  1 %encPacInternal 0 POINT.TNG ~q2
-32  1 SPOINT 0.0     INPUT 27  1 %encPacInternal 0 POINT.TNG ~q3
-32  1 SPOINT 0.0     INPUT 28  1 %encPacInternal 0 POINT.TNG ~q4
-32  1 SPOINT 0.0     INPUT 29  1 %encPacInternal 0 POINT.TNG ~q6
-32  1 SPOINT 0.0     INPUT 30  1 %encPacInternal 0 POINT.TNG ~q7
-32  1 SPOINT 0.0     INPUT 31  1 %encPacInternal 0 POINT.TNG ~q8
- 4  1 APOINT -150.0000 0  2  2 %encPacInternal 0 POINT.TNG ~AqwaHum
- 100.0000 -150.0000 ~AqwaHum SET.SCALE
- 4  1 APOINT -190.0000 0  3  2 %encPacInternal 0 POINT.TNG ~AqwaTemp
-  60.0000 -190.0000 ~AqwaTemp SET.SCALE
- 2  1 APOINT -200.0000 10  0  3 %encPacInternal 0 POINT.TNG ~AQ_PANEL_EXHAUST_TEMP
- 2  1 APOINT -200.0000 10  1  3 %encPacInternal 0 POINT.TNG ~AQWA_0m4b_BACK_TEMP
- 2  1 APOINT -200.0000 10  0  4 %encPacInternal 0 POINT.TNG ~AQ_OUTSIDE_TEMP
- 2  1 APOINT -200.0000 10  1  4 %encPacInternal 0 POINT.TNG ~COOLANT_TEMP
- 2  1 APOINT -200.0000 10  0  5 %encPacInternal 0 POINT.TNG ~INCOMING_AIR_TEMP
- 2  1 APOINT -200.0000 10  1  5 %encPacInternal 0 POINT.TNG ~OUTGOING_AIR_TEMP
- 2  1 APOINT    0.0000 69  0  6 %encPacInternal 0 POINT.TNG ~AQ_PANEL_IN_TACH
- 2  1 APOINT    0.0000 69  1  6 %encPacInternal 0 POINT.TNG ~AQ_PANEL_OUT_TACH
- 2  1 APOINT    0.0000 69  0  7 %encPacInternal 0 POINT.TNG ~ENC_EXHAUST_TACH
- 2  1 APOINT    0.0000 69  1  7 %encPacInternal 0 POINT.TNG ~ENC_INTAKE_TACH
- 2  1 APOINT    0.0000 165  0  8 %encPacInternal 0 POINT.TNG ~FAN_PANEL_IN
- 2  1 APOINT    0.0000 165  1  8 %encPacInternal 0 POINT.TNG ~FAN_PANEL_OUT
- 2  1 APOINT    0.0000 165  0  9 %encPacInternal 0 POINT.TNG ~RIGHT_SIDE_FAN
-  10.0000    0.0000 ~RIGHT_SIDE_FAN SET.RANGE
- 2  1 APOINT    0.0000 165  1  9 %encPacInternal 0 POINT.TNG ~LEFT_SIDE_FAN
-  10.0000    0.0000 ~LEFT_SIDE_FAN SET.RANGE
- 4  1 SPOINT 0.0    OUTPUT  0 11 %encPacInternal 0 POINT.TNG ~PANEL_LED_GREEN
- 4  1 SPOINT 0.0    OUTPUT  1 11 %encPacInternal 0 POINT.TNG ~PANEL_LED_RED
- 4  1 SPOINT 0.0    OUTPUT  2 11 %encPacInternal 0 POINT.TNG ~OUTSIDE_LED_GREEN
- 4  1 SPOINT 0.0    OUTPUT  3 11 %encPacInternal 0 POINT.TNG ~OUTSIDE_LED_RED
- 4  1 SPOINT 0.0    OUTPUT  0 12 %encPacInternal 0 POINT.TNG ~LIGHTS_RELAY_OUT
- 4  1 SPOINT 0.0    OUTPUT  1 12 %encPacInternal 0 POINT.TNG ~COOLANT_RELAY_OUT
- 4  1 SPOINT 0.0    OUTPUT  2 12 %encPacInternal 0 POINT.TNG ~FANS_RELAY_OUT
- 4  1 SPOINT 0.0    OUTPUT  0 13 %encPacInternal 0 POINT.TNG ~PANEL_BLUE_LED
- 4  1 SPOINT 0.0    OUTPUT  1 13 %encPacInternal 0 POINT.TNG ~RESET_RELAY
- 4  1 SPOINT 0.0    OUTPUT  2 13 %encPacInternal 0 POINT.TNG ~OUTPUT_GO_FAST
- 4  1 SPOINT 0.0    OUTPUT  3 13 %encPacInternal 0 POINT.TNG ~SOUND_ALERT
- 4  1 SPOINT 0.0    OUTPUT  0 14 %encPacInternal 0 POINT.TNG ~TAIL_ENABLE
- 4  1 SPOINT 0.0    OUTPUT  1 14 %encPacInternal 0 POINT.TNG ~TAIL_DIR
- 4  1 SPOINT 0.0    OUTPUT  2 14 %encPacInternal 0 POINT.TNG ~TAIL_STOP
- 4  1 SPOINT 0.0    OUTPUT  3 14 %encPacInternal 0 POINT.TNG ~TAIL_GO_FAST
- 4  1 SPOINT 0.0    OUTPUT  0 15 %encPacInternal 0 POINT.TNG ~POLE_ENABLE
- 4  1 SPOINT 0.0    OUTPUT  1 15 %encPacInternal 0 POINT.TNG ~POLE_DIR
- 4  1 SPOINT 0.0    OUTPUT  2 15 %encPacInternal 0 POINT.TNG ~POLE_STOP
- 4  1 SPOINT 0.0    OUTPUT  3 15 %encPacInternal 0 POINT.TNG ~POLE_GO_FAST
+32  1 SPOINT 0.0     INPUT  0  0 %encPacInternal 0 POINT.TNG ~DI_ESTOP_OK
+32  1 SPOINT 0.0     INPUT  1  0 %encPacInternal 0 POINT.TNG ~DI_DUPS_TVS
+32  1 SPOINT 0.0     INPUT  2  0 %encPacInternal 0 POINT.TNG ~DI_PAC_MCB
+32  1 SPOINT 0.0     INPUT  3  0 %encPacInternal 0 POINT.TNG ~DI_24vCtrl_MCB
+32  1 SPOINT 0.0     INPUT  4  0 %encPacInternal 0 POINT.TNG ~DI_PoleFans_MCB
+32  1 SPOINT 0.0     INPUT  5  0 %encPacInternal 0 POINT.TNG ~DI_TailFans_MCB
+32  1 SPOINT 0.0     INPUT  6  0 %encPacInternal 0 POINT.TNG ~DI_24vPSU_OK
+32  1 SPOINT 0.0     INPUT 11  0 %encPacInternal 0 POINT.TNG ~DI_Tscope_MCB
+32  1 SPOINT 0.0     INPUT 12  0 %encPacInternal 0 POINT.TNG ~DI_Webcam_MCB
+32  1 SPOINT 0.0     INPUT 15  0 %encPacInternal 0 POINT.TNG ~DI_Utility_TVS
+32  1 SPOINT 0.0     INPUT 18  0 %encPacInternal 0 POINT.TNG ~DI_Coolant_MCB
+32  1 SPOINT 0.0     INPUT 19  0 %encPacInternal 0 POINT.TNG ~DI_FUPS_TVS
+32  1 SPOINT 0.0     INPUT 22  0 %encPacInternal 0 POINT.TNG ~DI_Enet_OK
+32  1 SPOINT 0.0     INPUT 23  0 %encPacInternal 0 POINT.TNG ~DI_Pole_Open_LS
+32  1 SPOINT 0.0     INPUT 24  0 %encPacInternal 0 POINT.TNG ~DI_Pole_Closed_LS
+32  1 SPOINT 0.0     INPUT 25  0 %encPacInternal 0 POINT.TNG ~DI_Pole_Fast_LS
+32  1 SPOINT 0.0     INPUT 26  0 %encPacInternal 0 POINT.TNG ~DI_Tail_Open_LS
+32  1 SPOINT 0.0     INPUT 27  0 %encPacInternal 0 POINT.TNG ~DI_Tail_Closed_LS
+32  1 SPOINT 0.0     INPUT 28  0 %encPacInternal 0 POINT.TNG ~DI_Tail_Fast_LS
+32  1 SPOINT 0.0     INPUT 29  0 %encPacInternal 0 POINT.TNG ~DI_Lights_Enter_SW
+32  1 SPOINT 0.0     INPUT 30  0 %encPacInternal 0 POINT.TNG ~DI_Lights_Exit_SW
+32  1 SPOINT 0.0     INPUT 31  0 %encPacInternal 0 POINT.TNG ~DI_RightDoor_LS
+32  1 SPOINT 0.0     INPUT  0  1 %encPacInternal 0 POINT.TNG ~DI_LeftDoor_LS
+32  1 SPOINT 0.0     INPUT  1  1 %encPacInternal 0 POINT.TNG ~DI_CabinetDoor_LS
+32  1 SPOINT 0.0     INPUT  2  1 %encPacInternal 0 POINT.TNG ~DI_UltimateClosed_LS
+32  1 SPOINT 0.0     INPUT  3  1 %encPacInternal 0 POINT.TNG ~DI_PendantStow_SW
+32  1 SPOINT 0.0     INPUT  4  1 %encPacInternal 0 POINT.TNG ~DI_RightStormLock_LS
+32  1 SPOINT 0.0     INPUT  5  1 %encPacInternal 0 POINT.TNG ~DI_LeftStormLock_LS
+32  1 SPOINT 0.0     INPUT  6  1 %encPacInternal 0 POINT.TNG ~DI_FanStop_SW
+32  1 SPOINT 0.0     INPUT  7  1 %encPacInternal 0 POINT.TNG ~DI_FanAuto_SW
+32  1 SPOINT 0.0     INPUT  8  1 %encPacInternal 0 POINT.TNG ~DI_PoleSelect_SW
+32  1 SPOINT 0.0     INPUT  9  1 %encPacInternal 0 POINT.TNG ~DI_TailSelect_SW
+32  1 SPOINT 0.0     INPUT 10  1 %encPacInternal 0 POINT.TNG ~DI_RoofDisable_SW
+32  1 SPOINT 0.0     INPUT 11  1 %encPacInternal 0 POINT.TNG ~DI_RoofAuto_SW
+32  1 SPOINT 0.0     INPUT 12  1 %encPacInternal 0 POINT.TNG ~DI_CoolantStop_SW
+32  1 SPOINT 0.0     INPUT 13  1 %encPacInternal 0 POINT.TNG ~DI_CoolantAuto_SW
+32  1 SPOINT 0.0     INPUT 14  1 %encPacInternal 0 POINT.TNG ~DI_GoFast_SW
+32  1 SPOINT 0.0     INPUT 15  1 %encPacInternal 0 POINT.TNG ~DI_TrapKey_SW
+32  1 SPOINT 0.0     INPUT 18  1 %encPacInternal 0 POINT.TNG ~DI_PendantOpen_SW
+32  1 SPOINT 0.0     INPUT 19  1 %encPacInternal 0 POINT.TNG ~DI_PendantClose_SW
+32  1 SPOINT 0.0     INPUT 20  1 %encPacInternal 0 POINT.TNG ~DI_PanelFans_Blower_MCB
+32  1 SPOINT 0.0     INPUT 21  1 %encPacInternal 0 POINT.TNG ~DI_MuteTest_SW
+32  1 SPOINT 0.0     INPUT 22  1 %encPacInternal 0 POINT.TNG ~DI_SmokePWR_SEN
+32  1 SPOINT 0.0     INPUT 23  1 %encPacInternal 0 POINT.TNG ~DI_Smoke_SEN
+32  1 SPOINT 0.0     INPUT 24  1 %encPacInternal 0 POINT.TNG ~DI_SmokeHeat_SEN
+32  1 SPOINT 0.0     INPUT 25  1 %encPacInternal 0 POINT.TNG ~DI_FenceClosed_SEN
+ 4  1 SPOINT 0.0    OUTPUT  0  2 %encPacInternal 0 POINT.TNG ~DO_PAC_MCB
+ 4  1 SPOINT 0.0    OUTPUT  1  2 %encPacInternal 0 POINT.TNG ~DO_24vCTRL_MCB
+ 4  1 SPOINT 0.0    OUTPUT  2  2 %encPacInternal 0 POINT.TNG ~DO_PoleFans_MCB
+ 4  1 SPOINT 0.0    OUTPUT  3  2 %encPacInternal 0 POINT.TNG ~DO_TailFans_MCB
+ 4  1 SPOINT 0.0    OUTPUT  0  3 %encPacInternal 0 POINT.TNG ~DO_Coolant_MCB
+ 4  1 SPOINT 0.0    OUTPUT  2  3 %encPacInternal 0 POINT.TNG ~DO_Lights_RLA
+ 4  1 SPOINT 0.0    OUTPUT  0  4 %encPacInternal 0 POINT.TNG ~DO_Webcam_RLA
+ 4  1 SPOINT 0.0    OUTPUT  3  4 %encPacInternal 0 POINT.TNG ~DO_OutsideRed_LED
+ 4  1 SPOINT 0.0    OUTPUT  0  5 %encPacInternal 0 POINT.TNG ~DO_OutsideGreen_LED
+ 4  1 SPOINT 0.0    OUTPUT  1  5 %encPacInternal 0 POINT.TNG ~DO_PanelFans_Blower_MCB
+ 4  1 SPOINT 0.0    OUTPUT  3  5 %encPacInternal 0 POINT.TNG ~DO_PanelRed_LED
+ 4  1 SPOINT 0.0    OUTPUT  0  6 %encPacInternal 0 POINT.TNG ~DO_PanelGreen_LED
+ 4  1 SPOINT 0.0    OUTPUT  1  6 %encPacInternal 0 POINT.TNG ~DO_PanelBlue_LED
+ 4  1 SPOINT 0.0    OUTPUT  2  6 %encPacInternal 0 POINT.TNG ~DO_Sounder
+ 2  1 APOINT    0.0000 69  0  7 %encPacInternal 0 POINT.TNG ~AI_PoleFanExhaust_TACH
+ 2  1 APOINT    0.0000 69  1  7 %encPacInternal 0 POINT.TNG ~AI_CabFanIntake_TACH
+ 4  1 APOINT -150.0000 0  0  8 %encPacInternal 0 POINT.TNG ~AI_AqHumidity_SEN
+ 100.0000 -150.0000 ~AI_AqHumidity_SEN SET.SCALE
+ 4  1 APOINT -190.0000 0  1  8 %encPacInternal 0 POINT.TNG ~AI_AqTemp_SEN
+  60.0000 -190.0000 ~AI_AqTemp_SEN SET.SCALE
+ 2  1 APOINT -200.0000 10  0  9 %encPacInternal 0 POINT.TNG ~AI_InletAir_RTD
+ 2  1 APOINT -200.0000 10  1  9 %encPacInternal 0 POINT.TNG ~AI_OutletAir_RTD
+ 2  1 APOINT -200.0000 10  0 10 %encPacInternal 0 POINT.TNG ~AI_CabExhaust_RTD
+ 2  1 APOINT -200.0000 10  1 10 %encPacInternal 0 POINT.TNG ~AI_Coolant_RTD
+ 2  1 APOINT    0.0000 165  0 11 %encPacInternal 0 POINT.TNG ~AO_Wall_Fans_VDC
+  10.0000    0.0000 ~AO_Wall_Fans_VDC SET.RANGE
+ 2  1 APOINT    0.0000 165  1 11 %encPacInternal 0 POINT.TNG ~AO_Panel_Fans_VDC
+ 4  1 SPOINT 0.0    OUTPUT  0 12 %encPacInternal 0 POINT.TNG ~DO_TailEnable_NO
+ 4  1 SPOINT 0.0    OUTPUT  1 12 %encPacInternal 0 POINT.TNG ~DO_TailDirection_NO
+ 4  1 SPOINT 0.0    OUTPUT  2 12 %encPacInternal 0 POINT.TNG ~DO_TailStop_NO
+ 4  1 SPOINT 0.0    OUTPUT  3 12 %encPacInternal 0 POINT.TNG ~DO_TailGoFast_NO
+ 4  1 SPOINT 0.0    OUTPUT  0 13 %encPacInternal 0 POINT.TNG ~DO_PoleEnable_NO
+ 4  1 SPOINT 0.0    OUTPUT  1 13 %encPacInternal 0 POINT.TNG ~DO_PoleDirection_NO
+ 4  1 SPOINT 0.0    OUTPUT  2 13 %encPacInternal 0 POINT.TNG ~DO_PoleStop_NO
+ 4  1 SPOINT 0.0    OUTPUT  3 13 %encPacInternal 0 POINT.TNG ~DO_PoleGoFast_NO
 : 1_0
 
 1 LINE.NUM
@@ -274,16 +255,16 @@ T;
 : 3_32
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 
 5 LINE.NUM
   ^Heartbeat   StopTimer
@@ -380,7 +361,7 @@ T;
 TRUE
 
 1 LINE.NUM
-  ~OPERATE_DISABLE   ?OFF
+  ~DI_RoofDisable_SW   ?ON
 LAND
 
 2 LINE.NUM
@@ -388,29 +369,29 @@ LAND
 LAND
 
 3 LINE.NUM
-  ~OPERATE_AUTO   ?OFF
+  ~DI_RoofAuto_SW   ?OFF
 LAND
 IF -6 ELSE -2 THEN JUMP ;
 : 3_2
 TRUE
 
 1 LINE.NUM
-  ~OPERATE_AUTO   ?OFF
+  ~DI_RoofAuto_SW   ?OFF
 LAND
 
 2 LINE.NUM
-  ~OPERATE_DISABLE   ?ON
+  ~DI_RoofDisable_SW   ?OFF
 LAND
 IF -9 ELSE 0 THEN JUMP ;
 : 3_122
 TRUE
 
 1 LINE.NUM
-  ~OPERATE_AUTO   ?ON
+  ~DI_RoofAuto_SW   ?ON
 LAND
 
 2 LINE.NUM
-  ~OPERATE_DISABLE   ?OFF
+  ~DI_RoofDisable_SW   ?ON
 LAND
 
 3 LINE.NUM
@@ -697,10 +678,10 @@ T;
 12 LINE.NUM " , Switch=" *StatusString $CAT 
 
 14 LINE.NUM 0 ^switchAccum @! 
-16 LINE.NUM ~GO_FAST_BUTTON @@I IF 
+16 LINE.NUM ~DI_GoFast_SW @@I IF 
 17 LINE.NUM 1 ^switchAccum @! 
 18 LINE.NUM THEN 
-20 LINE.NUM ~TRAP_KEY_IN @@I 1 = IF 
+20 LINE.NUM ~DI_TrapKey_SW @@I 1 = IF 
 21 LINE.NUM ^switchAccum @@ 2 +  ^switchAccum @! 
 22 LINE.NUM THEN 
 27 LINE.NUM ^switchAccum @@ *DoorEnum  I>$ 
@@ -708,7 +689,7 @@ T;
 
 29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
 
-30 LINE.NUM ~TOP_JOIN_CLOSED @@I 0 = IF 
+30 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
 31 LINE.NUM " 0" *StatusString $CAT 
 
 32 LINE.NUM ELSE 
@@ -719,7 +700,7 @@ T;
 
 39 LINE.NUM " , Door=" *StatusString $CAT 
 
-40 LINE.NUM ~RIGHT_DOOR @@I ~LEFT_DOOR @@I 0 = LOR  IF 
+40 LINE.NUM ~DI_RightDoor_LS @@I ~DI_LeftDoor_LS @@I 0 = LOR  IF 
 41 LINE.NUM " 1" *StatusString $CAT 
 
 42 LINE.NUM ELSE 
@@ -728,11 +709,11 @@ T;
 44 LINE.NUM THEN 
 46 LINE.NUM " , E-stopON=9" *StatusString $CAT 
 
-48 LINE.NUM ~FenceSecure @@I 1 = IF 
-49 LINE.NUM " , FenceSecure=1" *StatusString $CAT 
+48 LINE.NUM ~DI_FenceClosed_SEN @@I 1 = IF 
+49 LINE.NUM " , DI_FenceClosed_SEN=1" *StatusString $CAT 
 
 50 LINE.NUM ELSE 
-51 LINE.NUM " , FenceSecure=0" *StatusString $CAT 
+51 LINE.NUM " , DI_FenceClosed_SEN=0" *StatusString $CAT 
 
 52 LINE.NUM THEN 
 54 LINE.NUM " , PaddleInPlace=1" *StatusString $CAT 
@@ -768,37 +749,37 @@ T;
 
 82 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
 
-83 LINE.NUM ~INCOMING_AIR_TEMP @@ 7 1 *TempC  FF.R$ 
+83 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 84 LINE.NUM *TempC *StatusString $CAT 
 
 86 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
 
-87 LINE.NUM ~AqwaTemp @@ 7 1 *TempC  FF.R$ 
+87 LINE.NUM ~AI_AqTemp_SEN @@ 7 1 *TempC  FF.R$ 
 88 LINE.NUM *TempC *StatusString $CAT 
 
 90 LINE.NUM " , AqawanHumidity=" *StatusString $CAT 
 
-91 LINE.NUM ~AqwaHum @@ 7 1 *TempC  FF.R$ 
+91 LINE.NUM ~AI_AqHumidity_SEN @@ 7 1 *TempC  FF.R$ 
 92 LINE.NUM *TempC *StatusString $CAT 
 
 94 LINE.NUM " , Air_Temp_Out=" *StatusString $CAT 
 
-95 LINE.NUM ~OUTGOING_AIR_TEMP @@ 7 1 *TempC  FF.R$ 
+95 LINE.NUM ~AI_OutletAir_RTD @@ 7 1 *TempC  FF.R$ 
 96 LINE.NUM *TempC *StatusString $CAT 
 
 98 LINE.NUM " , CoolantTemp=" *StatusString $CAT 
 
-99 LINE.NUM ~COOLANT_TEMP @@ 7 1 *TempC  FF.R$ 
+99 LINE.NUM ~AI_Coolant_RTD @@ 7 1 *TempC  FF.R$ 
 100 LINE.NUM *TempC *StatusString $CAT 
 
 102 LINE.NUM " , RoofTemp=" *StatusString $CAT 
 
-103 LINE.NUM ~AQ_OUTSIDE_TEMP @@ 7 1 *TempC  FF.R$ 
+103 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 104 LINE.NUM *TempC *StatusString $CAT 
 
 106 LINE.NUM " , PanelTemp=" *StatusString $CAT 
 
-107 LINE.NUM ~AQ_OUTSIDE_TEMP @@ 7 1 *TempC  FF.R$ 
+107 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 108 LINE.NUM *TempC *StatusString $CAT 
 
 15 JUMP ;
@@ -942,7 +923,7 @@ T;
 : 7_295
 
 1 LINE.NUM
-  ~LIGHTS_RELAY_OUT   OFF
+  ~DO_Lights_RLA   OFF
 
 2 LINE.NUM
   " 111" 
@@ -986,7 +967,7 @@ T;
 : 7_327
 
 1 LINE.NUM
-  ~LIGHTS_RELAY_OUT   ON
+  ~DO_Lights_RLA   ON
 
 2 LINE.NUM
   " 114" 
@@ -1124,94 +1105,94 @@ IF -53 ELSE 17 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_CLOSED   ?ON
+  ~DI_Tail_Closed_LS   ?ON
 LAND
 IF -53 ELSE 0 THEN JUMP ;
 : 7_194
 TRUE
 
 1 LINE.NUM
-  ~TAIL_OPEN_NOT_REACHED   ?OFF
+  ~DI_Tail_Open_LS   ?OFF
 LAND
 IF -53 ELSE -52 THEN JUMP ;
 : 7_210
 TRUE
 
 1 LINE.NUM
-  ~RIGHT_DOOR @@ 
-  ~LEFT_DOOR @@   LAND
+  ~DI_RightDoor_LS @@ 
+  ~DI_LeftDoor_LS @@   LAND
 LAND
 IF -51 ELSE 0 THEN JUMP ;
 : 7_211
 TRUE
 
 1 LINE.NUM
-  ~RIGHT_DOOR   ?ON
+  ~DI_RightDoor_LS   ?ON
 LAND
 IF -51 ELSE 0 THEN JUMP ;
 : 7_212
 TRUE
 
 1 LINE.NUM
-  ~LEFT_DOOR   ?ON
+  ~DI_LeftDoor_LS   ?ON
 LAND
 IF -51 ELSE -50 THEN JUMP ;
 : 7_224
 TRUE
 
 1 LINE.NUM
-  ~TRAP_KEY_IN @@ 
-  ~GO_FAST_BUTTON @@   LAND
+  ~DI_TrapKey_SW @@ 
+  ~DI_GoFast_SW @@   LAND
 LAND
 IF -50 ELSE 0 THEN JUMP ;
 : 7_225
 TRUE
 
 1 LINE.NUM
-  ~TRAP_KEY_IN   ?ON
+  ~DI_TrapKey_SW   ?ON
 LAND
 IF -50 ELSE 0 THEN JUMP ;
 : 7_226
 TRUE
 
 1 LINE.NUM
-  ~GO_FAST_BUTTON   ?ON
+  ~DI_GoFast_SW   ?ON
 LAND
 IF -50 ELSE -49 THEN JUMP ;
 : 7_247
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_SELECT   ?ON
+  ~DI_PoleSelect_SW   ?ON
 LAND
 IF -48 ELSE -49 THEN JUMP ;
 : 7_248
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_SELECT   ?ON
+  ~DI_TailSelect_SW   ?ON
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_249
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_SELECT @@ 
-  ~TAIL_SIDE_SELECT @@   LAND
+  ~DI_PoleSelect_SW @@ 
+  ~DI_TailSelect_SW @@   LAND
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_250
 TRUE
 
 1 LINE.NUM
-  ~POLE_OPEN_NOT_REACHED   ?OFF
+  ~DI_Pole_Open_LS   ?OFF
 LAND
 IF -48 ELSE -61 THEN JUMP ;
 : 7_252
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_CLOSED   ?ON
+  ~DI_Pole_Closed_LS   ?ON
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_257
@@ -1493,16 +1474,16 @@ T;
 : 5_46
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 -2 JUMP ;
 : 5_52
 
@@ -1518,36 +1499,28 @@ T;
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_SELECT   ?ON
+  ~DI_PoleSelect_SW   ?OFF
 LAND
 IF -10 ELSE -8 THEN JUMP ;
 : 5_12
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_SELECT   ?ON
+  ~DI_TailSelect_SW   ?ON
 LAND
 IF -10 ELSE -2 THEN JUMP ;
 : 5_28
 TRUE
 
 1 LINE.NUM
-  ~PENDANT_OPEN   ?ON
-LAND
-
-2 LINE.NUM
-  ~RESET_PB_MONITOR   ?OFF
+  ~DI_PendantOpen_SW   ?ON
 LAND
 IF -9 ELSE -5 THEN JUMP ;
 : 5_29
 TRUE
 
 1 LINE.NUM
-  ~RESET_PB_MONITOR   ?OFF
-LAND
-
-2 LINE.NUM
-  ~PENDANT_CLOSE   ?ON
+  ~DI_PendantClose_SW   ?ON
 LAND
 IF -9 ELSE -7 THEN JUMP ;
 T: T5
@@ -1573,24 +1546,24 @@ T;
 : 11_9
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 8 JUMP ;
 : 11_12
 
 1 LINE.NUM
-  ~POLE_GO_FAST   ON
+  ~DO_PoleGoFast_NO   ON
 
 2 LINE.NUM
-  ~POLE_DIR   ON
+  ~DO_PoleDirection_NO   ON
 0 JUMP ;
 : 11_13
 
@@ -1600,15 +1573,15 @@ T;
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   OFF
+  ~DO_PoleStop_NO   OFF
 
 3 LINE.NUM
-  ~POLE_ENABLE   ON
+  ~DO_PoleEnable_NO   ON
 6 JUMP ;
 : 11_18
 
 1 LINE.NUM
-  ~POLE_DIR   OFF
+  ~DO_PoleDirection_NO   OFF
 10 JUMP ;
 : 11_20
 
@@ -1618,10 +1591,10 @@ T;
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 4 JUMP ;
 : 11_24
 
@@ -1631,20 +1604,20 @@ T;
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 3 JUMP ;
 : 11_29
 
 1 LINE.NUM
-  ~POLE_GO_FAST   OFF
+  ~DO_PoleGoFast_NO   OFF
 1 JUMP ;
 : 11_31
 
 1 LINE.NUM
-  ~POLE_GO_FAST   ON
+  ~DO_PoleGoFast_NO   ON
 0 JUMP ;
 : 11_33
 
@@ -1654,10 +1627,10 @@ T;
   *PoleEnum   $MOVE
 
 2 LINE.NUM
-  ~POLE_STOP   OFF
+  ~DO_PoleStop_NO   OFF
 
 3 LINE.NUM
-  ~POLE_ENABLE   ON
+  ~DO_PoleEnable_NO   ON
 0 JUMP ;
 : 11_42
 
@@ -1690,21 +1663,21 @@ IF 1 ELSE -12 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~POLE_OPEN_NOT_REACHED   ?ON
+  ~DI_Pole_Open_LS   ?ON
 LAND
 IF -12 ELSE -9 THEN JUMP ;
 : 11_16
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_CLOSED   ?OFF
+  ~DI_Pole_Closed_LS   ?ON
 LAND
 IF -11 ELSE -9 THEN JUMP ;
 : 11_17
 TRUE
 
 1 LINE.NUM
-  ~POLE_CAN_GO_FAST   ?OFF
+  ~DI_Pole_Fast_LS   ?OFF
 LAND
 IF -9 ELSE -8 THEN JUMP ;
 T: T11
@@ -1757,26 +1730,25 @@ T;
   *lastCommand   $MOVE
 0 JUMP ;
 : 0_14
-1 LINE.NUM ~SOUND_ALERT  OFF 
-2 LINE.NUM ~SOUND_ALERT  OFF 
-3 LINE.NUM ~PANEL_BLUE_LED  OFF 
-4 LINE.NUM ~PANEL_LED_RED  OFF 
-5 LINE.NUM ~PANEL_LED_GREEN  OFF 
-6 LINE.NUM ~POLE_DIR  OFF 
-7 LINE.NUM ~TAIL_DIR  OFF 
-8 LINE.NUM ~POLE_ENABLE  OFF 
-9 LINE.NUM ~TAIL_ENABLE  OFF 
-10 LINE.NUM ~POLE_GO_FAST  OFF 
-11 LINE.NUM ~TAIL_GO_FAST  OFF 
-12 LINE.NUM ~OUTSIDE_LED_GREEN  OFF 
-13 LINE.NUM ~OUTSIDE_LED_RED  OFF 
-14 LINE.NUM ~POLE_STOP  ON 
-15 LINE.NUM ~TAIL_STOP  ON 
-16 LINE.NUM ~RESET_RELAY  ON 
-18 LINE.NUM &Manual_auto  START.T DROP  
-22 LINE.NUM &Master_comms  START.T DROP  
-26 LINE.NUM &SYSTEM_READY  START.T DROP  
-39 LINE.NUM &Powerup  STOP.T 
+1 LINE.NUM ~DO_Sounder  OFF 
+2 LINE.NUM ~DO_Sounder  OFF 
+3 LINE.NUM ~DO_PanelBlue_LED  OFF 
+4 LINE.NUM ~DO_PanelRed_LED  OFF 
+5 LINE.NUM ~DO_PanelGreen_LED  OFF 
+6 LINE.NUM ~DO_PoleDirection_NO  OFF 
+7 LINE.NUM ~DO_TailDirection_NO  OFF 
+8 LINE.NUM ~DO_PoleEnable_NO  OFF 
+9 LINE.NUM ~DO_TailEnable_NO  OFF 
+10 LINE.NUM ~DO_PoleGoFast_NO  OFF 
+11 LINE.NUM ~DO_TailGoFast_NO  OFF 
+12 LINE.NUM ~DO_OutsideGreen_LED  OFF 
+13 LINE.NUM ~DO_OutsideRed_LED  OFF 
+14 LINE.NUM ~DO_PoleStop_NO  ON 
+15 LINE.NUM ~DO_TailStop_NO  ON 
+17 LINE.NUM &Manual_auto  START.T DROP  
+21 LINE.NUM &Master_comms  START.T DROP  
+25 LINE.NUM &SYSTEM_READY  START.T DROP  
+38 LINE.NUM &Powerup  STOP.T 
 0 JUMP ;
 T: T0
 DUMMY
@@ -1787,47 +1759,28 @@ T;
 : 17_0
 0 JUMP ;
 : 17_1
-1 LINE.NUM ~OVR1 @@I ~OVR2 @@I LOR  ~OVR3 @@I LOR  ~OVR4 @@I LOR  ~FenceSecure @@I LOR  ~ETH_SWITCH @@I LOR  IF 
-2 LINE.NUM 0 ^OVROK @! 
+1 LINE.NUM ~DI_Utility_TVS @@I ~DI_FUPS_TVS @@I LAND  ~DI_DUPS_TVS @@I LAND  IF 
+2 LINE.NUM 1 ^SPD_OK @! 
 3 LINE.NUM ELSE 
-4 LINE.NUM 1 ^OVROK @! 
+4 LINE.NUM 0 ^SPD_OK @! 
 5 LINE.NUM THEN 
-7 LINE.NUM ~UTIL_BREAKER_1 @@I ~UTIL_AC_2_PANEL_LIGHT @@I LOR  ~UTIL_AC_3_24VDC_SUPPLY @@I LOR  ~UTIL_AC_MAIN @@I LOR  ~UTIL_BREAKER_5 @@I LOR  IF 
-8 LINE.NUM 0 ^UTIL_BREAKER_OK @! 
+7 LINE.NUM ~DI_Webcam_MCB @@I ~DI_Tscope_MCB @@I LAND  IF 
+8 LINE.NUM 1 ^Ups_Breaker_Ok @! 
 9 LINE.NUM ELSE 
-10 LINE.NUM 1 ^UTIL_BREAKER_OK @! 
+10 LINE.NUM 0 ^Ups_Breaker_Ok @! 
 11 LINE.NUM THEN 
-13 LINE.NUM ~UPS_AC_MAIN @@I ~UPS_AC_2 @@I LAND  ~UPS_AC_3_LIGHTS @@I LAND  ~UPS_AC_4 @@I LAND  ~UPS_AC_1 @@I LAND  IF 
-14 LINE.NUM 1 ^Ups_Breaker_Ok @! 
-15 LINE.NUM ELSE 
-16 LINE.NUM 0 ^Ups_Breaker_Ok @! 
-17 LINE.NUM THEN 
-21 LINE.NUM ~ESTOP_OK_TO_RUN @@I ~LEFT_STORM_LOCK @@I LAND  ~TOP_JOIN_CLOSED @@I LAND  ~PENDANT_OPEN @@I LAND  ~GO_FAST_PB_MONITOR @@I LAND  IF 
-22 LINE.NUM 1 ^System_Safe_To_Run @! 
-23 LINE.NUM 1 ^Contactors_OK @! 
-24 LINE.NUM ~RESET_RELAY  OFF 
-25 LINE.NUM ELSE 
-25 LINE.NUM ~ESTOP_OK_TO_RUN @@I LNOT  ~LEFT_STORM_LOCK @@I ~TOP_JOIN_CLOSED @@I LOR  ~PENDANT_OPEN @@I LNOT  LOR  ~GO_FAST_PB_MONITOR @@I LNOT  LOR  LAND  IF 
-26 LINE.NUM 0 ^System_Safe_To_Run @! 
-27 LINE.NUM 0 ^Contactors_OK @! 
-28 LINE.NUM ELSE 
-29 LINE.NUM 0 ^System_Safe_To_Run @! 
-30 LINE.NUM THEN THEN 
-33 LINE.NUM ~TRAP_KEY_IN @@I ~GO_FAST_BUTTON @@I LAND  IF 
-34 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
-35 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
-36 LINE.NUM ~OUTPUT_GO_FAST  ON 
-37 LINE.NUM ELSE 
-37 LINE.NUM ~RIGHT_DOOR @@I LNOT  ~LEFT_DOOR @@I LNOT  LOR  ~TRAP_KEY_IN @@I LNOT  LOR  ~GO_FAST_BUTTON @@I LNOT  LOR  IF 
-38 LINE.NUM 0 ^AQ_Go_Fast_Ok @! 
-39 LINE.NUM 0 ^Tel_Go_Fast_OK @! 
-40 LINE.NUM ~OUTPUT_GO_FAST  OFF 
-41 LINE.NUM ELSE 
-42 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
-43 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
-44 LINE.NUM ~OUTPUT_GO_FAST  ON 
-45 LINE.NUM THEN THEN 
-48 LINE.NUM 100  DELAY 
+16 LINE.NUM ~DI_TrapKey_SW @@I ~DI_GoFast_SW @@I LAND  IF 
+17 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
+18 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
+19 LINE.NUM ELSE 
+19 LINE.NUM ~DI_RightDoor_LS @@I LNOT  ~DI_LeftDoor_LS @@I LNOT  LOR  ~DI_TrapKey_SW @@I LNOT  LOR  ~DI_GoFast_SW @@I LNOT  LOR  IF 
+20 LINE.NUM 0 ^AQ_Go_Fast_Ok @! 
+21 LINE.NUM 0 ^Tel_Go_Fast_OK @! 
+22 LINE.NUM ELSE 
+23 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
+24 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
+25 LINE.NUM THEN THEN 
+28 LINE.NUM 100  DELAY 
 1 JUMP ;
 : 17_4
 
@@ -1837,84 +1790,78 @@ T;
 : 17_8
 0 JUMP ;
 : 17_11
-1 LINE.NUM ~LIGHTS_ENTER @@I IF 
+1 LINE.NUM ~DI_Lights_Enter_SW @@I IF 
 2 LINE.NUM 1 ^lightsenterold @! 
 3 LINE.NUM ELSE 
 4 LINE.NUM 0 ^lightsexitold @! 
 5 LINE.NUM THEN 
-6 LINE.NUM ~LIGHTS_EXIT @@I IF 
+6 LINE.NUM ~DI_Lights_Exit_SW @@I IF 
 7 LINE.NUM 1 ^lightsexitold @! 
 8 LINE.NUM ELSE 
 9 LINE.NUM 0 ^lightsexitold @! 
 10 LINE.NUM THEN 
 1 JUMP ;
 : 17_12
-1 LINE.NUM ~LIGHTS_ENTER @@I ^lightsenterold @@ LNOT  = ~LIGHTS_EXIT @@I ^lightsexitold @@ LNOT  = LOR  IF 
-2 LINE.NUM ~LIGHTS_ENTER @@I ^lightsenterold @! 
-3 LINE.NUM ~LIGHTS_EXIT @@I ^lightsexitold @! 
-4 LINE.NUM ~LIGHTS_RELAY_OUT @@I IF 
-5 LINE.NUM ~LIGHTS_RELAY_OUT  OFF 
+1 LINE.NUM ~DI_Lights_Enter_SW @@I ^lightsenterold @@ LNOT  = ~DI_Lights_Exit_SW @@I ^lightsexitold @@ LNOT  = LOR  IF 
+2 LINE.NUM ~DI_Lights_Enter_SW @@I ^lightsenterold @! 
+3 LINE.NUM ~DI_Lights_Exit_SW @@I ^lightsexitold @! 
+4 LINE.NUM ~DO_Lights_RLA @@I IF 
+5 LINE.NUM ~DO_Lights_RLA  OFF 
 6 LINE.NUM ELSE 
-6 LINE.NUM ~LIGHTS_RELAY_OUT @@I LNOT  IF 
-7 LINE.NUM ~LIGHTS_RELAY_OUT  ON 
+6 LINE.NUM ~DO_Lights_RLA @@I LNOT  IF 
+7 LINE.NUM ~DO_Lights_RLA  ON 
 8 LINE.NUM THEN THEN 
 9 LINE.NUM ELSE 
-10 LINE.NUM ~LIGHTS_RELAY_OUT @@I ~LIGHTS_RELAY_OUT @! 
+10 LINE.NUM ~DO_Lights_RLA @@I ~DO_Lights_RLA @! 
 11 LINE.NUM THEN 
 12 LINE.NUM 100  DELAY 
 -4 JUMP ;
 : 17_13
-1 LINE.NUM ~FANS_AUTO @@I IF 
-2 LINE.NUM 10 I>F ~RIGHT_SIDE_FAN @! 
-3 LINE.NUM 10 I>F ~LEFT_SIDE_FAN @! 
-4 LINE.NUM 10 I>F ~FAN_PANEL_IN @! 
-5 LINE.NUM 10 I>F ~FAN_PANEL_OUT @! 
-6 LINE.NUM 1 ~PANEL_LED_GREEN @! 
-7 LINE.NUM 1 ~PANEL_LED_RED @! 
-8 LINE.NUM 1 ~OUTSIDE_LED_RED @! 
-9 LINE.NUM 1 ~OUTSIDE_LED_GREEN @! 
-10 LINE.NUM 0 ~PANEL_BLUE_LED @! 
-11 LINE.NUM 0 ~SOUND_ALERT @! 
-12 LINE.NUM ELSE 
-12 LINE.NUM ~FANS_STOP @@I IF 
-13 LINE.NUM 0 I>F ~RIGHT_SIDE_FAN @! 
-14 LINE.NUM 0 I>F ~LEFT_SIDE_FAN @! 
-15 LINE.NUM 0 I>F ~FAN_PANEL_IN @! 
-16 LINE.NUM 0 I>F ~FAN_PANEL_OUT @! 
-17 LINE.NUM 1 ~PANEL_LED_GREEN @! 
-18 LINE.NUM 0 ~PANEL_LED_RED @! 
-19 LINE.NUM 0 ~OUTSIDE_LED_RED @! 
-20 LINE.NUM 1 ~OUTSIDE_LED_GREEN @! 
-21 LINE.NUM 0 ~PANEL_BLUE_LED @! 
-22 LINE.NUM 0 ~SOUND_ALERT @! 
-23 LINE.NUM ELSE 
-24 LINE.NUM 5 I>F ~RIGHT_SIDE_FAN @! 
-25 LINE.NUM 5 I>F ~LEFT_SIDE_FAN @! 
-26 LINE.NUM 5 I>F ~FAN_PANEL_IN @! 
-27 LINE.NUM 5 I>F ~FAN_PANEL_OUT @! 
-28 LINE.NUM 0 ~PANEL_LED_GREEN @! 
-29 LINE.NUM 1 ~PANEL_LED_RED @! 
-30 LINE.NUM 1 ~OUTSIDE_LED_RED @! 
-31 LINE.NUM 0 ~OUTSIDE_LED_GREEN @! 
-32 LINE.NUM 0 ~PANEL_BLUE_LED @! 
-33 LINE.NUM 0 ~SOUND_ALERT @! 
-34 LINE.NUM THEN THEN 
-36 LINE.NUM 100  DELAY 
+1 LINE.NUM ~DI_FanAuto_SW @@I IF 
+2 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+3 LINE.NUM 10 I>F ~AO_Panel_Fans_VDC @! 
+4 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+5 LINE.NUM 1 ~DO_PanelRed_LED @! 
+6 LINE.NUM 1 ~DO_OutsideRed_LED @! 
+7 LINE.NUM 1 ~DO_OutsideGreen_LED @! 
+8 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+9 LINE.NUM 0 ~DO_Sounder @! 
+10 LINE.NUM ELSE 
+10 LINE.NUM ~DI_FanStop_SW @@I IF 
+11 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+12 LINE.NUM 0 I>F ~AO_Panel_Fans_VDC @! 
+13 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+14 LINE.NUM 0 ~DO_PanelRed_LED @! 
+15 LINE.NUM 0 ~DO_OutsideRed_LED @! 
+16 LINE.NUM 1 ~DO_OutsideGreen_LED @! 
+17 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+18 LINE.NUM 0 ~DO_Sounder @! 
+19 LINE.NUM ELSE 
+20 LINE.NUM 5 I>F ~AO_Wall_Fans_VDC @! 
+21 LINE.NUM 5 I>F ~AO_Panel_Fans_VDC @! 
+22 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+23 LINE.NUM 1 ~DO_PanelRed_LED @! 
+24 LINE.NUM 1 ~DO_OutsideRed_LED @! 
+25 LINE.NUM 0 ~DO_OutsideGreen_LED @! 
+26 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+27 LINE.NUM 0 ~DO_Sounder @! 
+28 LINE.NUM THEN THEN 
+30 LINE.NUM 100  DELAY 
 -2 JUMP ;
 : 17_14
 1 LINE.NUM ^System_Safe_To_Run @@ ^Contactors_OK @@ 1 = LAND  ^Ups_Breaker_Ok @@ 1 = LAND  IF 
-2 LINE.NUM ~PANEL_LED_GREEN  ON 
-3 LINE.NUM ~PANEL_LED_RED  OFF 
-4 LINE.NUM ~PANEL_BLUE_LED  OFF 
+2 LINE.NUM ~DO_PanelGreen_LED  ON 
+3 LINE.NUM ~DO_PanelRed_LED  OFF 
+4 LINE.NUM ~DO_PanelBlue_LED  OFF 
 5 LINE.NUM ELSE 
 5 LINE.NUM ^System_Safe_To_Run @@ ^Contactors_OK @@ 1 = LAND  ^Ups_Breaker_Ok @@ 0 = LAND  IF 
-6 LINE.NUM ~PANEL_LED_GREEN  ON 
-7 LINE.NUM ~PANEL_LED_RED  ON 
-8 LINE.NUM ~PANEL_BLUE_LED  OFF 
+6 LINE.NUM ~DO_PanelGreen_LED  ON 
+7 LINE.NUM ~DO_PanelRed_LED  ON 
+8 LINE.NUM ~DO_PanelBlue_LED  OFF 
 9 LINE.NUM ELSE 
-10 LINE.NUM ~PANEL_LED_GREEN  OFF 
-11 LINE.NUM ~PANEL_LED_RED  ON 
-12 LINE.NUM ~PANEL_BLUE_LED  ON 
+10 LINE.NUM ~DO_PanelGreen_LED  OFF 
+11 LINE.NUM ~DO_PanelRed_LED  ON 
+12 LINE.NUM ~DO_PanelBlue_LED  ON 
 14 LINE.NUM THEN THEN 
 0 JUMP ;
 T: T17
@@ -1934,38 +1881,38 @@ T;
 : 13_2
 
 1 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 2 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 
 3 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 4 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 15 JUMP ;
 : 13_10
 
 1 LINE.NUM
-  ~POLE_STOP   ON
+  ~DO_PoleStop_NO   ON
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~POLE_ENABLE   OFF
+  ~DO_PoleEnable_NO   OFF
 
 4 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 8 JUMP ;
 : 13_13
 
 1 LINE.NUM
-  ~TAIL_GO_FAST   ON
+  ~DO_TailGoFast_NO   ON
 
 2 LINE.NUM
-  ~TAIL_DIR   ON
+  ~DO_TailDirection_NO   ON
 0 JUMP ;
 : 13_14
 
@@ -1975,10 +1922,10 @@ T;
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_STOP   OFF
+  ~DO_TailStop_NO   OFF
 
 3 LINE.NUM
-  ~TAIL_ENABLE   ON
+  ~DO_TailEnable_NO   ON
 6 JUMP ;
 : 13_17
 
@@ -1988,15 +1935,15 @@ T;
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 
 3 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 5 JUMP ;
 : 13_21
 
 1 LINE.NUM
-  ~TAIL_DIR   OFF
+  ~DO_TailDirection_NO   OFF
 9 JUMP ;
 : 13_24
 
@@ -2006,20 +1953,20 @@ T;
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_STOP   ON
+  ~DO_TailStop_NO   ON
 
 3 LINE.NUM
-  ~TAIL_ENABLE   OFF
+  ~DO_TailEnable_NO   OFF
 3 JUMP ;
 : 13_28
 
 1 LINE.NUM
-  ~TAIL_GO_FAST   OFF
+  ~DO_TailGoFast_NO   OFF
 1 JUMP ;
 : 13_31
 
 1 LINE.NUM
-  ~TAIL_GO_FAST   ON
+  ~DO_TailGoFast_NO   ON
 0 JUMP ;
 : 13_33
 
@@ -2029,10 +1976,10 @@ T;
   *TailEnum   $MOVE
 
 2 LINE.NUM
-  ~TAIL_STOP   OFF
+  ~DO_TailStop_NO   OFF
 
 3 LINE.NUM
-  ~TAIL_ENABLE   ON
+  ~DO_TailEnable_NO   ON
 0 JUMP ;
 : 13_38
 
@@ -2065,21 +2012,21 @@ IF 1 ELSE -12 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~TAIL_OPEN_NOT_REACHED   ?ON
+  ~DI_Tail_Open_LS   ?ON
 LAND
 IF -12 ELSE -10 THEN JUMP ;
 : 13_19
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_CLOSED   ?OFF
+  ~DI_Tail_Closed_LS   ?ON
 LAND
 IF -10 ELSE -9 THEN JUMP ;
 : 13_20
 TRUE
 
 1 LINE.NUM
-  ~TAIL_CAN_GO_FAST   ?OFF
+  ~DI_Tail_Fast_LS   ?OFF
 LAND
 IF -9 ELSE -8 THEN JUMP ;
 T: T13
@@ -2157,12 +2104,12 @@ CREATE V.ARRAY
 ^OLD_COOLING_FAN_FREQ ,
 ^OPEN ,
 ^OPEN_SLOW ,
-^OVROK ,
 ^PANEL_FANS_OK ,
 ^Second_reading ,
 ^Server_Ok_To_Go_Fast ,
 ^SocketElapsed ,
 ^SocketUpTime ,
+^SPD_OK ,
 ^status ,
 ^switchAccum ,
 ^System_Health_Status ,
@@ -2203,102 +2150,84 @@ CREATE B.ARRAY
 %encPacInternal ,
  0 ,
 CREATE P.ARRAY
-~CABINET_DOOR_CLOSED ,
-~COOLANT_AUTO ,
-~COOLANT_RELAY_OUT ,
-~COOLANT_STOP ,
-~DI_EstopOK ,
-~ESTOP_OK_TO_RUN ,
-~ETH_SWITCH ,
-~FANS_AUTO ,
-~FANS_RELAY_OUT ,
-~FANS_STOP ,
-~FenceSecure ,
-~GO_FAST_BUTTON ,
-~GO_FAST_PB_MONITOR ,
-~LEFT_DOOR ,
-~LEFT_STORM_LOCK ,
-~LIGHTS_ENTER ,
-~LIGHTS_EXIT ,
-~LIGHTS_RELAY_OUT ,
-~OPERATE_AUTO ,
-~OPERATE_DISABLE ,
-~OUTPUT_GO_FAST ,
-~OUTSIDE_LED_GREEN ,
-~OUTSIDE_LED_RED ,
-~OVR1 ,
-~OVR2 ,
-~OVR3 ,
-~OVR4 ,
-~PADDLE_IN_PLACE ,
-~PANEL_BLUE_LED ,
-~PANEL_LED_GREEN ,
-~PANEL_LED_RED ,
-~PENDANT_CLOSE ,
-~PENDANT_IS_STOWED ,
-~PENDANT_OPEN ,
-~POLE_CAN_GO_FAST ,
-~POLE_DIR ,
-~POLE_ENABLE ,
-~POLE_GO_FAST ,
-~POLE_OPEN_NOT_REACHED ,
-~POLE_SIDE_CLOSED ,
-~POLE_SIDE_SELECT ,
-~POLE_STOP ,
-~q1 ,
-~q11 ,
-~q12 ,
-~q13 ,
-~q14 ,
-~q15 ,
-~q2 ,
-~q3 ,
-~q4 ,
-~q6 ,
-~q7 ,
-~q8 ,
-~RESET_BUTTON ,
-~RESET_PB_MONITOR ,
-~RESET_RELAY ,
-~RIGHT_DOOR ,
-~RIGHT_STORM_LOCK ,
-~SOUND_ALERT ,
-~TAIL_CAN_GO_FAST ,
-~TAIL_DIR ,
-~TAIL_ENABLE ,
-~TAIL_GO_FAST ,
-~TAIL_OPEN_NOT_REACHED ,
-~TAIL_SIDE_CLOSED ,
-~TAIL_SIDE_SELECT ,
-~TAIL_STOP ,
-~TOP_JOIN_CLOSED ,
-~TRAP_KEY_IN ,
-~UPS_AC_1 ,
-~UPS_AC_2 ,
-~UPS_AC_3_LIGHTS ,
-~UPS_AC_4 ,
-~UPS_AC_MAIN ,
-~UTIL_AC_2_PANEL_LIGHT ,
-~UTIL_AC_3_24VDC_SUPPLY ,
-~UTIL_AC_MAIN ,
-~UTIL_BREAKER_1 ,
-~UTIL_BREAKER_5 ,
-~AQ_OUTSIDE_TEMP ,
-~AQ_PANEL_EXHAUST_TEMP ,
-~AQ_PANEL_IN_TACH ,
-~AQ_PANEL_OUT_TACH ,
-~AQWA_0m4b_BACK_TEMP ,
-~AqwaHum ,
-~AqwaTemp ,
-~COOLANT_TEMP ,
-~ENC_EXHAUST_TACH ,
-~ENC_INTAKE_TACH ,
-~FAN_PANEL_IN ,
-~FAN_PANEL_OUT ,
-~INCOMING_AIR_TEMP ,
-~LEFT_SIDE_FAN ,
-~OUTGOING_AIR_TEMP ,
-~RIGHT_SIDE_FAN ,
+~DI_24vCtrl_MCB ,
+~DI_24vPSU_OK ,
+~DI_CabinetDoor_LS ,
+~DI_Coolant_MCB ,
+~DI_CoolantAuto_SW ,
+~DI_CoolantStop_SW ,
+~DI_DUPS_TVS ,
+~DI_Enet_OK ,
+~DI_ESTOP_OK ,
+~DI_FanAuto_SW ,
+~DI_FanStop_SW ,
+~DI_FenceClosed_SEN ,
+~DI_FUPS_TVS ,
+~DI_GoFast_SW ,
+~DI_LeftDoor_LS ,
+~DI_LeftStormLock_LS ,
+~DI_Lights_Enter_SW ,
+~DI_Lights_Exit_SW ,
+~DI_MuteTest_SW ,
+~DI_PAC_MCB ,
+~DI_PanelFans_Blower_MCB ,
+~DI_PendantClose_SW ,
+~DI_PendantOpen_SW ,
+~DI_PendantStow_SW ,
+~DI_Pole_Closed_LS ,
+~DI_Pole_Fast_LS ,
+~DI_Pole_Open_LS ,
+~DI_PoleFans_MCB ,
+~DI_PoleSelect_SW ,
+~DI_RightDoor_LS ,
+~DI_RightStormLock_LS ,
+~DI_RoofAuto_SW ,
+~DI_RoofDisable_SW ,
+~DI_Smoke_SEN ,
+~DI_SmokeHeat_SEN ,
+~DI_SmokePWR_SEN ,
+~DI_Tail_Closed_LS ,
+~DI_Tail_Fast_LS ,
+~DI_Tail_Open_LS ,
+~DI_TailFans_MCB ,
+~DI_TailSelect_SW ,
+~DI_TrapKey_SW ,
+~DI_Tscope_MCB ,
+~DI_UltimateClosed_LS ,
+~DI_Utility_TVS ,
+~DI_Webcam_MCB ,
+~DO_24vCTRL_MCB ,
+~DO_Coolant_MCB ,
+~DO_Lights_RLA ,
+~DO_OutsideGreen_LED ,
+~DO_OutsideRed_LED ,
+~DO_PAC_MCB ,
+~DO_PanelBlue_LED ,
+~DO_PanelFans_Blower_MCB ,
+~DO_PanelGreen_LED ,
+~DO_PanelRed_LED ,
+~DO_PoleDirection_NO ,
+~DO_PoleEnable_NO ,
+~DO_PoleFans_MCB ,
+~DO_PoleGoFast_NO ,
+~DO_PoleStop_NO ,
+~DO_Sounder ,
+~DO_TailDirection_NO ,
+~DO_TailEnable_NO ,
+~DO_TailFans_MCB ,
+~DO_TailGoFast_NO ,
+~DO_TailStop_NO ,
+~DO_Webcam_RLA ,
+~AI_AqHumidity_SEN ,
+~AI_AqTemp_SEN ,
+~AI_CabExhaust_RTD ,
+~AI_CabFanIntake_TACH ,
+~AI_Coolant_RTD ,
+~AI_InletAir_RTD ,
+~AI_OutletAir_RTD ,
+~AI_PoleFanExhaust_TACH ,
+~AO_Panel_Fans_VDC ,
+~AO_Wall_Fans_VDC ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -2312,9 +2241,8 @@ CREATE E/RGROUP.ARRAY
 CONFIG_PORTS
 " %encPacInternal  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %encPacInternal ENABLE
-   0.0000 ~AQ_PANEL_IN_TACH IN.F!POINT
-   0.0000 ~ENC_EXHAUST_TACH IN.F!POINT
-   0.0000 ~ENC_INTAKE_TACH IN.F!POINT
+   0.0000 ~AI_PoleFanExhaust_TACH IN.F!POINT
+   0.0000 ~AI_CabFanIntake_TACH IN.F!POINT
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^AQ_Go_Fast_Ok @!
 9 ^AqDemand @!
@@ -2360,13 +2288,13 @@ CONFIG_PORTS
 0.00000000 ^OLD_COOLING_FAN_FREQ @!
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
-0 ^OVROK @!
 0 ^PANEL_FANS_OK @!
 1 ^Second_reading @!
 0 ^Server_Ok_To_Go_Fast @!
 0.0 ^Socket_Timer @!
 0.00000000 ^SocketElapsed @!
 0.00000000 ^SocketUpTime @!
+0 ^SPD_OK @!
 0 ^status @!
 0 ^switchAccum @!
 0 ^System_Health_Status @!
@@ -2413,9 +2341,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 12/10/13 " ;
-: TIMESTAMP ." 13:33:49 " ;
-: CRCSTAMP  ." 7805E33BED2F9D6FA15A1239E4A9211D " ;
+: DATESTAMP ." 12/13/13 " ;
+: TIMESTAMP ." 10:59:21 " ;
+: CRCSTAMP  ." 533022D6D7E4868E13BE44F0EA5BBEF3 " ;
 MAKECHECK
 CLEAR.BREAKS
 

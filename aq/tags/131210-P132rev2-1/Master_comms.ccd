@@ -246,10 +246,10 @@
 12 LINE.NUM " , Switch=" *StatusString $CAT 
 
 14 LINE.NUM 0 ^switchAccum @! 
-16 LINE.NUM ~GO_FAST_BUTTON @@I IF 
+16 LINE.NUM ~DI_GoFast_SW @@I IF 
 17 LINE.NUM 1 ^switchAccum @! 
 18 LINE.NUM THEN 
-20 LINE.NUM ~TRAP_KEY_IN @@I 1 = IF 
+20 LINE.NUM ~DI_TrapKey_SW @@I 1 = IF 
 21 LINE.NUM ^switchAccum @@ 2 +  ^switchAccum @! 
 22 LINE.NUM THEN 
 27 LINE.NUM ^switchAccum @@ *DoorEnum  I>$ 
@@ -257,7 +257,7 @@
 
 29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
 
-30 LINE.NUM ~TOP_JOIN_CLOSED @@I 0 = IF 
+30 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
 31 LINE.NUM " 0" *StatusString $CAT 
 
 32 LINE.NUM ELSE 
@@ -268,7 +268,7 @@
 
 39 LINE.NUM " , Door=" *StatusString $CAT 
 
-40 LINE.NUM ~RIGHT_DOOR @@I ~LEFT_DOOR @@I 0 = LOR  IF 
+40 LINE.NUM ~DI_RightDoor_LS @@I ~DI_LeftDoor_LS @@I 0 = LOR  IF 
 41 LINE.NUM " 1" *StatusString $CAT 
 
 42 LINE.NUM ELSE 
@@ -277,11 +277,11 @@
 44 LINE.NUM THEN 
 46 LINE.NUM " , E-stopON=9" *StatusString $CAT 
 
-48 LINE.NUM ~FenceSecure @@I 1 = IF 
-49 LINE.NUM " , FenceSecure=1" *StatusString $CAT 
+48 LINE.NUM ~DI_FenceClosed_SEN @@I 1 = IF 
+49 LINE.NUM " , DI_FenceClosed_SEN=1" *StatusString $CAT 
 
 50 LINE.NUM ELSE 
-51 LINE.NUM " , FenceSecure=0" *StatusString $CAT 
+51 LINE.NUM " , DI_FenceClosed_SEN=0" *StatusString $CAT 
 
 52 LINE.NUM THEN 
 54 LINE.NUM " , PaddleInPlace=1" *StatusString $CAT 
@@ -317,37 +317,37 @@
 
 82 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
 
-83 LINE.NUM ~INCOMING_AIR_TEMP @@ 7 1 *TempC  FF.R$ 
+83 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 84 LINE.NUM *TempC *StatusString $CAT 
 
 86 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
 
-87 LINE.NUM ~AqwaTemp @@ 7 1 *TempC  FF.R$ 
+87 LINE.NUM ~AI_AqTemp_SEN @@ 7 1 *TempC  FF.R$ 
 88 LINE.NUM *TempC *StatusString $CAT 
 
 90 LINE.NUM " , AqawanHumidity=" *StatusString $CAT 
 
-91 LINE.NUM ~AqwaHum @@ 7 1 *TempC  FF.R$ 
+91 LINE.NUM ~AI_AqHumidity_SEN @@ 7 1 *TempC  FF.R$ 
 92 LINE.NUM *TempC *StatusString $CAT 
 
 94 LINE.NUM " , Air_Temp_Out=" *StatusString $CAT 
 
-95 LINE.NUM ~OUTGOING_AIR_TEMP @@ 7 1 *TempC  FF.R$ 
+95 LINE.NUM ~AI_OutletAir_RTD @@ 7 1 *TempC  FF.R$ 
 96 LINE.NUM *TempC *StatusString $CAT 
 
 98 LINE.NUM " , CoolantTemp=" *StatusString $CAT 
 
-99 LINE.NUM ~COOLANT_TEMP @@ 7 1 *TempC  FF.R$ 
+99 LINE.NUM ~AI_Coolant_RTD @@ 7 1 *TempC  FF.R$ 
 100 LINE.NUM *TempC *StatusString $CAT 
 
 102 LINE.NUM " , RoofTemp=" *StatusString $CAT 
 
-103 LINE.NUM ~AQ_OUTSIDE_TEMP @@ 7 1 *TempC  FF.R$ 
+103 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 104 LINE.NUM *TempC *StatusString $CAT 
 
 106 LINE.NUM " , PanelTemp=" *StatusString $CAT 
 
-107 LINE.NUM ~AQ_OUTSIDE_TEMP @@ 7 1 *TempC  FF.R$ 
+107 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 108 LINE.NUM *TempC *StatusString $CAT 
 
 15 JUMP ;
@@ -491,7 +491,7 @@
 : 7_295
 
 1 LINE.NUM
-  ~LIGHTS_RELAY_OUT   OFF
+  ~DO_Lights_RLA   OFF
 
 2 LINE.NUM
   " 111" 
@@ -535,7 +535,7 @@
 : 7_327
 
 1 LINE.NUM
-  ~LIGHTS_RELAY_OUT   ON
+  ~DO_Lights_RLA   ON
 
 2 LINE.NUM
   " 114" 
@@ -673,94 +673,94 @@ IF -53 ELSE 17 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_CLOSED   ?ON
+  ~DI_Tail_Closed_LS   ?ON
 LAND
 IF -53 ELSE 0 THEN JUMP ;
 : 7_194
 TRUE
 
 1 LINE.NUM
-  ~TAIL_OPEN_NOT_REACHED   ?OFF
+  ~DI_Tail_Open_LS   ?OFF
 LAND
 IF -53 ELSE -52 THEN JUMP ;
 : 7_210
 TRUE
 
 1 LINE.NUM
-  ~RIGHT_DOOR @@ 
-  ~LEFT_DOOR @@   LAND
+  ~DI_RightDoor_LS @@ 
+  ~DI_LeftDoor_LS @@   LAND
 LAND
 IF -51 ELSE 0 THEN JUMP ;
 : 7_211
 TRUE
 
 1 LINE.NUM
-  ~RIGHT_DOOR   ?ON
+  ~DI_RightDoor_LS   ?ON
 LAND
 IF -51 ELSE 0 THEN JUMP ;
 : 7_212
 TRUE
 
 1 LINE.NUM
-  ~LEFT_DOOR   ?ON
+  ~DI_LeftDoor_LS   ?ON
 LAND
 IF -51 ELSE -50 THEN JUMP ;
 : 7_224
 TRUE
 
 1 LINE.NUM
-  ~TRAP_KEY_IN @@ 
-  ~GO_FAST_BUTTON @@   LAND
+  ~DI_TrapKey_SW @@ 
+  ~DI_GoFast_SW @@   LAND
 LAND
 IF -50 ELSE 0 THEN JUMP ;
 : 7_225
 TRUE
 
 1 LINE.NUM
-  ~TRAP_KEY_IN   ?ON
+  ~DI_TrapKey_SW   ?ON
 LAND
 IF -50 ELSE 0 THEN JUMP ;
 : 7_226
 TRUE
 
 1 LINE.NUM
-  ~GO_FAST_BUTTON   ?ON
+  ~DI_GoFast_SW   ?ON
 LAND
 IF -50 ELSE -49 THEN JUMP ;
 : 7_247
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_SELECT   ?ON
+  ~DI_PoleSelect_SW   ?ON
 LAND
 IF -48 ELSE -49 THEN JUMP ;
 : 7_248
 TRUE
 
 1 LINE.NUM
-  ~TAIL_SIDE_SELECT   ?ON
+  ~DI_TailSelect_SW   ?ON
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_249
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_SELECT @@ 
-  ~TAIL_SIDE_SELECT @@   LAND
+  ~DI_PoleSelect_SW @@ 
+  ~DI_TailSelect_SW @@   LAND
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_250
 TRUE
 
 1 LINE.NUM
-  ~POLE_OPEN_NOT_REACHED   ?OFF
+  ~DI_Pole_Open_LS   ?OFF
 LAND
 IF -48 ELSE -61 THEN JUMP ;
 : 7_252
 TRUE
 
 1 LINE.NUM
-  ~POLE_SIDE_CLOSED   ?ON
+  ~DI_Pole_Closed_LS   ?ON
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_257
