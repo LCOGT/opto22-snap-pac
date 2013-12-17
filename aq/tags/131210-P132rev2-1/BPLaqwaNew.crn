@@ -1775,7 +1775,7 @@ T;
 : 17_4
 
 1 LINE.NUM
-  200    DELAY
+  50    DELAY
 -2 JUMP ;
 : 17_8
 0 JUMP ;
@@ -1792,19 +1792,9 @@ T;
 10 LINE.NUM THEN 
 1 JUMP ;
 : 17_12
-1 LINE.NUM ~DI_Lights_Enter_SW @@I ^lightsenterold @@ LNOT  = ~DI_Lights_Exit_SW @@I ^lightsexitold @@ LNOT  = LOR  IF 
-2 LINE.NUM ~DI_Lights_Enter_SW @@I ^lightsenterold @! 
-3 LINE.NUM ~DI_Lights_Exit_SW @@I ^lightsexitold @! 
-4 LINE.NUM ~DO_Lights_RLA @@I IF 
-5 LINE.NUM ~DO_Lights_RLA  OFF 
-6 LINE.NUM ELSE 
-6 LINE.NUM ~DO_Lights_RLA @@I LNOT  IF 
-7 LINE.NUM ~DO_Lights_RLA  ON 
-8 LINE.NUM THEN THEN 
-9 LINE.NUM ELSE 
-10 LINE.NUM ~DO_Lights_RLA @@I ~DO_Lights_RLA @! 
-11 LINE.NUM THEN 
-12 LINE.NUM 100  DELAY 
+24 LINE.NUM ~DI_Lights_Enter_SW  CLR.+LATCH@I ~DI_Lights_Enter_SW  CLR.-LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.+LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.-LATCH@I LOR  IF 
+28 LINE.NUM ~DO_Lights_RLA @@I 1 XOR  ~DO_Lights_RLA @! 
+29 LINE.NUM THEN 
 -4 JUMP ;
 : 17_13
 1 LINE.NUM ~DI_FanAuto_SW @@I IF 
@@ -2331,8 +2321,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 12/13/13 " ;
-: TIMESTAMP ." 10:59:21 " ;
+: DATESTAMP ." 12/16/13 " ;
+: TIMESTAMP ." 19:39:29 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
