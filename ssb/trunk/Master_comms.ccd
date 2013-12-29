@@ -188,316 +188,294 @@
 85 LINE.NUM THEN 
 86 LINE.NUM " SSB_FANS_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 87 LINE.NUM ^Position @@ -1 >= IF 
-88 LINE.NUM ^FanSwMode @@ 2 = IF 
-89 LINE.NUM 1 ~FAN_M2_4_ON @! 
-90 LINE.NUM 1 ~FAN_M2_7_ON @! 
-91 LINE.NUM 1 ~FAN_M3_2_ON @! 
-92 LINE.NUM 1 ~FAN_M3_5_ON @! 
-93 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-94 LINE.NUM ELSE 
-95 LINE.NUM 1 ~FAN_M2_4_ON @! 
-96 LINE.NUM 0 ~FAN_M2_7_ON @! 
-97 LINE.NUM 1 ~FAN_M3_2_ON @! 
-98 LINE.NUM 0 ~FAN_M3_5_ON @! 
-99 LINE.NUM 3 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-100 LINE.NUM THEN 
-101 LINE.NUM 1 ^Response @! 
-102 LINE.NUM THEN 
-103 LINE.NUM " SSB_FANS_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-104 LINE.NUM ^Position @@ -1 >= IF 
-105 LINE.NUM ^FanSwMode @@ 2 = IF 
+88 LINE.NUM 1 ~FAN_M2_4_ON @! 
+89 LINE.NUM 1 ~FAN_M2_7_ON @! 
+90 LINE.NUM 1 ~FAN_M3_2_ON @! 
+91 LINE.NUM 1 ~FAN_M3_5_ON @! 
+92 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+93 LINE.NUM 1 ^Response @! 
+94 LINE.NUM THEN 
+95 LINE.NUM " SSB_FANS_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+96 LINE.NUM ^Position @@ -1 >= IF 
+97 LINE.NUM 1 ~FAN_M2_4_ON @! 
+98 LINE.NUM 0 ~FAN_M2_7_ON @! 
+99 LINE.NUM 0 ~FAN_M3_2_ON @! 
+100 LINE.NUM 1 ~FAN_M3_5_ON @! 
+101 LINE.NUM 6 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+102 LINE.NUM 1 ^Response @! 
+103 LINE.NUM THEN 
+104 LINE.NUM " SSB_FANS_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+105 LINE.NUM ^Position @@ -1 >= IF 
 106 LINE.NUM 1 ~FAN_M2_4_ON @! 
 107 LINE.NUM 0 ~FAN_M2_7_ON @! 
-108 LINE.NUM 1 ~FAN_M3_2_ON @! 
+108 LINE.NUM 0 ~FAN_M3_2_ON @! 
 109 LINE.NUM 0 ~FAN_M3_5_ON @! 
-110 LINE.NUM 6 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-111 LINE.NUM ELSE 
-112 LINE.NUM 0 ~FAN_M2_4_ON @! 
-113 LINE.NUM 1 ~FAN_M2_7_ON @! 
-114 LINE.NUM 0 ~FAN_M3_2_ON @! 
-115 LINE.NUM 0 ~FAN_M3_5_ON @! 
-116 LINE.NUM 2 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-117 LINE.NUM THEN 
-118 LINE.NUM 1 ^Response @! 
-119 LINE.NUM THEN 
-120 LINE.NUM " SSB_FANS_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-121 LINE.NUM ^Position @@ -1 >= IF 
-122 LINE.NUM ^FanSwMode @@ 2 = IF 
-123 LINE.NUM 1 ~FAN_M2_4_ON @! 
-124 LINE.NUM 0 ~FAN_M2_7_ON @! 
-125 LINE.NUM 0 ~FAN_M3_2_ON @! 
-126 LINE.NUM 0 ~FAN_M3_5_ON @! 
-127 LINE.NUM 2 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-128 LINE.NUM THEN 
-129 LINE.NUM 1 ^Response @! 
-130 LINE.NUM THEN 
-131 LINE.NUM " SSB_FANS_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-132 LINE.NUM ^Position @@ -1 >= IF 
-133 LINE.NUM ^FanSwMode @@ 2 = IF 
-134 LINE.NUM 0 ~FAN_M2_4_ON @! 
-135 LINE.NUM 0 ~FAN_M2_7_ON @! 
-136 LINE.NUM 0 ~FAN_M3_2_ON @! 
-137 LINE.NUM 0 ~FAN_M3_5_ON @! 
-138 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+110 LINE.NUM 3 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+111 LINE.NUM 1 ^Response @! 
+112 LINE.NUM THEN 
+113 LINE.NUM " SSB_FANS_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+114 LINE.NUM ^Position @@ -1 >= IF 
+115 LINE.NUM 0 ~FAN_M2_4_ON @! 
+116 LINE.NUM 0 ~FAN_M2_7_ON @! 
+117 LINE.NUM 0 ~FAN_M3_2_ON @! 
+118 LINE.NUM 0 ~FAN_M3_5_ON @! 
+119 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+120 LINE.NUM 1 ^Response @! 
+121 LINE.NUM THEN 
+122 LINE.NUM " FENCE_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+123 LINE.NUM ^Position @@ -1 >= IF 
+124 LINE.NUM 0 ^FenceRedFlag @! 
+125 LINE.NUM 1 ^FenceGrnFlag @! 
+126 LINE.NUM 1 ^Response @! 
+127 LINE.NUM THEN 
+128 LINE.NUM " FENCE_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+129 LINE.NUM ^Position @@ -1 >= IF 
+130 LINE.NUM 1 ^FenceRedFlag @! 
+131 LINE.NUM 1 ^FenceGrnFlag @! 
+132 LINE.NUM 1 ^Response @! 
+133 LINE.NUM THEN 
+134 LINE.NUM " FENCE_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+135 LINE.NUM ^Position @@ -1 >= IF 
+136 LINE.NUM 1 ^FenceRedFlag @! 
+137 LINE.NUM 0 ^FenceGrnFlag @! 
+138 LINE.NUM 1 ^Response @! 
 139 LINE.NUM THEN 
-140 LINE.NUM 1 ^Response @! 
-141 LINE.NUM THEN 
-142 LINE.NUM " FENCE_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-143 LINE.NUM ^Position @@ -1 >= IF 
-144 LINE.NUM 0 ^FenceRedFlag @! 
-145 LINE.NUM 1 ^FenceGrnFlag @! 
-146 LINE.NUM 1 ^Response @! 
-147 LINE.NUM THEN 
-148 LINE.NUM " FENCE_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-149 LINE.NUM ^Position @@ -1 >= IF 
-150 LINE.NUM 1 ^FenceRedFlag @! 
-151 LINE.NUM 1 ^FenceGrnFlag @! 
-152 LINE.NUM 1 ^Response @! 
-153 LINE.NUM THEN 
-154 LINE.NUM " FENCE_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-155 LINE.NUM ^Position @@ -1 >= IF 
-156 LINE.NUM 1 ^FenceRedFlag @! 
-157 LINE.NUM 0 ^FenceGrnFlag @! 
-158 LINE.NUM 1 ^Response @! 
-159 LINE.NUM THEN 
-160 LINE.NUM " FENCE_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-161 LINE.NUM ^Position @@ -1 >= IF 
-162 LINE.NUM 0 ^FenceRedFlag @! 
-163 LINE.NUM 0 ^FenceGrnFlag @! 
-164 LINE.NUM 1 ^Response @! 
-165 LINE.NUM THEN 
-166 LINE.NUM " FENCE_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-167 LINE.NUM ^Position @@ -1 >= IF 
-168 LINE.NUM 1 ^FenceBlink @! 
-169 LINE.NUM 1 ^Response @! 
-170 LINE.NUM THEN 
-171 LINE.NUM " FENCE_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-172 LINE.NUM ^Position @@ -1 >= IF 
-173 LINE.NUM 0 ^FenceBlink @! 
+140 LINE.NUM " FENCE_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+141 LINE.NUM ^Position @@ -1 >= IF 
+142 LINE.NUM 0 ^FenceRedFlag @! 
+143 LINE.NUM 0 ^FenceGrnFlag @! 
+144 LINE.NUM 1 ^Response @! 
+145 LINE.NUM THEN 
+146 LINE.NUM " FENCE_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+147 LINE.NUM ^Position @@ -1 >= IF 
+148 LINE.NUM 1 ^FenceBlink @! 
+149 LINE.NUM 1 ^Response @! 
+150 LINE.NUM THEN 
+151 LINE.NUM " FENCE_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+152 LINE.NUM ^Position @@ -1 >= IF 
+153 LINE.NUM 0 ^FenceBlink @! 
+154 LINE.NUM 1 ^Response @! 
+155 LINE.NUM THEN 
+157 LINE.NUM " ENCL_A_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+158 LINE.NUM ^Position @@ -1 >= IF 
+159 LINE.NUM 0 ^EncARedFlag @! 
+160 LINE.NUM 1 ^EncAGrnFlag @! 
+161 LINE.NUM 1 ^Response @! 
+162 LINE.NUM THEN 
+164 LINE.NUM " ENCL_A_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+165 LINE.NUM ^Position @@ -1 >= IF 
+166 LINE.NUM 1 ^EncARedFlag @! 
+167 LINE.NUM 1 ^EncAGrnFlag @! 
+168 LINE.NUM 1 ^Response @! 
+169 LINE.NUM THEN 
+170 LINE.NUM " ENCL_A_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+171 LINE.NUM ^Position @@ -1 >= IF 
+172 LINE.NUM 1 ^EncARedFlag @! 
+173 LINE.NUM 0 ^EncAGrnFlag @! 
 174 LINE.NUM 1 ^Response @! 
 175 LINE.NUM THEN 
-177 LINE.NUM " ENCL_A_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-178 LINE.NUM ^Position @@ -1 >= IF 
-179 LINE.NUM 0 ^EncARedFlag @! 
-180 LINE.NUM 1 ^EncAGrnFlag @! 
-181 LINE.NUM 1 ^Response @! 
-182 LINE.NUM THEN 
-184 LINE.NUM " ENCL_A_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-185 LINE.NUM ^Position @@ -1 >= IF 
-186 LINE.NUM 1 ^EncARedFlag @! 
-187 LINE.NUM 1 ^EncAGrnFlag @! 
-188 LINE.NUM 1 ^Response @! 
-189 LINE.NUM THEN 
-190 LINE.NUM " ENCL_A_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-191 LINE.NUM ^Position @@ -1 >= IF 
-192 LINE.NUM 1 ^EncARedFlag @! 
-193 LINE.NUM 0 ^EncAGrnFlag @! 
-194 LINE.NUM 1 ^Response @! 
-195 LINE.NUM THEN 
-196 LINE.NUM " ENCL_A_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-197 LINE.NUM ^Position @@ -1 >= IF 
-198 LINE.NUM 0 ^EncARedFlag @! 
-199 LINE.NUM 0 ^EncAGrnFlag @! 
-200 LINE.NUM 1 ^Response @! 
-201 LINE.NUM THEN 
-202 LINE.NUM " ENCL_A_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-203 LINE.NUM ^Position @@ -1 >= IF 
-204 LINE.NUM 1 ^EncABlink @! 
-205 LINE.NUM 1 ^Response @! 
-206 LINE.NUM THEN 
-207 LINE.NUM " ENCL_A_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-208 LINE.NUM ^Position @@ -1 >= IF 
-209 LINE.NUM 0 ^EncABlink @! 
-210 LINE.NUM 1 ^Response @! 
-211 LINE.NUM THEN 
-212 LINE.NUM " ENCL_B_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-213 LINE.NUM ^Position @@ -1 >= IF 
-214 LINE.NUM 0 ^EncARedFlag @! 
-215 LINE.NUM 1 ^EncAGrnFlag @! 
-216 LINE.NUM 1 ^Response @! 
-217 LINE.NUM THEN 
-219 LINE.NUM " ENCL_B_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-220 LINE.NUM ^Position @@ -1 >= IF 
-221 LINE.NUM 1 ^EncARedFlag @! 
-222 LINE.NUM 1 ^EncAGrnFlag @! 
-223 LINE.NUM 1 ^Response @! 
-224 LINE.NUM THEN 
-225 LINE.NUM " ENCL_B_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-226 LINE.NUM ^Position @@ -1 >= IF 
-227 LINE.NUM 1 ^EncARedFlag @! 
-228 LINE.NUM 0 ^EncAGrnFlag @! 
-229 LINE.NUM 1 ^Response @! 
-230 LINE.NUM THEN 
-231 LINE.NUM " ENCL_B_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-232 LINE.NUM ^Position @@ -1 >= IF 
-233 LINE.NUM 0 ^EncARedFlag @! 
-234 LINE.NUM 0 ^EncAGrnFlag @! 
-235 LINE.NUM 1 ^Response @! 
-236 LINE.NUM THEN 
-237 LINE.NUM " ENCL_B_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-238 LINE.NUM ^Position @@ -1 >= IF 
-239 LINE.NUM 1 ^EncABlink @! 
-240 LINE.NUM 1 ^Response @! 
-241 LINE.NUM THEN 
-242 LINE.NUM " ENCL_B_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-243 LINE.NUM ^Position @@ -1 >= IF 
-244 LINE.NUM 0 ^EncABlink @! 
-245 LINE.NUM 1 ^Response @! 
-246 LINE.NUM THEN 
-247 LINE.NUM " ENCL_C_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-248 LINE.NUM ^Position @@ -1 >= IF 
-249 LINE.NUM 0 ^EncARedFlag @! 
-250 LINE.NUM 1 ^EncAGrnFlag @! 
-251 LINE.NUM 1 ^Response @! 
-252 LINE.NUM THEN 
-254 LINE.NUM " ENCL_C_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-255 LINE.NUM ^Position @@ -1 >= IF 
-256 LINE.NUM 1 ^EncARedFlag @! 
-257 LINE.NUM 1 ^EncAGrnFlag @! 
-258 LINE.NUM 1 ^Response @! 
-259 LINE.NUM THEN 
-260 LINE.NUM " ENCL_C_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-261 LINE.NUM ^Position @@ -1 >= IF 
-262 LINE.NUM 1 ^EncARedFlag @! 
-263 LINE.NUM 0 ^EncAGrnFlag @! 
-264 LINE.NUM 1 ^Response @! 
-265 LINE.NUM THEN 
-266 LINE.NUM " ENCL_C_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-267 LINE.NUM ^Position @@ -1 >= IF 
-268 LINE.NUM 0 ^EncARedFlag @! 
-269 LINE.NUM 0 ^EncAGrnFlag @! 
-270 LINE.NUM 1 ^Response @! 
-271 LINE.NUM THEN 
-272 LINE.NUM " ENCL_C_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-273 LINE.NUM ^Position @@ -1 >= IF 
-274 LINE.NUM 1 ^EncABlink @! 
-275 LINE.NUM 1 ^Response @! 
-276 LINE.NUM THEN 
-277 LINE.NUM " ENCL_C_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-278 LINE.NUM ^Position @@ -1 >= IF 
-279 LINE.NUM 0 ^EncABlink @! 
+176 LINE.NUM " ENCL_A_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+177 LINE.NUM ^Position @@ -1 >= IF 
+178 LINE.NUM 0 ^EncARedFlag @! 
+179 LINE.NUM 0 ^EncAGrnFlag @! 
+180 LINE.NUM 1 ^Response @! 
+181 LINE.NUM THEN 
+182 LINE.NUM " ENCL_A_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+183 LINE.NUM ^Position @@ -1 >= IF 
+184 LINE.NUM 1 ^EncABlink @! 
+185 LINE.NUM 1 ^Response @! 
+186 LINE.NUM THEN 
+187 LINE.NUM " ENCL_A_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+188 LINE.NUM ^Position @@ -1 >= IF 
+189 LINE.NUM 0 ^EncABlink @! 
+190 LINE.NUM 1 ^Response @! 
+191 LINE.NUM THEN 
+192 LINE.NUM " ENCL_B_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+193 LINE.NUM ^Position @@ -1 >= IF 
+194 LINE.NUM 0 ^EncARedFlag @! 
+195 LINE.NUM 1 ^EncAGrnFlag @! 
+196 LINE.NUM 1 ^Response @! 
+197 LINE.NUM THEN 
+199 LINE.NUM " ENCL_B_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+200 LINE.NUM ^Position @@ -1 >= IF 
+201 LINE.NUM 1 ^EncARedFlag @! 
+202 LINE.NUM 1 ^EncAGrnFlag @! 
+203 LINE.NUM 1 ^Response @! 
+204 LINE.NUM THEN 
+205 LINE.NUM " ENCL_B_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+206 LINE.NUM ^Position @@ -1 >= IF 
+207 LINE.NUM 1 ^EncARedFlag @! 
+208 LINE.NUM 0 ^EncAGrnFlag @! 
+209 LINE.NUM 1 ^Response @! 
+210 LINE.NUM THEN 
+211 LINE.NUM " ENCL_B_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+212 LINE.NUM ^Position @@ -1 >= IF 
+213 LINE.NUM 0 ^EncARedFlag @! 
+214 LINE.NUM 0 ^EncAGrnFlag @! 
+215 LINE.NUM 1 ^Response @! 
+216 LINE.NUM THEN 
+217 LINE.NUM " ENCL_B_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+218 LINE.NUM ^Position @@ -1 >= IF 
+219 LINE.NUM 1 ^EncABlink @! 
+220 LINE.NUM 1 ^Response @! 
+221 LINE.NUM THEN 
+222 LINE.NUM " ENCL_B_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+223 LINE.NUM ^Position @@ -1 >= IF 
+224 LINE.NUM 0 ^EncABlink @! 
+225 LINE.NUM 1 ^Response @! 
+226 LINE.NUM THEN 
+227 LINE.NUM " ENCL_C_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+228 LINE.NUM ^Position @@ -1 >= IF 
+229 LINE.NUM 0 ^EncARedFlag @! 
+230 LINE.NUM 1 ^EncAGrnFlag @! 
+231 LINE.NUM 1 ^Response @! 
+232 LINE.NUM THEN 
+234 LINE.NUM " ENCL_C_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+235 LINE.NUM ^Position @@ -1 >= IF 
+236 LINE.NUM 1 ^EncARedFlag @! 
+237 LINE.NUM 1 ^EncAGrnFlag @! 
+238 LINE.NUM 1 ^Response @! 
+239 LINE.NUM THEN 
+240 LINE.NUM " ENCL_C_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+241 LINE.NUM ^Position @@ -1 >= IF 
+242 LINE.NUM 1 ^EncARedFlag @! 
+243 LINE.NUM 0 ^EncAGrnFlag @! 
+244 LINE.NUM 1 ^Response @! 
+245 LINE.NUM THEN 
+246 LINE.NUM " ENCL_C_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+247 LINE.NUM ^Position @@ -1 >= IF 
+248 LINE.NUM 0 ^EncARedFlag @! 
+249 LINE.NUM 0 ^EncAGrnFlag @! 
+250 LINE.NUM 1 ^Response @! 
+251 LINE.NUM THEN 
+252 LINE.NUM " ENCL_C_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+253 LINE.NUM ^Position @@ -1 >= IF 
+254 LINE.NUM 1 ^EncABlink @! 
+255 LINE.NUM 1 ^Response @! 
+256 LINE.NUM THEN 
+257 LINE.NUM " ENCL_C_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+258 LINE.NUM ^Position @@ -1 >= IF 
+259 LINE.NUM 0 ^EncABlink @! 
+260 LINE.NUM 1 ^Response @! 
+261 LINE.NUM THEN 
+264 LINE.NUM " SITEKEY_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+265 LINE.NUM ^Position @@ -1 >= IF 
+266 LINE.NUM 0 ^SiteRedFlag @! 
+267 LINE.NUM 1 ^SiteGrnFlag @! 
+268 LINE.NUM 1 ^Response @! 
+269 LINE.NUM THEN 
+270 LINE.NUM " SITEKEY_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+271 LINE.NUM ^Position @@ -1 >= IF 
+272 LINE.NUM 1 ^SiteRedFlag @! 
+273 LINE.NUM 1 ^SiteGrnFlag @! 
+274 LINE.NUM 1 ^Response @! 
+275 LINE.NUM THEN 
+276 LINE.NUM " SITEKEY_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+277 LINE.NUM ^Position @@ -1 >= IF 
+278 LINE.NUM 1 ^SiteRedFlag @! 
+279 LINE.NUM 0 ^SiteGrnFlag @! 
 280 LINE.NUM 1 ^Response @! 
 281 LINE.NUM THEN 
-284 LINE.NUM " SITEKEY_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-285 LINE.NUM ^Position @@ -1 >= IF 
-286 LINE.NUM 0 ^SiteRedFlag @! 
-287 LINE.NUM 1 ^SiteGrnFlag @! 
-288 LINE.NUM 1 ^Response @! 
-289 LINE.NUM THEN 
-290 LINE.NUM " SITEKEY_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-291 LINE.NUM ^Position @@ -1 >= IF 
-292 LINE.NUM 1 ^SiteRedFlag @! 
-293 LINE.NUM 1 ^SiteGrnFlag @! 
-294 LINE.NUM 1 ^Response @! 
-295 LINE.NUM THEN 
-296 LINE.NUM " SITEKEY_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-297 LINE.NUM ^Position @@ -1 >= IF 
-298 LINE.NUM 1 ^SiteRedFlag @! 
-299 LINE.NUM 0 ^SiteGrnFlag @! 
-300 LINE.NUM 1 ^Response @! 
-301 LINE.NUM THEN 
-302 LINE.NUM " SITEKEY_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-303 LINE.NUM ^Position @@ -1 >= IF 
-304 LINE.NUM 0 ^SiteRedFlag @! 
-305 LINE.NUM 0 ^SiteGrnFlag @! 
-306 LINE.NUM 1 ^Response @! 
-307 LINE.NUM THEN 
-308 LINE.NUM " SITEKEY_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-309 LINE.NUM ^Position @@ -1 >= IF 
-310 LINE.NUM 1 ^SiteBlink @! 
-311 LINE.NUM 1 ^Response @! 
-312 LINE.NUM THEN 
-313 LINE.NUM " SITEKEY_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-314 LINE.NUM ^Position @@ -1 >= IF 
-315 LINE.NUM 0 ^SiteBlink @! 
-316 LINE.NUM 1 ^Response @! 
-317 LINE.NUM THEN 
-319 LINE.NUM " SHUTDOWN_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-320 LINE.NUM ^Position @@ -1 >= IF 
-321 LINE.NUM 0 ^ShutdownRedFlag @! 
-322 LINE.NUM 1 ^ShutdownGrnFlag @! 
-323 LINE.NUM 1 ^Response @! 
-324 LINE.NUM THEN 
-325 LINE.NUM " SHUTDOWN_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-326 LINE.NUM ^Position @@ -1 >= IF 
-327 LINE.NUM 1 ^ShutdownRedFlag @! 
-328 LINE.NUM 1 ^ShutdownGrnFlag @! 
-329 LINE.NUM 1 ^Response @! 
-330 LINE.NUM THEN 
-331 LINE.NUM " SHUTDOWN_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-332 LINE.NUM ^Position @@ -1 >= IF 
-333 LINE.NUM 1 ^ShutdownRedFlag @! 
-334 LINE.NUM 0 ^ShutdownGrnFlag @! 
-335 LINE.NUM 1 ^Response @! 
-336 LINE.NUM THEN 
-337 LINE.NUM " SHUTDOWN_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-338 LINE.NUM ^Position @@ -1 >= IF 
-339 LINE.NUM 0 ^ShutdownRedFlag @! 
-340 LINE.NUM 0 ^ShutdownGrnFlag @! 
-341 LINE.NUM 1 ^Response @! 
-342 LINE.NUM THEN 
-343 LINE.NUM " SHUTDOWN_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-344 LINE.NUM ^Position @@ -1 >= IF 
-345 LINE.NUM 1 ^ShutdownBlink @! 
-346 LINE.NUM 1 ^Response @! 
-347 LINE.NUM THEN 
-348 LINE.NUM " SHUTDOWN_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-349 LINE.NUM ^Position @@ -1 >= IF 
-350 LINE.NUM 0 ^ShutdownBlink @! 
-351 LINE.NUM 1 ^Response @! 
-352 LINE.NUM THEN 
-354 LINE.NUM " WX_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-355 LINE.NUM ^Position @@ -1 >= IF 
-356 LINE.NUM 0 ^WeatherRedFlag @! 
-357 LINE.NUM 1 ^WeatherGrnFlag @! 
-358 LINE.NUM 1 ^Response @! 
-359 LINE.NUM THEN 
-360 LINE.NUM " WX_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-361 LINE.NUM ^Position @@ -1 >= IF 
-362 LINE.NUM 1 ^WeatherRedFlag @! 
-363 LINE.NUM 1 ^WeatherGrnFlag @! 
-364 LINE.NUM 1 ^Response @! 
-365 LINE.NUM THEN 
-366 LINE.NUM " WX_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-367 LINE.NUM ^Position @@ -1 >= IF 
-368 LINE.NUM 1 ^WeatherRedFlag @! 
-369 LINE.NUM 0 ^WeatherGrnFlag @! 
-370 LINE.NUM 1 ^Response @! 
-371 LINE.NUM THEN 
-372 LINE.NUM " WX_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-373 LINE.NUM ^Position @@ -1 >= IF 
-374 LINE.NUM 0 ^WeatherRedFlag @! 
-375 LINE.NUM 0 ^WeatherGrnFlag @! 
-376 LINE.NUM 1 ^Response @! 
-377 LINE.NUM THEN 
-378 LINE.NUM " WX_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-379 LINE.NUM ^Position @@ -1 >= IF 
-380 LINE.NUM 1 ^WeatherBlink @! 
-381 LINE.NUM 1 ^Response @! 
-382 LINE.NUM THEN 
-383 LINE.NUM " WX_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-384 LINE.NUM ^Position @@ -1 >= IF 
-385 LINE.NUM 0 ^WeatherBlink @! 
-386 LINE.NUM 1 ^Response @! 
-387 LINE.NUM THEN 
-391 LINE.NUM " SON_ALERT_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-392 LINE.NUM ^Position @@ -1 >= IF 
-393 LINE.NUM 1 ^SonalertFlag @! 
-394 LINE.NUM 1 ~Sonalert @! 
-395 LINE.NUM 1 ^Response @! 
-396 LINE.NUM THEN 
-397 LINE.NUM " SON_ALERT_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-398 LINE.NUM ^Position @@ -1 >= IF 
-399 LINE.NUM 0 ^SonalertFlag @! 
-400 LINE.NUM 0 ~Sonalert @! 
-401 LINE.NUM 1 ^Response @! 
-402 LINE.NUM THEN 
-404 LINE.NUM ^Response @@ 1 = IF 
-405 LINE.NUM " Success=TRUE" *Master_Handle  PRT$ ^MasterXmitStatus @! 
-406 LINE.NUM ELSE 
-407 LINE.NUM " Success=FALSE" *Master_Handle  PRT$ ^MasterXmitStatus @! 
-408 LINE.NUM THEN 
-409 LINE.NUM " " *MasterCommand  $MOVE 
+282 LINE.NUM " SITEKEY_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+283 LINE.NUM ^Position @@ -1 >= IF 
+284 LINE.NUM 0 ^SiteRedFlag @! 
+285 LINE.NUM 0 ^SiteGrnFlag @! 
+286 LINE.NUM 1 ^Response @! 
+287 LINE.NUM THEN 
+288 LINE.NUM " SITEKEY_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+289 LINE.NUM ^Position @@ -1 >= IF 
+290 LINE.NUM 1 ^SiteBlink @! 
+291 LINE.NUM 1 ^Response @! 
+292 LINE.NUM THEN 
+293 LINE.NUM " SITEKEY_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+294 LINE.NUM ^Position @@ -1 >= IF 
+295 LINE.NUM 0 ^SiteBlink @! 
+296 LINE.NUM 1 ^Response @! 
+297 LINE.NUM THEN 
+299 LINE.NUM " SHUTDOWN_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+300 LINE.NUM ^Position @@ -1 >= IF 
+301 LINE.NUM 0 ^ShutdownRedFlag @! 
+302 LINE.NUM 1 ^ShutdownGrnFlag @! 
+303 LINE.NUM 1 ^Response @! 
+304 LINE.NUM THEN 
+305 LINE.NUM " SHUTDOWN_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+306 LINE.NUM ^Position @@ -1 >= IF 
+307 LINE.NUM 1 ^ShutdownRedFlag @! 
+308 LINE.NUM 1 ^ShutdownGrnFlag @! 
+309 LINE.NUM 1 ^Response @! 
+310 LINE.NUM THEN 
+311 LINE.NUM " SHUTDOWN_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+312 LINE.NUM ^Position @@ -1 >= IF 
+313 LINE.NUM 1 ^ShutdownRedFlag @! 
+314 LINE.NUM 0 ^ShutdownGrnFlag @! 
+315 LINE.NUM 1 ^Response @! 
+316 LINE.NUM THEN 
+317 LINE.NUM " SHUTDOWN_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+318 LINE.NUM ^Position @@ -1 >= IF 
+319 LINE.NUM 0 ^ShutdownRedFlag @! 
+320 LINE.NUM 0 ^ShutdownGrnFlag @! 
+321 LINE.NUM 1 ^Response @! 
+322 LINE.NUM THEN 
+323 LINE.NUM " SHUTDOWN_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+324 LINE.NUM ^Position @@ -1 >= IF 
+325 LINE.NUM 1 ^ShutdownBlink @! 
+326 LINE.NUM 1 ^Response @! 
+327 LINE.NUM THEN 
+328 LINE.NUM " SHUTDOWN_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+329 LINE.NUM ^Position @@ -1 >= IF 
+330 LINE.NUM 0 ^ShutdownBlink @! 
+331 LINE.NUM 1 ^Response @! 
+332 LINE.NUM THEN 
+334 LINE.NUM " SSB_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+335 LINE.NUM ^Position @@ -1 >= IF 
+336 LINE.NUM 0 ^SSBRedFlag @! 
+337 LINE.NUM 1 ^SSBGrnFlag @! 
+338 LINE.NUM 1 ^Response @! 
+339 LINE.NUM THEN 
+340 LINE.NUM " SSB_LED_YELLOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+341 LINE.NUM ^Position @@ -1 >= IF 
+342 LINE.NUM 1 ^SSBRedFlag @! 
+343 LINE.NUM 1 ^SSBGrnFlag @! 
+344 LINE.NUM 1 ^Response @! 
+345 LINE.NUM THEN 
+346 LINE.NUM " SSB_LED_RED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+347 LINE.NUM ^Position @@ -1 >= IF 
+348 LINE.NUM 1 ^SSBRedFlag @! 
+349 LINE.NUM 0 ^SSBGrnFlag @! 
+350 LINE.NUM 1 ^Response @! 
+351 LINE.NUM THEN 
+352 LINE.NUM " SSB_LED_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+353 LINE.NUM ^Position @@ -1 >= IF 
+354 LINE.NUM 0 ^SSBRedFlag @! 
+355 LINE.NUM 0 ^SSBGrnFlag @! 
+356 LINE.NUM 1 ^Response @! 
+357 LINE.NUM THEN 
+358 LINE.NUM " SSB_LED_BLINK" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+359 LINE.NUM ^Position @@ -1 >= IF 
+360 LINE.NUM 1 ^SSBBlink @! 
+361 LINE.NUM 1 ^Response @! 
+362 LINE.NUM THEN 
+363 LINE.NUM " SSB_LED_STEADY" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+364 LINE.NUM ^Position @@ -1 >= IF 
+365 LINE.NUM 0 ^SSBBlink @! 
+366 LINE.NUM 1 ^Response @! 
+367 LINE.NUM THEN 
+371 LINE.NUM " SON_ALERT_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+372 LINE.NUM ^Position @@ -1 >= IF 
+373 LINE.NUM 1 ~Sonalert @! 
+374 LINE.NUM 1 ^Response @! 
+375 LINE.NUM THEN 
+376 LINE.NUM " SON_ALERT_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+377 LINE.NUM ^Position @@ -1 >= IF 
+378 LINE.NUM 0 ~Sonalert @! 
+379 LINE.NUM 1 ^Response @! 
+380 LINE.NUM THEN 
+382 LINE.NUM ^Response @@ 1 = IF 
+383 LINE.NUM " Success=TRUE" *Master_Handle  PRT$ ^MasterXmitStatus @! 
+384 LINE.NUM ELSE 
+385 LINE.NUM " Success=FALSE" *Master_Handle  PRT$ ^MasterXmitStatus @! 
+386 LINE.NUM THEN 
+387 LINE.NUM " " *MasterCommand  $MOVE 
 0 JUMP ;
 : 6_336
 -14 JUMP ;
@@ -645,151 +623,144 @@
 84 LINE.NUM ~Mute_Test @@I 1 = IF 
 85 LINE.NUM " TRUE" *StatusString $CAT 
 
-86 LINE.NUM 0 ^SonalertFlag @! 
-87 LINE.NUM 1 ~Sonalert @! 
-88 LINE.NUM ELSE 
-89 LINE.NUM " FALSE" *StatusString $CAT 
+86 LINE.NUM ELSE 
+87 LINE.NUM " FALSE" *StatusString $CAT 
 
-90 LINE.NUM THEN 
-93 LINE.NUM " , FansSwitch=" *StatusString $CAT 
+88 LINE.NUM THEN 
+90 LINE.NUM " , FansSwitch=" *StatusString $CAT 
 
-94 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 0 = LAND  IF 
-95 LINE.NUM 2 ^FanSwMode @! 
-96 LINE.NUM 1 ~Fan_Green_LED @! 
-97 LINE.NUM 0 ~Fan_Red_LED @! 
-98 LINE.NUM " AUTO" *StatusString $CAT 
+91 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 0 = LAND  IF 
+92 LINE.NUM 2 ^FanSwMode @! 
+93 LINE.NUM 1 ~Fan_Green_LED @! 
+94 LINE.NUM 0 ~Fan_Red_LED @! 
+95 LINE.NUM " AUTO" *StatusString $CAT 
 
-100 LINE.NUM ^TempLatch @@ 0 = ~IT_Rack_Back_Temp @@ 36 I>F F> ~SSB_Internal_Humidity @@ 31 I>F F> LOR  LAND  IF 
-106 LINE.NUM 1 ^TempLatch @! 
-107 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
-108 LINE.NUM THEN 
-109 LINE.NUM ^TempLatch @@ 1 = ~IT_Rack_Back_Temp @@ 33 I>F F< ~SSB_Internal_Humidity @@ 28 I>F F< LAND  LAND  IF 
-115 LINE.NUM 0 ^TempLatch @! 
-116 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
-117 LINE.NUM THEN 
-119 LINE.NUM ~SSB_Internal_Humidity @@ 26 I>F F> IF 
-127 LINE.NUM THEN 
-128 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
-129 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-130 LINE.NUM 0 ~FAN_M2_4_ON @! 
-131 LINE.NUM 0 ~FAN_M2_7_ON @! 
-132 LINE.NUM 0 ~FAN_M3_2_ON @! 
-133 LINE.NUM 0 ~FAN_M3_5_ON @! 
-134 LINE.NUM 0 ^TempLatch @! 
-135 LINE.NUM " TOO_COLD" *TempServoState  $MOVE 
-136 LINE.NUM THEN 
-138 LINE.NUM ELSE 
-138 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 1 = LAND  IF 
-139 LINE.NUM 0 ^FanSwMode @! 
-140 LINE.NUM 1 ~Fan_Green_LED @! 
-141 LINE.NUM 1 ~Fan_Red_LED @! 
-142 LINE.NUM " OFF" *StatusString $CAT 
+97 LINE.NUM ~SSB_Internal_Temp @@ 30 I>F F> IF 
+98 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+99 LINE.NUM 1 ~FAN_M2_4_ON @! 
+100 LINE.NUM 1 ~FAN_M2_7_ON @! 
+101 LINE.NUM 1 ~FAN_M3_2_ON @! 
+102 LINE.NUM 1 ~FAN_M3_5_ON @! 
+103 LINE.NUM 1 ^TempLatch @! 
+104 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
+105 LINE.NUM THEN 
+106 LINE.NUM ^TempLatch @@ 1 = ~SSB_Internal_Temp @@ 26 I>F F< LAND  IF 
+107 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+108 LINE.NUM 0 ~FAN_M2_4_ON @! 
+109 LINE.NUM 0 ~FAN_M2_7_ON @! 
+110 LINE.NUM 0 ~FAN_M3_2_ON @! 
+111 LINE.NUM 0 ~FAN_M3_5_ON @! 
+112 LINE.NUM 0 ^TempLatch @! 
+113 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
+114 LINE.NUM THEN 
+115 LINE.NUM ~SSB_Internal_Temp @@ 25 I>F F< IF 
+116 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+117 LINE.NUM 0 ~FAN_M2_4_ON @! 
+118 LINE.NUM 0 ~FAN_M2_7_ON @! 
+119 LINE.NUM 0 ~FAN_M3_2_ON @! 
+120 LINE.NUM 0 ~FAN_M3_5_ON @! 
+121 LINE.NUM 0 ^TempLatch @! 
+122 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
+123 LINE.NUM THEN 
+134 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
+142 LINE.NUM THEN 
+144 LINE.NUM ELSE 
+144 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 1 = LAND  IF 
+145 LINE.NUM 0 ^FanSwMode @! 
+146 LINE.NUM 0 ~Fan_Green_LED @! 
+147 LINE.NUM 1 ~Fan_Red_LED @! 
+148 LINE.NUM " OFF" *StatusString $CAT 
 
-143 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-144 LINE.NUM 0 ~FAN_M2_4_ON @! 
-145 LINE.NUM 0 ~FAN_M2_7_ON @! 
-146 LINE.NUM 0 ~FAN_M3_2_ON @! 
-147 LINE.NUM 0 ~FAN_M3_5_ON @! 
-148 LINE.NUM 0 ^TempLatch @! 
-149 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
-150 LINE.NUM ELSE 
-150 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 0 = LAND  IF 
-151 LINE.NUM 1 ^FanSwMode @! 
-152 LINE.NUM 0 ~Fan_Green_LED @! 
-153 LINE.NUM 1 ~Fan_Red_LED @! 
-154 LINE.NUM " ON" *StatusString $CAT 
+149 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+150 LINE.NUM 0 ~FAN_M2_4_ON @! 
+151 LINE.NUM 0 ~FAN_M2_7_ON @! 
+152 LINE.NUM 0 ~FAN_M3_2_ON @! 
+153 LINE.NUM 0 ~FAN_M3_5_ON @! 
+154 LINE.NUM 0 ^TempLatch @! 
+155 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
+156 LINE.NUM ELSE 
+156 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 1 = LAND  IF 
+157 LINE.NUM 1 ^FanSwMode @! 
+158 LINE.NUM 1 ~Fan_Green_LED @! 
+159 LINE.NUM 1 ~Fan_Red_LED @! 
+160 LINE.NUM " ON" *StatusString $CAT 
 
-155 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-156 LINE.NUM 1 ~FAN_M2_4_ON @! 
-157 LINE.NUM 1 ~FAN_M2_7_ON @! 
-158 LINE.NUM 1 ~FAN_M3_2_ON @! 
-159 LINE.NUM 1 ~FAN_M3_5_ON @! 
-160 LINE.NUM 0 ^TempLatch @! 
-161 LINE.NUM " MAX_ON_FANS" *TempServoState  $MOVE 
-162 LINE.NUM ELSE 
-163 LINE.NUM 3 ^FanSwMode @! 
-164 LINE.NUM 0 ~Fan_Green_LED @! 
-165 LINE.NUM 0 ~Fan_Red_LED @! 
-166 LINE.NUM " FAULT" *StatusString $CAT 
+161 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+162 LINE.NUM 1 ~FAN_M2_4_ON @! 
+163 LINE.NUM 1 ~FAN_M2_7_ON @! 
+164 LINE.NUM 1 ~FAN_M3_2_ON @! 
+165 LINE.NUM 1 ~FAN_M3_5_ON @! 
+166 LINE.NUM 0 ^TempLatch @! 
+167 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
+168 LINE.NUM ELSE 
+169 LINE.NUM 3 ^FanSwMode @! 
+170 LINE.NUM 0 ~Fan_Green_LED @! 
+171 LINE.NUM 0 ~Fan_Red_LED @! 
+172 LINE.NUM " FAULT" *StatusString $CAT 
 
-167 LINE.NUM 2 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-168 LINE.NUM 1 ~FAN_M2_4_ON @! 
-169 LINE.NUM 0 ~FAN_M2_7_ON @! 
-170 LINE.NUM 0 ~FAN_M3_2_ON @! 
-171 LINE.NUM 0 ~FAN_M3_5_ON @! 
-172 LINE.NUM 0 ^TempLatch @! 
-173 LINE.NUM " FAULT_FANS_LOW" *TempServoState  $MOVE 
-174 LINE.NUM THEN THEN THEN 
-176 LINE.NUM " , TemperatureServoState=" *StatusString $CAT 
+173 LINE.NUM THEN THEN THEN 
+175 LINE.NUM " , TemperatureServoState=" *StatusString $CAT 
 
-177 LINE.NUM *TempServoState *StatusString $CAT 
+176 LINE.NUM *TempServoState *StatusString $CAT 
 
-179 LINE.NUM ~HVAC_Cool_Voltage @@ 10 I>F F> IF 
-180 LINE.NUM " , HvacCooling=FALSE" *StatusString $CAT 
+178 LINE.NUM ~HVAC_Fan_Voltage @@ 10 I>F F< IF 
+179 LINE.NUM " , HvacFanOn=FALSE" *StatusString $CAT 
 
-181 LINE.NUM ELSE 
-182 LINE.NUM " , HvacCooling=TRUE" *StatusString $CAT 
+180 LINE.NUM ELSE 
+181 LINE.NUM " , HvacFanOn=TRUE" *StatusString $CAT 
 
-183 LINE.NUM THEN 
-184 LINE.NUM ~HVAC_Fan_Voltage @@ 9.000000e-001 F< IF 
-185 LINE.NUM " , HvacFanOn=TRUE" *StatusString $CAT 
+182 LINE.NUM THEN 
+183 LINE.NUM ~HVAC_Cool_Voltage @@ 10 I>F F< IF 
+184 LINE.NUM " , HvacCooling=FALSE" *StatusString $CAT 
 
-186 LINE.NUM ELSE 
-187 LINE.NUM " , HvacFanOn=FALSE" *StatusString $CAT 
+185 LINE.NUM ELSE 
+186 LINE.NUM " , HvacCooling=TRUE" *StatusString $CAT 
 
-188 LINE.NUM THEN 
-191 LINE.NUM *StatusString *EnviroString  $MOVE 
-192 LINE.NUM ~Ladder_stowed @@I 0 = IF 
-193 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
+187 LINE.NUM THEN 
+188 LINE.NUM ~HVAC_Heat_Voltage @@ 10 I>F F< IF 
+189 LINE.NUM " , HvacHeating=FALSE" *StatusString $CAT 
 
-194 LINE.NUM ELSE 
-195 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
+190 LINE.NUM ELSE 
+191 LINE.NUM " , HvacHeating=TRUE" *StatusString $CAT 
 
-196 LINE.NUM THEN 
-198 LINE.NUM ~SSBdoorSwitch @@I 0 = IF 
-199 LINE.NUM " , EntryDoorClosed=FALSE" *EnviroString $CAT 
+192 LINE.NUM THEN 
+195 LINE.NUM *StatusString *EnviroString  $MOVE 
+199 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
 
-200 LINE.NUM ELSE 
-201 LINE.NUM " , EntryDoorClosed=TRUE" *EnviroString $CAT 
+202 LINE.NUM ~SSBdoorSwitch @@I 0 = IF 
+203 LINE.NUM " , EntryDoorClosed=FALSE" *EnviroString $CAT 
 
-202 LINE.NUM THEN 
-204 LINE.NUM ~SmokeAlarmOK @@I 0 = IF 
-205 LINE.NUM " , SmokeAlarmOK=TRUE" *EnviroString $CAT 
+204 LINE.NUM ELSE 
+205 LINE.NUM " , EntryDoorClosed=TRUE" *EnviroString $CAT 
 
-206 LINE.NUM ELSE 
-207 LINE.NUM " , SmokeAlarmOK=FALSE" *EnviroString $CAT 
+206 LINE.NUM THEN 
+211 LINE.NUM " , SmokeAlarm=FALSE" *EnviroString $CAT 
 
-208 LINE.NUM THEN 
-211 LINE.NUM ~Acp_Panel_Closed @@I IF 
-212 LINE.NUM " , AcpPanelClosed=TRUE" *EnviroString $CAT 
+215 LINE.NUM ~Acp_Panel_Closed @@I IF 
+216 LINE.NUM " , AcpPanelClosed=TRUE" *EnviroString $CAT 
 
-213 LINE.NUM ELSE 
-214 LINE.NUM " , AcpPanelClosed=FALSE" *EnviroString $CAT 
+217 LINE.NUM ELSE 
+218 LINE.NUM " , AcpPanelClosed=FALSE" *EnviroString $CAT 
 
-215 LINE.NUM THEN 
-217 LINE.NUM " , UtilityVac=" *EnviroString $CAT 
+219 LINE.NUM THEN 
+221 LINE.NUM " , UtilityVac=" *EnviroString $CAT 
 
-218 LINE.NUM 2.080000e+002 5 0 *EnviroTemp  FF.R$ 
-219 LINE.NUM *EnviroTemp *EnviroString $CAT 
+222 LINE.NUM ~ACP_Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
+223 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-220 LINE.NUM " , FupsVac=" *EnviroString $CAT 
+224 LINE.NUM " , FupsVac=" *EnviroString $CAT 
 
-221 LINE.NUM 2.080000e+002 5 0 *EnviroTemp  FF.R$ 
-222 LINE.NUM *EnviroTemp *EnviroString $CAT 
-
-224 LINE.NUM " , ExternalShadedTemp=" *EnviroString $CAT 
-
-225 LINE.NUM ~SSB_Incoming_Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+225 LINE.NUM ~ACP_Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
 226 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-227 LINE.NUM " , ExternalHumidity=" *EnviroString $CAT 
+228 LINE.NUM " , IncomingTemp=" *EnviroString $CAT 
 
-228 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
-229 LINE.NUM *EnviroTemp *EnviroString $CAT 
+229 LINE.NUM ~SSB_Incoming_Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+230 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-231 LINE.NUM " , IncomingTemp=" *EnviroString $CAT 
+231 LINE.NUM " , InternalTemp=" *EnviroString $CAT 
 
-232 LINE.NUM ~SSB_Incoming_Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+232 LINE.NUM ~SSB_Internal_Temp @@ 4 1 *EnviroTemp  FF.R$ 
 233 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 234 LINE.NUM " , InternalHumidity=" *EnviroString $CAT 
@@ -797,98 +768,103 @@
 235 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
 236 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-237 LINE.NUM " , InternalTemp=" *EnviroString $CAT 
+237 LINE.NUM " , AcpPanelTemp=" *EnviroString $CAT 
 
-238 LINE.NUM ~SSB_Internal_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+238 LINE.NUM ~SSB_Panel_Temp @@ 4 1 *EnviroTemp  FF.R$ 
 239 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-240 LINE.NUM " , AcpPanelTemp=" *EnviroString $CAT 
+240 LINE.NUM " , ItRackBackTemp=" *EnviroString $CAT 
 
-241 LINE.NUM ~SSB_Panel_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+241 LINE.NUM ~IT_Rack_Back_Temp @@ 4 1 *EnviroTemp  FF.R$ 
 242 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-243 LINE.NUM " , ItRackBackTemp=" *EnviroString $CAT 
+243 LINE.NUM " , OutgoingTemp=" *EnviroString $CAT 
 
-244 LINE.NUM ~IT_Rack_Back_Temp @@ 4.000000e+000 F+ 4 1 *EnviroTemp  FF.R$ 
+244 LINE.NUM ~SSB_Outgoing_Temp @@ 4 1 *EnviroTemp  FF.R$ 
 245 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-246 LINE.NUM " , OutgoingTemp=" *EnviroString $CAT 
+247 LINE.NUM " , AcpPanelTach=" *EnviroString $CAT 
 
-247 LINE.NUM ~SSB_Outgoing_Temp @@ 4 1 *EnviroTemp  FF.R$ 
-248 LINE.NUM *EnviroTemp *EnviroString $CAT 
+248 LINE.NUM ~ACP_Fan_Tach @@ 1.140000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+249 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-250 LINE.NUM " , AcpPanelTach=" *EnviroString $CAT 
+251 LINE.NUM 0 I>F ^Total_Inflow @! 
+253 LINE.NUM ~SSB_Fan_M24_Tach @@ ^AdjustTach @! 
+254 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+255 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
+256 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+257 LINE.NUM 0 I>F ^AdjustTach @! 
+258 LINE.NUM THEN 
+259 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+260 LINE.NUM " , InletFan1Tach=" *EnviroString $CAT 
 
-251 LINE.NUM ~ACP_Fan_Tach @@ 1.140000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-252 LINE.NUM *EnviroTemp *EnviroString $CAT 
+261 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+262 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-254 LINE.NUM 0 I>F ^Total_Inflow @! 
-256 LINE.NUM ~SSB_Fan_M24_Tach @@ ^AdjustTach @! 
-257 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-258 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
-259 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-260 LINE.NUM 0 I>F ^AdjustTach @! 
-261 LINE.NUM THEN 
-262 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-263 LINE.NUM " , InletFan1Tach=" *EnviroString $CAT 
+264 LINE.NUM ~SSB_Fan_M27_Tach @@ ^AdjustTach @! 
+265 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+266 LINE.NUM ^AdjustTach @@ 3.703000e+000 F* ^AdjustTach @! 
+267 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+268 LINE.NUM 0 I>F ^AdjustTach @! 
+269 LINE.NUM THEN 
+270 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+271 LINE.NUM " , InletFan2Tach=" *EnviroString $CAT 
 
-264 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-265 LINE.NUM *EnviroTemp *EnviroString $CAT 
+272 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+273 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-267 LINE.NUM ~SSB_Fan_M27_Tach @@ ^AdjustTach @! 
-268 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-269 LINE.NUM ^AdjustTach @@ 3.703000e+000 F* ^AdjustTach @! 
-270 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-271 LINE.NUM 0 I>F ^AdjustTach @! 
-272 LINE.NUM THEN 
-273 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-274 LINE.NUM " , InletFan2Tach=" *EnviroString $CAT 
+276 LINE.NUM ~SSB_Fan_M32_Tach @@ ^AdjustTach @! 
+277 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+278 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
+279 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+280 LINE.NUM 0 I>F ^AdjustTach @! 
+281 LINE.NUM THEN 
+282 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+283 LINE.NUM " , InletFan3Tach=" *EnviroString $CAT 
 
-275 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-276 LINE.NUM *EnviroTemp *EnviroString $CAT 
+284 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+285 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-279 LINE.NUM ~SSB_Fan_M32_Tach @@ ^AdjustTach @! 
-280 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-281 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
-282 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-283 LINE.NUM 0 I>F ^AdjustTach @! 
-284 LINE.NUM THEN 
-285 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-286 LINE.NUM " , InletFan3Tach=" *EnviroString $CAT 
+288 LINE.NUM ~SSB_Fan_M35_Tach @@ ^AdjustTach @! 
+289 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+290 LINE.NUM ^AdjustTach @@ 3.846000e+000 F* ^AdjustTach @! 
+291 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+292 LINE.NUM 0 I>F ^AdjustTach @! 
+293 LINE.NUM THEN 
+294 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+295 LINE.NUM " , InletFan4Tach=" *EnviroString $CAT 
 
-287 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-288 LINE.NUM *EnviroTemp *EnviroString $CAT 
+296 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+297 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-291 LINE.NUM ~SSB_Fan_M35_Tach @@ ^AdjustTach @! 
-292 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-293 LINE.NUM ^AdjustTach @@ 3.846000e+000 F* ^AdjustTach @! 
-294 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-295 LINE.NUM 0 I>F ^AdjustTach @! 
-296 LINE.NUM THEN 
-297 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-298 LINE.NUM " , InletFan4Tach=" *EnviroString $CAT 
+299 LINE.NUM " , TotalInflow=" *EnviroString $CAT 
 
-299 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-300 LINE.NUM *EnviroTemp *EnviroString $CAT 
+300 LINE.NUM ^Total_Inflow @@ 4.000000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+301 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-302 LINE.NUM " , TotalInflow=" *EnviroString $CAT 
+303 LINE.NUM " , OutletTach=" *EnviroString $CAT 
 
-303 LINE.NUM ^Total_Inflow @@ 4.000000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-304 LINE.NUM *EnviroTemp *EnviroString $CAT 
+304 LINE.NUM ~SSB_Exhaust_Fan_Speed @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
+305 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-306 LINE.NUM " , OutletTach=" *EnviroString $CAT 
+307 LINE.NUM " , UtilityCurrent=" *EnviroString $CAT 
 
-307 LINE.NUM ~SSB_Exhaust_Fan_Speed @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
-308 LINE.NUM *EnviroTemp *EnviroString $CAT 
+308 LINE.NUM ~Utility_Current @@ 4 1 *EnviroTemp  FF.R$ 
+309 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-310 LINE.NUM " , UtilityCurrent=" *EnviroString $CAT 
+312 LINE.NUM " , DeltaTemp=" *EnviroString $CAT 
 
-311 LINE.NUM ~Utility_Current @@ 4 1 *EnviroTemp  FF.R$ 
-312 LINE.NUM *EnviroTemp *EnviroString $CAT 
+313 LINE.NUM ^delta_T @@ 4 1 *EnviroTemp  FF.R$ 
+314 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-314 LINE.NUM *EnviroString *StatusString  $MOVE 
-316 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-317 LINE.NUM " " *MasterCommand  $MOVE 
+316 LINE.NUM " , AvgMidSSBTemp=" *EnviroString $CAT 
+
+317 LINE.NUM ^avg_T @@ 4 1 *EnviroTemp  FF.R$ 
+318 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+320 LINE.NUM *EnviroString *StatusString  $MOVE 
+322 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+323 LINE.NUM " " *MasterCommand  $MOVE 
 -5 JUMP ;
 : 6_370
 
@@ -900,7 +876,7 @@
   ^PriorHeartbeatTime F@!   
 
 3 LINE.NUM
-  180.0  
+  90.0  
   ^Heartbeat_Timer   SetTimer
 
 4 LINE.NUM
@@ -912,293 +888,9 @@
   *Master_Handle   STREAM.CLEAR.BUF
 -5 JUMP ;
 : 6_406
-3 LINE.NUM " Success=TRUE, ICDVersion=" *StatusString  $MOVE 
-4 LINE.NUM *ICDVersion *StatusString $CAT 
-
-5 LINE.NUM " , FWVersion=" *StatusString $CAT 
-
-6 LINE.NUM *FWVersion *StatusString $CAT 
-
-7 LINE.NUM " , SWVersion=" *StatusString $CAT 
-
-8 LINE.NUM *SWVersion *StatusString $CAT 
-
-10 LINE.NUM " , Timestamp=" *StatusString $CAT 
-
-13 LINE.NUM  DATE@ DROP DROP *DateStringY  I>$ 
-14 LINE.NUM *DateStringY *StatusString $CAT 
-
-15 LINE.NUM " /" *StatusString $CAT 
-
-16 LINE.NUM  DATE@ -ROT DROP DROP *DateStringMD  I>$ 
-17 LINE.NUM *DateStringMD *StatusString $CAT 
-
-18 LINE.NUM " /" *StatusString $CAT 
-
-19 LINE.NUM  DATE@ DROP SWAP DROP *DateStringMD  I>$ 
-20 LINE.NUM *DateStringMD *StatusString $CAT 
-
-21 LINE.NUM " T" *StatusString $CAT 
-
-22 LINE.NUM *TimeString  TIME>$ 
-23 LINE.NUM *TimeString *StatusString $CAT 
-
-25 LINE.NUM " , SonalertStatus=" *StatusString $CAT 
-
-26 LINE.NUM ~Mute_Test @@I 1 = ^SonalertFlag @@ 1 = LOR  ~Sonalert @@I 1 = LOR  IF 
-27 LINE.NUM " NOISY" *StatusString $CAT 
-
-28 LINE.NUM ELSE 
-29 LINE.NUM " QUIET" *StatusString $CAT 
-
-30 LINE.NUM THEN 
-32 LINE.NUM " , FupsLineOK=" *StatusString $CAT 
-
-33 LINE.NUM ~FUPS_LineOK @@I 1 = IF 
-34 LINE.NUM " TRUE" *StatusString $CAT 
-
-35 LINE.NUM ELSE 
-36 LINE.NUM " FALSE" *StatusString $CAT 
-
-37 LINE.NUM THEN 
-39 LINE.NUM " , SMOKE_ALARM=" *StatusString $CAT 
-
-40 LINE.NUM ~SMOKE_ALARM @@I 1 = IF 
-41 LINE.NUM " TRUE" *StatusString $CAT 
-
-42 LINE.NUM ELSE 
-43 LINE.NUM " FALSE" *StatusString $CAT 
-
-44 LINE.NUM THEN 
-46 LINE.NUM " , HI_TEMP_ALARM=" *StatusString $CAT 
-
-47 LINE.NUM ~HI_TEMP_ALARM @@I 1 = IF 
-48 LINE.NUM " TRUE" *StatusString $CAT 
-
-49 LINE.NUM ELSE 
-50 LINE.NUM " FALSE" *StatusString $CAT 
-
-51 LINE.NUM THEN 
-53 LINE.NUM " , DupsLineOK=" *StatusString $CAT 
-
-54 LINE.NUM ~DUPS_LineOK @@I 1 = IF 
-55 LINE.NUM " TRUE" *StatusString $CAT 
-
-56 LINE.NUM ELSE 
-57 LINE.NUM " FALSE" *StatusString $CAT 
-
-58 LINE.NUM THEN 
-60 LINE.NUM " , FupsBatteryNormal=" *StatusString $CAT 
-
-61 LINE.NUM ~FUPS_BatteryNormal @@I 1 = IF 
-62 LINE.NUM " TRUE" *StatusString $CAT 
-
-63 LINE.NUM ELSE 
-64 LINE.NUM " FALSE" *StatusString $CAT 
-
-65 LINE.NUM THEN 
-67 LINE.NUM " , DupsBatteryNormal=" *StatusString $CAT 
-
-68 LINE.NUM ~DUPS_BatteryNormal @@I 1 = IF 
-69 LINE.NUM " TRUE" *StatusString $CAT 
-
-70 LINE.NUM ELSE 
-71 LINE.NUM " FALSE" *StatusString $CAT 
-
-72 LINE.NUM THEN 
-74 LINE.NUM " , FupsAlarm=" *StatusString $CAT 
-
-75 LINE.NUM ~FUPS_Alarm @@I 1 = IF 
-76 LINE.NUM " TRUE" *StatusString $CAT 
-
-77 LINE.NUM ELSE 
-78 LINE.NUM " FALSE" *StatusString $CAT 
-
-79 LINE.NUM THEN 
-81 LINE.NUM " , DupsAlarm=" *StatusString $CAT 
-
-82 LINE.NUM ~DUPS_Alarm @@I 1 = IF 
-83 LINE.NUM " TRUE" *StatusString $CAT 
-
-84 LINE.NUM ELSE 
-85 LINE.NUM " FALSE" *StatusString $CAT 
-
-86 LINE.NUM THEN 
-88 LINE.NUM " , FupsOnBypass=" *StatusString $CAT 
-
-89 LINE.NUM ~FUPS_on_bypass @@I 1 = IF 
-90 LINE.NUM " TRUE" *StatusString $CAT 
-
-91 LINE.NUM ELSE 
-92 LINE.NUM " FALSE" *StatusString $CAT 
-
-93 LINE.NUM THEN 
-95 LINE.NUM " , DupsOnBypass=" *StatusString $CAT 
-
-96 LINE.NUM ~DUPS_on_bypass @@I 1 = IF 
-97 LINE.NUM " TRUE" *StatusString $CAT 
-
-98 LINE.NUM ELSE 
-99 LINE.NUM " FALSE" *StatusString $CAT 
-
-100 LINE.NUM THEN 
-102 LINE.NUM " , F5_5_ECB_OK=" *StatusString $CAT 
-
-103 LINE.NUM ~F5_5_ECB_OK @@I 1 = IF 
-104 LINE.NUM " TRUE" *StatusString $CAT 
-
-105 LINE.NUM ELSE 
-106 LINE.NUM " FALSE" *StatusString $CAT 
-
-107 LINE.NUM THEN 
-109 LINE.NUM " , F5_7_ECB_OK=" *StatusString $CAT 
-
-110 LINE.NUM ~F5_7_ECB_OK @@I 1 = IF 
-111 LINE.NUM " TRUE" *StatusString $CAT 
-
-112 LINE.NUM ELSE 
-113 LINE.NUM " FALSE" *StatusString $CAT 
-
-114 LINE.NUM THEN 
-116 LINE.NUM " , F4_1_ECB_OK=" *StatusString $CAT 
-
-117 LINE.NUM ~F4_1_ECB_OK @@I 1 = IF 
-118 LINE.NUM " TRUE" *StatusString $CAT 
-
-119 LINE.NUM ELSE 
-120 LINE.NUM " FALSE" *StatusString $CAT 
-
-121 LINE.NUM THEN 
-123 LINE.NUM " , F4_3_ECB_OK=" *StatusString $CAT 
-
-124 LINE.NUM ~F4_3_ECB_OK @@I 1 = IF 
-125 LINE.NUM " TRUE" *StatusString $CAT 
-
-126 LINE.NUM ELSE 
-127 LINE.NUM " FALSE" *StatusString $CAT 
-
-128 LINE.NUM THEN 
-130 LINE.NUM " , F4_5_ECB_OK=" *StatusString $CAT 
-
-131 LINE.NUM ~F4_5_ECB_OK @@I 1 = IF 
-132 LINE.NUM " TRUE" *StatusString $CAT 
-
-133 LINE.NUM ELSE 
-134 LINE.NUM " FALSE" *StatusString $CAT 
-
-135 LINE.NUM THEN 
-137 LINE.NUM " , F4_7_ECB_OK=" *StatusString $CAT 
-
-138 LINE.NUM ~F4_7_ECB_OK @@I 1 = IF 
-139 LINE.NUM " TRUE" *StatusString $CAT 
-
-140 LINE.NUM ELSE 
-141 LINE.NUM " FALSE" *StatusString $CAT 
-
-142 LINE.NUM THEN 
-144 LINE.NUM " , F5_1_ECB_OK=" *StatusString $CAT 
-
-145 LINE.NUM ~F5_1_ECB_OK @@I 1 = IF 
-146 LINE.NUM " TRUE" *StatusString $CAT 
-
-147 LINE.NUM ELSE 
-148 LINE.NUM " FALSE" *StatusString $CAT 
-
-149 LINE.NUM THEN 
-151 LINE.NUM " , Fault5VDC=" *StatusString $CAT 
-
-152 LINE.NUM ~Fault5VDC @@I 1 = IF 
-153 LINE.NUM " TRUE" *StatusString $CAT 
-
-154 LINE.NUM ELSE 
-155 LINE.NUM " FALSE" *StatusString $CAT 
-
-156 LINE.NUM THEN 
-158 LINE.NUM " , OK_24VDC=" *StatusString $CAT 
-
-159 LINE.NUM ~OK_24VDC @@I 1 = IF 
-160 LINE.NUM " TRUE" *StatusString $CAT 
-
-161 LINE.NUM ELSE 
-162 LINE.NUM " FALSE" *StatusString $CAT 
-
-163 LINE.NUM THEN 
-165 LINE.NUM " , OK_12VDC=" *StatusString $CAT 
-
-166 LINE.NUM ~OK_12VDC @@I 1 = IF 
-167 LINE.NUM " TRUE" *StatusString $CAT 
-
-168 LINE.NUM ELSE 
-169 LINE.NUM " FALSE" *StatusString $CAT 
-
-170 LINE.NUM THEN 
-172 LINE.NUM " , OK_EthernetSwitch=" *StatusString $CAT 
-
-173 LINE.NUM ~OK_EthernetSwitch @@I 1 = IF 
-174 LINE.NUM " TRUE" *StatusString $CAT 
-
-175 LINE.NUM ELSE 
-176 LINE.NUM " FALSE" *StatusString $CAT 
-
-177 LINE.NUM THEN 
-179 LINE.NUM " , CompressorDoorSwtich=" *StatusString $CAT 
-
-180 LINE.NUM ~CompressorDoorSwtich @@I 1 = IF 
-181 LINE.NUM " TRUE" *StatusString $CAT 
-
-182 LINE.NUM ELSE 
-183 LINE.NUM " FALSE" *StatusString $CAT 
-
-184 LINE.NUM THEN 
-186 LINE.NUM " , Exhaust_Fan_Fault=" *StatusString $CAT 
-
-187 LINE.NUM ~Exhaust_Fan_Fault @@I 1 = IF 
-188 LINE.NUM " TRUE" *StatusString $CAT 
-
-189 LINE.NUM ELSE 
-190 LINE.NUM " FALSE" *StatusString $CAT 
-
-191 LINE.NUM THEN 
-193 LINE.NUM " , OK_FUPS_TVSS=" *StatusString $CAT 
-
-194 LINE.NUM ~OK_FUPS_TVSS @@I 1 = IF 
-195 LINE.NUM " TRUE" *StatusString $CAT 
-
-196 LINE.NUM ELSE 
-197 LINE.NUM " FALSE" *StatusString $CAT 
-
-198 LINE.NUM THEN 
-200 LINE.NUM " , OK_UTILITY_TVSS=" *StatusString $CAT 
-
-201 LINE.NUM ~OK_Utility_TVSS @@I 1 = IF 
-202 LINE.NUM " TRUE" *StatusString $CAT 
-
-203 LINE.NUM ELSE 
-204 LINE.NUM " FALSE" *StatusString $CAT 
-
-205 LINE.NUM THEN 
-207 LINE.NUM " , ManifoldAirPressure=" *StatusString $CAT 
-
-208 LINE.NUM ~AirPressure @@ 4 1 *EnviroTemp  FF.R$ 
-209 LINE.NUM *EnviroTemp *StatusString $CAT 
-
-211 LINE.NUM " , ManifoldAirTemp=" *StatusString $CAT 
-
-212 LINE.NUM ~Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
-213 LINE.NUM *EnviroTemp *StatusString $CAT 
-
-215 LINE.NUM " , ManifoldAirDewpoint=" *StatusString $CAT 
-
-216 LINE.NUM ~Air_Dewpoint @@ 4 1 *EnviroTemp  FF.R$ 
-217 LINE.NUM *EnviroTemp *StatusString $CAT 
-
-219 LINE.NUM " , BARD_Current=" *StatusString $CAT 
-
-220 LINE.NUM ~BARD_Current @@ 4 1 *EnviroTemp  FF.R$ 
-221 LINE.NUM *EnviroTemp *StatusString $CAT 
-
-223 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-224 LINE.NUM " " *MasterCommand  $MOVE 
+3 LINE.NUM " Success=FALSE" *StatusString  $MOVE 
+5 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+6 LINE.NUM " " *MasterCommand  $MOVE 
 1 JUMP ;
 : 6_408
 

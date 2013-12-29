@@ -6,10 +6,10 @@
 2 JUMP ;
 : 0_1
 1 LINE.NUM ~Sonalert  OFF 
-2 LINE.NUM ~Fence_Red_LED  OFF 
-3 LINE.NUM ~Fence_Green_LED  OFF 
-4 LINE.NUM ~Fan_Red_LED  OFF 
-5 LINE.NUM ~Fan_Green_LED  OFF 
+2 LINE.NUM ~Fan_Red_LED  OFF 
+3 LINE.NUM ~Fan_Green_LED  OFF 
+4 LINE.NUM ~Fence_Red_LED  OFF 
+5 LINE.NUM ~Fence_Green_LED  OFF 
 6 LINE.NUM ~Enclosure_A_Red_LED  OFF 
 7 LINE.NUM ~Enclosure_A_Green_LED  OFF 
 8 LINE.NUM ~Enclosure_B_Red_LED  OFF 
@@ -22,8 +22,8 @@
 15 LINE.NUM ~Keyring_Status_Green_LED  OFF 
 16 LINE.NUM ~Shutdown_Status_Red_LED  OFF 
 17 LINE.NUM ~Shutdown_Status_Green_LED  OFF 
-18 LINE.NUM ~Weather_status_Red_LED  OFF 
-19 LINE.NUM ~Weather_status_Green_LED  OFF 
+18 LINE.NUM ~SSB_status_Red_LED  OFF 
+19 LINE.NUM ~SSB_status_Green_LED  OFF 
 20 LINE.NUM ~FAN_M2_4_ON  OFF 
 21 LINE.NUM ~FAN_M2_7_ON  OFF 
 22 LINE.NUM ~FAN_M3_2_ON  OFF 
@@ -36,6 +36,8 @@
 29 LINE.NUM 0 ^FaultFlag @! 
 30 LINE.NUM " " *ErrorString  $MOVE 
 31 LINE.NUM " " *FaultString  $MOVE 
+32 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @! 
+33 LINE.NUM ~SSB_Internal_Temp @@ ~IT_Rack_Back_Temp @@ F+ 2 I>F F/ ^avg_T @! 
 2 JUMP ;
 : 0_9
 
@@ -54,12 +56,12 @@
 : 0_35
 
 1 LINE.NUM
-  &Monitor   START.T
+  &Master_comms   START.T
   ^ChartSTATUS I@! 
 
 2 LINE.NUM
-  &Master_comms   START.T
-  ^MasterXmitStatus @! 
+  &Monitor   START.T
+  ^MonitorStatus @! 
 -3 JUMP ;
 T: T0
 DUMMY

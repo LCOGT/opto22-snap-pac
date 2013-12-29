@@ -1,15 +1,19 @@
 0 TASK  &_INIT_IO
 0 TASK &Master_comms
 0 TASK &Monitor
-0 TASK &Mute_Test_Manager
 0 TASK &Powerup
 0 FVAR ^AdjustTach
+0 IVAR ^AQ_Go_Fast_Ok
+0 FVAR ^avg_T
 0 FVAR ^ChartSTATUS
 0 IVAR ^Comm_status
+0 IVAR ^DateTemp
+0 FVAR ^delta_T
 0 IVAR ^EncABlink
 0 IVAR ^EncAGrnFlag
 0 IVAR ^EncARedFlag
 0 IVAR ^ErrorFlag
+0 FVAR ^FamMemory
 0 IVAR ^FanSwMode
 0 IVAR ^FaultFlag
 0 IVAR ^FenceBlink
@@ -23,6 +27,7 @@
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
 0 IVAR ^MasterXmitStatus
+0 IVAR ^MonitorStatus
 0 IVAR ^Position
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^Response
@@ -33,12 +38,11 @@
 0 IVAR ^SiteGrnFlag
 0 IVAR ^SiteRedFlag
 0 TVAR ^Socket_Timer
-0 IVAR ^SonalertFlag
+0 IVAR ^SSBBlink
+0 IVAR ^SSBGrnFlag
+0 IVAR ^SSBRedFlag
 0 IVAR ^TempLatch
 0 FVAR ^Total_Inflow
-0 IVAR ^WeatherBlink
-0 IVAR ^WeatherGrnFlag
-0 IVAR ^WeatherRedFlag
 2 0 $VAR *DateStringMD 
 4 0 $VAR *DateStringY 
 12 0 $VAR *ElapsedString 
@@ -46,7 +50,7 @@
 6 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorString 
 1024 0 $VAR *FaultString 
-12 0 $VAR *FWVersion 
+6 0 $VAR *FWVersion 
 6 0 $VAR *ICDVersion 
 64 0 $VAR *MasterCommand 
 1024 0 $VAR *StateString 
@@ -67,7 +71,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  7  0 %acp 0 POINT.TNG ~SpareKey
 32  1 SPOINT 0.0     INPUT  8  0 %acp 0 POINT.TNG ~SSBdoorSwitch
 32  1 SPOINT 0.0     INPUT  9  0 %acp 0 POINT.TNG ~CompressorDoorSwtich
-32  1 SPOINT 0.0     INPUT 10  0 %acp 0 POINT.TNG ~SmokeAlarmOK
+32  1 SPOINT 0.0     INPUT 10  0 %acp 0 POINT.TNG ~SmokeAlarm
 32  1 SPOINT 0.0     INPUT 11  0 %acp 0 POINT.TNG ~A_acp_01
 32  1 SPOINT 0.0     INPUT 12  0 %acp 0 POINT.TNG ~Mute_Test
 32  1 SPOINT 0.0     INPUT 13  0 %acp 0 POINT.TNG ~OK_EthernetSwitch
@@ -76,13 +80,13 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT 16  0 %acp 0 POINT.TNG ~Exhaust_Fan_Fault
 32  1 SPOINT 0.0     INPUT 17  0 %acp 0 POINT.TNG ~acp_02
 32  1 SPOINT 0.0     INPUT 18  0 %acp 0 POINT.TNG ~FUPS_LineOK
-32  1 SPOINT 0.0     INPUT 19  0 %acp 0 POINT.TNG ~DUPS_LineOK
+32  1 SPOINT 0.0     INPUT 19  0 %acp 0 POINT.TNG ~DUPS_Line_OK
 32  1 SPOINT 0.0     INPUT 20  0 %acp 0 POINT.TNG ~FUPS_BatteryNormal
 32  1 SPOINT 0.0     INPUT 21  0 %acp 0 POINT.TNG ~DUPS_BatteryNormal
-32  1 SPOINT 0.0     INPUT 22  0 %acp 0 POINT.TNG ~FUPS_Alarm
-32  1 SPOINT 0.0     INPUT 23  0 %acp 0 POINT.TNG ~DUPS_Alarm
-32  1 SPOINT 0.0     INPUT 24  0 %acp 0 POINT.TNG ~FUPS_on_bypass
-32  1 SPOINT 0.0     INPUT 25  0 %acp 0 POINT.TNG ~DUPS_on_bypass
+32  1 SPOINT 0.0     INPUT 22  0 %acp 0 POINT.TNG ~DUPS_ON_OK
+32  1 SPOINT 0.0     INPUT 23  0 %acp 0 POINT.TNG ~FUPS_ON_OK
+32  1 SPOINT 0.0     INPUT 24  0 %acp 0 POINT.TNG ~DUPS_Normal_OnInverter
+32  1 SPOINT 0.0     INPUT 25  0 %acp 0 POINT.TNG ~FUPS_Normal_OnInverter
 32  1 SPOINT 0.0     INPUT 26  0 %acp 0 POINT.TNG ~F5_5_ECB_OK
 32  1 SPOINT 0.0     INPUT 27  0 %acp 0 POINT.TNG ~F5_7_ECB_OK
 32  1 SPOINT 0.0     INPUT 28  0 %acp 0 POINT.TNG ~Spare3
@@ -99,10 +103,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0    OUTPUT  7  1 %acp 0 POINT.TNG ~FAN_M2_7_ON
 32  1 SPOINT 0.0    OUTPUT  8  1 %acp 0 POINT.TNG ~FAN_M3_2_ON
 32  1 SPOINT 0.0    OUTPUT  9  1 %acp 0 POINT.TNG ~FAN_M3_5_ON
-32  1 SPOINT 0.0    OUTPUT 10  1 %acp 0 POINT.TNG ~Fence_Red_LED
-32  1 SPOINT 0.0    OUTPUT 11  1 %acp 0 POINT.TNG ~Fence_Green_LED
-32  1 SPOINT 0.0    OUTPUT 12  1 %acp 0 POINT.TNG ~Fan_Red_LED
-32  1 SPOINT 0.0    OUTPUT 13  1 %acp 0 POINT.TNG ~Fan_Green_LED
+32  1 SPOINT 0.0    OUTPUT 10  1 %acp 0 POINT.TNG ~Fan_Red_LED
+32  1 SPOINT 0.0    OUTPUT 11  1 %acp 0 POINT.TNG ~Fan_Green_LED
+32  1 SPOINT 0.0    OUTPUT 12  1 %acp 0 POINT.TNG ~Fence_Red_LED
+32  1 SPOINT 0.0    OUTPUT 13  1 %acp 0 POINT.TNG ~Fence_Green_LED
 32  1 SPOINT 0.0    OUTPUT 14  1 %acp 0 POINT.TNG ~Enclosure_A_Red_LED
 32  1 SPOINT 0.0    OUTPUT 15  1 %acp 0 POINT.TNG ~Enclosure_A_Green_LED
 32  1 SPOINT 0.0    OUTPUT 16  1 %acp 0 POINT.TNG ~Enclosure_B_Red_LED
@@ -115,14 +119,14 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0    OUTPUT 23  1 %acp 0 POINT.TNG ~Enclosure_D_Green_LED
 32  1 SPOINT 0.0    OUTPUT 24  1 %acp 0 POINT.TNG ~Enclosure_C_Red_LED
 32  1 SPOINT 0.0    OUTPUT 25  1 %acp 0 POINT.TNG ~Enclosure_C_Green_LED
-32  1 SPOINT 0.0    OUTPUT 26  1 %acp 0 POINT.TNG ~Weather_status_Red_LED
-32  1 SPOINT 0.0    OUTPUT 27  1 %acp 0 POINT.TNG ~Weather_status_Green_LED
+32  1 SPOINT 0.0    OUTPUT 26  1 %acp 0 POINT.TNG ~SSB_status_Red_LED
+32  1 SPOINT 0.0    OUTPUT 27  1 %acp 0 POINT.TNG ~SSB_status_Green_LED
 32  1 SPOINT 0.0    OUTPUT 28  1 %acp 0 POINT.TNG ~Shunt_Trip_Compressor
 32  1 SPOINT 0.0    OUTPUT 29  1 %acp 0 POINT.TNG ~Sonalert
 32  1 SPOINT 0.0    OUTPUT 30  1 %acp 0 POINT.TNG ~F5_1_ECB_Set_Reset
 32  1 SPOINT 0.0    OUTPUT 31  1 %acp 0 POINT.TNG ~Spare_Output_1
- 4  1 APOINT  -20.0000 64  0  2 %acp 0 POINT.TNG ~Air_Temp
- 4  1 APOINT  -20.0000 64  1  2 %acp 0 POINT.TNG ~Air_Dewpoint
+ 4  1 APOINT  -20.0000 64  0  2 %acp 0 POINT.TNG ~Air_Dewpoint1
+ 4  1 APOINT  -20.0000 64  1  2 %acp 0 POINT.TNG ~Air_Dewpoint2
  4  1 APOINT -190.0000 0  2  2 %acp 0 POINT.TNG ~SSB_Internal_Temp
   60.0000 -190.0000 ~SSB_Internal_Temp SET.SCALE
  4  1 APOINT -150.0000 0  3  2 %acp 0 POINT.TNG ~SSB_Internal_Humidity
@@ -151,13 +155,13 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  9  9 %acp 0 POINT.TNG ~Fault5VDC
 32  1 SPOINT 0.0     INPUT 10  9 %acp 0 POINT.TNG ~Ladder_stowed
 32  1 SPOINT 0.0     INPUT 11  9 %acp 0 POINT.TNG ~Acp_Panel_Closed
-32  1 SPOINT 0.0     INPUT 12  9 %acp 0 POINT.TNG ~SMOKE_ALARM
-32  1 SPOINT 0.0     INPUT 13  9 %acp 0 POINT.TNG ~HI_TEMP_ALARM
+32  1 SPOINT 0.0     INPUT 12  9 %acp 0 POINT.TNG ~di_acp_0912
+32  1 SPOINT 0.0     INPUT 13  9 %acp 0 POINT.TNG ~di_acp_0913
 32  1 SPOINT 0.0     INPUT 14  9 %acp 0 POINT.TNG ~di_acp_0914
 32  1 SPOINT 0.0     INPUT 15  9 %acp 0 POINT.TNG ~di_acp_0915
 32  1 SPOINT 0.0     INPUT 16  9 %acp 0 POINT.TNG ~Fan_Sw_1
 32  1 SPOINT 0.0     INPUT 17  9 %acp 0 POINT.TNG ~Fan_Sw_2
-32  1 SPOINT 0.0     INPUT 18  9 %acp 0 POINT.TNG ~di_acp_0918
+32  1 SPOINT 0.0     INPUT 18  9 %acp 0 POINT.TNG ~HeatEnableSW
 32  1 SPOINT 0.0     INPUT 19  9 %acp 0 POINT.TNG ~di_acp_0919
 32  1 SPOINT 0.0     INPUT 20  9 %acp 0 POINT.TNG ~di_acp_0920
 32  1 SPOINT 0.0     INPUT 21  9 %acp 0 POINT.TNG ~di_acp_0921
@@ -172,9 +176,11 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT 30  9 %acp 0 POINT.TNG ~di_acp_0930
 32  1 SPOINT 0.0     INPUT 31  9 %acp 0 POINT.TNG ~di_acp_0931
  4  1 APOINT  -20.0000 64  0 10 %acp 0 POINT.TNG ~AirPressure
- 4  1 APOINT -150.0000 0  1 10 %acp 0 POINT.TNG ~Utility_Current
- 100.0000 -150.0000 ~Utility_Current SET.SCALE
- 4  1 APOINT  -20.0000 64  2 10 %acp 0 POINT.TNG ~BARD_Current
+ 4  1 APOINT -112.5000 0  1 10 %acp 0 POINT.TNG ~Utility_Current
+  75.0000 -112.5000 ~Utility_Current SET.SCALE
+ 4  1 APOINT  -20.0000 64  2 10 %acp 0 POINT.TNG ~ai_acp_1002
  4  1 APOINT  -20.0000 64  3 10 %acp 0 POINT.TNG ~ai_acp_1003
- 2  1 APOINT    0.0000 70  0 11 %acp 0 POINT.TNG ~HVAC_Cool_Voltage
- 2  1 APOINT    0.0000 70  1 11 %acp 0 POINT.TNG ~HVAC_Fan_Voltage
+ 2  1 APOINT    0.0000 70  0 11 %acp 0 POINT.TNG ~ACP_Utility_VAC
+ 2  1 APOINT    0.0000 70  1 11 %acp 0 POINT.TNG ~HVAC_Heat_Voltage
+ 2  1 APOINT    0.0000 70  0 12 %acp 0 POINT.TNG ~HVAC_Fan_Voltage
+ 2  1 APOINT    0.0000 70  1 12 %acp 0 POINT.TNG ~HVAC_Cool_Voltage
