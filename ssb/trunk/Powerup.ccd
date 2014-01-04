@@ -47,7 +47,7 @@
 : 0_15
 
 1 LINE.NUM
-  180.0  
+  ^HeartTime @@ 
   ^Heartbeat_Timer   SetTimer
 
 2 LINE.NUM

@@ -21,6 +21,7 @@ CREATE V.ARRAY
 ^FenceBlink ,
 ^FenceGrnFlag ,
 ^FenceRedFlag ,
+^HeartTime ,
 ^indexStep ,
 ^ListeningForMaster ,
 ^Master_CommClosed ,
@@ -29,8 +30,16 @@ CREATE V.ARRAY
 ^MasterCommEstablished ,
 ^MasterXmitStatus ,
 ^MonitorStatus ,
+^OpenFlag ,
 ^Position ,
+^Position1 ,
+^Position2 ,
+^Position3 ,
+^Position4 ,
+^Position5 ,
+^Position6 ,
 ^PriorHeartbeatTime ,
+^PriorStatusTime ,
 ^Response ,
 ^ShutdownBlink ,
 ^ShutdownGrnFlag ,
@@ -38,24 +47,33 @@ CREATE V.ARRAY
 ^SiteBlink ,
 ^SiteGrnFlag ,
 ^SiteRedFlag ,
+^SiteSetpoint ,
 ^SSBBlink ,
 ^SSBGrnFlag ,
 ^SSBRedFlag ,
+^SysTime ,
 ^TempLatch ,
 ^Total_Inflow ,
+^ValidTemp ,
 *DateStringMD ,
 *DateStringY ,
+*DateTimeString ,
+*DewString ,
 *ElapsedString ,
 *EnviroString ,
 *EnviroTemp ,
 *ErrorString ,
 *FaultString ,
 *FWVersion ,
+*HumidityString ,
 *ICDVersion ,
 *MasterCommand ,
+*Pstring ,
+*SiteString ,
 *StateString ,
 *StatusString ,
 *SWVersion ,
+*TemperatureString ,
 *TempServoState ,
 *TimeString ,
 *_HSV_SEMA ,
@@ -230,6 +248,7 @@ CONFIG_PORTS
 0 ^FenceGrnFlag @!
 0 ^FenceRedFlag @!
 0.0 ^Heartbeat_Timer @!
+450.00000 ^HeartTime @!
 0 ^indexStep @!
 0 ^ListeningForMaster @!
 0 ^Master_CommClosed @!
@@ -238,8 +257,16 @@ CONFIG_PORTS
 0 ^MasterCommEstablished @!
 0 ^MasterXmitStatus @!
 0 ^MonitorStatus @!
+0 ^OpenFlag @!
 -1 ^Position @!
-120 ^PriorHeartbeatTime @!
+0 ^Position1 @!
+0 ^Position2 @!
+0 ^Position3 @!
+0 ^Position4 @!
+0 ^Position5 @!
+0 ^Position6 @!
+1 ^PriorHeartbeatTime @!
+0 ^PriorStatusTime @!
 0 ^Response @!
 0 ^ShutdownBlink @!
 0 ^ShutdownGrnFlag @!
@@ -247,16 +274,23 @@ CONFIG_PORTS
 0 ^SiteBlink @!
 0 ^SiteGrnFlag @!
 0 ^SiteRedFlag @!
+24.000000 ^SiteSetpoint @!
 0.0 ^Socket_Timer @!
 0 ^SSBBlink @!
 0 ^SSBGrnFlag @!
 0 ^SSBRedFlag @!
+0.00000000 ^SysTime @!
 0 ^TempLatch @!
 0.00000000 ^Total_Inflow @!
+0 ^ValidTemp @!
 " "
  *DateStringMD $MOVE
 " "
  *DateStringY $MOVE
+" "
+ *DateTimeString $MOVE
+" "
+ *DewString $MOVE
 " "
  *ElapsedString $MOVE
 " Enviro"
@@ -269,16 +303,24 @@ CONFIG_PORTS
  *FaultString $MOVE
 " 001.07"
  *FWVersion $MOVE
+" "
+ *HumidityString $MOVE
 " 001.01"
  *ICDVersion $MOVE
 " xxx"
  *MasterCommand $MOVE
+" "
+ *Pstring $MOVE
+" GEN"
+ *SiteString $MOVE
 " State"
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.09"
+" 001.10"
  *SWVersion $MOVE
+" "
+ *TemperatureString $MOVE
 " "
  *TempServoState $MOVE
 " "

@@ -20,6 +20,7 @@
 0 IVAR ^FenceGrnFlag
 0 IVAR ^FenceRedFlag
 0 TVAR ^Heartbeat_Timer
+0 FVAR ^HeartTime
 0 IVAR ^indexStep
 0 IVAR ^ListeningForMaster
 0 IVAR ^Master_CommClosed
@@ -28,8 +29,16 @@
 0 IVAR ^MasterCommEstablished
 0 IVAR ^MasterXmitStatus
 0 IVAR ^MonitorStatus
+0 IVAR ^OpenFlag
 0 IVAR ^Position
+0 IVAR ^Position1
+0 IVAR ^Position2
+0 IVAR ^Position3
+0 IVAR ^Position4
+0 IVAR ^Position5
+0 IVAR ^Position6
 0 IVAR ^PriorHeartbeatTime
+0 IVAR ^PriorStatusTime
 0 IVAR ^Response
 0 IVAR ^ShutdownBlink
 0 IVAR ^ShutdownGrnFlag
@@ -37,25 +46,34 @@
 0 IVAR ^SiteBlink
 0 IVAR ^SiteGrnFlag
 0 IVAR ^SiteRedFlag
+0 FVAR ^SiteSetpoint
 0 TVAR ^Socket_Timer
 0 IVAR ^SSBBlink
 0 IVAR ^SSBGrnFlag
 0 IVAR ^SSBRedFlag
+0 FVAR ^SysTime
 0 IVAR ^TempLatch
 0 FVAR ^Total_Inflow
+0 IVAR ^ValidTemp
 2 0 $VAR *DateStringMD 
 4 0 $VAR *DateStringY 
+64 0 $VAR *DateTimeString 
+8 0 $VAR *DewString 
 12 0 $VAR *ElapsedString 
 1024 0 $VAR *EnviroString 
 6 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorString 
 1024 0 $VAR *FaultString 
 6 0 $VAR *FWVersion 
+8 0 $VAR *HumidityString 
 6 0 $VAR *ICDVersion 
 64 0 $VAR *MasterCommand 
+128 0 $VAR *Pstring 
+3 0 $VAR *SiteString 
 1024 0 $VAR *StateString 
 1024 0 $VAR *StatusString 
-6 0 $VAR *SWVersion 
+9 0 $VAR *SWVersion 
+8 0 $VAR *TemperatureString 
 32 0 $VAR *TempServoState 
 12 0 $VAR *TimeString 
 1024 1073741824 COMVAR *Master_Handle 
