@@ -735,8 +735,13 @@
 
 202 LINE.NUM THEN 
 205 LINE.NUM *StatusString *EnviroString  $MOVE 
+206 LINE.NUM ~Ladder_stowed @@I 0 = IF 
+207 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
+
+208 LINE.NUM ELSE 
 209 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
 
+210 LINE.NUM THEN 
 212 LINE.NUM ~SSBdoorSwitch @@I 0 = IF 
 213 LINE.NUM " , EntryDoorClosed=FALSE" *EnviroString $CAT 
 
@@ -744,137 +749,156 @@
 215 LINE.NUM " , EntryDoorClosed=TRUE" *EnviroString $CAT 
 
 216 LINE.NUM THEN 
-221 LINE.NUM " , SmokeAlarm=FALSE" *EnviroString $CAT 
+218 LINE.NUM ~SmokeAlarmOK @@I 1 = IF 
+219 LINE.NUM " , SmokeAlarmOK=TRUE" *EnviroString $CAT 
 
-225 LINE.NUM ~Acp_Panel_Closed @@I IF 
-226 LINE.NUM " , AcpPanelClosed=TRUE" *EnviroString $CAT 
+220 LINE.NUM ELSE 
+221 LINE.NUM " , SmokeAlarmOK=FALSE" *EnviroString $CAT 
+
+222 LINE.NUM THEN 
+225 LINE.NUM ~SmokeAlert @@I 1 = IF 
+226 LINE.NUM " , SmokeAlert=TRUE" *EnviroString $CAT 
 
 227 LINE.NUM ELSE 
-228 LINE.NUM " , AcpPanelClosed=FALSE" *EnviroString $CAT 
+228 LINE.NUM " , SmokeAlert=FALSE" *EnviroString $CAT 
 
 229 LINE.NUM THEN 
-231 LINE.NUM " , UtilityVac=" *EnviroString $CAT 
+231 LINE.NUM ~HighTempAlert @@I 1 = IF 
+232 LINE.NUM " , HighTempAlert=TRUE" *EnviroString $CAT 
 
-232 LINE.NUM ~ACP_Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
-233 LINE.NUM *EnviroTemp *EnviroString $CAT 
+233 LINE.NUM ELSE 
+234 LINE.NUM " , HighTempAlert=FALSE" *EnviroString $CAT 
 
-234 LINE.NUM " , FupsVac=" *EnviroString $CAT 
+235 LINE.NUM THEN 
+238 LINE.NUM ~Acp_Panel_Closed @@I IF 
+239 LINE.NUM " , AcpPanelClosed=TRUE" *EnviroString $CAT 
 
-235 LINE.NUM ~ACP_Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
-236 LINE.NUM *EnviroTemp *EnviroString $CAT 
+240 LINE.NUM ELSE 
+241 LINE.NUM " , AcpPanelClosed=FALSE" *EnviroString $CAT 
 
-238 LINE.NUM " , IncomingTemp=" *EnviroString $CAT 
+242 LINE.NUM THEN 
+244 LINE.NUM " , UtilityVac=" *EnviroString $CAT 
 
-239 LINE.NUM ~SSB_Incoming_Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
-240 LINE.NUM *EnviroTemp *EnviroString $CAT 
-
-241 LINE.NUM " , InternalTemp=" *EnviroString $CAT 
-
-242 LINE.NUM ~SSB_Internal_Temp @@ 4 1 *EnviroTemp  FF.R$ 
-243 LINE.NUM *EnviroTemp *EnviroString $CAT 
-
-244 LINE.NUM " , InternalHumidity=" *EnviroString $CAT 
-
-245 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
+245 LINE.NUM ~ACP_Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
 246 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-247 LINE.NUM " , AcpPanelTemp=" *EnviroString $CAT 
+247 LINE.NUM " , FupsVac=" *EnviroString $CAT 
 
-248 LINE.NUM ~SSB_Panel_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+248 LINE.NUM ~ACP_Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
 249 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-250 LINE.NUM " , ItRackBackTemp=" *EnviroString $CAT 
+251 LINE.NUM " , IncomingTemp=" *EnviroString $CAT 
 
-251 LINE.NUM ~IT_Rack_Back_Temp @@ 4 1 *EnviroTemp  FF.R$ 
-252 LINE.NUM *EnviroTemp *EnviroString $CAT 
+252 LINE.NUM ~SSB_Incoming_Air_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+253 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-253 LINE.NUM " , OutgoingTemp=" *EnviroString $CAT 
+254 LINE.NUM " , InternalTemp=" *EnviroString $CAT 
 
-254 LINE.NUM ~SSB_Outgoing_Temp @@ 4 1 *EnviroTemp  FF.R$ 
-255 LINE.NUM *EnviroTemp *EnviroString $CAT 
+255 LINE.NUM ~SSB_Internal_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+256 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-257 LINE.NUM " , AcpPanelTach=" *EnviroString $CAT 
+257 LINE.NUM " , InternalHumidity=" *EnviroString $CAT 
 
-258 LINE.NUM ~ACP_Fan_Tach @@ 1.140000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+258 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
 259 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-261 LINE.NUM 0 I>F ^Total_Inflow @! 
-263 LINE.NUM ~SSB_Fan_M24_Tach @@ ^AdjustTach @! 
-264 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-265 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
-266 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-267 LINE.NUM 0 I>F ^AdjustTach @! 
-268 LINE.NUM THEN 
-269 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-270 LINE.NUM " , InletFan1Tach=" *EnviroString $CAT 
+260 LINE.NUM " , AcpPanelTemp=" *EnviroString $CAT 
 
-271 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+261 LINE.NUM ~SSB_Panel_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+262 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+263 LINE.NUM " , ItRackBackTemp=" *EnviroString $CAT 
+
+264 LINE.NUM ~IT_Rack_Back_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+265 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+266 LINE.NUM " , OutgoingTemp=" *EnviroString $CAT 
+
+267 LINE.NUM ~SSB_Outgoing_Temp @@ 4 1 *EnviroTemp  FF.R$ 
+268 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+270 LINE.NUM " , AcpPanelTach=" *EnviroString $CAT 
+
+271 LINE.NUM ~ACP_Fan_Tach @@ 1.140000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 272 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-274 LINE.NUM ~SSB_Fan_M27_Tach @@ ^AdjustTach @! 
-275 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-276 LINE.NUM ^AdjustTach @@ 3.703000e+000 F* ^AdjustTach @! 
-277 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-278 LINE.NUM 0 I>F ^AdjustTach @! 
-279 LINE.NUM THEN 
-280 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-281 LINE.NUM " , InletFan2Tach=" *EnviroString $CAT 
+274 LINE.NUM 0 I>F ^Total_Inflow @! 
+276 LINE.NUM ~SSB_Fan_M24_Tach @@ ^AdjustTach @! 
+277 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+278 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
+279 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+280 LINE.NUM 0 I>F ^AdjustTach @! 
+281 LINE.NUM THEN 
+282 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+283 LINE.NUM " , InletFan1Tach=" *EnviroString $CAT 
 
-282 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-283 LINE.NUM *EnviroTemp *EnviroString $CAT 
+284 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+285 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-286 LINE.NUM ~SSB_Fan_M32_Tach @@ ^AdjustTach @! 
-287 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-288 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
-289 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-290 LINE.NUM 0 I>F ^AdjustTach @! 
-291 LINE.NUM THEN 
-292 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-293 LINE.NUM " , InletFan3Tach=" *EnviroString $CAT 
+287 LINE.NUM ~SSB_Fan_M27_Tach @@ ^AdjustTach @! 
+288 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+289 LINE.NUM ^AdjustTach @@ 3.703000e+000 F* ^AdjustTach @! 
+290 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+291 LINE.NUM 0 I>F ^AdjustTach @! 
+292 LINE.NUM THEN 
+293 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+294 LINE.NUM " , InletFan2Tach=" *EnviroString $CAT 
 
-294 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-295 LINE.NUM *EnviroTemp *EnviroString $CAT 
+295 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+296 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-298 LINE.NUM ~SSB_Fan_M35_Tach @@ ^AdjustTach @! 
-299 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-300 LINE.NUM ^AdjustTach @@ 3.846000e+000 F* ^AdjustTach @! 
-301 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
-302 LINE.NUM 0 I>F ^AdjustTach @! 
-303 LINE.NUM THEN 
-304 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
-305 LINE.NUM " , InletFan4Tach=" *EnviroString $CAT 
+299 LINE.NUM ~SSB_Fan_M32_Tach @@ ^AdjustTach @! 
+300 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+301 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
+302 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+303 LINE.NUM 0 I>F ^AdjustTach @! 
+304 LINE.NUM THEN 
+305 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+306 LINE.NUM " , InletFan3Tach=" *EnviroString $CAT 
 
-306 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
-307 LINE.NUM *EnviroTemp *EnviroString $CAT 
+307 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+308 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-309 LINE.NUM " , TotalInflow=" *EnviroString $CAT 
+311 LINE.NUM ~SSB_Fan_M35_Tach @@ ^AdjustTach @! 
+312 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
+313 LINE.NUM ^AdjustTach @@ 3.846000e+000 F* ^AdjustTach @! 
+314 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
+315 LINE.NUM 0 I>F ^AdjustTach @! 
+316 LINE.NUM THEN 
+317 LINE.NUM ^Total_Inflow @@ ^AdjustTach @@ F+ ^Total_Inflow @! 
+318 LINE.NUM " , InletFan4Tach=" *EnviroString $CAT 
 
-310 LINE.NUM ^Total_Inflow @@ 4.000000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-311 LINE.NUM *EnviroTemp *EnviroString $CAT 
+319 LINE.NUM ^AdjustTach @@ 4 0 *EnviroTemp  FF.R$ 
+320 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-313 LINE.NUM " , OutletTach=" *EnviroString $CAT 
+322 LINE.NUM " , TotalInflow=" *EnviroString $CAT 
 
-314 LINE.NUM ~SSB_Exhaust_Fan_Speed @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
-315 LINE.NUM *EnviroTemp *EnviroString $CAT 
-
-317 LINE.NUM " , UtilityCurrent=" *EnviroString $CAT 
-
-318 LINE.NUM ~Utility_Current @@ 4 1 *EnviroTemp  FF.R$ 
-319 LINE.NUM *EnviroTemp *EnviroString $CAT 
-
-322 LINE.NUM " , DeltaTemp=" *EnviroString $CAT 
-
-323 LINE.NUM ^delta_T @@ 4 1 *EnviroTemp  FF.R$ 
+323 LINE.NUM ^Total_Inflow @@ 4.000000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 324 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-326 LINE.NUM " , AvgMidSSBTemp=" *EnviroString $CAT 
+326 LINE.NUM " , OutletTach=" *EnviroString $CAT 
 
-327 LINE.NUM ^avg_T @@ 4 1 *EnviroTemp  FF.R$ 
+327 LINE.NUM ~SSB_Exhaust_Fan_Speed @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
 328 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-330 LINE.NUM *EnviroString *StatusString  $MOVE 
-332 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-333 LINE.NUM " " *MasterCommand  $MOVE 
+330 LINE.NUM " , UtilityCurrent=" *EnviroString $CAT 
+
+331 LINE.NUM ~Utility_Current @@ 4 1 *EnviroTemp  FF.R$ 
+332 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+335 LINE.NUM " , DeltaTemp=" *EnviroString $CAT 
+
+336 LINE.NUM ^delta_T @@ 4 1 *EnviroTemp  FF.R$ 
+337 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+339 LINE.NUM " , AvgMidSSBTemp=" *EnviroString $CAT 
+
+340 LINE.NUM ^avg_T @@ 4 1 *EnviroTemp  FF.R$ 
+341 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+343 LINE.NUM *EnviroString *StatusString  $MOVE 
+345 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+346 LINE.NUM " " *MasterCommand  $MOVE 
 -5 JUMP ;
 : 6_370
 
