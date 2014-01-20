@@ -38,6 +38,7 @@ _END NEW $$$.RUN
 0 IVAR ^CmdTOGGLE_LIGHTS
 0 TVAR ^COMMWATCHDOG
 0 IVAR ^Contactors_OK
+0 IVAR ^CountOneSecond
 0 FVAR ^CURRENT_COOLING_FAN_FREQ
 0 IVAR ^door
 0 IVAR ^flag_status
@@ -59,6 +60,7 @@ _END NEW $$$.RUN
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
 0 IVAR ^PANEL_FANS_OK
+0 IVAR ^Pubsub_Wall_Fans
 0 IVAR ^Second_reading
 0 IVAR ^Server_Ok_To_Go_Fast
 0 TVAR ^Socket_Timer
@@ -170,6 +172,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  1 13 %encPacInternal 0 POINT.TNG ~DO_PoleDirection_NO
  4  1 SPOINT 0.0    OUTPUT  2 13 %encPacInternal 0 POINT.TNG ~DO_PoleStop_NO
  4  1 SPOINT 0.0    OUTPUT  3 13 %encPacInternal 0 POINT.TNG ~DO_PoleGoFast_NO
+1    0.0000   10.0000    0.0000    0.0000    0.0000   10.0000    5.0000   30.0000
+   1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
+~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
+$80000002 0 %encPacInternal 0 PID |PanelFans
 : 1_0
 
 1 LINE.NUM
@@ -1770,90 +1776,51 @@ T;
 23 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
 24 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
 25 LINE.NUM THEN THEN 
-28 LINE.NUM 100  DELAY 
-1 JUMP ;
+2 JUMP ;
 : 17_4
 
 1 LINE.NUM
-  50    DELAY
+  200    DELAY
 -2 JUMP ;
-: 17_8
-0 JUMP ;
-: 17_11
-1 LINE.NUM ~DI_Lights_Enter_SW @@I IF 
-2 LINE.NUM 1 ^lightsenterold @! 
-3 LINE.NUM ELSE 
-4 LINE.NUM 0 ^lightsexitold @! 
-5 LINE.NUM THEN 
-6 LINE.NUM ~DI_Lights_Exit_SW @@I IF 
-7 LINE.NUM 1 ^lightsexitold @! 
-8 LINE.NUM ELSE 
-9 LINE.NUM 0 ^lightsexitold @! 
-10 LINE.NUM THEN 
-1 JUMP ;
 : 17_12
 24 LINE.NUM ~DI_Lights_Enter_SW  CLR.+LATCH@I ~DI_Lights_Enter_SW  CLR.-LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.+LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.-LATCH@I LOR  IF 
 28 LINE.NUM ~DO_Lights_RLA @@I 1 XOR  ~DO_Lights_RLA @! 
 29 LINE.NUM THEN 
--4 JUMP ;
+2 JUMP ;
 : 17_13
-1 LINE.NUM ~DI_FanAuto_SW @@I IF 
-2 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-3 LINE.NUM 10 I>F ~AO_Panel_Fans_VDC @! 
-4 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-5 LINE.NUM 1 ~DO_PanelRed_LED @! 
-6 LINE.NUM 1 ~DO_OutsideRed_LED @! 
-7 LINE.NUM 1 ~DO_OutsideGreen_LED @! 
-8 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-9 LINE.NUM 0 ~DO_Sounder @! 
-10 LINE.NUM ELSE 
-10 LINE.NUM ~DI_FanStop_SW @@I IF 
-11 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-12 LINE.NUM 0 I>F ~AO_Panel_Fans_VDC @! 
-13 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-14 LINE.NUM 0 ~DO_PanelRed_LED @! 
-15 LINE.NUM 0 ~DO_OutsideRed_LED @! 
-16 LINE.NUM 1 ~DO_OutsideGreen_LED @! 
-17 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-18 LINE.NUM 0 ~DO_Sounder @! 
-19 LINE.NUM ELSE 
-20 LINE.NUM 5 I>F ~AO_Wall_Fans_VDC @! 
-21 LINE.NUM 5 I>F ~AO_Panel_Fans_VDC @! 
-22 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-23 LINE.NUM 1 ~DO_PanelRed_LED @! 
-24 LINE.NUM 1 ~DO_OutsideRed_LED @! 
-25 LINE.NUM 0 ~DO_OutsideGreen_LED @! 
-26 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-27 LINE.NUM 0 ~DO_Sounder @! 
-28 LINE.NUM THEN THEN 
-30 LINE.NUM 100  DELAY 
+1 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
+2 LINE.NUM ^Pubsub_Wall_Fans @@F ~AO_Wall_Fans_VDC @! 
+3 LINE.NUM ELSE 
+3 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+4 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+5 LINE.NUM ELSE 
+6 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+7 LINE.NUM THEN THEN 
 -2 JUMP ;
 : 17_14
-1 LINE.NUM ^System_Safe_To_Run @@ ^Contactors_OK @@ 1 = LAND  ^Ups_Breaker_Ok @@ 1 = LAND  IF 
-2 LINE.NUM ~DO_PanelGreen_LED  ON 
-3 LINE.NUM ~DO_PanelRed_LED  OFF 
-4 LINE.NUM ~DO_PanelBlue_LED  OFF 
-5 LINE.NUM ELSE 
-5 LINE.NUM ^System_Safe_To_Run @@ ^Contactors_OK @@ 1 = LAND  ^Ups_Breaker_Ok @@ 0 = LAND  IF 
-6 LINE.NUM ~DO_PanelGreen_LED  ON 
-7 LINE.NUM ~DO_PanelRed_LED  ON 
-8 LINE.NUM ~DO_PanelBlue_LED  OFF 
+1 LINE.NUM ^CountOneSecond @@ 1 +  ^CountOneSecond @! 
+3 LINE.NUM ~DI_ESTOP_OK @@I 0 = ^CountOneSecond @@ 5 = LAND  IF 
+4 LINE.NUM 1 ~DO_PanelBlue_LED @! 
+5 LINE.NUM 0 ^CountOneSecond @! 
+6 LINE.NUM 800  DELAY 
+7 LINE.NUM ELSE 
+7 LINE.NUM ^CountOneSecond @@ 5 >= IF 
+8 LINE.NUM 0 ^CountOneSecond @! 
 9 LINE.NUM ELSE 
-10 LINE.NUM ~DO_PanelGreen_LED  OFF 
-11 LINE.NUM ~DO_PanelRed_LED  ON 
-12 LINE.NUM ~DO_PanelBlue_LED  ON 
-14 LINE.NUM THEN THEN 
-0 JUMP ;
+10 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+11 LINE.NUM THEN THEN 
+-4 JUMP ;
+: 17_18
+-2 JUMP ;
 T: T17
 DUMMY
 17_0
 17_1
 17_4
-17_8
-17_11
 17_12
 17_13
 17_14
+17_18
 T;
 &SYSTEM_READY ' T17 SETTASK
 : 13_0
@@ -2065,6 +2032,7 @@ CREATE V.ARRAY
 ^CmdTAIL_OPEN ,
 ^CmdTOGGLE_LIGHTS ,
 ^Contactors_OK ,
+^CountOneSecond ,
 ^CURRENT_COOLING_FAN_FREQ ,
 ^door ,
 ^flag_status ,
@@ -2085,6 +2053,7 @@ CREATE V.ARRAY
 ^OPEN ,
 ^OPEN_SLOW ,
 ^PANEL_FANS_OK ,
+^Pubsub_Wall_Fans ,
 ^Second_reading ,
 ^Server_Ok_To_Go_Fast ,
 ^SocketElapsed ,
@@ -2210,6 +2179,7 @@ CREATE P.ARRAY
 ~AO_Wall_Fans_VDC ,
  0 ,
 CREATE PID.ARRAY
+ |PanelFans ,
  0 ,
 CREATE E/R.ARRAY
  0 ,
@@ -2219,6 +2189,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
+|PanelFans ENABLE
 " %encPacInternal  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %encPacInternal ENABLE
    0.0000 ~AI_PoleFanExhaust_TACH IN.F!POINT
@@ -2248,6 +2219,7 @@ CONFIG_PORTS
 0 ^CmdTOGGLE_LIGHTS @!
 0.0 ^COMMWATCHDOG @!
 0 ^Contactors_OK @!
+0 ^CountOneSecond @!
 0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
 0 ^door @!
 0 ^flag_status @!
@@ -2269,6 +2241,7 @@ CONFIG_PORTS
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
 0 ^PANEL_FANS_OK @!
+0 ^Pubsub_Wall_Fans @!
 1 ^Second_reading @!
 0 ^Server_Ok_To_Go_Fast @!
 0.0 ^Socket_Timer @!
@@ -2321,8 +2294,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 12/16/13 " ;
-: TIMESTAMP ." 19:39:29 " ;
+: DATESTAMP ." 01/20/14 " ;
+: TIMESTAMP ." 14:46:40 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

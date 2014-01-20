@@ -32,6 +32,7 @@
 0 IVAR ^CmdTOGGLE_LIGHTS
 0 TVAR ^COMMWATCHDOG
 0 IVAR ^Contactors_OK
+0 IVAR ^CountOneSecond
 0 FVAR ^CURRENT_COOLING_FAN_FREQ
 0 IVAR ^door
 0 IVAR ^flag_status
@@ -53,6 +54,7 @@
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
 0 IVAR ^PANEL_FANS_OK
+0 IVAR ^Pubsub_Wall_Fans
 0 IVAR ^Second_reading
 0 IVAR ^Server_Ok_To_Go_Fast
 0 TVAR ^Socket_Timer
@@ -164,3 +166,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  1 13 %encPacInternal 0 POINT.TNG ~DO_PoleDirection_NO
  4  1 SPOINT 0.0    OUTPUT  2 13 %encPacInternal 0 POINT.TNG ~DO_PoleStop_NO
  4  1 SPOINT 0.0    OUTPUT  3 13 %encPacInternal 0 POINT.TNG ~DO_PoleGoFast_NO
+1    0.0000   10.0000    0.0000    0.0000    0.0000   10.0000    5.0000   30.0000
+   1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
+~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
+$80000002 0 %encPacInternal 0 PID |PanelFans

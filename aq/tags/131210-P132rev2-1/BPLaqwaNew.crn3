@@ -33,6 +33,7 @@ CREATE V.ARRAY
 ^CmdTAIL_OPEN ,
 ^CmdTOGGLE_LIGHTS ,
 ^Contactors_OK ,
+^CountOneSecond ,
 ^CURRENT_COOLING_FAN_FREQ ,
 ^door ,
 ^flag_status ,
@@ -53,6 +54,7 @@ CREATE V.ARRAY
 ^OPEN ,
 ^OPEN_SLOW ,
 ^PANEL_FANS_OK ,
+^Pubsub_Wall_Fans ,
 ^Second_reading ,
 ^Server_Ok_To_Go_Fast ,
 ^SocketElapsed ,
@@ -178,6 +180,7 @@ CREATE P.ARRAY
 ~AO_Wall_Fans_VDC ,
  0 ,
 CREATE PID.ARRAY
+ |PanelFans ,
  0 ,
 CREATE E/R.ARRAY
  0 ,
@@ -187,6 +190,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
+|PanelFans ENABLE
 " %encPacInternal  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %encPacInternal ENABLE
    0.0000 ~AI_PoleFanExhaust_TACH IN.F!POINT
@@ -216,6 +220,7 @@ CONFIG_PORTS
 0 ^CmdTOGGLE_LIGHTS @!
 0.0 ^COMMWATCHDOG @!
 0 ^Contactors_OK @!
+0 ^CountOneSecond @!
 0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
 0 ^door @!
 0 ^flag_status @!
@@ -237,6 +242,7 @@ CONFIG_PORTS
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
 0 ^PANEL_FANS_OK @!
+0 ^Pubsub_Wall_Fans @!
 1 ^Second_reading @!
 0 ^Server_Ok_To_Go_Fast @!
 0.0 ^Socket_Timer @!
