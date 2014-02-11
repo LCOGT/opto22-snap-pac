@@ -2,7 +2,7 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\Jan16_cryoPAC\cryoPAC_rev3.idb
+# NAME :         C:\Users\jdevera\Desktop\cryoPAC_rev3\cryoPAC_rev3.idb
 # VERSION :      R9.1a
 # TIME/DATE :    14:51:3 1/16/2014
 # 
