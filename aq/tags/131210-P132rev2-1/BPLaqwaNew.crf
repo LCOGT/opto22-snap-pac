@@ -696,10 +696,10 @@ T;
 29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
 
 30 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
-31 LINE.NUM " 0" *StatusString $CAT 
+31 LINE.NUM " 1" *StatusString $CAT 
 
 32 LINE.NUM ELSE 
-33 LINE.NUM " 1" *StatusString $CAT 
+33 LINE.NUM " 0" *StatusString $CAT 
 
 34 LINE.NUM THEN 
 37 LINE.NUM " , PowerInterlock=0" *StatusString $CAT 
@@ -1111,7 +1111,7 @@ IF -53 ELSE 17 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_Tail_Closed_LS   ?ON
+  ~DI_Tail_Closed_LS   ?OFF
 LAND
 IF -53 ELSE 0 THEN JUMP ;
 : 7_194
@@ -1198,7 +1198,7 @@ IF -48 ELSE -61 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_Pole_Closed_LS   ?ON
+  ~DI_Pole_Closed_LS   ?OFF
 LAND
 IF -48 ELSE -2 THEN JUMP ;
 : 7_257
@@ -2328,9 +2328,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 01/31/14 " ;
-: TIMESTAMP ." 15:22:17 " ;
-: CRCSTAMP  ." D04E8EAB7AE7DE9C1DC07A990E43F66D " ;
+: DATESTAMP ." 02/11/14 " ;
+: TIMESTAMP ." 11:24:46 " ;
+: CRCSTAMP  ." C3923B07257C9EB901501EE91271AEB2 " ;
 MAKECHECK
 CLEAR.BREAKS
 
