@@ -257,7 +257,7 @@
 
 29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
 
-30 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
+30 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
 31 LINE.NUM " 1" *StatusString $CAT 
 
 32 LINE.NUM ELSE 

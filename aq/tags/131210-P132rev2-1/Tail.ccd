@@ -31,9 +31,6 @@
 : 13_13
 
 1 LINE.NUM
-  ~DO_TailGoFast_NO   ON
-
-2 LINE.NUM
   ~DO_TailDirection_NO   ON
 0 JUMP ;
 : 13_14
@@ -66,7 +63,7 @@
 
 1 LINE.NUM
   ~DO_TailDirection_NO   OFF
-9 JUMP ;
+3 JUMP ;
 : 13_24
 
 1 LINE.NUM
@@ -84,12 +81,12 @@
 
 1 LINE.NUM
   ~DO_TailGoFast_NO   OFF
-1 JUMP ;
+9 JUMP ;
 : 13_31
 
 1 LINE.NUM
   ~DO_TailGoFast_NO   ON
-0 JUMP ;
+8 JUMP ;
 : 13_33
 
 1 LINE.NUM

@@ -22,7 +22,7 @@
 23 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
 24 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
 25 LINE.NUM THEN THEN 
-2 JUMP ;
+5 JUMP ;
 : 17_4
 
 1 LINE.NUM
@@ -58,6 +58,36 @@
 -4 JUMP ;
 : 17_18
 -2 JUMP ;
+: 17_25
+1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+2 LINE.NUM ^Pubsub_OTA_Blower @@F ~AO_OTA_Blower_A @! 
+3 LINE.NUM ^Pubsub_OTA_Blower @@F ~AO_OTA_Blower_B @! 
+4 LINE.NUM ELSE 
+4 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+5 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
+6 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
+7 LINE.NUM ELSE 
+8 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+9 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+10 LINE.NUM THEN THEN 
+0 JUMP ;
+: 17_28
+1 LINE.NUM ~DI_GoFast_SW @@I ~DI_FenceClosed_SEN @@I LOR  ~DI_TrapKey_SW @@I LOR  IF 
+2 LINE.NUM 1 ^FastMode @! 
+3 LINE.NUM ELSE 
+4 LINE.NUM 0 ^FastMode @! 
+5 LINE.NUM THEN 
+8 LINE.NUM ^FastMode @@ 0 = ~DI_Pole_Fast_LS @@I 0 = ^CLOSE @@ LAND  LOR  IF 
+9 LINE.NUM 0 ~DO_PoleGoFast_NO @! 
+10 LINE.NUM ELSE 
+11 LINE.NUM 1 ~DO_PoleGoFast_NO @! 
+12 LINE.NUM THEN 
+15 LINE.NUM ^FastMode @@ 0 = ~DI_Tail_Fast_LS @@I 0 = ^CLOSE @@ LAND  LOR  IF 
+16 LINE.NUM 0 ~DO_TailGoFast_NO @! 
+17 LINE.NUM ELSE 
+18 LINE.NUM 1 ~DO_TailGoFast_NO @! 
+19 LINE.NUM THEN 
+-5 JUMP ;
 T: T17
 DUMMY
 17_0
@@ -67,5 +97,7 @@ DUMMY
 17_13
 17_14
 17_18
+17_25
+17_28
 T;
 &SYSTEM_READY ' T17 SETTASK

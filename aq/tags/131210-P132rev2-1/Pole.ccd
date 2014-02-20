@@ -17,9 +17,6 @@
 : 11_12
 
 1 LINE.NUM
-  ~DO_PoleGoFast_NO   ON
-
-2 LINE.NUM
   ~DO_PoleDirection_NO   ON
 0 JUMP ;
 : 11_13
@@ -39,7 +36,7 @@
 
 1 LINE.NUM
   ~DO_PoleDirection_NO   OFF
-10 JUMP ;
+4 JUMP ;
 : 11_20
 
 1 LINE.NUM
@@ -70,12 +67,12 @@
 
 1 LINE.NUM
   ~DO_PoleGoFast_NO   OFF
-1 JUMP ;
+9 JUMP ;
 : 11_31
 
 1 LINE.NUM
   ~DO_PoleGoFast_NO   ON
-0 JUMP ;
+8 JUMP ;
 : 11_33
 
 1 LINE.NUM

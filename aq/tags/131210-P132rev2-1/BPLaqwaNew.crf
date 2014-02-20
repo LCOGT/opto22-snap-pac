@@ -51,6 +51,7 @@ _END NEW $$$.RUN
 0 IVAR ^CountOneSecond
 0 FVAR ^CURRENT_COOLING_FAN_FREQ
 0 IVAR ^door
+0 IVAR ^FastMode
 0 IVAR ^flag_status
 0 TVAR ^Heartbeat
 0 IVAR ^HeartEnabled
@@ -70,6 +71,7 @@ _END NEW $$$.RUN
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
 0 IVAR ^PANEL_FANS_OK
+0 IVAR ^Pubsub_OTA_Blower
 0 IVAR ^Pubsub_Wall_Fans
 0 IVAR ^Second_reading
 0 IVAR ^Server_Ok_To_Go_Fast
@@ -135,8 +137,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  9  1 %encPacInternal 0 POINT.TNG ~DI_TailSelect_SW
 32  1 SPOINT 0.0     INPUT 10  1 %encPacInternal 0 POINT.TNG ~DI_RoofDisable_SW
 32  1 SPOINT 0.0     INPUT 11  1 %encPacInternal 0 POINT.TNG ~DI_RoofAuto_SW
-32  1 SPOINT 0.0     INPUT 12  1 %encPacInternal 0 POINT.TNG ~DI_CoolantStop_SW
-32  1 SPOINT 0.0     INPUT 13  1 %encPacInternal 0 POINT.TNG ~DI_CoolantAuto_SW
+32  1 SPOINT 0.0     INPUT 12  1 %encPacInternal 0 POINT.TNG ~DI_OTA_BlowerStop_SW
+32  1 SPOINT 0.0     INPUT 13  1 %encPacInternal 0 POINT.TNG ~DI_OTA_BlowerAuto_SW
 32  1 SPOINT 0.0     INPUT 14  1 %encPacInternal 0 POINT.TNG ~DI_GoFast_SW
 32  1 SPOINT 0.0     INPUT 15  1 %encPacInternal 0 POINT.TNG ~DI_TrapKey_SW
 32  1 SPOINT 0.0     INPUT 18  1 %encPacInternal 0 POINT.TNG ~DI_PendantOpen_SW
@@ -182,6 +184,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  1 13 %encPacInternal 0 POINT.TNG ~DO_PoleDirection_NO
  4  1 SPOINT 0.0    OUTPUT  2 13 %encPacInternal 0 POINT.TNG ~DO_PoleStop_NO
  4  1 SPOINT 0.0    OUTPUT  3 13 %encPacInternal 0 POINT.TNG ~DO_PoleGoFast_NO
+ 2  1 APOINT    0.0000 165  0 14 %encPacInternal 0 POINT.TNG ~AO_OTA_Blower_A
+ 2  1 APOINT    0.0000 165  1 14 %encPacInternal 0 POINT.TNG ~AO_OTA_Blower_B
 1    0.0000   10.0000    0.0000    0.0000    0.0000   10.0000    5.0000   30.0000
    1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
 ~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
@@ -695,7 +699,7 @@ T;
 
 29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
 
-30 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
+30 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
 31 LINE.NUM " 1" *StatusString $CAT 
 
 32 LINE.NUM ELSE 
@@ -1566,9 +1570,6 @@ T;
 : 11_12
 
 1 LINE.NUM
-  ~DO_PoleGoFast_NO   ON
-
-2 LINE.NUM
   ~DO_PoleDirection_NO   ON
 0 JUMP ;
 : 11_13
@@ -1588,7 +1589,7 @@ T;
 
 1 LINE.NUM
   ~DO_PoleDirection_NO   OFF
-10 JUMP ;
+4 JUMP ;
 : 11_20
 
 1 LINE.NUM
@@ -1619,12 +1620,12 @@ T;
 
 1 LINE.NUM
   ~DO_PoleGoFast_NO   OFF
-1 JUMP ;
+9 JUMP ;
 : 11_31
 
 1 LINE.NUM
   ~DO_PoleGoFast_NO   ON
-0 JUMP ;
+8 JUMP ;
 : 11_33
 
 1 LINE.NUM
@@ -1798,7 +1799,7 @@ T;
 23 LINE.NUM 1 ^AQ_Go_Fast_Ok @! 
 24 LINE.NUM 1 ^Tel_Go_Fast_OK @! 
 25 LINE.NUM THEN THEN 
-2 JUMP ;
+5 JUMP ;
 : 17_4
 
 1 LINE.NUM
@@ -1834,6 +1835,36 @@ T;
 -4 JUMP ;
 : 17_18
 -2 JUMP ;
+: 17_25
+1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+2 LINE.NUM ^Pubsub_OTA_Blower @@F ~AO_OTA_Blower_A @! 
+3 LINE.NUM ^Pubsub_OTA_Blower @@F ~AO_OTA_Blower_B @! 
+4 LINE.NUM ELSE 
+4 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+5 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
+6 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
+7 LINE.NUM ELSE 
+8 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+9 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+10 LINE.NUM THEN THEN 
+0 JUMP ;
+: 17_28
+1 LINE.NUM ~DI_GoFast_SW @@I ~DI_FenceClosed_SEN @@I LOR  ~DI_TrapKey_SW @@I LOR  IF 
+2 LINE.NUM 1 ^FastMode @! 
+3 LINE.NUM ELSE 
+4 LINE.NUM 0 ^FastMode @! 
+5 LINE.NUM THEN 
+8 LINE.NUM ^FastMode @@ 0 = ~DI_Pole_Fast_LS @@I 0 = ^CLOSE @@ LAND  LOR  IF 
+9 LINE.NUM 0 ~DO_PoleGoFast_NO @! 
+10 LINE.NUM ELSE 
+11 LINE.NUM 1 ~DO_PoleGoFast_NO @! 
+12 LINE.NUM THEN 
+15 LINE.NUM ^FastMode @@ 0 = ~DI_Tail_Fast_LS @@I 0 = ^CLOSE @@ LAND  LOR  IF 
+16 LINE.NUM 0 ~DO_TailGoFast_NO @! 
+17 LINE.NUM ELSE 
+18 LINE.NUM 1 ~DO_TailGoFast_NO @! 
+19 LINE.NUM THEN 
+-5 JUMP ;
 T: T17
 DUMMY
 17_0
@@ -1843,6 +1874,8 @@ DUMMY
 17_13
 17_14
 17_18
+17_25
+17_28
 T;
 &SYSTEM_READY ' T17 SETTASK
 : 13_0
@@ -1878,9 +1911,6 @@ T;
 : 13_13
 
 1 LINE.NUM
-  ~DO_TailGoFast_NO   ON
-
-2 LINE.NUM
   ~DO_TailDirection_NO   ON
 0 JUMP ;
 : 13_14
@@ -1913,7 +1943,7 @@ T;
 
 1 LINE.NUM
   ~DO_TailDirection_NO   OFF
-9 JUMP ;
+3 JUMP ;
 : 13_24
 
 1 LINE.NUM
@@ -1931,12 +1961,12 @@ T;
 
 1 LINE.NUM
   ~DO_TailGoFast_NO   OFF
-1 JUMP ;
+9 JUMP ;
 : 13_31
 
 1 LINE.NUM
   ~DO_TailGoFast_NO   ON
-0 JUMP ;
+8 JUMP ;
 : 13_33
 
 1 LINE.NUM
@@ -2069,6 +2099,7 @@ CREATE V.ARRAY
 ^CountOneSecond ,
 ^CURRENT_COOLING_FAN_FREQ ,
 ^door ,
+^FastMode ,
 ^flag_status ,
 ^HeartEnabled ,
 ^Init_light_state_s1 ,
@@ -2087,6 +2118,7 @@ CREATE V.ARRAY
 ^OPEN ,
 ^OPEN_SLOW ,
 ^PANEL_FANS_OK ,
+^Pubsub_OTA_Blower ,
 ^Pubsub_Wall_Fans ,
 ^Second_reading ,
 ^Server_Ok_To_Go_Fast ,
@@ -2137,8 +2169,6 @@ CREATE P.ARRAY
 ~DI_24vPSU_OK ,
 ~DI_CabinetDoor_LS ,
 ~DI_Coolant_MCB ,
-~DI_CoolantAuto_SW ,
-~DI_CoolantStop_SW ,
 ~DI_DUPS_TVS ,
 ~DI_Enet_OK ,
 ~DI_ESTOP_OK ,
@@ -2152,6 +2182,8 @@ CREATE P.ARRAY
 ~DI_Lights_Enter_SW ,
 ~DI_Lights_Exit_SW ,
 ~DI_MuteTest_SW ,
+~DI_OTA_BlowerAuto_SW ,
+~DI_OTA_BlowerStop_SW ,
 ~DI_PAC_MCB ,
 ~DI_PanelFans_Blower_MCB ,
 ~DI_PendantClose_SW ,
@@ -2209,6 +2241,8 @@ CREATE P.ARRAY
 ~AI_InletAir_RTD ,
 ~AI_OutletAir_RTD ,
 ~AI_PoleFanExhaust_TACH ,
+~AO_OTA_Blower_A ,
+~AO_OTA_Blower_B ,
 ~AO_Panel_Fans_VDC ,
 ~AO_Wall_Fans_VDC ,
  0 ,
@@ -2256,6 +2290,7 @@ CONFIG_PORTS
 0 ^CountOneSecond @!
 0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
 0 ^door @!
+0 ^FastMode @!
 0 ^flag_status @!
 0.0 ^Heartbeat @!
 0 ^HeartEnabled @!
@@ -2275,6 +2310,7 @@ CONFIG_PORTS
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
 0 ^PANEL_FANS_OK @!
+0 ^Pubsub_OTA_Blower @!
 0 ^Pubsub_Wall_Fans @!
 1 ^Second_reading @!
 0 ^Server_Ok_To_Go_Fast @!
@@ -2328,9 +2364,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 02/11/14 " ;
-: TIMESTAMP ." 11:24:46 " ;
-: CRCSTAMP  ." C3923B07257C9EB901501EE91271AEB2 " ;
+: DATESTAMP ." 02/19/14 " ;
+: TIMESTAMP ." 14:17:48 " ;
+: CRCSTAMP  ." D2E396B13A750350A4218326A12DC094 " ;
 MAKECHECK
 CLEAR.BREAKS
 

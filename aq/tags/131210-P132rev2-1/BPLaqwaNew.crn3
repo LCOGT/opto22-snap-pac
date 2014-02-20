@@ -36,6 +36,7 @@ CREATE V.ARRAY
 ^CountOneSecond ,
 ^CURRENT_COOLING_FAN_FREQ ,
 ^door ,
+^FastMode ,
 ^flag_status ,
 ^HeartEnabled ,
 ^Init_light_state_s1 ,
@@ -54,6 +55,7 @@ CREATE V.ARRAY
 ^OPEN ,
 ^OPEN_SLOW ,
 ^PANEL_FANS_OK ,
+^Pubsub_OTA_Blower ,
 ^Pubsub_Wall_Fans ,
 ^Second_reading ,
 ^Server_Ok_To_Go_Fast ,
@@ -104,8 +106,6 @@ CREATE P.ARRAY
 ~DI_24vPSU_OK ,
 ~DI_CabinetDoor_LS ,
 ~DI_Coolant_MCB ,
-~DI_CoolantAuto_SW ,
-~DI_CoolantStop_SW ,
 ~DI_DUPS_TVS ,
 ~DI_Enet_OK ,
 ~DI_ESTOP_OK ,
@@ -119,6 +119,8 @@ CREATE P.ARRAY
 ~DI_Lights_Enter_SW ,
 ~DI_Lights_Exit_SW ,
 ~DI_MuteTest_SW ,
+~DI_OTA_BlowerAuto_SW ,
+~DI_OTA_BlowerStop_SW ,
 ~DI_PAC_MCB ,
 ~DI_PanelFans_Blower_MCB ,
 ~DI_PendantClose_SW ,
@@ -176,6 +178,8 @@ CREATE P.ARRAY
 ~AI_InletAir_RTD ,
 ~AI_OutletAir_RTD ,
 ~AI_PoleFanExhaust_TACH ,
+~AO_OTA_Blower_A ,
+~AO_OTA_Blower_B ,
 ~AO_Panel_Fans_VDC ,
 ~AO_Wall_Fans_VDC ,
  0 ,
@@ -223,6 +227,7 @@ CONFIG_PORTS
 0 ^CountOneSecond @!
 0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
 0 ^door @!
+0 ^FastMode @!
 0 ^flag_status @!
 0.0 ^Heartbeat @!
 0 ^HeartEnabled @!
@@ -242,6 +247,7 @@ CONFIG_PORTS
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
 0 ^PANEL_FANS_OK @!
+0 ^Pubsub_OTA_Blower @!
 0 ^Pubsub_Wall_Fans @!
 1 ^Second_reading @!
 0 ^Server_Ok_To_Go_Fast @!

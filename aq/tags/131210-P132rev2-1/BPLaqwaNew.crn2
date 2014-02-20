@@ -35,6 +35,7 @@
 0 IVAR ^CountOneSecond
 0 FVAR ^CURRENT_COOLING_FAN_FREQ
 0 IVAR ^door
+0 IVAR ^FastMode
 0 IVAR ^flag_status
 0 TVAR ^Heartbeat
 0 IVAR ^HeartEnabled
@@ -54,6 +55,7 @@
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
 0 IVAR ^PANEL_FANS_OK
+0 IVAR ^Pubsub_OTA_Blower
 0 IVAR ^Pubsub_Wall_Fans
 0 IVAR ^Second_reading
 0 IVAR ^Server_Ok_To_Go_Fast
@@ -119,8 +121,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  9  1 %encPacInternal 0 POINT.TNG ~DI_TailSelect_SW
 32  1 SPOINT 0.0     INPUT 10  1 %encPacInternal 0 POINT.TNG ~DI_RoofDisable_SW
 32  1 SPOINT 0.0     INPUT 11  1 %encPacInternal 0 POINT.TNG ~DI_RoofAuto_SW
-32  1 SPOINT 0.0     INPUT 12  1 %encPacInternal 0 POINT.TNG ~DI_CoolantStop_SW
-32  1 SPOINT 0.0     INPUT 13  1 %encPacInternal 0 POINT.TNG ~DI_CoolantAuto_SW
+32  1 SPOINT 0.0     INPUT 12  1 %encPacInternal 0 POINT.TNG ~DI_OTA_BlowerStop_SW
+32  1 SPOINT 0.0     INPUT 13  1 %encPacInternal 0 POINT.TNG ~DI_OTA_BlowerAuto_SW
 32  1 SPOINT 0.0     INPUT 14  1 %encPacInternal 0 POINT.TNG ~DI_GoFast_SW
 32  1 SPOINT 0.0     INPUT 15  1 %encPacInternal 0 POINT.TNG ~DI_TrapKey_SW
 32  1 SPOINT 0.0     INPUT 18  1 %encPacInternal 0 POINT.TNG ~DI_PendantOpen_SW
@@ -166,6 +168,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  1 13 %encPacInternal 0 POINT.TNG ~DO_PoleDirection_NO
  4  1 SPOINT 0.0    OUTPUT  2 13 %encPacInternal 0 POINT.TNG ~DO_PoleStop_NO
  4  1 SPOINT 0.0    OUTPUT  3 13 %encPacInternal 0 POINT.TNG ~DO_PoleGoFast_NO
+ 2  1 APOINT    0.0000 165  0 14 %encPacInternal 0 POINT.TNG ~AO_OTA_Blower_A
+ 2  1 APOINT    0.0000 165  1 14 %encPacInternal 0 POINT.TNG ~AO_OTA_Blower_B
 1    0.0000   10.0000    0.0000    0.0000    0.0000   10.0000    5.0000   30.0000
    1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
 ~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
