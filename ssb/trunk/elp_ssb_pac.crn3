@@ -161,7 +161,7 @@ CREATE P.ARRAY
 ~Fence_Red_LED ,
 ~FenceKey ,
 ~FUPS_BatteryNormal ,
-~FUPS_LineOK ,
+~FUPS_Line_OK ,
 ~FUPS_Normal_OnInverter ,
 ~FUPS_ON_OK ,
 ~HeatEnableSW ,
@@ -317,7 +317,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.10"
+" 001.12"
  *SWVersion $MOVE
 " "
  *TemperatureString $MOVE

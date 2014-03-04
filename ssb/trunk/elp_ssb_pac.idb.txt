@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         H:\Documents and Settings\eng\Desktop\ssb\trunk\elp_ssb_pac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    13:28:56 1/7/2014
+# TIME/DATE :    17:14:42 3/4/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -163,7 +163,7 @@ TAG1,Fence_Green_LED                                   ,141  ,10000000,00000000,
 TAG1,Fence_Red_LED                                     ,140  ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,FenceKey                                          ,96   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FUPS_BatteryNormal                                ,116  ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,FUPS_LineOK                                       ,114  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,FUPS_Line_OK                                      ,114  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FUPS_Normal_OnInverter                            ,121  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FUPS_ON_OK                                        ,119  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,HeatEnableSW                                      ,82   ,40000000,00000000,00000000,00000000,0    ,0   
