@@ -1,0 +1,37 @@
+0 TASK  &_INIT_IO
+0 TASK &Powerup
+0 TASK &StirFan_Control
+0 IVAR ^NV_FanCtrlMax
+0 IVAR ^NV_MaxStirFanTach
+0 IVAR ^NV_StirFan_Control_Chart_Status
+
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %local_IO
+SPOINT 0.0 INPUT 0 %local_IO
+    0 POINT ~DI_Lock2
+SPOINT 0.0 INPUT 1 %local_IO
+    0 POINT ~DI_Lock1
+SPOINT 0.0 INPUT 2 %local_IO
+    0 POINT ~DI_SafetyRelayK6_2
+SPOINT 0.0 INPUT 3 %local_IO
+    0 POINT ~DI_SafetyRelayK8_2
+SPOINT 0.0 INPUT 4 %local_IO
+    0 POINT ~DI_SafetyRelayK9_2
+SPOINT 0.0 INPUT 5 %local_IO
+    0 POINT ~DI_DC_MCB_F3_6
+SPOINT 0.0 INPUT 6 %local_IO
+    0 POINT ~DI_aqwC_MCB
+SPOINT 0.0 INPUT 8 %local_IO
+    0 POINT ~DI_aqwA_MCB
+SPOINT 0.0 INPUT 9 %local_IO
+    0 POINT ~DI_aqwB_MCB
+SPOINT 0.0 INPUT 10 %local_IO
+    0 POINT ~DI_FUPS_SPD
+SPOINT 0.0 INPUT 11 %local_IO
+    0 POINT ~DI_Cabinet_Door
+APOINT -200.0000 10 12 %local_IO
+    0 POINT ~AI_CabinetTemp
+SPOINT 0.0 OUTPUT 16 %local_IO
+    0 POINT ~DO_DC_MCB_F3_6
+APOINT    0.0000 165 20 %local_IO 0 POINT ~AO_StirFan
+APOINT    0.0000 69 24 %local_IO
+    0 POINT ~AI_StirFanTach

@@ -1,0 +1,25 @@
+: 0_0
+0 JUMP ;
+: 0_2
+1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
+2 LINE.NUM 2.000000e+001  FDELAY 
+3 LINE.NUM ~AI_StirFanTach  MAX@F ^NV_MaxStirFanTach F@! 
+4 LINE.NUM ^NV_MaxStirFanTach @@ 100 >= IF 
+5 LINE.NUM 5 ^NV_FanCtrlMax @! 
+6 LINE.NUM ELSE 
+6 LINE.NUM 10 ^NV_FanCtrlMax @! 
+7 LINE.NUM THEN 
+8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
+9 LINE.NUM 1.000000e+001  FDELAY 
+0 JUMP ;
+: 0_4
+1 LINE.NUM &StirFan_Control  START.T ^NV_StirFan_Control_Chart_Status @! 
+2 LINE.NUM &Powerup  STOP.T 
+0 JUMP ;
+T: T0
+DUMMY
+0_0
+0_2
+0_4
+T;
+&Powerup ' T0 SETTASK

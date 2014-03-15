@@ -1,0 +1,20 @@
+: 1_0
+0 JUMP ;
+: 1_1
+1 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F<= IF 
+2 LINE.NUM 0 I>F ~AO_StirFan @! 
+3 LINE.NUM THEN 
+5 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F> ~AI_CabinetTemp @@ 30 I>F F<= LAND  IF 
+6 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F- 10 I>F F/ ^NV_FanCtrlMax @@F F* ~AO_StirFan @! 
+7 LINE.NUM THEN 
+9 LINE.NUM ~AI_CabinetTemp @@ 30 I>F F> IF 
+10 LINE.NUM ^NV_FanCtrlMax @@F ~AO_StirFan @! 
+11 LINE.NUM THEN 
+13 LINE.NUM 1.000000e+000  FDELAY 
+-1 JUMP ;
+T: T1
+DUMMY
+1_0
+1_1
+T;
+&StirFan_Control ' T1 SETTASK
