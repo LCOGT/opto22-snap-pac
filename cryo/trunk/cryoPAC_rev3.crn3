@@ -69,8 +69,8 @@ CREATE B.ARRAY
 CREATE P.ARRAY
 ~CryoTig_Deadman ,
 ~CryoTigPWR_Lower_M2_3 ,
-~CryoTigPWR_Upper_M2_7 ,
 ~DeadmanBypass ,
+~DO_XformerPWR ,
 ~F4_3_Reset ,
 ~F4_3_Status ,
 ~Honeysucker_CTRL ,
@@ -115,7 +115,7 @@ CONFIG_PORTS
 $01F3FF3333133F30.. %Local_IO ENABLES!
 " %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
- 0 ~CryoTigPWR_Upper_M2_7 @!
+ 0 ~DO_XformerPWR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^CoolantDemand @!
 20 ^CoolantSetpoint @!

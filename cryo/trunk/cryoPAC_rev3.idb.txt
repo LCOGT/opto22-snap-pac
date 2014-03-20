@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\cryoPAC_rev3\cryoPAC_rev3.idb
+# NAME :         C:\Users\jdevera\Desktop\cryoPAC_trunk\cryoPAC_rev3.idb
 # VERSION :      R9.1a
-# TIME/DATE :    14:51:3 1/16/2014
+# TIME/DATE :    15:47:4 3/5/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -97,8 +97,8 @@ TAG1,Powerup                                           ,0    ,00000000,00000100,
 TAG1,Local_IO                                          ,0    ,00000000,00000000,20000000,00000000,0    ,0   
 TAG1,CryoTig_Deadman                                   ,7    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,CryoTigPWR_Lower_M2_3                             ,0    ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,CryoTigPWR_Upper_M2_7                             ,1    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DeadmanBypass                                     ,8    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DO_XformerPWR                                     ,1    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,F4_3_Reset                                        ,5    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,F4_3_Status                                       ,6    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,Honeysucker_CTRL                                  ,4    ,10000000,00000000,00000000,00000000,0    ,0   

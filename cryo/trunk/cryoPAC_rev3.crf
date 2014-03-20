@@ -71,7 +71,7 @@ $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %
 SPOINT 0.0 OUTPUT 4 %Local_IO
     0 POINT ~CryoTigPWR_Lower_M2_3
 SPOINT 0.0 OUTPUT 5 %Local_IO
-    0 POINT ~CryoTigPWR_Upper_M2_7
+    0 POINT ~DO_XformerPWR
 SPOINT 0.0 OUTPUT 8 %Local_IO
     0 POINT ~ThermoPWR_Lower_M3_3
 SPOINT 0.0 OUTPUT 9 %Local_IO
@@ -565,12 +565,12 @@ SPOINT 0.0 INPUT 56 %Local_IO
 65 LINE.NUM THEN 
 66 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 67 LINE.NUM ^Position @@ -1 >= IF 
-68 LINE.NUM 1 ~CryoTigPWR_Upper_M2_7 @! 
+68 LINE.NUM 1 ~DO_XformerPWR @! 
 69 LINE.NUM 1 ^Response @! 
 70 LINE.NUM THEN 
 71 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 72 LINE.NUM ^Position @@ -1 >= IF 
-73 LINE.NUM 0 ~CryoTigPWR_Upper_M2_7 @! 
+73 LINE.NUM 0 ~DO_XformerPWR @! 
 74 LINE.NUM 1 ^Response @! 
 75 LINE.NUM THEN 
 76 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -965,61 +965,64 @@ T;
 : 0_0
 
 1 LINE.NUM
-  ~Honeysucker_CTRL   ON
+  ~DO_XformerPWR   ON
 
 2 LINE.NUM
+  ~Honeysucker_CTRL   ON
+
+3 LINE.NUM
   ^HeartbeatPreset @@ 
   ^Heartbeat_Timer   SetTimer
 
-3 LINE.NUM
+4 LINE.NUM
   &Master_Comm   START.T
   ^MasterCommEstablished @! 
-
-4 LINE.NUM
-  1500    DELAY
 
 5 LINE.NUM
   1500    DELAY
 
 6 LINE.NUM
-  ~ThermoPWR_Lower_M3_3   ON
-
-7 LINE.NUM
   1500    DELAY
 
+7 LINE.NUM
+  ~ThermoPWR_Lower_M3_3   ON
+
 8 LINE.NUM
-  ~ThermoPWR_Upper_M3_7   OFF
+  1500    DELAY
 
 9 LINE.NUM
-  10 I>F 
-  1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
+  ~ThermoPWR_Upper_M3_7   OFF
 
 10 LINE.NUM
   10 I>F 
   1 I>F 
-  ~Intake_Fan_CTRL   F!RAMP
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 11 LINE.NUM
-  3000    DELAY
+  10 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  ~Honeysucker_CTRL   ON
+  3000    DELAY
 
 13 LINE.NUM
-  6 I>F 
-  1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
+  ~Honeysucker_CTRL   ON
 
 14 LINE.NUM
   6 I>F 
   1 I>F 
-  ~Intake_Fan_CTRL   F!RAMP
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 15 LINE.NUM
-  3000    DELAY
+  6 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
 
 16 LINE.NUM
+  3000    DELAY
+
+17 LINE.NUM
   ~Honeysucker_CTRL   OFF
 2 JUMP ;
 : 0_1
@@ -1155,8 +1158,8 @@ CREATE B.ARRAY
 CREATE P.ARRAY
 ~CryoTig_Deadman ,
 ~CryoTigPWR_Lower_M2_3 ,
-~CryoTigPWR_Upper_M2_7 ,
 ~DeadmanBypass ,
+~DO_XformerPWR ,
 ~F4_3_Reset ,
 ~F4_3_Status ,
 ~Honeysucker_CTRL ,
@@ -1201,7 +1204,7 @@ CONFIG_PORTS
 $01F3FF3333133F30.. %Local_IO ENABLES!
 " %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
- 0 ~CryoTigPWR_Upper_M2_7 @!
+ 0 ~DO_XformerPWR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^CoolantDemand @!
 20 ^CoolantSetpoint @!
@@ -1286,9 +1289,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 01/16/14 " ;
-: TIMESTAMP ." 14:51:03 " ;
-: CRCSTAMP  ." CE66CF89E145913E7CCF0F88979FA121 " ;
+: DATESTAMP ." 03/05/14 " ;
+: TIMESTAMP ." 15:47:04 " ;
+: CRCSTAMP  ." C12E907D228C559E0990F15447B8966B " ;
 MAKECHECK
 CLEAR.BREAKS
 

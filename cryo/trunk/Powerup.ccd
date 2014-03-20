@@ -1,61 +1,64 @@
 : 0_0
 
 1 LINE.NUM
-  ~Honeysucker_CTRL   ON
+  ~DO_XformerPWR   ON
 
 2 LINE.NUM
+  ~Honeysucker_CTRL   ON
+
+3 LINE.NUM
   ^HeartbeatPreset @@ 
   ^Heartbeat_Timer   SetTimer
 
-3 LINE.NUM
+4 LINE.NUM
   &Master_Comm   START.T
   ^MasterCommEstablished @! 
-
-4 LINE.NUM
-  1500    DELAY
 
 5 LINE.NUM
   1500    DELAY
 
 6 LINE.NUM
-  ~ThermoPWR_Lower_M3_3   ON
-
-7 LINE.NUM
   1500    DELAY
 
+7 LINE.NUM
+  ~ThermoPWR_Lower_M3_3   ON
+
 8 LINE.NUM
-  ~ThermoPWR_Upper_M3_7   OFF
+  1500    DELAY
 
 9 LINE.NUM
-  10 I>F 
-  1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
+  ~ThermoPWR_Upper_M3_7   OFF
 
 10 LINE.NUM
   10 I>F 
   1 I>F 
-  ~Intake_Fan_CTRL   F!RAMP
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 11 LINE.NUM
-  3000    DELAY
+  10 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
 
 12 LINE.NUM
-  ~Honeysucker_CTRL   ON
+  3000    DELAY
 
 13 LINE.NUM
-  6 I>F 
-  1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
+  ~Honeysucker_CTRL   ON
 
 14 LINE.NUM
   6 I>F 
   1 I>F 
-  ~Intake_Fan_CTRL   F!RAMP
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 15 LINE.NUM
-  3000    DELAY
+  6 I>F 
+  1 I>F 
+  ~Intake_Fan_CTRL   F!RAMP
 
 16 LINE.NUM
+  3000    DELAY
+
+17 LINE.NUM
   ~Honeysucker_CTRL   OFF
 2 JUMP ;
 : 0_1

@@ -417,12 +417,12 @@
 65 LINE.NUM THEN 
 66 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 67 LINE.NUM ^Position @@ -1 >= IF 
-68 LINE.NUM 1 ~CryoTigPWR_Upper_M2_7 @! 
+68 LINE.NUM 1 ~DO_XformerPWR @! 
 69 LINE.NUM 1 ^Response @! 
 70 LINE.NUM THEN 
 71 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 72 LINE.NUM ^Position @@ -1 >= IF 
-73 LINE.NUM 0 ~CryoTigPWR_Upper_M2_7 @! 
+73 LINE.NUM 0 ~DO_XformerPWR @! 
 74 LINE.NUM 1 ^Response @! 
 75 LINE.NUM THEN 
 76 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
