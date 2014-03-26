@@ -1,0 +1,44 @@
+: 0_0
+2 JUMP ;
+: 0_2
+1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
+2 LINE.NUM 2.000000e+001  FDELAY 
+3 LINE.NUM ~AI_StirFanTach  MAX@F ^n_MaxStirFanTach F@! 
+4 LINE.NUM ^n_MaxStirFanTach @@ 100 >= IF 
+5 LINE.NUM 5 ^n_FanCtrlMax @! 
+6 LINE.NUM ELSE 
+6 LINE.NUM 10 ^n_FanCtrlMax @! 
+7 LINE.NUM THEN 
+8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
+9 LINE.NUM 1.000000e+001  FDELAY 
+0 JUMP ;
+: 0_4
+1 LINE.NUM &StirFan_Control  START.T ^n_StirFan_Control_Chart_Status @! 
+2 LINE.NUM &Powerup  STOP.T 
+1 JUMP ;
+: 0_8
+1 LINE.NUM *s_PAC_IP  MY.ADDRESS>String 
+3 LINE.NUM *s_PAC_IP  IP$>I ^n_IpInteger @! 
+4 LINE.NUM ^n_IpInteger @@ *s_IpHex  I>HEX$ 
+5 LINE.NUM *s_IpHex 0 4 *s_IpHex  $SUB 
+6 LINE.NUM 48 *s_IpHex $APPEND 
+
+7 LINE.NUM 48 *s_IpHex $APPEND 
+
+8 LINE.NUM 48 *s_IpHex $APPEND 
+
+9 LINE.NUM 66 *s_IpHex $APPEND 
+
+10 LINE.NUM *s_IpHex  HEX$>I ^n_IpInteger @! 
+11 LINE.NUM ^n_IpInteger @@ *s_NTP_IP  I>IP$ 
+12 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *s_NTP_IP  *_HSV_TEMP $CAT " :13"  *_HSV_TEMP $CAT *_HSV_TEMP *s_NTP_IP $MOVE Release1String 
+13 LINE.NUM *s_NTP_IP *ch_NTPserver  $MOVE 
+-3 JUMP ;
+T: T0
+DUMMY
+0_0
+0_2
+0_4
+0_8
+T;
+&Powerup ' T0 SETTASK

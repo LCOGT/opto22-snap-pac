@@ -1,0 +1,249 @@
+
+\ ********************** PER File **********************
+
+?EXISTS DL.STAT SWAP DROP .IF 1 DL.STAT .THEN
+_END NEW $$$.RUN FORGET $$$.RUN
+GetPersistentTop  **fencePAC**
+PersistentMAKECHECK
+
+\ ********************** CRN File **********************
+
+_END NEW $$$.RUN
+: FILENAME  ." fencePAC " ;
+1 0 $VAR *_HSV_SEMA 
+1024 0 $VAR *_HSV_TEMP 
+200 0 $VAR *_HSV_INIT_IO 
+0 IVAR ^_HNV_INIT_IO 
+0 TASK  &_INIT_IO
+0 TASK &Get_Time
+0 TASK &Powerup
+0 TASK &StirFan_Control
+0 TVAR ^dt_GetTime_Timer
+0 FVAR ^n_24hrsInSec
+0 IVAR ^n_FanCtrlMax
+0 IVAR ^n_IpInteger
+0 IVAR ^n_MaxStirFanTach
+0 IVAR ^n_One
+0 IVAR ^n_StirFan_Control_Chart_Status
+8 0 $VAR *s_IpHex 
+25 0 $VAR *s_NTP_IP 
+15 0 $VAR *s_PAC_IP 
+1024 0 COMVAR *ch_NTPserver 
+
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %local_IO
+SPOINT 0.0 INPUT 0 %local_IO
+    0 POINT ~DI_Lock2
+SPOINT 0.0 INPUT 1 %local_IO
+    0 POINT ~DI_Lock1
+SPOINT 0.0 INPUT 2 %local_IO
+    0 POINT ~DI_SafetyRelayK6_2
+SPOINT 0.0 INPUT 3 %local_IO
+    0 POINT ~DI_SafetyRelayK8_2
+SPOINT 0.0 INPUT 4 %local_IO
+    0 POINT ~DI_SafetyRelayK9_2
+SPOINT 0.0 INPUT 5 %local_IO
+    0 POINT ~DI_DC_MCB_F3_6
+SPOINT 0.0 INPUT 6 %local_IO
+    0 POINT ~DI_aqwC_MCB
+SPOINT 0.0 INPUT 8 %local_IO
+    0 POINT ~DI_aqwA_MCB
+SPOINT 0.0 INPUT 9 %local_IO
+    0 POINT ~DI_aqwB_MCB
+SPOINT 0.0 INPUT 10 %local_IO
+    0 POINT ~DI_FUPS_SPD
+SPOINT 0.0 INPUT 11 %local_IO
+    0 POINT ~DI_Cabinet_Door
+APOINT -200.0000 10 12 %local_IO
+    0 POINT ~AI_CabinetTemp
+SPOINT 0.0 OUTPUT 16 %local_IO
+    0 POINT ~DO_DC_MCB_F3_6
+APOINT    0.0000 165 20 %local_IO 0 POINT ~AO_StirFan
+APOINT    0.0000 69 24 %local_IO
+    0 POINT ~AI_StirFanTach
+: 2_0
+2 JUMP ;
+: 2_1
+7 LINE.NUM ^n_24hrsInSec @@ ^dt_GetTime_Timer  SetTimer 
+8 LINE.NUM ^dt_GetTime_Timer  StartTimer 
+0 JUMP ;
+: 2_5
+
+1 LINE.NUM
+  ^n_One @@   DELAY
+0 JUMP ;
+: 2_4
+TRUE
+
+1 LINE.NUM
+  ^dt_GetTime_Timer   T0=
+LAND
+IF -3 ELSE -2 THEN JUMP ;
+T: T2
+DUMMY
+2_0
+2_1
+2_5
+2_4
+T;
+&Get_Time ' T2 SETTASK
+: 0_0
+2 JUMP ;
+: 0_2
+1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
+2 LINE.NUM 2.000000e+001  FDELAY 
+3 LINE.NUM ~AI_StirFanTach  MAX@F ^n_MaxStirFanTach F@! 
+4 LINE.NUM ^n_MaxStirFanTach @@ 100 >= IF 
+5 LINE.NUM 5 ^n_FanCtrlMax @! 
+6 LINE.NUM ELSE 
+6 LINE.NUM 10 ^n_FanCtrlMax @! 
+7 LINE.NUM THEN 
+8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
+9 LINE.NUM 1.000000e+001  FDELAY 
+0 JUMP ;
+: 0_4
+1 LINE.NUM &StirFan_Control  START.T ^n_StirFan_Control_Chart_Status @! 
+2 LINE.NUM &Powerup  STOP.T 
+1 JUMP ;
+: 0_8
+1 LINE.NUM *s_PAC_IP  MY.ADDRESS>String 
+3 LINE.NUM *s_PAC_IP  IP$>I ^n_IpInteger @! 
+4 LINE.NUM ^n_IpInteger @@ *s_IpHex  I>HEX$ 
+5 LINE.NUM *s_IpHex 0 4 *s_IpHex  $SUB 
+6 LINE.NUM 48 *s_IpHex $APPEND 
+
+7 LINE.NUM 48 *s_IpHex $APPEND 
+
+8 LINE.NUM 48 *s_IpHex $APPEND 
+
+9 LINE.NUM 66 *s_IpHex $APPEND 
+
+10 LINE.NUM *s_IpHex  HEX$>I ^n_IpInteger @! 
+11 LINE.NUM ^n_IpInteger @@ *s_NTP_IP  I>IP$ 
+12 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *s_NTP_IP  *_HSV_TEMP $CAT " :13"  *_HSV_TEMP $CAT *_HSV_TEMP *s_NTP_IP $MOVE Release1String 
+13 LINE.NUM *s_NTP_IP *ch_NTPserver  $MOVE 
+-3 JUMP ;
+T: T0
+DUMMY
+0_0
+0_2
+0_4
+0_8
+T;
+&Powerup ' T0 SETTASK
+: 1_0
+0 JUMP ;
+: 1_1
+1 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F<= IF 
+2 LINE.NUM 0 I>F ~AO_StirFan @! 
+3 LINE.NUM THEN 
+5 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F> ~AI_CabinetTemp @@ 30 I>F F<= LAND  IF 
+6 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F- 10 I>F F/ ^n_FanCtrlMax @@F F* ~AO_StirFan @! 
+7 LINE.NUM THEN 
+9 LINE.NUM ~AI_CabinetTemp @@ 30 I>F F> IF 
+10 LINE.NUM ^n_FanCtrlMax @@F ~AO_StirFan @! 
+11 LINE.NUM THEN 
+13 LINE.NUM 1.000000e+000  FDELAY 
+-1 JUMP ;
+T: T1
+DUMMY
+1_0
+1_1
+T;
+&StirFan_Control ' T1 SETTASK
+CREATE T.ARRAY
+&Get_Time ,
+&Powerup ,
+&StirFan_Control ,
+ 0 ,
+CREATE V.ARRAY
+^n_24hrsInSec ,
+^n_FanCtrlMax ,
+^n_IpInteger ,
+^n_MaxStirFanTach ,
+^n_One ,
+^n_StirFan_Control_Chart_Status ,
+*s_IpHex ,
+*s_NTP_IP ,
+*s_PAC_IP ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*ch_NTPserver ,
+ 0 ,
+CREATE TI.ARRAY
+^dt_GetTime_Timer ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%local_IO ,
+ 0 ,
+CREATE P.ARRAY
+~DI_aqwA_MCB ,
+~DI_aqwB_MCB ,
+~DI_aqwC_MCB ,
+~DI_Cabinet_Door ,
+~DI_DC_MCB_F3_6 ,
+~DI_FUPS_SPD ,
+~DI_Lock1 ,
+~DI_Lock2 ,
+~DI_SafetyRelayK6_2 ,
+~DI_SafetyRelayK8_2 ,
+~DI_SafetyRelayK9_2 ,
+~DO_DC_MCB_F3_6 ,
+~AI_CabinetTemp ,
+~AI_StirFanTach ,
+~AO_StirFan ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+$0000000001111F7F.. %local_IO ENABLES!
+" %local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%local_IO ENABLE
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0.0 ^dt_GetTime_Timer @!
+86400.000 ^n_24hrsInSec @!
+0 ^n_FanCtrlMax @!
+0 ^n_IpInteger @!
+0 ^n_MaxStirFanTach @!
+1 ^n_One @!
+0 ^n_StirFan_Control_Chart_Status @!
+" "
+ *s_IpHex $MOVE
+" tcp:"
+ *s_NTP_IP $MOVE
+" 0"
+ *s_PAC_IP $MOVE
+" 0.0.0.0"
+ *ch_NTPserver $MOVE
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;
+: DATESTAMP ." 03/25/14 " ;
+: TIMESTAMP ." 19:21:29 " ;
+: CRCSTAMP  ." 578C88C1AC9434F76962DCC69CFABF8D " ;
+MAKECHECK
+CLEAR.BREAKS
+
+\ ********************** INC File **********************
+
+\ ""DOWNLOAD_COMPRESSION_OFF

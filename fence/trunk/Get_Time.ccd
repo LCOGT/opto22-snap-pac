@@ -1,0 +1,26 @@
+: 2_0
+2 JUMP ;
+: 2_1
+7 LINE.NUM ^n_24hrsInSec @@ ^dt_GetTime_Timer  SetTimer 
+8 LINE.NUM ^dt_GetTime_Timer  StartTimer 
+0 JUMP ;
+: 2_5
+
+1 LINE.NUM
+  ^n_One @@   DELAY
+0 JUMP ;
+: 2_4
+TRUE
+
+1 LINE.NUM
+  ^dt_GetTime_Timer   T0=
+LAND
+IF -3 ELSE -2 THEN JUMP ;
+T: T2
+DUMMY
+2_0
+2_1
+2_5
+2_4
+T;
+&Get_Time ' T2 SETTASK
