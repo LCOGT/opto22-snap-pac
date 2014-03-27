@@ -1,19 +1,75 @@
 : 2_0
 2 JUMP ;
 : 2_1
-7 LINE.NUM ^n_24hrsInSec @@ ^dt_GetTime_Timer  SetTimer 
-8 LINE.NUM ^dt_GetTime_Timer  StartTimer 
+2 LINE.NUM 1 ^nIndex2 @! 
+3 LINE.NUM BEGIN ^nIndex2 @@ 4 < WHILE 
+4 LINE.NUM *cNTPserver  OPEN ^nNTPstatus @! 
+5 LINE.NUM ^nNTPstatus @@ 0 = IF 
+6 LINE.NUM 4 ^nIndex2 @! 
+7 LINE.NUM THEN 
+9 LINE.NUM ^nNTPstatus @@ 0 < IF 
+10 LINE.NUM 5.000000e+000 ^nIndex2 @@F F*  FDELAY 
+11 LINE.NUM THEN 
+12 LINE.NUM ^nIndex2  1+@! 
+13 LINE.NUM REPEAT 
+17 LINE.NUM ^nNTPstatus @@ 0 = IF 
+18 LINE.NUM *cNTPserver 32  S.!EOL 
+19 LINE.NUM ^n120 @@ ^dtGetChar  SetTimer 
+20 LINE.NUM ^dtGetChar  StartTimer 
+21 LINE.NUM THEN 
+22 LINE.NUM BEGIN ^dtGetChar @@F 0 I>F F> WHILE 
+23 LINE.NUM *cNTPserver  ?STREAM.KEY ^nCharCount @! 
+24 LINE.NUM ^nCharCount @@ 0 < ^nCharCount @@ -37 <> LAND  ^nCharCount @@ -39 <> LAND  IF 
+25 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+26 LINE.NUM 0 I>F ^dtGetChar @! 
+27 LINE.NUM ELSE 
+27 LINE.NUM *cNTPserver  ?OPEN 0> 1 XOR  IF 
+28 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+29 LINE.NUM 0 I>F ^dtGetChar @! 
+30 LINE.NUM ELSE 
+30 LINE.NUM ^nCharCount @@ 0 > IF 
+31 LINE.NUM 0 I>F ^dtGetChar @! 
+32 LINE.NUM 1.000000e-001  FDELAY 
+33 LINE.NUM THEN THEN THEN 
+34 LINE.NUM REPEAT 
+36 LINE.NUM ^nCharCount @@ 26 < ^nCharCount @@ 26 > LOR  IF 
+37 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+38 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+39 LINE.NUM ELSE 
+40 LINE.NUM *sDay *cNTPserver  GET$ ^nReceiveStatus @! 
+41 LINE.NUM *sMonth *cNTPserver  GET$ ^nReceiveStatus @! 
+42 LINE.NUM *sYear *cNTPserver  GET$ ^nReceiveStatus @! 
+43 LINE.NUM *sTime *cNTPserver  GET$ ^nReceiveStatus @! 
+44 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+45 LINE.NUM THEN 
+48 LINE.NUM *sTime  SETTIME 
+51 LINE.NUM *sDay  $>I ^nDay @! 
+52 LINE.NUM ^nDay @@  I!DAY 
+55 LINE.NUM *sMonth  $>Upper 
+56 LINE.NUM 0 ^nIndex3 @! 
+57 LINE.NUM BEGIN ^nIndex3 @@ 12 < WHILE 
+58 LINE.NUM *sMonth ^nIndex3 @@ {stMonths $TABLE@ $= IF 
+59 LINE.NUM ^nIndex3 @@ 1 +   I!MTH 
+60 LINE.NUM 12 ^nIndex3 @! 
+61 LINE.NUM ELSE 
+62 LINE.NUM ^nIndex3  1+@! 
+63 LINE.NUM THEN 
+64 LINE.NUM REPEAT 
+67 LINE.NUM *sYear  $>I ^nYear @! 
+68 LINE.NUM ^nYear @@  I!YRS 
+71 LINE.NUM ^n24hrsInSec @@ ^dtGetTime  SetTimer 
+72 LINE.NUM ^dtGetTime  StartTimer 
 0 JUMP ;
 : 2_5
 
 1 LINE.NUM
-  ^n_One @@   DELAY
+  ^n1 @@   DELAY
 0 JUMP ;
 : 2_4
 TRUE
 
 1 LINE.NUM
-  ^dt_GetTime_Timer   T0=
+  ^dtGetTime   T0=
 LAND
 IF -3 ELSE -2 THEN JUMP ;
 T: T2

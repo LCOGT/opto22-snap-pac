@@ -18,17 +18,35 @@ _END NEW $$$.RUN
 0 TASK &Get_Time
 0 TASK &Powerup
 0 TASK &StirFan_Control
-0 TVAR ^dt_GetTime_Timer
-0 FVAR ^n_24hrsInSec
-0 IVAR ^n_FanCtrlMax
-0 IVAR ^n_IpInteger
-0 IVAR ^n_MaxStirFanTach
-0 IVAR ^n_One
-0 IVAR ^n_StirFan_Control_Chart_Status
-8 0 $VAR *s_IpHex 
-25 0 $VAR *s_NTP_IP 
-15 0 $VAR *s_PAC_IP 
-1024 0 COMVAR *ch_NTPserver 
+0 TVAR ^dtGetChar
+0 TVAR ^dtGetTime
+0 IVAR ^n1
+0 FVAR ^n120
+0 FVAR ^n24hrsInSec
+0 IVAR ^nASCII
+0 IVAR ^nCharCount
+0 IVAR ^nDay
+0 IVAR ^nFanCtrlMax
+0 IVAR ^nGetTimeChartStatus
+0 IVAR ^nIndex0
+0 IVAR ^nIndex1
+0 IVAR ^nIndex2
+0 IVAR ^nIndex3
+0 IVAR ^nIP_integer
+0 IVAR ^nMaxStirFanTach
+0 IVAR ^nNTPstatus
+0 IVAR ^nReceiveStatus
+0 IVAR ^nStirFanChartStatus
+0 IVAR ^nYear
+3 0 $VAR *sDay 
+8 0 $VAR *sIP_hex 
+25 0 $VAR *sIP_NTP 
+15 0 $VAR *sIP_PAC 
+4 0 $VAR *sMonth 
+9 0 $VAR *sTime 
+5 0 $VAR *sYear 
+1024 0 COMVAR *cNTPserver 
+12 3 0 $TABLE {stMonths 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %local_IO
 SPOINT 0.0 INPUT 0 %local_IO
@@ -63,19 +81,75 @@ APOINT    0.0000 69 24 %local_IO
 : 2_0
 2 JUMP ;
 : 2_1
-7 LINE.NUM ^n_24hrsInSec @@ ^dt_GetTime_Timer  SetTimer 
-8 LINE.NUM ^dt_GetTime_Timer  StartTimer 
+2 LINE.NUM 1 ^nIndex2 @! 
+3 LINE.NUM BEGIN ^nIndex2 @@ 4 < WHILE 
+4 LINE.NUM *cNTPserver  OPEN ^nNTPstatus @! 
+5 LINE.NUM ^nNTPstatus @@ 0 = IF 
+6 LINE.NUM 4 ^nIndex2 @! 
+7 LINE.NUM THEN 
+9 LINE.NUM ^nNTPstatus @@ 0 < IF 
+10 LINE.NUM 5.000000e+000 ^nIndex2 @@F F*  FDELAY 
+11 LINE.NUM THEN 
+12 LINE.NUM ^nIndex2  1+@! 
+13 LINE.NUM REPEAT 
+17 LINE.NUM ^nNTPstatus @@ 0 = IF 
+18 LINE.NUM *cNTPserver 32  S.!EOL 
+19 LINE.NUM ^n120 @@ ^dtGetChar  SetTimer 
+20 LINE.NUM ^dtGetChar  StartTimer 
+21 LINE.NUM THEN 
+22 LINE.NUM BEGIN ^dtGetChar @@F 0 I>F F> WHILE 
+23 LINE.NUM *cNTPserver  ?STREAM.KEY ^nCharCount @! 
+24 LINE.NUM ^nCharCount @@ 0 < ^nCharCount @@ -37 <> LAND  ^nCharCount @@ -39 <> LAND  IF 
+25 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+26 LINE.NUM 0 I>F ^dtGetChar @! 
+27 LINE.NUM ELSE 
+27 LINE.NUM *cNTPserver  ?OPEN 0> 1 XOR  IF 
+28 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+29 LINE.NUM 0 I>F ^dtGetChar @! 
+30 LINE.NUM ELSE 
+30 LINE.NUM ^nCharCount @@ 0 > IF 
+31 LINE.NUM 0 I>F ^dtGetChar @! 
+32 LINE.NUM 1.000000e-001  FDELAY 
+33 LINE.NUM THEN THEN THEN 
+34 LINE.NUM REPEAT 
+36 LINE.NUM ^nCharCount @@ 26 < ^nCharCount @@ 26 > LOR  IF 
+37 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+38 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+39 LINE.NUM ELSE 
+40 LINE.NUM *sDay *cNTPserver  GET$ ^nReceiveStatus @! 
+41 LINE.NUM *sMonth *cNTPserver  GET$ ^nReceiveStatus @! 
+42 LINE.NUM *sYear *cNTPserver  GET$ ^nReceiveStatus @! 
+43 LINE.NUM *sTime *cNTPserver  GET$ ^nReceiveStatus @! 
+44 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+45 LINE.NUM THEN 
+48 LINE.NUM *sTime  SETTIME 
+51 LINE.NUM *sDay  $>I ^nDay @! 
+52 LINE.NUM ^nDay @@  I!DAY 
+55 LINE.NUM *sMonth  $>Upper 
+56 LINE.NUM 0 ^nIndex3 @! 
+57 LINE.NUM BEGIN ^nIndex3 @@ 12 < WHILE 
+58 LINE.NUM *sMonth ^nIndex3 @@ {stMonths $TABLE@ $= IF 
+59 LINE.NUM ^nIndex3 @@ 1 +   I!MTH 
+60 LINE.NUM 12 ^nIndex3 @! 
+61 LINE.NUM ELSE 
+62 LINE.NUM ^nIndex3  1+@! 
+63 LINE.NUM THEN 
+64 LINE.NUM REPEAT 
+67 LINE.NUM *sYear  $>I ^nYear @! 
+68 LINE.NUM ^nYear @@  I!YRS 
+71 LINE.NUM ^n24hrsInSec @@ ^dtGetTime  SetTimer 
+72 LINE.NUM ^dtGetTime  StartTimer 
 0 JUMP ;
 : 2_5
 
 1 LINE.NUM
-  ^n_One @@   DELAY
+  ^n1 @@   DELAY
 0 JUMP ;
 : 2_4
 TRUE
 
 1 LINE.NUM
-  ^dt_GetTime_Timer   T0=
+  ^dtGetTime   T0=
 LAND
 IF -3 ELSE -2 THEN JUMP ;
 T: T2
@@ -87,47 +161,63 @@ DUMMY
 T;
 &Get_Time ' T2 SETTASK
 : 0_0
-2 JUMP ;
+3 JUMP ;
 : 0_2
 1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
 2 LINE.NUM 2.000000e+001  FDELAY 
-3 LINE.NUM ~AI_StirFanTach  MAX@F ^n_MaxStirFanTach F@! 
-4 LINE.NUM ^n_MaxStirFanTach @@ 100 >= IF 
-5 LINE.NUM 5 ^n_FanCtrlMax @! 
+3 LINE.NUM ~AI_StirFanTach  MAX@F ^nMaxStirFanTach F@! 
+4 LINE.NUM ^nMaxStirFanTach @@ 100 >= IF 
+5 LINE.NUM 5 ^nFanCtrlMax @! 
 6 LINE.NUM ELSE 
-6 LINE.NUM 10 ^n_FanCtrlMax @! 
+6 LINE.NUM 10 ^nFanCtrlMax @! 
 7 LINE.NUM THEN 
 8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
 9 LINE.NUM 1.000000e+001  FDELAY 
-0 JUMP ;
+3 JUMP ;
 : 0_4
-1 LINE.NUM &StirFan_Control  START.T ^n_StirFan_Control_Chart_Status @! 
-2 LINE.NUM &Powerup  STOP.T 
-1 JUMP ;
+1 LINE.NUM &StirFan_Control  START.T ^nStirFanChartStatus @! 
+2 LINE.NUM &Get_Time  START.T ^nGetTimeChartStatus @! 
+3 LINE.NUM &Powerup  STOP.T 
+2 JUMP ;
 : 0_8
-1 LINE.NUM *s_PAC_IP  MY.ADDRESS>String 
-3 LINE.NUM *s_PAC_IP  IP$>I ^n_IpInteger @! 
-4 LINE.NUM ^n_IpInteger @@ *s_IpHex  I>HEX$ 
-5 LINE.NUM *s_IpHex 0 4 *s_IpHex  $SUB 
-6 LINE.NUM 48 *s_IpHex $APPEND 
-
-7 LINE.NUM 48 *s_IpHex $APPEND 
-
-8 LINE.NUM 48 *s_IpHex $APPEND 
-
-9 LINE.NUM 66 *s_IpHex $APPEND 
-
-10 LINE.NUM *s_IpHex  HEX$>I ^n_IpInteger @! 
-11 LINE.NUM ^n_IpInteger @@ *s_NTP_IP  I>IP$ 
-12 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *s_NTP_IP  *_HSV_TEMP $CAT " :13"  *_HSV_TEMP $CAT *_HSV_TEMP *s_NTP_IP $MOVE Release1String 
-13 LINE.NUM *s_NTP_IP *ch_NTPserver  $MOVE 
--3 JUMP ;
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+22 LINE.NUM 0 ^nIndex0 @! 
+23 LINE.NUM 0 ^nIndex1 @! 
+24 LINE.NUM BEGIN ^nIndex0 @@ 8 < WHILE 
+25 LINE.NUM *sIP_PAC ^nIndex0 @@  $INDEX ^nASCII @! 
+26 LINE.NUM ^nASCII @@ 46 = IF 
+27 LINE.NUM ^nIndex1 @@ 1 +  ^nIndex1 @! 
+28 LINE.NUM ^nIndex1 @@ 1 = IF 
+29 LINE.NUM *sIP_PAC 0 ^nIndex0 @@ *sIP_NTP  $SUB 
+30 LINE.NUM 8 ^nIndex0 @! 
+31 LINE.NUM THEN 
+32 LINE.NUM THEN 
+33 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
+34 LINE.NUM REPEAT 
+35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sIP_NTP  *_HSV_TEMP $CAT " .16.5.50:13"  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_NTP $MOVE Release1String 
+36 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
+-2 JUMP ;
+: 0_12
+1 LINE.NUM " JAN" 0 {stMonths $TABLE@  $MOVE 
+2 LINE.NUM " FEB" 1 {stMonths $TABLE@  $MOVE 
+3 LINE.NUM " MAR" 2 {stMonths $TABLE@  $MOVE 
+4 LINE.NUM " APR" 3 {stMonths $TABLE@  $MOVE 
+5 LINE.NUM " MAY" 4 {stMonths $TABLE@  $MOVE 
+6 LINE.NUM " JUN" 5 {stMonths $TABLE@  $MOVE 
+7 LINE.NUM " JUL" 6 {stMonths $TABLE@  $MOVE 
+8 LINE.NUM " AUG" 7 {stMonths $TABLE@  $MOVE 
+9 LINE.NUM " SEP" 8 {stMonths $TABLE@  $MOVE 
+10 LINE.NUM " OCT" 9 {stMonths $TABLE@  $MOVE 
+11 LINE.NUM " NOV" 10 {stMonths $TABLE@  $MOVE 
+12 LINE.NUM " DEC" 11 {stMonths $TABLE@  $MOVE 
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
 0_2
 0_4
 0_8
+0_12
 T;
 &Powerup ' T0 SETTASK
 : 1_0
@@ -137,10 +227,10 @@ T;
 2 LINE.NUM 0 I>F ~AO_StirFan @! 
 3 LINE.NUM THEN 
 5 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F> ~AI_CabinetTemp @@ 30 I>F F<= LAND  IF 
-6 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F- 10 I>F F/ ^n_FanCtrlMax @@F F* ~AO_StirFan @! 
+6 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F- 10 I>F F/ ^nFanCtrlMax @@F F* ~AO_StirFan @! 
 7 LINE.NUM THEN 
 9 LINE.NUM ~AI_CabinetTemp @@ 30 I>F F> IF 
-10 LINE.NUM ^n_FanCtrlMax @@F ~AO_StirFan @! 
+10 LINE.NUM ^nFanCtrlMax @@F ~AO_StirFan @! 
 11 LINE.NUM THEN 
 13 LINE.NUM 1.000000e+000  FDELAY 
 -1 JUMP ;
@@ -156,25 +246,43 @@ CREATE T.ARRAY
 &StirFan_Control ,
  0 ,
 CREATE V.ARRAY
-^n_24hrsInSec ,
-^n_FanCtrlMax ,
-^n_IpInteger ,
-^n_MaxStirFanTach ,
-^n_One ,
-^n_StirFan_Control_Chart_Status ,
-*s_IpHex ,
-*s_NTP_IP ,
-*s_PAC_IP ,
+^n1 ,
+^n120 ,
+^n24hrsInSec ,
+^nASCII ,
+^nCharCount ,
+^nDay ,
+^nFanCtrlMax ,
+^nGetTimeChartStatus ,
+^nIndex0 ,
+^nIndex1 ,
+^nIndex2 ,
+^nIndex3 ,
+^nIP_integer ,
+^nMaxStirFanTach ,
+^nNTPstatus ,
+^nReceiveStatus ,
+^nStirFanChartStatus ,
+^nYear ,
+*sDay ,
+*sIP_hex ,
+*sIP_NTP ,
+*sIP_PAC ,
+*sMonth ,
+*sTime ,
+*sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
-*ch_NTPserver ,
+*cNTPserver ,
  0 ,
 CREATE TI.ARRAY
-^dt_GetTime_Timer ,
+^dtGetChar ,
+^dtGetTime ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
+{stMonths ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -212,21 +320,44 @@ $0000000001111F7F.. %local_IO ENABLES!
 " %local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %local_IO ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE
-0.0 ^dt_GetTime_Timer @!
-86400.000 ^n_24hrsInSec @!
-0 ^n_FanCtrlMax @!
-0 ^n_IpInteger @!
-0 ^n_MaxStirFanTach @!
-1 ^n_One @!
-0 ^n_StirFan_Control_Chart_Status @!
+0.0 ^dtGetChar @!
+0.0 ^dtGetTime @!
+1 ^n1 @!
+120.00000 ^n120 @!
+86400.000 ^n24hrsInSec @!
+0 ^nASCII @!
+0 ^nCharCount @!
+0 ^nDay @!
+0 ^nFanCtrlMax @!
+0 ^nGetTimeChartStatus @!
+0 ^nIndex0 @!
+0 ^nIndex1 @!
+0 ^nIndex2 @!
+0 ^nIndex3 @!
+0 ^nIP_integer @!
+0 ^nMaxStirFanTach @!
+0 ^nNTPstatus @!
+0 ^nReceiveStatus @!
+0 ^nStirFanChartStatus @!
+0 ^nYear @!
 " "
- *s_IpHex $MOVE
+ *sDay $MOVE
+" "
+ *sIP_hex $MOVE
 " tcp:"
- *s_NTP_IP $MOVE
+ *sIP_NTP $MOVE
 " 0"
- *s_PAC_IP $MOVE
+ *sIP_PAC $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sTime $MOVE
+" "
+ *sYear $MOVE
 " 0.0.0.0"
- *ch_NTPserver $MOVE
+ *cNTPserver $MOVE
+ " "
+0 -1 {stMonths Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO
@@ -238,9 +369,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/25/14 " ;
-: TIMESTAMP ." 19:21:29 " ;
-: CRCSTAMP  ." 578C88C1AC9434F76962DCC69CFABF8D " ;
+: DATESTAMP ." 03/26/14 " ;
+: TIMESTAMP ." 18:17:14 " ;
+: CRCSTAMP  ." A3796F81CDBEA163A135855217EFC3D7 " ;
 MAKECHECK
 CLEAR.BREAKS
 

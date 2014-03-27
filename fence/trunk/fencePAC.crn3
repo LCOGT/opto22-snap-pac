@@ -4,25 +4,43 @@ CREATE T.ARRAY
 &StirFan_Control ,
  0 ,
 CREATE V.ARRAY
-^n_24hrsInSec ,
-^n_FanCtrlMax ,
-^n_IpInteger ,
-^n_MaxStirFanTach ,
-^n_One ,
-^n_StirFan_Control_Chart_Status ,
-*s_IpHex ,
-*s_NTP_IP ,
-*s_PAC_IP ,
+^n1 ,
+^n120 ,
+^n24hrsInSec ,
+^nASCII ,
+^nCharCount ,
+^nDay ,
+^nFanCtrlMax ,
+^nGetTimeChartStatus ,
+^nIndex0 ,
+^nIndex1 ,
+^nIndex2 ,
+^nIndex3 ,
+^nIP_integer ,
+^nMaxStirFanTach ,
+^nNTPstatus ,
+^nReceiveStatus ,
+^nStirFanChartStatus ,
+^nYear ,
+*sDay ,
+*sIP_hex ,
+*sIP_NTP ,
+*sIP_PAC ,
+*sMonth ,
+*sTime ,
+*sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
-*ch_NTPserver ,
+*cNTPserver ,
  0 ,
 CREATE TI.ARRAY
-^dt_GetTime_Timer ,
+^dtGetChar ,
+^dtGetTime ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
+{stMonths ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -60,21 +78,44 @@ $0000000001111F7F.. %local_IO ENABLES!
 " %local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %local_IO ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE
-0.0 ^dt_GetTime_Timer @!
-86400.000 ^n_24hrsInSec @!
-0 ^n_FanCtrlMax @!
-0 ^n_IpInteger @!
-0 ^n_MaxStirFanTach @!
-1 ^n_One @!
-0 ^n_StirFan_Control_Chart_Status @!
+0.0 ^dtGetChar @!
+0.0 ^dtGetTime @!
+1 ^n1 @!
+120.00000 ^n120 @!
+86400.000 ^n24hrsInSec @!
+0 ^nASCII @!
+0 ^nCharCount @!
+0 ^nDay @!
+0 ^nFanCtrlMax @!
+0 ^nGetTimeChartStatus @!
+0 ^nIndex0 @!
+0 ^nIndex1 @!
+0 ^nIndex2 @!
+0 ^nIndex3 @!
+0 ^nIP_integer @!
+0 ^nMaxStirFanTach @!
+0 ^nNTPstatus @!
+0 ^nReceiveStatus @!
+0 ^nStirFanChartStatus @!
+0 ^nYear @!
 " "
- *s_IpHex $MOVE
+ *sDay $MOVE
+" "
+ *sIP_hex $MOVE
 " tcp:"
- *s_NTP_IP $MOVE
+ *sIP_NTP $MOVE
 " 0"
- *s_PAC_IP $MOVE
+ *sIP_PAC $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sTime $MOVE
+" "
+ *sYear $MOVE
 " 0.0.0.0"
- *ch_NTPserver $MOVE
+ *cNTPserver $MOVE
+ " "
+0 -1 {stMonths Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO

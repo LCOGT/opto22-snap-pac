@@ -1,44 +1,60 @@
 : 0_0
-2 JUMP ;
+3 JUMP ;
 : 0_2
 1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
 2 LINE.NUM 2.000000e+001  FDELAY 
-3 LINE.NUM ~AI_StirFanTach  MAX@F ^n_MaxStirFanTach F@! 
-4 LINE.NUM ^n_MaxStirFanTach @@ 100 >= IF 
-5 LINE.NUM 5 ^n_FanCtrlMax @! 
+3 LINE.NUM ~AI_StirFanTach  MAX@F ^nMaxStirFanTach F@! 
+4 LINE.NUM ^nMaxStirFanTach @@ 100 >= IF 
+5 LINE.NUM 5 ^nFanCtrlMax @! 
 6 LINE.NUM ELSE 
-6 LINE.NUM 10 ^n_FanCtrlMax @! 
+6 LINE.NUM 10 ^nFanCtrlMax @! 
 7 LINE.NUM THEN 
 8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
 9 LINE.NUM 1.000000e+001  FDELAY 
-0 JUMP ;
+3 JUMP ;
 : 0_4
-1 LINE.NUM &StirFan_Control  START.T ^n_StirFan_Control_Chart_Status @! 
-2 LINE.NUM &Powerup  STOP.T 
-1 JUMP ;
+1 LINE.NUM &StirFan_Control  START.T ^nStirFanChartStatus @! 
+2 LINE.NUM &Get_Time  START.T ^nGetTimeChartStatus @! 
+3 LINE.NUM &Powerup  STOP.T 
+2 JUMP ;
 : 0_8
-1 LINE.NUM *s_PAC_IP  MY.ADDRESS>String 
-3 LINE.NUM *s_PAC_IP  IP$>I ^n_IpInteger @! 
-4 LINE.NUM ^n_IpInteger @@ *s_IpHex  I>HEX$ 
-5 LINE.NUM *s_IpHex 0 4 *s_IpHex  $SUB 
-6 LINE.NUM 48 *s_IpHex $APPEND 
-
-7 LINE.NUM 48 *s_IpHex $APPEND 
-
-8 LINE.NUM 48 *s_IpHex $APPEND 
-
-9 LINE.NUM 66 *s_IpHex $APPEND 
-
-10 LINE.NUM *s_IpHex  HEX$>I ^n_IpInteger @! 
-11 LINE.NUM ^n_IpInteger @@ *s_NTP_IP  I>IP$ 
-12 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *s_NTP_IP  *_HSV_TEMP $CAT " :13"  *_HSV_TEMP $CAT *_HSV_TEMP *s_NTP_IP $MOVE Release1String 
-13 LINE.NUM *s_NTP_IP *ch_NTPserver  $MOVE 
--3 JUMP ;
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+22 LINE.NUM 0 ^nIndex0 @! 
+23 LINE.NUM 0 ^nIndex1 @! 
+24 LINE.NUM BEGIN ^nIndex0 @@ 8 < WHILE 
+25 LINE.NUM *sIP_PAC ^nIndex0 @@  $INDEX ^nASCII @! 
+26 LINE.NUM ^nASCII @@ 46 = IF 
+27 LINE.NUM ^nIndex1 @@ 1 +  ^nIndex1 @! 
+28 LINE.NUM ^nIndex1 @@ 1 = IF 
+29 LINE.NUM *sIP_PAC 0 ^nIndex0 @@ *sIP_NTP  $SUB 
+30 LINE.NUM 8 ^nIndex0 @! 
+31 LINE.NUM THEN 
+32 LINE.NUM THEN 
+33 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
+34 LINE.NUM REPEAT 
+35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sIP_NTP  *_HSV_TEMP $CAT " .16.5.50:13"  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_NTP $MOVE Release1String 
+36 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
+-2 JUMP ;
+: 0_12
+1 LINE.NUM " JAN" 0 {stMonths $TABLE@  $MOVE 
+2 LINE.NUM " FEB" 1 {stMonths $TABLE@  $MOVE 
+3 LINE.NUM " MAR" 2 {stMonths $TABLE@  $MOVE 
+4 LINE.NUM " APR" 3 {stMonths $TABLE@  $MOVE 
+5 LINE.NUM " MAY" 4 {stMonths $TABLE@  $MOVE 
+6 LINE.NUM " JUN" 5 {stMonths $TABLE@  $MOVE 
+7 LINE.NUM " JUL" 6 {stMonths $TABLE@  $MOVE 
+8 LINE.NUM " AUG" 7 {stMonths $TABLE@  $MOVE 
+9 LINE.NUM " SEP" 8 {stMonths $TABLE@  $MOVE 
+10 LINE.NUM " OCT" 9 {stMonths $TABLE@  $MOVE 
+11 LINE.NUM " NOV" 10 {stMonths $TABLE@  $MOVE 
+12 LINE.NUM " DEC" 11 {stMonths $TABLE@  $MOVE 
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
 0_2
 0_4
 0_8
+0_12
 T;
 &Powerup ' T0 SETTASK
