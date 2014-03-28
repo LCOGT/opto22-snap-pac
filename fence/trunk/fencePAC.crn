@@ -4,31 +4,79 @@ _END NEW $$$.RUN
 1024 0 $VAR *_HSV_TEMP 
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
+
+\   ++++++++++ SUB name="SetTimeDayMonthYear" ++++++++++
+
+0 SUBR &SetTimeDayMonthYear
+SUB.CODE null$VAR null$VAR null$VAR null$VAR &SetTimeDayMonthYear
+0 IVAR ^nDay
+0 IVAR ^nIndex
+0 IVAR ^nYear
+12 3 0 $TABLE {stMonths
+
+: &SetTimeDayMonthYear.0
+0 JUMP ;
+: &SetTimeDayMonthYear.1
+2 LINE.NUM " JAN" 0 {stMonths $TABLE@  $MOVE 
+3 LINE.NUM " FEB" 1 {stMonths $TABLE@  $MOVE 
+4 LINE.NUM " MAR" 2 {stMonths $TABLE@  $MOVE 
+5 LINE.NUM " APR" 3 {stMonths $TABLE@  $MOVE 
+6 LINE.NUM " MAY" 4 {stMonths $TABLE@  $MOVE 
+7 LINE.NUM " JUN" 5 {stMonths $TABLE@  $MOVE 
+8 LINE.NUM " JUL" 6 {stMonths $TABLE@  $MOVE 
+9 LINE.NUM " AUG" 7 {stMonths $TABLE@  $MOVE 
+10 LINE.NUM " SEP" 8 {stMonths $TABLE@  $MOVE 
+11 LINE.NUM " OCT" 9 {stMonths $TABLE@  $MOVE 
+12 LINE.NUM " NOV" 10 {stMonths $TABLE@  $MOVE 
+13 LINE.NUM " DEC" 11 {stMonths $TABLE@  $MOVE 
+16 LINE.NUM 3 PARAM  SETTIME 
+19 LINE.NUM 2 PARAM  $>I ^nDay @! 
+20 LINE.NUM ^nDay @@  I!DAY 
+23 LINE.NUM 1 PARAM  $>Upper 
+24 LINE.NUM 0 ^nIndex @! 
+25 LINE.NUM BEGIN ^nIndex @@ 12 < WHILE 
+26 LINE.NUM 1 PARAM ^nIndex @@ {stMonths $TABLE@ $= IF 
+27 LINE.NUM ^nIndex @@ 1 +   I!MTH 
+28 LINE.NUM 12 ^nIndex @! 
+29 LINE.NUM ELSE 
+30 LINE.NUM ^nIndex  1+@! 
+31 LINE.NUM THEN 
+32 LINE.NUM REPEAT 
+35 LINE.NUM 0 PARAM  $>I ^nYear @! 
+36 LINE.NUM ^nYear @@  I!YRS 
+0 JUMP ;
+
+CODE
+
+DUMMY
+&SetTimeDayMonthYear.0
+&SetTimeDayMonthYear.1
+ENDCODE
 0 TASK  &_INIT_IO
 0 TASK &Get_Time
 0 TASK &Powerup
 0 TASK &StirFan_Control
 0 TVAR ^dtGetChar
 0 TVAR ^dtGetTime
+0 FVAR ^f120
+0 FVAR ^f24hrsInSec
 0 IVAR ^n1
-0 FVAR ^n120
-0 FVAR ^n24hrsInSec
+0 IVAR ^n30
 0 IVAR ^nASCII
 0 IVAR ^nCharCount
-0 IVAR ^nDay
 0 IVAR ^nFanCtrlMax
 0 IVAR ^nGetTimeChartStatus
 0 IVAR ^nIndex0
 0 IVAR ^nIndex1
 0 IVAR ^nIndex2
-0 IVAR ^nIndex3
 0 IVAR ^nIP_integer
 0 IVAR ^nMaxStirFanTach
 0 IVAR ^nNTPstatus
 0 IVAR ^nReceiveStatus
+0 IVAR ^nSetTimeDateStatus
 0 IVAR ^nStirFanChartStatus
-0 IVAR ^nYear
-3 0 $VAR *sDay 
+4 0 $VAR *sDay 
+40 0 $VAR *sDebug 
 8 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_NTP 
 15 0 $VAR *sIP_PAC 
@@ -36,7 +84,7 @@ _END NEW $$$.RUN
 9 0 $VAR *sTime 
 5 0 $VAR *sYear 
 1024 0 COMVAR *cNTPserver 
-12 3 0 $TABLE {stMonths 
+5 10 0 $TABLE {stTimeDate 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %local_IO
 SPOINT 0.0 INPUT 0 %local_IO
@@ -71,64 +119,64 @@ APOINT    0.0000 69 24 %local_IO
 : 2_0
 2 JUMP ;
 : 2_1
-2 LINE.NUM 1 ^nIndex2 @! 
-3 LINE.NUM BEGIN ^nIndex2 @@ 4 < WHILE 
-4 LINE.NUM *cNTPserver  OPEN ^nNTPstatus @! 
-5 LINE.NUM ^nNTPstatus @@ 0 = IF 
-6 LINE.NUM 4 ^nIndex2 @! 
-7 LINE.NUM THEN 
-9 LINE.NUM ^nNTPstatus @@ 0 < IF 
-10 LINE.NUM 5.000000e+000 ^nIndex2 @@F F*  FDELAY 
-11 LINE.NUM THEN 
-12 LINE.NUM ^nIndex2  1+@! 
-13 LINE.NUM REPEAT 
-17 LINE.NUM ^nNTPstatus @@ 0 = IF 
-18 LINE.NUM *cNTPserver 32  S.!EOL 
-19 LINE.NUM ^n120 @@ ^dtGetChar  SetTimer 
-20 LINE.NUM ^dtGetChar  StartTimer 
-21 LINE.NUM THEN 
-22 LINE.NUM BEGIN ^dtGetChar @@F 0 I>F F> WHILE 
-23 LINE.NUM *cNTPserver  ?STREAM.KEY ^nCharCount @! 
-24 LINE.NUM ^nCharCount @@ 0 < ^nCharCount @@ -37 <> LAND  ^nCharCount @@ -39 <> LAND  IF 
-25 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-26 LINE.NUM 0 I>F ^dtGetChar @! 
-27 LINE.NUM ELSE 
-27 LINE.NUM *cNTPserver  ?OPEN 0> 1 XOR  IF 
+4 LINE.NUM 1 ^nIndex2 @! 
+5 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+6 LINE.NUM BEGIN ^nIndex2 @@ 4 < WHILE 
+7 LINE.NUM *cNTPserver  OPEN ^nNTPstatus @! 
+8 LINE.NUM 1.000000e+000  FDELAY 
+9 LINE.NUM ^nNTPstatus @@ 0 = IF 
+10 LINE.NUM 5 ^nIndex2 @! 
+11 LINE.NUM *cNTPserver 32  S.!EOL 
+12 LINE.NUM ^f120 @@ ^dtGetChar  SetTimer 
+13 LINE.NUM ^dtGetChar  StartTimer 
+14 LINE.NUM ELSE 
+14 LINE.NUM ^nNTPstatus @@ 0 < IF 
+15 LINE.NUM 5.000000e+000 ^nIndex2 @@F F*  FDELAY 
+16 LINE.NUM ELSE 
+16 LINE.NUM ^nIndex2 @@ 4 = IF 
+18 LINE.NUM THEN THEN THEN 
+19 LINE.NUM ^nIndex2  1+@! 
+20 LINE.NUM REPEAT 
+25 LINE.NUM BEGIN ^dtGetChar @@F 0 I>F F> WHILE 
+26 LINE.NUM *cNTPserver  ?STREAM.KEY ^nCharCount @! 
+27 LINE.NUM ^nCharCount @@ 0 < ^nCharCount @@ -37 <> LAND  ^nCharCount @@ -39 <> LAND  IF 
 28 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
 29 LINE.NUM 0 I>F ^dtGetChar @! 
-30 LINE.NUM ELSE 
-30 LINE.NUM ^nCharCount @@ 0 > IF 
-31 LINE.NUM 0 I>F ^dtGetChar @! 
-32 LINE.NUM 1.000000e-001  FDELAY 
-33 LINE.NUM THEN THEN THEN 
-34 LINE.NUM REPEAT 
-36 LINE.NUM ^nCharCount @@ 26 < ^nCharCount @@ 26 > LOR  IF 
-37 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
-38 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-39 LINE.NUM ELSE 
-40 LINE.NUM *sDay *cNTPserver  GET$ ^nReceiveStatus @! 
-41 LINE.NUM *sMonth *cNTPserver  GET$ ^nReceiveStatus @! 
-42 LINE.NUM *sYear *cNTPserver  GET$ ^nReceiveStatus @! 
-43 LINE.NUM *sTime *cNTPserver  GET$ ^nReceiveStatus @! 
-44 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
-45 LINE.NUM THEN 
-48 LINE.NUM *sTime  SETTIME 
-51 LINE.NUM *sDay  $>I ^nDay @! 
-52 LINE.NUM ^nDay @@  I!DAY 
-55 LINE.NUM *sMonth  $>Upper 
-56 LINE.NUM 0 ^nIndex3 @! 
-57 LINE.NUM BEGIN ^nIndex3 @@ 12 < WHILE 
-58 LINE.NUM *sMonth ^nIndex3 @@ {stMonths $TABLE@ $= IF 
-59 LINE.NUM ^nIndex3 @@ 1 +   I!MTH 
-60 LINE.NUM 12 ^nIndex3 @! 
-61 LINE.NUM ELSE 
-62 LINE.NUM ^nIndex3  1+@! 
-63 LINE.NUM THEN 
-64 LINE.NUM REPEAT 
-67 LINE.NUM *sYear  $>I ^nYear @! 
-68 LINE.NUM ^nYear @@  I!YRS 
-71 LINE.NUM ^n24hrsInSec @@ ^dtGetTime  SetTimer 
-72 LINE.NUM ^dtGetTime  StartTimer 
+31 LINE.NUM ELSE 
+31 LINE.NUM *cNTPserver  ?OPEN 0> 1 XOR  IF 
+32 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+33 LINE.NUM 0 I>F ^dtGetChar @! 
+35 LINE.NUM ELSE 
+35 LINE.NUM ^nCharCount @@ 0 > IF 
+36 LINE.NUM 0 I>F ^dtGetChar @! 
+37 LINE.NUM 1.000000e-001  FDELAY 
+38 LINE.NUM THEN THEN THEN 
+39 LINE.NUM REPEAT 
+45 LINE.NUM ^nCharCount @@ 26 = IF 
+46 LINE.NUM 4 0 {stTimeDate *cNTPserver  S.GET#TABLE ^nReceiveStatus @! 
+47 LINE.NUM 3 {stTimeDate $TABLE@ *sTime  $MOVE 
+48 LINE.NUM 0 {stTimeDate $TABLE@ *sDay  $MOVE 
+49 LINE.NUM 1 {stTimeDate $TABLE@ *sMonth  $MOVE 
+50 LINE.NUM 2 {stTimeDate $TABLE@ *sYear  $MOVE 
+51 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+52 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+53 LINE.NUM *sTime *sDay *sMonth *sYear &SetTimeDayMonthYear CALL.SUB ^nSetTimeDateStatus @! 
+56 LINE.NUM ELSE 
+56 LINE.NUM ^nCharCount @@ 30 = IF 
+57 LINE.NUM 5 0 {stTimeDate *cNTPserver  S.GET#TABLE ^nReceiveStatus @! 
+58 LINE.NUM 3 {stTimeDate $TABLE@ *sTime  $MOVE 
+59 LINE.NUM 2 {stTimeDate $TABLE@ *sDay  $MOVE 
+60 LINE.NUM 1 {stTimeDate $TABLE@ *sMonth  $MOVE 
+61 LINE.NUM 4 {stTimeDate $TABLE@ *sYear  $MOVE 
+62 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+63 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+64 LINE.NUM *sTime *sDay *sMonth *sYear &SetTimeDayMonthYear CALL.SUB ^nSetTimeDateStatus @! 
+66 LINE.NUM ELSE 
+67 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
+68 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
+70 LINE.NUM THEN THEN 
+75 LINE.NUM ^f24hrsInSec @@ ^dtGetTime  SetTimer 
+76 LINE.NUM ^dtGetTime  StartTimer 
 0 JUMP ;
 : 2_5
 
@@ -151,7 +199,7 @@ DUMMY
 T;
 &Get_Time ' T2 SETTASK
 : 0_0
-3 JUMP ;
+2 JUMP ;
 : 0_2
 1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
 2 LINE.NUM 2.000000e+001  FDELAY 
@@ -163,12 +211,12 @@ T;
 7 LINE.NUM THEN 
 8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
 9 LINE.NUM 1.000000e+001  FDELAY 
-3 JUMP ;
+2 JUMP ;
 : 0_4
 1 LINE.NUM &StirFan_Control  START.T ^nStirFanChartStatus @! 
 2 LINE.NUM &Get_Time  START.T ^nGetTimeChartStatus @! 
 3 LINE.NUM &Powerup  STOP.T 
-2 JUMP ;
+1 JUMP ;
 : 0_8
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 22 LINE.NUM 0 ^nIndex0 @! 
@@ -184,22 +232,8 @@ T;
 32 LINE.NUM THEN 
 33 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
 34 LINE.NUM REPEAT 
-35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sIP_NTP  *_HSV_TEMP $CAT " .16.5.50:13"  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_NTP $MOVE Release1String 
-36 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
--2 JUMP ;
-: 0_12
-1 LINE.NUM " JAN" 0 {stMonths $TABLE@  $MOVE 
-2 LINE.NUM " FEB" 1 {stMonths $TABLE@  $MOVE 
-3 LINE.NUM " MAR" 2 {stMonths $TABLE@  $MOVE 
-4 LINE.NUM " APR" 3 {stMonths $TABLE@  $MOVE 
-5 LINE.NUM " MAY" 4 {stMonths $TABLE@  $MOVE 
-6 LINE.NUM " JUN" 5 {stMonths $TABLE@  $MOVE 
-7 LINE.NUM " JUL" 6 {stMonths $TABLE@  $MOVE 
-8 LINE.NUM " AUG" 7 {stMonths $TABLE@  $MOVE 
-9 LINE.NUM " SEP" 8 {stMonths $TABLE@  $MOVE 
-10 LINE.NUM " OCT" 9 {stMonths $TABLE@  $MOVE 
-11 LINE.NUM " NOV" 10 {stMonths $TABLE@  $MOVE 
-12 LINE.NUM " DEC" 11 {stMonths $TABLE@  $MOVE 
+36 LINE.NUM " tcp:10.10.20.11:13" *sIP_NTP  $MOVE 
+37 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
 -2 JUMP ;
 T: T0
 DUMMY
@@ -207,7 +241,6 @@ DUMMY
 0_2
 0_4
 0_8
-0_12
 T;
 &Powerup ' T0 SETTASK
 : 1_0
@@ -236,25 +269,25 @@ CREATE T.ARRAY
 &StirFan_Control ,
  0 ,
 CREATE V.ARRAY
+^f120 ,
+^f24hrsInSec ,
 ^n1 ,
-^n120 ,
-^n24hrsInSec ,
+^n30 ,
 ^nASCII ,
 ^nCharCount ,
-^nDay ,
 ^nFanCtrlMax ,
 ^nGetTimeChartStatus ,
 ^nIndex0 ,
 ^nIndex1 ,
 ^nIndex2 ,
-^nIndex3 ,
 ^nIP_integer ,
 ^nMaxStirFanTach ,
 ^nNTPstatus ,
 ^nReceiveStatus ,
+^nSetTimeDateStatus ,
 ^nStirFanChartStatus ,
-^nYear ,
 *sDay ,
+*sDebug ,
 *sIP_hex ,
 *sIP_NTP ,
 *sIP_PAC ,
@@ -272,7 +305,7 @@ CREATE TI.ARRAY
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
-{stMonths ,
+{stTimeDate ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -312,26 +345,27 @@ $0000000001111F7F.. %local_IO ENABLES!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0.0 ^dtGetChar @!
 0.0 ^dtGetTime @!
+120.00000 ^f120 @!
+86400.000 ^f24hrsInSec @!
 1 ^n1 @!
-120.00000 ^n120 @!
-86400.000 ^n24hrsInSec @!
+30 ^n30 @!
 0 ^nASCII @!
 0 ^nCharCount @!
-0 ^nDay @!
 0 ^nFanCtrlMax @!
 0 ^nGetTimeChartStatus @!
 0 ^nIndex0 @!
 0 ^nIndex1 @!
 0 ^nIndex2 @!
-0 ^nIndex3 @!
 0 ^nIP_integer @!
 0 ^nMaxStirFanTach @!
 0 ^nNTPstatus @!
 0 ^nReceiveStatus @!
+0 ^nSetTimeDateStatus @!
 0 ^nStirFanChartStatus @!
-0 ^nYear @!
 " "
  *sDay $MOVE
+" "
+ *sDebug $MOVE
 " "
  *sIP_hex $MOVE
 " tcp:"
@@ -347,7 +381,7 @@ $0000000001111F7F.. %local_IO ENABLES!
 " 0.0.0.0"
  *cNTPserver $MOVE
  " "
-0 -1 {stMonths Init$Table
+0 -1 {stTimeDate Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO
@@ -359,8 +393,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/26/14 " ;
-: TIMESTAMP ." 18:17:14 " ;
+: DATESTAMP ." 03/27/14 " ;
+: TIMESTAMP ." 17:46:49 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

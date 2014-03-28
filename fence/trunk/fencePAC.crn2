@@ -4,25 +4,25 @@
 0 TASK &StirFan_Control
 0 TVAR ^dtGetChar
 0 TVAR ^dtGetTime
+0 FVAR ^f120
+0 FVAR ^f24hrsInSec
 0 IVAR ^n1
-0 FVAR ^n120
-0 FVAR ^n24hrsInSec
+0 IVAR ^n30
 0 IVAR ^nASCII
 0 IVAR ^nCharCount
-0 IVAR ^nDay
 0 IVAR ^nFanCtrlMax
 0 IVAR ^nGetTimeChartStatus
 0 IVAR ^nIndex0
 0 IVAR ^nIndex1
 0 IVAR ^nIndex2
-0 IVAR ^nIndex3
 0 IVAR ^nIP_integer
 0 IVAR ^nMaxStirFanTach
 0 IVAR ^nNTPstatus
 0 IVAR ^nReceiveStatus
+0 IVAR ^nSetTimeDateStatus
 0 IVAR ^nStirFanChartStatus
-0 IVAR ^nYear
-3 0 $VAR *sDay 
+4 0 $VAR *sDay 
+40 0 $VAR *sDebug 
 8 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_NTP 
 15 0 $VAR *sIP_PAC 
@@ -30,7 +30,7 @@
 9 0 $VAR *sTime 
 5 0 $VAR *sYear 
 1024 0 COMVAR *cNTPserver 
-12 3 0 $TABLE {stMonths 
+5 10 0 $TABLE {stTimeDate 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %local_IO
 SPOINT 0.0 INPUT 0 %local_IO

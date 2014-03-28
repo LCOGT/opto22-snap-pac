@@ -4,25 +4,25 @@ CREATE T.ARRAY
 &StirFan_Control ,
  0 ,
 CREATE V.ARRAY
+^f120 ,
+^f24hrsInSec ,
 ^n1 ,
-^n120 ,
-^n24hrsInSec ,
+^n30 ,
 ^nASCII ,
 ^nCharCount ,
-^nDay ,
 ^nFanCtrlMax ,
 ^nGetTimeChartStatus ,
 ^nIndex0 ,
 ^nIndex1 ,
 ^nIndex2 ,
-^nIndex3 ,
 ^nIP_integer ,
 ^nMaxStirFanTach ,
 ^nNTPstatus ,
 ^nReceiveStatus ,
+^nSetTimeDateStatus ,
 ^nStirFanChartStatus ,
-^nYear ,
 *sDay ,
+*sDebug ,
 *sIP_hex ,
 *sIP_NTP ,
 *sIP_PAC ,
@@ -40,7 +40,7 @@ CREATE TI.ARRAY
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
-{stMonths ,
+{stTimeDate ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -80,26 +80,27 @@ $0000000001111F7F.. %local_IO ENABLES!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0.0 ^dtGetChar @!
 0.0 ^dtGetTime @!
+120.00000 ^f120 @!
+86400.000 ^f24hrsInSec @!
 1 ^n1 @!
-120.00000 ^n120 @!
-86400.000 ^n24hrsInSec @!
+30 ^n30 @!
 0 ^nASCII @!
 0 ^nCharCount @!
-0 ^nDay @!
 0 ^nFanCtrlMax @!
 0 ^nGetTimeChartStatus @!
 0 ^nIndex0 @!
 0 ^nIndex1 @!
 0 ^nIndex2 @!
-0 ^nIndex3 @!
 0 ^nIP_integer @!
 0 ^nMaxStirFanTach @!
 0 ^nNTPstatus @!
 0 ^nReceiveStatus @!
+0 ^nSetTimeDateStatus @!
 0 ^nStirFanChartStatus @!
-0 ^nYear @!
 " "
  *sDay $MOVE
+" "
+ *sDebug $MOVE
 " "
  *sIP_hex $MOVE
 " tcp:"
@@ -115,7 +116,7 @@ $0000000001111F7F.. %local_IO ENABLES!
 " 0.0.0.0"
  *cNTPserver $MOVE
  " "
-0 -1 {stMonths Init$Table
+0 -1 {stTimeDate Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO

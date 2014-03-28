@@ -1,5 +1,5 @@
 : 0_0
-3 JUMP ;
+2 JUMP ;
 : 0_2
 1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
 2 LINE.NUM 2.000000e+001  FDELAY 
@@ -11,12 +11,12 @@
 7 LINE.NUM THEN 
 8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
 9 LINE.NUM 1.000000e+001  FDELAY 
-3 JUMP ;
+2 JUMP ;
 : 0_4
 1 LINE.NUM &StirFan_Control  START.T ^nStirFanChartStatus @! 
 2 LINE.NUM &Get_Time  START.T ^nGetTimeChartStatus @! 
 3 LINE.NUM &Powerup  STOP.T 
-2 JUMP ;
+1 JUMP ;
 : 0_8
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 22 LINE.NUM 0 ^nIndex0 @! 
@@ -32,22 +32,8 @@
 32 LINE.NUM THEN 
 33 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
 34 LINE.NUM REPEAT 
-35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sIP_NTP  *_HSV_TEMP $CAT " .16.5.50:13"  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_NTP $MOVE Release1String 
-36 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
--2 JUMP ;
-: 0_12
-1 LINE.NUM " JAN" 0 {stMonths $TABLE@  $MOVE 
-2 LINE.NUM " FEB" 1 {stMonths $TABLE@  $MOVE 
-3 LINE.NUM " MAR" 2 {stMonths $TABLE@  $MOVE 
-4 LINE.NUM " APR" 3 {stMonths $TABLE@  $MOVE 
-5 LINE.NUM " MAY" 4 {stMonths $TABLE@  $MOVE 
-6 LINE.NUM " JUN" 5 {stMonths $TABLE@  $MOVE 
-7 LINE.NUM " JUL" 6 {stMonths $TABLE@  $MOVE 
-8 LINE.NUM " AUG" 7 {stMonths $TABLE@  $MOVE 
-9 LINE.NUM " SEP" 8 {stMonths $TABLE@  $MOVE 
-10 LINE.NUM " OCT" 9 {stMonths $TABLE@  $MOVE 
-11 LINE.NUM " NOV" 10 {stMonths $TABLE@  $MOVE 
-12 LINE.NUM " DEC" 11 {stMonths $TABLE@  $MOVE 
+36 LINE.NUM " tcp:10.10.20.11:13" *sIP_NTP  $MOVE 
+37 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
 -2 JUMP ;
 T: T0
 DUMMY
@@ -55,6 +41,5 @@ DUMMY
 0_2
 0_4
 0_8
-0_12
 T;
 &Powerup ' T0 SETTASK
