@@ -1,0 +1,180 @@
+: 3_0
+8 JUMP ;
+: 3_32
+
+1 LINE.NUM
+  ~DO_PoleStop_NO   ON
+
+2 LINE.NUM
+  ~DO_TailStop_NO   ON
+
+3 LINE.NUM
+  ~DO_PoleEnable_NO   OFF
+
+4 LINE.NUM
+  ~DO_TailEnable_NO   OFF
+
+5 LINE.NUM
+  ^Heartbeat   StopTimer
+
+6 LINE.NUM
+  0  
+  ^HeartEnabled @!   
+0 JUMP ;
+: 3_113
+
+1 LINE.NUM
+  " 0" 
+ 
+  *ModeEnum   $MOVE
+
+2 LINE.NUM
+  ^AUTOMODE   FALSE@!
+
+3 LINE.NUM
+  &Pendant_manual   STOP.T
+4 JUMP ;
+: 3_165
+
+1 LINE.NUM
+  ^AUTOMODE   FALSE@!
+
+2 LINE.NUM
+  &Pendant_manual   START.T
+  ^CHART_STARTED @! 
+
+3 LINE.NUM
+  " 1" 
+ 
+  *ModeEnum   $MOVE
+
+4 LINE.NUM
+  ^Heartbeat   StopTimer
+
+5 LINE.NUM
+  0  
+  ^HeartEnabled @!   
+3 JUMP ;
+: 3_166
+
+1 LINE.NUM
+  ^AUTOMODE   TRUE@!
+
+2 LINE.NUM
+  &Pendant_manual   STOP.T
+
+3 LINE.NUM
+  " 2" 
+ 
+  *ModeEnum   $MOVE
+6 JUMP ;
+: 3_181
+
+1 LINE.NUM
+  90.  
+  ^Heartbeat   SetTimer
+
+2 LINE.NUM
+  ^Heartbeat   StartTimer
+
+3 LINE.NUM
+  1  
+  ^HeartEnabled @!   
+1 JUMP ;
+: 3_190
+
+1 LINE.NUM
+  ^Heartbeat   StopTimer
+
+2 LINE.NUM
+  ^OPEN   FALSE@!
+
+3 LINE.NUM
+  ^CLOSE   TRUE@!
+
+4 LINE.NUM
+  &Pole   START.T
+  ^CHART_STARTED @! 
+
+5 LINE.NUM
+  &Tail   START.T
+  ^CHART_STARTED @! 
+0 JUMP ;
+: 3_193
+
+1 LINE.NUM
+  200    DELAY
+1 JUMP ;
+: 3_1
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofDisable_SW   ?ON
+LAND
+
+2 LINE.NUM
+  &Pendant_manual   ?STOPPED
+LAND
+
+3 LINE.NUM
+  ~DI_RoofAuto_SW   ?OFF
+LAND
+IF -6 ELSE -2 THEN JUMP ;
+: 3_2
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofAuto_SW   ?OFF
+LAND
+
+2 LINE.NUM
+  ~DI_RoofDisable_SW   ?OFF
+LAND
+IF -9 ELSE 0 THEN JUMP ;
+: 3_122
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofAuto_SW   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_RoofDisable_SW   ?ON
+LAND
+
+3 LINE.NUM
+  ^AUTOMODE @@   0=
+LAND
+IF -7 ELSE -3 THEN JUMP ;
+: 3_176
+TRUE
+
+1 LINE.NUM
+  ^HeartEnabled @@ 
+  0    =
+LAND
+IF -7 ELSE 0 THEN JUMP ;
+: 3_184
+TRUE
+
+1 LINE.NUM
+  ^Heartbeat   T0=
+LAND
+IF -7 ELSE -6 THEN JUMP ;
+T: T3
+DUMMY
+3_0
+3_32
+3_113
+3_165
+3_166
+3_181
+3_190
+3_193
+3_1
+3_2
+3_122
+3_176
+3_184
+T;
+&Manual_auto ' T3 SETTASK
