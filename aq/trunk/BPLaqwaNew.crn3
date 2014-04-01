@@ -1,5 +1,6 @@
 CREATE T.ARRAY
-&Control_command_comms ,
+&Encl_Comm ,
+&Facility_Comm ,
 &Heart_Monitor ,
 &Manual_auto ,
 &Master_comms ,
@@ -38,7 +39,6 @@ CREATE V.ARRAY
 ^door ,
 ^FastMode ,
 ^flag_status ,
-^HeartEnabled ,
 ^Init_light_state_s1 ,
 ^Init_Light_State_S2 ,
 ^Light_State_Old ,
@@ -51,6 +51,18 @@ CREATE V.ARRAY
 ^MasterCommandNum ,
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
+^nEnclCharCount ,
+^nEnclPortStatus ,
+^nEnclReceiveStatus ,
+^nEnclTransmitStatus ,
+^nFacilityCharCount ,
+^nFacilityPortStatus ,
+^nFacilityReceiveStatus ,
+^nFacilityTransmitStatus ,
+^nFindEnclCmd ,
+^nFindFacilityCmd ,
+^nIndexEncl ,
+^nOldHeartbeat ,
 ^OLD_COOLING_FAN_FREQ ,
 ^OPEN ,
 ^OPEN_SLOW ,
@@ -76,8 +88,13 @@ CREATE V.ARRAY
 *MasterCommand ,
 *ModeEnum ,
 *PoleEnum ,
+*sEnclCmd ,
+*sEnclStatus ,
+*sFacilityCmd ,
+*sFacilityStatus ,
 *SideEnum ,
-*StatusString ,
+*sOldHeartbeat ,
+*sStatus ,
 *StormEnum ,
 *SwitchEnum ,
 *TailEnum ,
@@ -85,11 +102,15 @@ CREATE V.ARRAY
 *TimeString ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*cEncl_Port ,
+*cFacilityPort ,
 *Master_Handle ,
  0 ,
 CREATE TI.ARRAY
 ^COMMWATCHDOG ,
-^Heartbeat ,
+^dtEnclSocket ,
+^dtFacilitySocket ,
+^dtHeartbeat ,
 ^Socket_Timer ,
  0 ,
 CREATE PTR.ARRAY
@@ -227,10 +248,11 @@ CONFIG_PORTS
 0 ^CountOneSecond @!
 0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
 0 ^door @!
+0.0 ^dtEnclSocket @!
+0.0 ^dtFacilitySocket @!
+0.0 ^dtHeartbeat @!
 0 ^FastMode @!
 0 ^flag_status @!
-0.0 ^Heartbeat @!
-0 ^HeartEnabled @!
 0 ^Init_light_state_s1 @!
 0 ^Init_Light_State_S2 @!
 0 ^Light_State_Old @!
@@ -243,6 +265,18 @@ CONFIG_PORTS
 0 ^MasterCommandNum @!
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
+0 ^nEnclCharCount @!
+0 ^nEnclPortStatus @!
+0 ^nEnclReceiveStatus @!
+0 ^nEnclTransmitStatus @!
+0 ^nFacilityCharCount @!
+0 ^nFacilityPortStatus @!
+0 ^nFacilityReceiveStatus @!
+0 ^nFacilityTransmitStatus @!
+0 ^nFindEnclCmd @!
+0 ^nFindFacilityCmd @!
+0 ^nIndexEncl @!
+0 ^nOldHeartbeat @!
 0.00000000 ^OLD_COOLING_FAN_FREQ @!
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
@@ -276,10 +310,20 @@ CONFIG_PORTS
  *ModeEnum $MOVE
 " 9"
  *PoleEnum $MOVE
+" "
+ *sEnclCmd $MOVE
+" "
+ *sEnclStatus $MOVE
+" "
+ *sFacilityCmd $MOVE
+" "
+ *sFacilityStatus $MOVE
 " 9"
  *SideEnum $MOVE
 " "
- *StatusString $MOVE
+ *sOldHeartbeat $MOVE
+" "
+ *sStatus $MOVE
 " 9"
  *StormEnum $MOVE
 " 9"
@@ -290,6 +334,10 @@ CONFIG_PORTS
  *TempC $MOVE
 " "
  *TimeString $MOVE
+" tcp:22004"
+ *cEncl_Port $MOVE
+" tcp:22005"
+ *cFacilityPort $MOVE
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO

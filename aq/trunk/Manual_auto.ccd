@@ -15,11 +15,7 @@
   ~DO_TailEnable_NO   OFF
 
 5 LINE.NUM
-  ^Heartbeat   StopTimer
-
-6 LINE.NUM
-  0  
-  ^HeartEnabled @!   
+  ^dtHeartbeat   StopTimer
 0 JUMP ;
 : 3_113
 
@@ -49,11 +45,7 @@
   *ModeEnum   $MOVE
 
 4 LINE.NUM
-  ^Heartbeat   StopTimer
-
-5 LINE.NUM
-  0  
-  ^HeartEnabled @!   
+  ^dtHeartbeat   StopTimer
 3 JUMP ;
 : 3_166
 
@@ -67,24 +59,20 @@
   " 2" 
  
   *ModeEnum   $MOVE
-6 JUMP ;
+2 JUMP ;
 : 3_181
 
 1 LINE.NUM
   90.  
-  ^Heartbeat   SetTimer
+  ^dtHeartbeat   SetTimer
 
 2 LINE.NUM
-  ^Heartbeat   StartTimer
-
-3 LINE.NUM
-  1  
-  ^HeartEnabled @!   
+  ^dtHeartbeat   StartTimer
 1 JUMP ;
 : 3_190
 
 1 LINE.NUM
-  ^Heartbeat   StopTimer
+  ^dtHeartbeat   StopTimer
 
 2 LINE.NUM
   ^OPEN   FALSE@!
@@ -148,17 +136,12 @@ LAND
 IF -7 ELSE -3 THEN JUMP ;
 : 3_176
 TRUE
-
-1 LINE.NUM
-  ^HeartEnabled @@ 
-  0    =
-LAND
 IF -7 ELSE 0 THEN JUMP ;
 : 3_184
 TRUE
 
 1 LINE.NUM
-  ^Heartbeat   T0=
+  ^dtHeartbeat   T0=
 LAND
 IF -7 ELSE -6 THEN JUMP ;
 T: T3

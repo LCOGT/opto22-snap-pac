@@ -1,5 +1,6 @@
 0 TASK  &_INIT_IO
-0 TASK &Control_command_comms
+0 TASK &Encl_Comm
+0 TASK &Facility_Comm
 0 TASK &Heart_Monitor
 0 TASK &Manual_auto
 0 TASK &Master_comms
@@ -35,10 +36,11 @@
 0 IVAR ^CountOneSecond
 0 FVAR ^CURRENT_COOLING_FAN_FREQ
 0 IVAR ^door
+0 TVAR ^dtEnclSocket
+0 TVAR ^dtFacilitySocket
+0 TVAR ^dtHeartbeat
 0 IVAR ^FastMode
 0 IVAR ^flag_status
-0 TVAR ^Heartbeat
-0 IVAR ^HeartEnabled
 0 IVAR ^Init_light_state_s1
 0 IVAR ^Init_Light_State_S2
 0 IVAR ^Light_State_Old
@@ -51,6 +53,18 @@
 0 IVAR ^MasterCommandNum
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
+0 IVAR ^nEnclCharCount
+0 IVAR ^nEnclPortStatus
+0 IVAR ^nEnclReceiveStatus
+0 IVAR ^nEnclTransmitStatus
+0 IVAR ^nFacilityCharCount
+0 IVAR ^nFacilityPortStatus
+0 IVAR ^nFacilityReceiveStatus
+0 IVAR ^nFacilityTransmitStatus
+0 IVAR ^nFindEnclCmd
+0 IVAR ^nFindFacilityCmd
+0 IVAR ^nIndexEncl
+0 IVAR ^nOldHeartbeat
 0 FVAR ^OLD_COOLING_FAN_FREQ
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
@@ -77,13 +91,20 @@
 3 0 $VAR *MasterCommand 
 1 0 $VAR *ModeEnum 
 1 0 $VAR *PoleEnum 
+32 0 $VAR *sEnclCmd 
+1024 0 $VAR *sEnclStatus 
+32 0 $VAR *sFacilityCmd 
+1024 0 $VAR *sFacilityStatus 
 1 0 $VAR *SideEnum 
-512 0 $VAR *StatusString 
+3 0 $VAR *sOldHeartbeat 
+512 0 $VAR *sStatus 
 1 0 $VAR *StormEnum 
 1 0 $VAR *SwitchEnum 
 1 0 $VAR *TailEnum 
 15 0 $VAR *TempC 
 10 0 $VAR *TimeString 
+1024 0 COMVAR *cEncl_Port 
+1024 0 COMVAR *cFacilityPort 
 1024 1073741824 COMVAR *Master_Handle 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %encPacInternal

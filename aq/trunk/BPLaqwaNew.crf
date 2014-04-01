@@ -15,7 +15,8 @@ _END NEW $$$.RUN
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
 0 TASK  &_INIT_IO
-0 TASK &Control_command_comms
+0 TASK &Encl_Comm
+0 TASK &Facility_Comm
 0 TASK &Heart_Monitor
 0 TASK &Manual_auto
 0 TASK &Master_comms
@@ -51,10 +52,11 @@ _END NEW $$$.RUN
 0 IVAR ^CountOneSecond
 0 FVAR ^CURRENT_COOLING_FAN_FREQ
 0 IVAR ^door
+0 TVAR ^dtEnclSocket
+0 TVAR ^dtFacilitySocket
+0 TVAR ^dtHeartbeat
 0 IVAR ^FastMode
 0 IVAR ^flag_status
-0 TVAR ^Heartbeat
-0 IVAR ^HeartEnabled
 0 IVAR ^Init_light_state_s1
 0 IVAR ^Init_Light_State_S2
 0 IVAR ^Light_State_Old
@@ -67,6 +69,18 @@ _END NEW $$$.RUN
 0 IVAR ^MasterCommandNum
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
+0 IVAR ^nEnclCharCount
+0 IVAR ^nEnclPortStatus
+0 IVAR ^nEnclReceiveStatus
+0 IVAR ^nEnclTransmitStatus
+0 IVAR ^nFacilityCharCount
+0 IVAR ^nFacilityPortStatus
+0 IVAR ^nFacilityReceiveStatus
+0 IVAR ^nFacilityTransmitStatus
+0 IVAR ^nFindEnclCmd
+0 IVAR ^nFindFacilityCmd
+0 IVAR ^nIndexEncl
+0 IVAR ^nOldHeartbeat
 0 FVAR ^OLD_COOLING_FAN_FREQ
 0 IVAR ^OPEN
 0 IVAR ^OPEN_SLOW
@@ -93,13 +107,20 @@ _END NEW $$$.RUN
 3 0 $VAR *MasterCommand 
 1 0 $VAR *ModeEnum 
 1 0 $VAR *PoleEnum 
+32 0 $VAR *sEnclCmd 
+1024 0 $VAR *sEnclStatus 
+32 0 $VAR *sFacilityCmd 
+1024 0 $VAR *sFacilityStatus 
 1 0 $VAR *SideEnum 
-512 0 $VAR *StatusString 
+3 0 $VAR *sOldHeartbeat 
+512 0 $VAR *sStatus 
 1 0 $VAR *StormEnum 
 1 0 $VAR *SwitchEnum 
 1 0 $VAR *TailEnum 
 15 0 $VAR *TempC 
 10 0 $VAR *TimeString 
+1024 0 COMVAR *cEncl_Port 
+1024 0 COMVAR *cFacilityPort 
 1024 1073741824 COMVAR *Master_Handle 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %encPacInternal
@@ -190,29 +211,429 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
    1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
 ~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
 $80000002 0 %encPacInternal 0 PID |PanelFans
-: 1_0
+: 21_0
+0 JUMP ;
+: 21_2
 
 1 LINE.NUM
-  *MasterCommand   $>I
-  ^MasterCommandNum @! 
+  *cEncl_Port   LISTEN
+  ^nEnclPortStatus @! 
+14 JUMP ;
+: 21_6
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 21_9
+
+1 LINE.NUM
+  *cEncl_Port   ACCEPT
+  ^nEnclPortStatus @! 
+13 JUMP ;
+: 21_13
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 21_17
+1 LINE.NUM 120 I>F ^dtEnclSocket @! 
+2 LINE.NUM ^dtEnclSocket  StartTimer 
+0 JUMP ;
+: 21_19
+
+1 LINE.NUM
+  *cEncl_Port   ?STREAM.KEY
+  ^nEnclCharCount @! 
+11 JUMP ;
+: 21_28
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 21_37
+
+1 LINE.NUM
+  *cEncl_Port   STREAM.CLEAR.BUF
 
 2 LINE.NUM
-  &Control_command_comms   STOP.T
+  *cEncl_Port   CLOSE
+  ^nEnclPortStatus @! 
+-8 JUMP ;
+: 21_43
+1 LINE.NUM 120 I>F ^dtEnclSocket @! 
+2 LINE.NUM ^dtEnclSocket  StartTimer 
+13 JUMP ;
+: 21_49
+1 LINE.NUM *sEnclCmd *cEncl_Port  GET$ ^nEnclReceiveStatus @! 
+2 LINE.NUM 0 ^nIndexEncl @! 
+13 JUMP ;
+: 21_55
+
+1 LINE.NUM
+  *cEncl_Port   STREAM.CLEAR.BUF
 1 JUMP ;
-: 1_195
+: 21_59
+-7 JUMP ;
+: 21_64
+1 LINE.NUM *sEnclCmd  $>Upper 
+3 LINE.NUM " HEARTBEAT" 0 *sEnclCmd  FindSubString ^nFindEnclCmd @! 
+12 JUMP ;
+: 21_69
+1 LINE.NUM ^dtHeartbeat  StopTimer 
+2 LINE.NUM ^dtHeartbeat @@F ^nOldHeartbeat F@! 
+3 LINE.NUM 60 I>F ^dtHeartbeat @! 
+4 LINE.NUM ^dtHeartbeat  StartTimer 
+6 LINE.NUM ^nOldHeartbeat @@ *sOldHeartbeat  I>$ 
+7 LINE.NUM *_HSV_SEMA Acquire1String " HEARTBEAT="  *_HSV_TEMP $MOVE *sOldHeartbeat  *_HSV_TEMP $CAT *_HSV_TEMP *sEnclStatus $MOVE Release1String 
+8 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+9 LINE.NUM " " *sEnclStatus  $MOVE 
 0 JUMP ;
-T: T1
+: 21_70
+-10 JUMP ;
+: 21_4
+FALSE
+
+1 LINE.NUM
+  ^nEnclPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nEnclPortStatus @@ 
+  -47    =
+LOR
+IF -14 ELSE -15 THEN JUMP ;
+: 21_11
+FALSE
+
+1 LINE.NUM
+  ^nEnclPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nEnclPortStatus @@ 
+  -47    =
+LOR
+IF -13 ELSE -14 THEN JUMP ;
+: 21_22
+TRUE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  0    >
+LAND
+IF -10 ELSE 0 THEN JUMP ;
+: 21_23
+TRUE
+
+1 LINE.NUM
+  *cEncl_Port   ?OPEN 0>
+LAND
+IF 0 ELSE -12 THEN JUMP ;
+: 21_24
+TRUE
+
+1 LINE.NUM
+  ^dtEnclSocket   T0=
+LAND
+IF -13 ELSE 0 THEN JUMP ;
+: 21_25
+TRUE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  0    <
+LAND
+IF 0 ELSE -15 THEN JUMP ;
+: 21_26
+FALSE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  -37    =
+LOR
+
+2 LINE.NUM
+  ^nEnclCharCount @@ 
+  -39    =
+LOR
+IF -16 ELSE -15 THEN JUMP ;
+: 21_45
+TRUE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  4    <
+LAND
+IF -16 ELSE -14 THEN JUMP ;
+: 21_51
+TRUE
+
+1 LINE.NUM
+  ^nEnclReceiveStatus @@ 
+  0    =
+LAND
+IF -14 ELSE 0 THEN JUMP ;
+: 21_57
+TRUE
+
+1 LINE.NUM
+  ^nEnclReceiveStatus @@ 
+  -39    =
+LAND
+IF -14 ELSE -18 THEN JUMP ;
+: 21_67
+TRUE
+
+1 LINE.NUM
+  ^nFindEnclCmd @@ 
+  -1    >
+LAND
+IF -13 ELSE -12 THEN JUMP ;
+T: T21
 DUMMY
-1_0
-1_195
+21_0
+21_2
+21_6
+21_9
+21_13
+21_17
+21_19
+21_28
+21_37
+21_43
+21_49
+21_55
+21_59
+21_64
+21_69
+21_70
+21_4
+21_11
+21_22
+21_23
+21_24
+21_25
+21_26
+21_45
+21_51
+21_57
+21_67
 T;
-&Control_command_comms ' T1 SETTASK
+&Encl_Comm ' T21 SETTASK
+: 20_0
+11 JUMP ;
+: 20_3
+5 JUMP ;
+: 20_7
+
+1 LINE.NUM
+  *cFacilityPort   STREAM.CLEAR.BUF
+11 JUMP ;
+: 20_11
+1 LINE.NUM *sFacilityCmd *cFacilityPort  GET$ ^nFacilityReceiveStatus @! 
+2 LINE.NUM 0 ^nIndexEncl @! 
+13 JUMP ;
+: 20_16
+1 LINE.NUM 120 I>F ^dtFacilitySocket @! 
+2 LINE.NUM ^dtFacilitySocket  StartTimer 
+13 JUMP ;
+: 20_21
+
+1 LINE.NUM
+  *cFacilityPort   STREAM.CLEAR.BUF
+
+2 LINE.NUM
+  *cFacilityPort   CLOSE
+  ^nFacilityPortStatus @! 
+6 JUMP ;
+: 20_30
+
+1 LINE.NUM
+  10    DELAY
+0 JUMP ;
+: 20_37
+
+1 LINE.NUM
+  *cFacilityPort   ?STREAM.KEY
+  ^nFacilityCharCount @! 
+15 JUMP ;
+: 20_39
+1 LINE.NUM 120 I>F ^dtFacilitySocket @! 
+2 LINE.NUM ^dtFacilitySocket  StartTimer 
+-2 JUMP ;
+: 20_42
+
+1 LINE.NUM
+  10    DELAY
+0 JUMP ;
+: 20_46
+
+1 LINE.NUM
+  *cFacilityPort   ACCEPT
+  ^nFacilityPortStatus @! 
+13 JUMP ;
+: 20_49
+
+1 LINE.NUM
+  10    DELAY
+0 JUMP ;
+: 20_52
+
+1 LINE.NUM
+  *cFacilityPort   LISTEN
+  ^nFacilityPortStatus @! 
+12 JUMP ;
+: 20_55
+1 LINE.NUM " SUCCESS=TRUE" *sFacilityStatus  $MOVE 
+2 LINE.NUM *sFacilityStatus *cFacilityPort  PRT$ ^nFacilityTransmitStatus @! 
+3 LINE.NUM " " *sFacilityStatus  $MOVE 
+1 JUMP ;
+: 20_58
+1 LINE.NUM *sFacilityCmd  $>Upper 
+3 LINE.NUM " ENC_FANS_HI" 0 *sFacilityCmd  FindSubString ^nFindFacilityCmd @! 
+11 JUMP ;
+: 20_60
+-9 JUMP ;
+: 20_5
+TRUE
+
+1 LINE.NUM
+  ^nFacilityReceiveStatus @@ 
+  -39    =
+LAND
+IF -16 ELSE -12 THEN JUMP ;
+: 20_9
+TRUE
+
+1 LINE.NUM
+  ^nFacilityReceiveStatus @@ 
+  0    =
+LAND
+IF -16 ELSE -2 THEN JUMP ;
+: 20_14
+TRUE
+
+1 LINE.NUM
+  ^nFacilityCharCount @@ 
+  4    <
+LAND
+IF -14 ELSE -16 THEN JUMP ;
+: 20_31
+FALSE
+
+1 LINE.NUM
+  ^nFacilityCharCount @@ 
+  -37    =
+LOR
+
+2 LINE.NUM
+  ^nFacilityCharCount @@ 
+  -39    =
+LOR
+IF -14 ELSE -15 THEN JUMP ;
+: 20_32
+TRUE
+
+1 LINE.NUM
+  ^nFacilityCharCount @@ 
+  0    <
+LAND
+IF -2 ELSE -15 THEN JUMP ;
+: 20_33
+TRUE
+
+1 LINE.NUM
+  ^dtFacilitySocket   T0=
+LAND
+IF -17 ELSE -2 THEN JUMP ;
+: 20_34
+TRUE
+
+1 LINE.NUM
+  *cFacilityPort   ?OPEN 0>
+LAND
+IF -2 ELSE -18 THEN JUMP ;
+: 20_35
+TRUE
+
+1 LINE.NUM
+  ^nFacilityCharCount @@ 
+  0    >
+LAND
+IF -20 ELSE -2 THEN JUMP ;
+: 20_44
+FALSE
+
+1 LINE.NUM
+  ^nFacilityPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nFacilityPortStatus @@ 
+  -47    =
+LOR
+IF -17 ELSE -16 THEN JUMP ;
+: 20_51
+FALSE
+
+1 LINE.NUM
+  ^nFacilityPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nFacilityPortStatus @@ 
+  -47    =
+LOR
+IF -16 ELSE -15 THEN JUMP ;
+: 20_57
+TRUE
+
+1 LINE.NUM
+  ^nFindFacilityCmd @@ 
+  -1    >
+LAND
+IF -14 ELSE -12 THEN JUMP ;
+T: T20
+DUMMY
+20_0
+20_3
+20_7
+20_11
+20_16
+20_21
+20_30
+20_37
+20_39
+20_42
+20_46
+20_49
+20_52
+20_55
+20_58
+20_60
+20_5
+20_9
+20_14
+20_31
+20_32
+20_33
+20_34
+20_35
+20_44
+20_51
+20_57
+T;
+&Facility_Comm ' T20 SETTASK
 : 19_0
 3 JUMP ;
 : 19_2
 
 1 LINE.NUM
-  ^Heartbeat   StopTimer
+  ^dtHeartbeat   StopTimer
 
 2 LINE.NUM
   ^OPEN   FALSE@!
@@ -241,7 +662,7 @@ T;
 TRUE
 
 1 LINE.NUM
-  ^Heartbeat   T0=
+  ^dtHeartbeat   T0=
 LAND
 IF -3 ELSE -2 THEN JUMP ;
 : 19_4
@@ -277,11 +698,7 @@ T;
   ~DO_TailEnable_NO   OFF
 
 5 LINE.NUM
-  ^Heartbeat   StopTimer
-
-6 LINE.NUM
-  0  
-  ^HeartEnabled @!   
+  ^dtHeartbeat   StopTimer
 0 JUMP ;
 : 3_113
 
@@ -311,11 +728,7 @@ T;
   *ModeEnum   $MOVE
 
 4 LINE.NUM
-  ^Heartbeat   StopTimer
-
-5 LINE.NUM
-  0  
-  ^HeartEnabled @!   
+  ^dtHeartbeat   StopTimer
 3 JUMP ;
 : 3_166
 
@@ -329,24 +742,20 @@ T;
   " 2" 
  
   *ModeEnum   $MOVE
-6 JUMP ;
+2 JUMP ;
 : 3_181
 
 1 LINE.NUM
   90.  
-  ^Heartbeat   SetTimer
+  ^dtHeartbeat   SetTimer
 
 2 LINE.NUM
-  ^Heartbeat   StartTimer
-
-3 LINE.NUM
-  1  
-  ^HeartEnabled @!   
+  ^dtHeartbeat   StartTimer
 1 JUMP ;
 : 3_190
 
 1 LINE.NUM
-  ^Heartbeat   StopTimer
+  ^dtHeartbeat   StopTimer
 
 2 LINE.NUM
   ^OPEN   FALSE@!
@@ -410,17 +819,12 @@ LAND
 IF -7 ELSE -3 THEN JUMP ;
 : 3_176
 TRUE
-
-1 LINE.NUM
-  ^HeartEnabled @@ 
-  0    =
-LAND
 IF -7 ELSE 0 THEN JUMP ;
 : 3_184
 TRUE
 
 1 LINE.NUM
-  ^Heartbeat   T0=
+  ^dtHeartbeat   T0=
 LAND
 IF -7 ELSE -6 THEN JUMP ;
 T: T3
@@ -540,14 +944,14 @@ T;
 : 7_181
 
 1 LINE.NUM
-  ^Heartbeat   StopTimer
+  ^dtHeartbeat   StopTimer
 
 2 LINE.NUM
   90.0  
-  ^Heartbeat   SetTimer
+  ^dtHeartbeat   SetTimer
 
 3 LINE.NUM
-  ^Heartbeat   StartTimer
+  ^dtHeartbeat   StartTimer
 -2 JUMP ;
 : 7_191
 
@@ -666,26 +1070,26 @@ T;
   *PoleEnum   $MOVE
 34 JUMP ;
 : 7_254
-2 LINE.NUM " Shutter1=" *StatusString  $MOVE 
-3 LINE.NUM *PoleEnum *StatusString $CAT 
+2 LINE.NUM " Shutter1=" *sStatus  $MOVE 
+3 LINE.NUM *PoleEnum *sStatus $CAT 
 
-4 LINE.NUM " , Shutter2=" *StatusString $CAT 
+4 LINE.NUM " , Shutter2=" *sStatus $CAT 
 
-5 LINE.NUM *TailEnum *StatusString $CAT 
+5 LINE.NUM *TailEnum *sStatus $CAT 
 
-6 LINE.NUM " , OpMode=" *StatusString $CAT 
+6 LINE.NUM " , OpMode=" *sStatus $CAT 
 
-7 LINE.NUM *ModeEnum *StatusString $CAT 
+7 LINE.NUM *ModeEnum *sStatus $CAT 
 
-8 LINE.NUM " , SideSw=" *StatusString $CAT 
+8 LINE.NUM " , SideSw=" *sStatus $CAT 
 
-9 LINE.NUM *SideEnum *StatusString $CAT 
+9 LINE.NUM *SideEnum *sStatus $CAT 
 
-10 LINE.NUM " , Storm=" *StatusString $CAT 
+10 LINE.NUM " , Storm=" *sStatus $CAT 
 
-11 LINE.NUM *StormEnum *StatusString $CAT 
+11 LINE.NUM *StormEnum *sStatus $CAT 
 
-12 LINE.NUM " , Switch=" *StatusString $CAT 
+12 LINE.NUM " , Switch=" *sStatus $CAT 
 
 14 LINE.NUM 0 ^switchAccum @! 
 16 LINE.NUM ~DI_GoFast_SW @@I IF 
@@ -695,102 +1099,102 @@ T;
 21 LINE.NUM ^switchAccum @@ 2 +  ^switchAccum @! 
 22 LINE.NUM THEN 
 27 LINE.NUM ^switchAccum @@ *DoorEnum  I>$ 
-28 LINE.NUM *DoorEnum *StatusString $CAT 
+28 LINE.NUM *DoorEnum *sStatus $CAT 
 
-29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
+29 LINE.NUM " , TopsJoined=" *sStatus $CAT 
 
 30 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
-31 LINE.NUM " 1" *StatusString $CAT 
+31 LINE.NUM " 1" *sStatus $CAT 
 
 32 LINE.NUM ELSE 
-33 LINE.NUM " 0" *StatusString $CAT 
+33 LINE.NUM " 0" *sStatus $CAT 
 
 34 LINE.NUM THEN 
-37 LINE.NUM " , PowerInterlock=0" *StatusString $CAT 
+37 LINE.NUM " , PowerInterlock=0" *sStatus $CAT 
 
-39 LINE.NUM " , Door=" *StatusString $CAT 
+39 LINE.NUM " , Door=" *sStatus $CAT 
 
 40 LINE.NUM ~DI_RightDoor_LS @@I ~DI_LeftDoor_LS @@I 0 = LOR  IF 
-41 LINE.NUM " 1" *StatusString $CAT 
+41 LINE.NUM " 1" *sStatus $CAT 
 
 42 LINE.NUM ELSE 
-43 LINE.NUM " 0" *StatusString $CAT 
+43 LINE.NUM " 0" *sStatus $CAT 
 
 44 LINE.NUM THEN 
-46 LINE.NUM " , E-stopON=9" *StatusString $CAT 
+46 LINE.NUM " , E-stopON=9" *sStatus $CAT 
 
 48 LINE.NUM ~DI_FenceClosed_SEN @@I 1 = IF 
-49 LINE.NUM " , DI_FenceClosed_SEN=1" *StatusString $CAT 
+49 LINE.NUM " , DI_FenceClosed_SEN=1" *sStatus $CAT 
 
 50 LINE.NUM ELSE 
-51 LINE.NUM " , DI_FenceClosed_SEN=0" *StatusString $CAT 
+51 LINE.NUM " , DI_FenceClosed_SEN=0" *sStatus $CAT 
 
 52 LINE.NUM THEN 
-54 LINE.NUM " , PaddleInPlace=1" *StatusString $CAT 
+54 LINE.NUM " , PaddleInPlace=1" *sStatus $CAT 
 
-56 LINE.NUM " , DateDMY:TimeHMS$=" *StatusString $CAT 
+56 LINE.NUM " , DateDMY:TimeHMS$=" *sStatus $CAT 
 
 57 LINE.NUM *DateString  -1 DATE>$ 
-58 LINE.NUM *DateString *StatusString $CAT 
+58 LINE.NUM *DateString *sStatus $CAT 
 
-59 LINE.NUM " :" *StatusString $CAT 
+59 LINE.NUM " :" *sStatus $CAT 
 
 60 LINE.NUM *TimeString  TIME>$ 
-61 LINE.NUM *TimeString *StatusString $CAT 
+61 LINE.NUM *TimeString *sStatus $CAT 
 
-63 LINE.NUM " , SystemUpTime=" *StatusString $CAT 
+63 LINE.NUM " , SystemUpTime=" *sStatus $CAT 
 
 64 LINE.NUM  GetSystemTime I>F  10 0 *ElapsedString  FF.R$ 
-65 LINE.NUM *ElapsedString *StatusString $CAT 
+65 LINE.NUM *ElapsedString *sStatus $CAT 
 
-71 LINE.NUM " , HeartBeatDownTimer=" *StatusString $CAT 
+71 LINE.NUM " , HeartBeatDownTimer=" *sStatus $CAT 
 
-72 LINE.NUM ^Heartbeat @@F 4 1 *ElapsedString  FF.R$ 
-73 LINE.NUM *ElapsedString *StatusString $CAT 
+72 LINE.NUM ^dtHeartbeat @@F 4 1 *ElapsedString  FF.R$ 
+73 LINE.NUM *ElapsedString *sStatus $CAT 
 
-75 LINE.NUM " , AqDemand=" *StatusString $CAT 
+75 LINE.NUM " , AqDemand=" *sStatus $CAT 
 
 76 LINE.NUM ^AqDemand @@ *ElapsedString  I>$ 
-77 LINE.NUM *ElapsedString *StatusString $CAT 
+77 LINE.NUM *ElapsedString *sStatus $CAT 
 
-79 LINE.NUM " , PriorCommand=" *StatusString $CAT 
+79 LINE.NUM " , PriorCommand=" *sStatus $CAT 
 
-80 LINE.NUM *lastCommand *StatusString $CAT 
+80 LINE.NUM *lastCommand *sStatus $CAT 
 
-82 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
+82 LINE.NUM " , AqawanTemp=" *sStatus $CAT 
 
 83 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
-84 LINE.NUM *TempC *StatusString $CAT 
+84 LINE.NUM *TempC *sStatus $CAT 
 
-86 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
+86 LINE.NUM " , AqawanTemp=" *sStatus $CAT 
 
 87 LINE.NUM ~AI_AqTemp_SEN @@ 7 1 *TempC  FF.R$ 
-88 LINE.NUM *TempC *StatusString $CAT 
+88 LINE.NUM *TempC *sStatus $CAT 
 
-90 LINE.NUM " , AqawanHumidity=" *StatusString $CAT 
+90 LINE.NUM " , AqawanHumidity=" *sStatus $CAT 
 
 91 LINE.NUM ~AI_AqHumidity_SEN @@ 7 1 *TempC  FF.R$ 
-92 LINE.NUM *TempC *StatusString $CAT 
+92 LINE.NUM *TempC *sStatus $CAT 
 
-94 LINE.NUM " , Air_Temp_Out=" *StatusString $CAT 
+94 LINE.NUM " , Air_Temp_Out=" *sStatus $CAT 
 
 95 LINE.NUM ~AI_OutletAir_RTD @@ 7 1 *TempC  FF.R$ 
-96 LINE.NUM *TempC *StatusString $CAT 
+96 LINE.NUM *TempC *sStatus $CAT 
 
-98 LINE.NUM " , CoolantTemp=" *StatusString $CAT 
+98 LINE.NUM " , CoolantTemp=" *sStatus $CAT 
 
 99 LINE.NUM ~AI_Coolant_RTD @@ 7 1 *TempC  FF.R$ 
-100 LINE.NUM *TempC *StatusString $CAT 
+100 LINE.NUM *TempC *sStatus $CAT 
 
-102 LINE.NUM " , RoofTemp=" *StatusString $CAT 
+102 LINE.NUM " , RoofTemp=" *sStatus $CAT 
 
 103 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
-104 LINE.NUM *TempC *StatusString $CAT 
+104 LINE.NUM *TempC *sStatus $CAT 
 
-106 LINE.NUM " , PanelTemp=" *StatusString $CAT 
+106 LINE.NUM " , PanelTemp=" *sStatus $CAT 
 
 107 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
-108 LINE.NUM *TempC *StatusString $CAT 
+108 LINE.NUM *TempC *sStatus $CAT 
 
 15 JUMP ;
 : 7_256
@@ -957,14 +1361,14 @@ T;
 : 7_300
 
 1 LINE.NUM
-  *StatusString 
+  *sStatus 
   *Master_Handle   PRT$
   ^status @! 
 
 2 LINE.NUM
   " " 
  
-  *StatusString   $MOVE
+  *sStatus   $MOVE
 -38 JUMP ;
 : 7_313
 
@@ -1722,28 +2126,24 @@ T;
 : 0_0
 
 1 LINE.NUM
-  0  
-  ^HeartEnabled @!   
-
-2 LINE.NUM
   &Heart_Monitor   START.T
   ^status @! 
 
-3 LINE.NUM
+2 LINE.NUM
   " 9" 
  
   *PoleEnum   $MOVE
 
-4 LINE.NUM
+3 LINE.NUM
   " 9" 
  
   *TailEnum   $MOVE
 
-5 LINE.NUM
+4 LINE.NUM
   9  
   ^AqDemand @!   
 
-6 LINE.NUM
+5 LINE.NUM
   " ---" 
  
   *lastCommand   $MOVE
@@ -1765,9 +2165,10 @@ T;
 14 LINE.NUM ~DO_PoleStop_NO  ON 
 15 LINE.NUM ~DO_TailStop_NO  ON 
 17 LINE.NUM &Manual_auto  START.T DROP  
-21 LINE.NUM &Master_comms  START.T DROP  
 25 LINE.NUM &SYSTEM_READY  START.T DROP  
-38 LINE.NUM &Powerup  STOP.T 
+27 LINE.NUM &Encl_Comm  START.T DROP  
+29 LINE.NUM &Facility_Comm  START.T DROP  
+42 LINE.NUM &Powerup  STOP.T 
 0 JUMP ;
 T: T0
 DUMMY
@@ -2062,7 +2463,8 @@ DUMMY
 T;
 &Tail ' T13 SETTASK
 CREATE T.ARRAY
-&Control_command_comms ,
+&Encl_Comm ,
+&Facility_Comm ,
 &Heart_Monitor ,
 &Manual_auto ,
 &Master_comms ,
@@ -2101,7 +2503,6 @@ CREATE V.ARRAY
 ^door ,
 ^FastMode ,
 ^flag_status ,
-^HeartEnabled ,
 ^Init_light_state_s1 ,
 ^Init_Light_State_S2 ,
 ^Light_State_Old ,
@@ -2114,6 +2515,18 @@ CREATE V.ARRAY
 ^MasterCommandNum ,
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
+^nEnclCharCount ,
+^nEnclPortStatus ,
+^nEnclReceiveStatus ,
+^nEnclTransmitStatus ,
+^nFacilityCharCount ,
+^nFacilityPortStatus ,
+^nFacilityReceiveStatus ,
+^nFacilityTransmitStatus ,
+^nFindEnclCmd ,
+^nFindFacilityCmd ,
+^nIndexEncl ,
+^nOldHeartbeat ,
 ^OLD_COOLING_FAN_FREQ ,
 ^OPEN ,
 ^OPEN_SLOW ,
@@ -2139,8 +2552,13 @@ CREATE V.ARRAY
 *MasterCommand ,
 *ModeEnum ,
 *PoleEnum ,
+*sEnclCmd ,
+*sEnclStatus ,
+*sFacilityCmd ,
+*sFacilityStatus ,
 *SideEnum ,
-*StatusString ,
+*sOldHeartbeat ,
+*sStatus ,
 *StormEnum ,
 *SwitchEnum ,
 *TailEnum ,
@@ -2148,11 +2566,15 @@ CREATE V.ARRAY
 *TimeString ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*cEncl_Port ,
+*cFacilityPort ,
 *Master_Handle ,
  0 ,
 CREATE TI.ARRAY
 ^COMMWATCHDOG ,
-^Heartbeat ,
+^dtEnclSocket ,
+^dtFacilitySocket ,
+^dtHeartbeat ,
 ^Socket_Timer ,
  0 ,
 CREATE PTR.ARRAY
@@ -2290,10 +2712,11 @@ CONFIG_PORTS
 0 ^CountOneSecond @!
 0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
 0 ^door @!
+0.0 ^dtEnclSocket @!
+0.0 ^dtFacilitySocket @!
+0.0 ^dtHeartbeat @!
 0 ^FastMode @!
 0 ^flag_status @!
-0.0 ^Heartbeat @!
-0 ^HeartEnabled @!
 0 ^Init_light_state_s1 @!
 0 ^Init_Light_State_S2 @!
 0 ^Light_State_Old @!
@@ -2306,6 +2729,18 @@ CONFIG_PORTS
 0 ^MasterCommandNum @!
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
+0 ^nEnclCharCount @!
+0 ^nEnclPortStatus @!
+0 ^nEnclReceiveStatus @!
+0 ^nEnclTransmitStatus @!
+0 ^nFacilityCharCount @!
+0 ^nFacilityPortStatus @!
+0 ^nFacilityReceiveStatus @!
+0 ^nFacilityTransmitStatus @!
+0 ^nFindEnclCmd @!
+0 ^nFindFacilityCmd @!
+0 ^nIndexEncl @!
+0 ^nOldHeartbeat @!
 0.00000000 ^OLD_COOLING_FAN_FREQ @!
 0 ^OPEN @!
 0 ^OPEN_SLOW @!
@@ -2339,10 +2774,20 @@ CONFIG_PORTS
  *ModeEnum $MOVE
 " 9"
  *PoleEnum $MOVE
+" "
+ *sEnclCmd $MOVE
+" "
+ *sEnclStatus $MOVE
+" "
+ *sFacilityCmd $MOVE
+" "
+ *sFacilityStatus $MOVE
 " 9"
  *SideEnum $MOVE
 " "
- *StatusString $MOVE
+ *sOldHeartbeat $MOVE
+" "
+ *sStatus $MOVE
 " 9"
  *StormEnum $MOVE
 " 9"
@@ -2353,6 +2798,10 @@ CONFIG_PORTS
  *TempC $MOVE
 " "
  *TimeString $MOVE
+" tcp:22004"
+ *cEncl_Port $MOVE
+" tcp:22005"
+ *cFacilityPort $MOVE
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO
@@ -2364,9 +2813,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 02/19/14 " ;
-: TIMESTAMP ." 14:17:48 " ;
-: CRCSTAMP  ." D2E396B13A750350A4218326A12DC094 " ;
+: DATESTAMP ." 03/31/14 " ;
+: TIMESTAMP ." 16:17:25 " ;
+: CRCSTAMP  ." 0B6FD44DC528D82D530F92A4CE20D084 " ;
 MAKECHECK
 CLEAR.BREAKS
 

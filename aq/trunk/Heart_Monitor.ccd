@@ -3,7 +3,7 @@
 : 19_2
 
 1 LINE.NUM
-  ^Heartbeat   StopTimer
+  ^dtHeartbeat   StopTimer
 
 2 LINE.NUM
   ^OPEN   FALSE@!
@@ -32,7 +32,7 @@
 TRUE
 
 1 LINE.NUM
-  ^Heartbeat   T0=
+  ^dtHeartbeat   T0=
 LAND
 IF -3 ELSE -2 THEN JUMP ;
 : 19_4

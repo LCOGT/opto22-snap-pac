@@ -98,14 +98,14 @@
 : 7_181
 
 1 LINE.NUM
-  ^Heartbeat   StopTimer
+  ^dtHeartbeat   StopTimer
 
 2 LINE.NUM
   90.0  
-  ^Heartbeat   SetTimer
+  ^dtHeartbeat   SetTimer
 
 3 LINE.NUM
-  ^Heartbeat   StartTimer
+  ^dtHeartbeat   StartTimer
 -2 JUMP ;
 : 7_191
 
@@ -224,26 +224,26 @@
   *PoleEnum   $MOVE
 34 JUMP ;
 : 7_254
-2 LINE.NUM " Shutter1=" *StatusString  $MOVE 
-3 LINE.NUM *PoleEnum *StatusString $CAT 
+2 LINE.NUM " Shutter1=" *sStatus  $MOVE 
+3 LINE.NUM *PoleEnum *sStatus $CAT 
 
-4 LINE.NUM " , Shutter2=" *StatusString $CAT 
+4 LINE.NUM " , Shutter2=" *sStatus $CAT 
 
-5 LINE.NUM *TailEnum *StatusString $CAT 
+5 LINE.NUM *TailEnum *sStatus $CAT 
 
-6 LINE.NUM " , OpMode=" *StatusString $CAT 
+6 LINE.NUM " , OpMode=" *sStatus $CAT 
 
-7 LINE.NUM *ModeEnum *StatusString $CAT 
+7 LINE.NUM *ModeEnum *sStatus $CAT 
 
-8 LINE.NUM " , SideSw=" *StatusString $CAT 
+8 LINE.NUM " , SideSw=" *sStatus $CAT 
 
-9 LINE.NUM *SideEnum *StatusString $CAT 
+9 LINE.NUM *SideEnum *sStatus $CAT 
 
-10 LINE.NUM " , Storm=" *StatusString $CAT 
+10 LINE.NUM " , Storm=" *sStatus $CAT 
 
-11 LINE.NUM *StormEnum *StatusString $CAT 
+11 LINE.NUM *StormEnum *sStatus $CAT 
 
-12 LINE.NUM " , Switch=" *StatusString $CAT 
+12 LINE.NUM " , Switch=" *sStatus $CAT 
 
 14 LINE.NUM 0 ^switchAccum @! 
 16 LINE.NUM ~DI_GoFast_SW @@I IF 
@@ -253,102 +253,102 @@
 21 LINE.NUM ^switchAccum @@ 2 +  ^switchAccum @! 
 22 LINE.NUM THEN 
 27 LINE.NUM ^switchAccum @@ *DoorEnum  I>$ 
-28 LINE.NUM *DoorEnum *StatusString $CAT 
+28 LINE.NUM *DoorEnum *sStatus $CAT 
 
-29 LINE.NUM " , TopsJoined=" *StatusString $CAT 
+29 LINE.NUM " , TopsJoined=" *sStatus $CAT 
 
 30 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
-31 LINE.NUM " 1" *StatusString $CAT 
+31 LINE.NUM " 1" *sStatus $CAT 
 
 32 LINE.NUM ELSE 
-33 LINE.NUM " 0" *StatusString $CAT 
+33 LINE.NUM " 0" *sStatus $CAT 
 
 34 LINE.NUM THEN 
-37 LINE.NUM " , PowerInterlock=0" *StatusString $CAT 
+37 LINE.NUM " , PowerInterlock=0" *sStatus $CAT 
 
-39 LINE.NUM " , Door=" *StatusString $CAT 
+39 LINE.NUM " , Door=" *sStatus $CAT 
 
 40 LINE.NUM ~DI_RightDoor_LS @@I ~DI_LeftDoor_LS @@I 0 = LOR  IF 
-41 LINE.NUM " 1" *StatusString $CAT 
+41 LINE.NUM " 1" *sStatus $CAT 
 
 42 LINE.NUM ELSE 
-43 LINE.NUM " 0" *StatusString $CAT 
+43 LINE.NUM " 0" *sStatus $CAT 
 
 44 LINE.NUM THEN 
-46 LINE.NUM " , E-stopON=9" *StatusString $CAT 
+46 LINE.NUM " , E-stopON=9" *sStatus $CAT 
 
 48 LINE.NUM ~DI_FenceClosed_SEN @@I 1 = IF 
-49 LINE.NUM " , DI_FenceClosed_SEN=1" *StatusString $CAT 
+49 LINE.NUM " , DI_FenceClosed_SEN=1" *sStatus $CAT 
 
 50 LINE.NUM ELSE 
-51 LINE.NUM " , DI_FenceClosed_SEN=0" *StatusString $CAT 
+51 LINE.NUM " , DI_FenceClosed_SEN=0" *sStatus $CAT 
 
 52 LINE.NUM THEN 
-54 LINE.NUM " , PaddleInPlace=1" *StatusString $CAT 
+54 LINE.NUM " , PaddleInPlace=1" *sStatus $CAT 
 
-56 LINE.NUM " , DateDMY:TimeHMS$=" *StatusString $CAT 
+56 LINE.NUM " , DateDMY:TimeHMS$=" *sStatus $CAT 
 
 57 LINE.NUM *DateString  -1 DATE>$ 
-58 LINE.NUM *DateString *StatusString $CAT 
+58 LINE.NUM *DateString *sStatus $CAT 
 
-59 LINE.NUM " :" *StatusString $CAT 
+59 LINE.NUM " :" *sStatus $CAT 
 
 60 LINE.NUM *TimeString  TIME>$ 
-61 LINE.NUM *TimeString *StatusString $CAT 
+61 LINE.NUM *TimeString *sStatus $CAT 
 
-63 LINE.NUM " , SystemUpTime=" *StatusString $CAT 
+63 LINE.NUM " , SystemUpTime=" *sStatus $CAT 
 
 64 LINE.NUM  GetSystemTime I>F  10 0 *ElapsedString  FF.R$ 
-65 LINE.NUM *ElapsedString *StatusString $CAT 
+65 LINE.NUM *ElapsedString *sStatus $CAT 
 
-71 LINE.NUM " , HeartBeatDownTimer=" *StatusString $CAT 
+71 LINE.NUM " , HeartBeatDownTimer=" *sStatus $CAT 
 
-72 LINE.NUM ^Heartbeat @@F 4 1 *ElapsedString  FF.R$ 
-73 LINE.NUM *ElapsedString *StatusString $CAT 
+72 LINE.NUM ^dtHeartbeat @@F 4 1 *ElapsedString  FF.R$ 
+73 LINE.NUM *ElapsedString *sStatus $CAT 
 
-75 LINE.NUM " , AqDemand=" *StatusString $CAT 
+75 LINE.NUM " , AqDemand=" *sStatus $CAT 
 
 76 LINE.NUM ^AqDemand @@ *ElapsedString  I>$ 
-77 LINE.NUM *ElapsedString *StatusString $CAT 
+77 LINE.NUM *ElapsedString *sStatus $CAT 
 
-79 LINE.NUM " , PriorCommand=" *StatusString $CAT 
+79 LINE.NUM " , PriorCommand=" *sStatus $CAT 
 
-80 LINE.NUM *lastCommand *StatusString $CAT 
+80 LINE.NUM *lastCommand *sStatus $CAT 
 
-82 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
+82 LINE.NUM " , AqawanTemp=" *sStatus $CAT 
 
 83 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
-84 LINE.NUM *TempC *StatusString $CAT 
+84 LINE.NUM *TempC *sStatus $CAT 
 
-86 LINE.NUM " , AqawanTemp=" *StatusString $CAT 
+86 LINE.NUM " , AqawanTemp=" *sStatus $CAT 
 
 87 LINE.NUM ~AI_AqTemp_SEN @@ 7 1 *TempC  FF.R$ 
-88 LINE.NUM *TempC *StatusString $CAT 
+88 LINE.NUM *TempC *sStatus $CAT 
 
-90 LINE.NUM " , AqawanHumidity=" *StatusString $CAT 
+90 LINE.NUM " , AqawanHumidity=" *sStatus $CAT 
 
 91 LINE.NUM ~AI_AqHumidity_SEN @@ 7 1 *TempC  FF.R$ 
-92 LINE.NUM *TempC *StatusString $CAT 
+92 LINE.NUM *TempC *sStatus $CAT 
 
-94 LINE.NUM " , Air_Temp_Out=" *StatusString $CAT 
+94 LINE.NUM " , Air_Temp_Out=" *sStatus $CAT 
 
 95 LINE.NUM ~AI_OutletAir_RTD @@ 7 1 *TempC  FF.R$ 
-96 LINE.NUM *TempC *StatusString $CAT 
+96 LINE.NUM *TempC *sStatus $CAT 
 
-98 LINE.NUM " , CoolantTemp=" *StatusString $CAT 
+98 LINE.NUM " , CoolantTemp=" *sStatus $CAT 
 
 99 LINE.NUM ~AI_Coolant_RTD @@ 7 1 *TempC  FF.R$ 
-100 LINE.NUM *TempC *StatusString $CAT 
+100 LINE.NUM *TempC *sStatus $CAT 
 
-102 LINE.NUM " , RoofTemp=" *StatusString $CAT 
+102 LINE.NUM " , RoofTemp=" *sStatus $CAT 
 
 103 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
-104 LINE.NUM *TempC *StatusString $CAT 
+104 LINE.NUM *TempC *sStatus $CAT 
 
-106 LINE.NUM " , PanelTemp=" *StatusString $CAT 
+106 LINE.NUM " , PanelTemp=" *sStatus $CAT 
 
 107 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
-108 LINE.NUM *TempC *StatusString $CAT 
+108 LINE.NUM *TempC *sStatus $CAT 
 
 15 JUMP ;
 : 7_256
@@ -515,14 +515,14 @@
 : 7_300
 
 1 LINE.NUM
-  *StatusString 
+  *sStatus 
   *Master_Handle   PRT$
   ^status @! 
 
 2 LINE.NUM
   " " 
  
-  *StatusString   $MOVE
+  *sStatus   $MOVE
 -38 JUMP ;
 : 7_313
 

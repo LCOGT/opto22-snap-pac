@@ -1,28 +1,24 @@
 : 0_0
 
 1 LINE.NUM
-  0  
-  ^HeartEnabled @!   
-
-2 LINE.NUM
   &Heart_Monitor   START.T
   ^status @! 
 
-3 LINE.NUM
+2 LINE.NUM
   " 9" 
  
   *PoleEnum   $MOVE
 
-4 LINE.NUM
+3 LINE.NUM
   " 9" 
  
   *TailEnum   $MOVE
 
-5 LINE.NUM
+4 LINE.NUM
   9  
   ^AqDemand @!   
 
-6 LINE.NUM
+5 LINE.NUM
   " ---" 
  
   *lastCommand   $MOVE
@@ -44,9 +40,10 @@
 14 LINE.NUM ~DO_PoleStop_NO  ON 
 15 LINE.NUM ~DO_TailStop_NO  ON 
 17 LINE.NUM &Manual_auto  START.T DROP  
-21 LINE.NUM &Master_comms  START.T DROP  
 25 LINE.NUM &SYSTEM_READY  START.T DROP  
-38 LINE.NUM &Powerup  STOP.T 
+27 LINE.NUM &Encl_Comm  START.T DROP  
+29 LINE.NUM &Facility_Comm  START.T DROP  
+42 LINE.NUM &Powerup  STOP.T 
 0 JUMP ;
 T: T0
 DUMMY
