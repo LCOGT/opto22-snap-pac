@@ -1,0 +1,45 @@
+: 0_0
+2 JUMP ;
+: 0_2
+1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
+2 LINE.NUM 2.000000e+001  FDELAY 
+3 LINE.NUM ~AI_StirFanTach  MAX@F ^nMaxStirFanTach F@! 
+4 LINE.NUM ^nMaxStirFanTach @@ 100 >= IF 
+5 LINE.NUM 5 ^nFanCtrlMax @! 
+6 LINE.NUM ELSE 
+6 LINE.NUM 10 ^nFanCtrlMax @! 
+7 LINE.NUM THEN 
+8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
+9 LINE.NUM 1.000000e+001  FDELAY 
+2 JUMP ;
+: 0_4
+1 LINE.NUM &StirFan_Control  START.T ^nStirFanChartStatus @! 
+2 LINE.NUM &Get_Time  START.T ^nGetTimeChartStatus @! 
+3 LINE.NUM &Powerup  STOP.T 
+1 JUMP ;
+: 0_8
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+22 LINE.NUM 0 ^nIndex0 @! 
+23 LINE.NUM 0 ^nIndex1 @! 
+24 LINE.NUM BEGIN ^nIndex0 @@ 8 < WHILE 
+25 LINE.NUM *sIP_PAC ^nIndex0 @@  $INDEX ^nASCII @! 
+26 LINE.NUM ^nASCII @@ 46 = IF 
+27 LINE.NUM ^nIndex1 @@ 1 +  ^nIndex1 @! 
+28 LINE.NUM ^nIndex1 @@ 1 = IF 
+29 LINE.NUM *sIP_PAC 0 ^nIndex0 @@ *sIP_NTP  $SUB 
+30 LINE.NUM 8 ^nIndex0 @! 
+31 LINE.NUM THEN 
+32 LINE.NUM THEN 
+33 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
+34 LINE.NUM REPEAT 
+36 LINE.NUM " tcp:10.10.20.11:13" *sIP_NTP  $MOVE 
+37 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
+-2 JUMP ;
+T: T0
+DUMMY
+0_0
+0_2
+0_4
+0_8
+T;
+&Powerup ' T0 SETTASK

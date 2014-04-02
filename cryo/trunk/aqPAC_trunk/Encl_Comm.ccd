@@ -1,0 +1,221 @@
+: 21_0
+0 JUMP ;
+: 21_2
+
+1 LINE.NUM
+  *cEncl_Port   LISTEN
+  ^nEnclPortStatus @! 
+20 JUMP ;
+: 21_6
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 21_9
+
+1 LINE.NUM
+  *cEncl_Port   ACCEPT
+  ^nEnclPortStatus @! 
+19 JUMP ;
+: 21_13
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 21_17
+1 LINE.NUM 120 I>F ^dtEnclSocket @! 
+2 LINE.NUM ^dtEnclSocket  StartTimer 
+0 JUMP ;
+: 21_19
+
+1 LINE.NUM
+  *cEncl_Port   ?STREAM.KEY
+  ^nEnclCharCount @! 
+17 JUMP ;
+: 21_28
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 21_37
+
+1 LINE.NUM
+  *cEncl_Port   STREAM.CLEAR.BUF
+
+2 LINE.NUM
+  *cEncl_Port   CLOSE
+  ^nEnclPortStatus @! 
+-8 JUMP ;
+: 21_43
+1 LINE.NUM 120 I>F ^dtEnclSocket @! 
+2 LINE.NUM ^dtEnclSocket  StartTimer 
+19 JUMP ;
+: 21_49
+1 LINE.NUM *sEnclCmd *cEncl_Port  GET$ ^nEnclReceiveStatus @! 
+2 LINE.NUM 0 ^nIndexEncl @! 
+19 JUMP ;
+: 21_55
+
+1 LINE.NUM
+  *cEncl_Port   STREAM.CLEAR.BUF
+1 JUMP ;
+: 21_59
+-7 JUMP ;
+: 21_64
+1 LINE.NUM *sEnclCmd  $>Upper 
+3 LINE.NUM " HEARTBEAT" 0 *sEnclCmd  FindSubString ^nFindEnclCmd @! 
+18 JUMP ;
+: 21_69
+1 LINE.NUM ^dtHeartbeat  StopTimer 
+2 LINE.NUM ^dtHeartbeat @@F ^nOldHeartbeat F@! 
+3 LINE.NUM 60 I>F ^dtHeartbeat @! 
+4 LINE.NUM ^dtHeartbeat  StartTimer 
+6 LINE.NUM ^nOldHeartbeat @@ *sOldHeartbeat  I>$ 
+7 LINE.NUM *_HSV_SEMA Acquire1String " HEARTBEAT="  *_HSV_TEMP $MOVE *sOldHeartbeat  *_HSV_TEMP $CAT *_HSV_TEMP *sEnclStatus $MOVE Release1String 
+8 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+9 LINE.NUM " " *sEnclStatus  $MOVE 
+0 JUMP ;
+: 21_70
+-10 JUMP ;
+: 21_76
+-11 JUMP ;
+: 21_77
+1 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+2 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+3 LINE.NUM " " *sEnclStatus  $MOVE 
+-2 JUMP ;
+: 21_80
+1 LINE.NUM *sEnclCmd  $>Upper 
+2 LINE.NUM " STOP" 0 *sEnclCmd  FindSubString ^nFindEnclCmd @! 
+3 LINE.NUM ^nFindEnclCmd @@ -1 > IF 
+5 LINE.NUM " OPEN" 0 *sEnclCmd  FindSubString ^nFindEnclCmd @! 
+6 LINE.NUM " ST" 0 *sEnclCmd  FindSubString ^nFindEnclCmd @! 
+14 JUMP ;
+: 21_84
+1 LINE.NUM *sEnclCmd  $>Upper 
+2 LINE.NUM " OPEN" 0 *sEnclCmd  FindSubString ^nFindEnclCmd @! 
+14 JUMP ;
+: 21_87
+1 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+2 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+3 LINE.NUM " " *sEnclStatus  $MOVE 
+0 JUMP ;
+: 21_88
+-16 JUMP ;
+: 21_4
+FALSE
+
+1 LINE.NUM
+  ^nEnclPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nEnclPortStatus @@ 
+  -47    =
+LOR
+IF -20 ELSE -21 THEN JUMP ;
+: 21_11
+FALSE
+
+1 LINE.NUM
+  ^nEnclPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nEnclPortStatus @@ 
+  -47    =
+LOR
+IF -19 ELSE -20 THEN JUMP ;
+: 21_22
+TRUE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  0    >
+LAND
+IF -16 ELSE 0 THEN JUMP ;
+: 21_23
+TRUE
+
+1 LINE.NUM
+  *cEncl_Port   ?OPEN 0>
+LAND
+IF 0 ELSE -18 THEN JUMP ;
+: 21_24
+TRUE
+
+1 LINE.NUM
+  ^dtEnclSocket   T0=
+LAND
+IF -19 ELSE 0 THEN JUMP ;
+: 21_25
+TRUE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  0    <
+LAND
+IF 0 ELSE -21 THEN JUMP ;
+: 21_26
+FALSE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  -37    =
+LOR
+
+2 LINE.NUM
+  ^nEnclCharCount @@ 
+  -39    =
+LOR
+IF -22 ELSE -21 THEN JUMP ;
+: 21_45
+TRUE
+
+1 LINE.NUM
+  ^nEnclCharCount @@ 
+  4    <
+LAND
+IF -22 ELSE -20 THEN JUMP ;
+: 21_51
+TRUE
+
+1 LINE.NUM
+  ^nEnclReceiveStatus @@ 
+  0    =
+LAND
+IF -20 ELSE 0 THEN JUMP ;
+: 21_57
+TRUE
+
+1 LINE.NUM
+  ^nEnclReceiveStatus @@ 
+  -39    =
+LAND
+IF -20 ELSE -24 THEN JUMP ;
+: 21_67
+TRUE
+
+1 LINE.NUM
+  ^nFindEnclCmd @@ 
+  -1    >
+LAND
+IF -19 ELSE -15 THEN JUMP ;
+: 21_79
+TRUE
+
+1 LINE.NUM
+  ^nFindEnclCmd @@ 
+  -1    >
+LAND
+IF -17 ELSE -15 THEN JUMP ;
+: 21_85
+TRUE
+
+1 LINE.NUM
+  ^nFindEnclCmd @@ 
+  -1    >
+LAND
+IF -15 ELSE 0 THEN JUMP ;

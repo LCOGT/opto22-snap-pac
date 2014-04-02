@@ -1,0 +1,33 @@
+Wed Mar 26 23:33:06 2014 UTC
+                            end
+
+
+
+26 MAR 2014 23:42:32 UTC
+end
+
+Differentiate by:
+1.  # of char
+	26 for non FT's
+	30 for FTS
+	
+2.  1st substring
+
+
+FTN IP
+10.0.0.11
+
+FTS IP
+Current 10.10.20.11
+In 1wk 10.10.0.11
+
+subRoutine variables
+nDay
+nIndex3
+stMonths
+nYear
+
+Thu Mar 27 23:23:34 2014 UTC
+
+
+

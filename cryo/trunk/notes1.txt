@@ -1,0 +1,44 @@
+List of Aqawan functions, listed by enclosure and facility types
+
+1.  Enclosure
+	Heartbeat
+	Stop
+	Open
+	Close
+	Open Shutter 1
+	Close Shutter 1
+	Open Shutter 2
+	Close Shutter 2
+	Status
+	Get Errors
+	Get Faults
+	Toggle Lights
+	Reset
+
+2.  Facility
+	Enc Fans High
+	Enc Fans Med
+	Enc Fans Low
+	Enc Fans Off
+	Toggle lights
+	Panel Fans On	(OTA Fan)
+	Panel Fans Off	(OTA Fan)
+	Panel LED GN
+	Panel LED RD
+	Panel LED YE
+	Panel LED Off
+	Door LED GN
+	Door LED RD
+	Door LED YE
+	Door LED Off
+	SonAlert On
+	SonAlert Off
+	LED Steady
+	LED Blink
+	LED Bright
+	LED Dim
+	Status
+
+
+
+Status = WriteNumToIoUnitMemMap(SNAP-PAC-R2, 

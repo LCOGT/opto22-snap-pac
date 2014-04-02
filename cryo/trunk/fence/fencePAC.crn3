@@ -1,0 +1,130 @@
+CREATE T.ARRAY
+&Get_Time ,
+&Powerup ,
+&StirFan_Control ,
+ 0 ,
+CREATE V.ARRAY
+^f120 ,
+^f24hrsInSec ,
+^n1 ,
+^n30 ,
+^nASCII ,
+^nCharCount ,
+^nFanCtrlMax ,
+^nGetTimeChartStatus ,
+^nIndex0 ,
+^nIndex1 ,
+^nIndex2 ,
+^nIP_integer ,
+^nMaxStirFanTach ,
+^nNTPstatus ,
+^nReceiveStatus ,
+^nSetTimeDateStatus ,
+^nStirFanChartStatus ,
+*sDay ,
+*sDebug ,
+*sIP_hex ,
+*sIP_NTP ,
+*sIP_PAC ,
+*sMonth ,
+*sTime ,
+*sYear ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*cNTPserver ,
+ 0 ,
+CREATE TI.ARRAY
+^dtGetChar ,
+^dtGetTime ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+{stTimeDate ,
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%local_IO ,
+ 0 ,
+CREATE P.ARRAY
+~DI_aqwA_MCB ,
+~DI_aqwB_MCB ,
+~DI_aqwC_MCB ,
+~DI_Cabinet_Door ,
+~DI_DC_MCB_F3_6 ,
+~DI_FUPS_SPD ,
+~DI_Lock1 ,
+~DI_Lock2 ,
+~DI_SafetyRelayK6_2 ,
+~DI_SafetyRelayK8_2 ,
+~DI_SafetyRelayK9_2 ,
+~DO_DC_MCB_F3_6 ,
+~AI_CabinetTemp ,
+~AI_StirFanTach ,
+~AO_StirFan ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+$0000000001111F7F.. %local_IO ENABLES!
+" %local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%local_IO ENABLE
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0.0 ^dtGetChar @!
+0.0 ^dtGetTime @!
+120.00000 ^f120 @!
+86400.000 ^f24hrsInSec @!
+1 ^n1 @!
+30 ^n30 @!
+0 ^nASCII @!
+0 ^nCharCount @!
+0 ^nFanCtrlMax @!
+0 ^nGetTimeChartStatus @!
+0 ^nIndex0 @!
+0 ^nIndex1 @!
+0 ^nIndex2 @!
+0 ^nIP_integer @!
+0 ^nMaxStirFanTach @!
+0 ^nNTPstatus @!
+0 ^nReceiveStatus @!
+0 ^nSetTimeDateStatus @!
+0 ^nStirFanChartStatus @!
+" "
+ *sDay $MOVE
+" "
+ *sDebug $MOVE
+" "
+ *sIP_hex $MOVE
+" tcp:"
+ *sIP_NTP $MOVE
+" 0"
+ *sIP_PAC $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sTime $MOVE
+" "
+ *sYear $MOVE
+" 0.0.0.0"
+ *cNTPserver $MOVE
+ " "
+0 -1 {stTimeDate Init$Table
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;
