@@ -98,6 +98,9 @@
 : 6_312
 
 1 LINE.NUM
+  *MasterCommand   $>Upper
+
+2 LINE.NUM
   " HEARTBEAT" 
  
   ^indexStep @@ 
@@ -924,7 +927,7 @@
 
 1 LINE.NUM
   *Master_Handle   STREAM.CLEAR.BUF
--5 JUMP ;
+-10 JUMP ;
 : 6_406
 3 LINE.NUM " Success=FALSE" *StatusString  $MOVE 
 5 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
@@ -971,10 +974,10 @@
 15 LINE.NUM *Pstring 0 ^Position4 @@ *TemperatureString  $SUB 
 16 LINE.NUM *Pstring ^Position4 @@ 1 +  50 *Pstring  $SUB 
 18 LINE.NUM " ," 0 *Pstring  FindSubString ^Position5 @! 
-19 LINE.NUM *Pstring 0 ^Position5 @@ *HumidityString  $SUB 
+19 LINE.NUM *Pstring 0 ^Position5 @@ *DewString  $SUB 
 20 LINE.NUM *Pstring ^Position5 @@ 1 +  50 *Pstring  $SUB 
 22 LINE.NUM " ," 0 *Pstring  FindSubString ^Position6 @! 
-23 LINE.NUM *Pstring 0 ^Position6 @@ *DewString  $SUB 
+23 LINE.NUM *Pstring 0 ^Position6 @@ *HumidityString  $SUB 
 24 LINE.NUM *Pstring ^Position6 @@ 1 +  50 *Pstring  $SUB 
 26 LINE.NUM *Pstring " TRUE" $= IF 
 27 LINE.NUM 1 ^OpenFlag @! 

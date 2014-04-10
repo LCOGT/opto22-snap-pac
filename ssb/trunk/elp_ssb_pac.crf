@@ -318,6 +318,9 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 : 6_312
 
 1 LINE.NUM
+  *MasterCommand   $>Upper
+
+2 LINE.NUM
   " HEARTBEAT" 
  
   ^indexStep @@ 
@@ -1144,7 +1147,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 1 LINE.NUM
   *Master_Handle   STREAM.CLEAR.BUF
--5 JUMP ;
+-10 JUMP ;
 : 6_406
 3 LINE.NUM " Success=FALSE" *StatusString  $MOVE 
 5 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
@@ -1191,10 +1194,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 15 LINE.NUM *Pstring 0 ^Position4 @@ *TemperatureString  $SUB 
 16 LINE.NUM *Pstring ^Position4 @@ 1 +  50 *Pstring  $SUB 
 18 LINE.NUM " ," 0 *Pstring  FindSubString ^Position5 @! 
-19 LINE.NUM *Pstring 0 ^Position5 @@ *HumidityString  $SUB 
+19 LINE.NUM *Pstring 0 ^Position5 @@ *DewString  $SUB 
 20 LINE.NUM *Pstring ^Position5 @@ 1 +  50 *Pstring  $SUB 
 22 LINE.NUM " ," 0 *Pstring  FindSubString ^Position6 @! 
-23 LINE.NUM *Pstring 0 ^Position6 @@ *DewString  $SUB 
+23 LINE.NUM *Pstring 0 ^Position6 @@ *HumidityString  $SUB 
 24 LINE.NUM *Pstring ^Position6 @@ 1 +  50 *Pstring  $SUB 
 26 LINE.NUM *Pstring " TRUE" $= IF 
 27 LINE.NUM 1 ^OpenFlag @! 
@@ -1958,7 +1961,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.12"
+" 001.13"
  *SWVersion $MOVE
 " "
  *TemperatureString $MOVE
@@ -1977,9 +1980,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/04/14 " ;
-: TIMESTAMP ." 17:14:42 " ;
-: CRCSTAMP  ." B3BD02474C2BB5811604DAE4612F6E50 " ;
+: DATESTAMP ." 04/10/14 " ;
+: TIMESTAMP ." 16:31:36 " ;
+: CRCSTAMP  ." 3CB9DAD1B487ACDE2340A0F56B76674A " ;
 MAKECHECK
 CLEAR.BREAKS
 
