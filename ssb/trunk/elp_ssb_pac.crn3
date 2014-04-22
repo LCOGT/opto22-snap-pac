@@ -317,7 +317,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.13"
+" 001.14"
  *SWVersion $MOVE
 " "
  *TemperatureString $MOVE
