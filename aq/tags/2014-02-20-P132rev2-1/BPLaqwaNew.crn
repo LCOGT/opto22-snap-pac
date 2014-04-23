@@ -285,6 +285,12 @@ T;
 
 3 LINE.NUM
   &Pendant_manual   STOP.T
+
+4 LINE.NUM
+  &Pole   STOP.T
+
+5 LINE.NUM
+  &Tail   STOP.T
 4 JUMP ;
 : 3_165
 
@@ -442,7 +448,7 @@ T;
 1 LINE.NUM
   *Master_Handle   ACCEPT
   ^MasterCommEstablished @! 
-56 JUMP ;
+57 JUMP ;
 : 7_12
 
 1 LINE.NUM
@@ -453,13 +459,13 @@ T;
 1 LINE.NUM
   *Master_Handle   LISTEN
   ^ListeningForMaster @! 
-55 JUMP ;
+56 JUMP ;
 : 7_20
 
 1 LINE.NUM
   *Master_Handle   ?STREAM.KEY
   ^Master_Handle_CharNumWaiting @! 
-56 JUMP ;
+57 JUMP ;
 : 7_22
 
 1 LINE.NUM
@@ -477,7 +483,7 @@ T;
   *MasterCommand 
   *Master_Handle   GET$
   ^MasterCommandStringRcvd @! 
-55 JUMP ;
+56 JUMP ;
 : 7_41
 
 1 LINE.NUM
@@ -511,7 +517,7 @@ T;
 
 2 LINE.NUM
   ^Socket_Timer   StartTimer
-52 JUMP ;
+53 JUMP ;
 : 7_110
 -8 JUMP ;
 : 7_118
@@ -545,18 +551,18 @@ T;
   " 1" 
  
   *TailEnum   $MOVE
-61 JUMP ;
+62 JUMP ;
 : 7_193
 
 1 LINE.NUM
   " 0" 
  
   *TailEnum   $MOVE
-60 JUMP ;
+61 JUMP ;
 : 7_198
-59 JUMP ;
+60 JUMP ;
 : 7_201
-48 JUMP ;
+49 JUMP ;
 : 7_214
 
 1 LINE.NUM
@@ -591,70 +597,70 @@ T;
   " 3" 
  
   *SwitchEnum   $MOVE
-45 JUMP ;
+46 JUMP ;
 : 7_229
 
 1 LINE.NUM
   " 2" 
  
   *SwitchEnum   $MOVE
-44 JUMP ;
+45 JUMP ;
 : 7_230
 
 1 LINE.NUM
   " 1" 
  
   *SwitchEnum   $MOVE
-43 JUMP ;
+44 JUMP ;
 : 7_235
 
 1 LINE.NUM
   " 0" 
  
   *SwitchEnum   $MOVE
-42 JUMP ;
+43 JUMP ;
 : 7_238
 
 1 LINE.NUM
   " 9" 
  
   *SideEnum   $MOVE
-44 JUMP ;
+45 JUMP ;
 : 7_243
 
 1 LINE.NUM
   " 1" 
  
   *SideEnum   $MOVE
-43 JUMP ;
+44 JUMP ;
 : 7_244
 
 1 LINE.NUM
   " 2" 
  
   *SideEnum   $MOVE
-42 JUMP ;
+43 JUMP ;
 : 7_245
 
 1 LINE.NUM
   " 0" 
  
   *SideEnum   $MOVE
-41 JUMP ;
+42 JUMP ;
 : 7_251
 
 1 LINE.NUM
   " 0" 
  
   *PoleEnum   $MOVE
-35 JUMP ;
+36 JUMP ;
 : 7_253
 
 1 LINE.NUM
   " 1" 
  
   *PoleEnum   $MOVE
-34 JUMP ;
+35 JUMP ;
 : 7_254
 2 LINE.NUM " Shutter1=" *StatusString  $MOVE 
 3 LINE.NUM *PoleEnum *StatusString $CAT 
@@ -782,6 +788,13 @@ T;
 107 LINE.NUM ~AI_InletAir_RTD @@ 7 1 *TempC  FF.R$ 
 108 LINE.NUM *TempC *StatusString $CAT 
 
+110 LINE.NUM ~DO_Lights_RLA @@I 1 = IF 
+111 LINE.NUM " , LightsOn=TRUE" *StatusString $CAT 
+
+112 LINE.NUM ELSE 
+113 LINE.NUM " , LightsOn=FALSE" *StatusString $CAT 
+
+114 LINE.NUM THEN 
 15 JUMP ;
 : 7_256
 16 JUMP ;
@@ -923,13 +936,13 @@ T;
 : 7_295
 
 1 LINE.NUM
-  ~DO_Lights_RLA   OFF
+  ~DO_Lights_RLA   ON
 
 2 LINE.NUM
   " 111" 
  
   *lastCommand   $MOVE
--6 JUMP ;
+48 JUMP ;
 : 7_297
 
 1 LINE.NUM
@@ -961,7 +974,7 @@ T;
 1 LINE.NUM
   *MasterCommand   $>I
   ^MasterCommandNum @! 
-38 JUMP ;
+39 JUMP ;
 : 7_315
 -51 JUMP ;
 : 7_327
@@ -987,6 +1000,10 @@ T;
   ^MasterCommandNum @@ 
   *lastCommand   I>$
 -4 JUMP ;
+: 7_356
+1 LINE.NUM ~DO_Lights_RLA @@I 1 XOR  ~DO_Lights_RLA @! 
+3 LINE.NUM " 111" *lastCommand  $MOVE 
+-15 JUMP ;
 : 7_7
 FALSE
 
@@ -999,7 +1016,7 @@ LOR
   ^MasterCommEstablished @@ 
   -47    =
 LOR
-IF -49 ELSE -59 THEN JUMP ;
+IF -50 ELSE -60 THEN JUMP ;
 : 7_14
 FALSE
 
@@ -1012,7 +1029,7 @@ LOR
   ^ListeningForMaster @@ 
   -47    =
 LOR
-IF -59 ELSE -58 THEN JUMP ;
+IF -60 ELSE -59 THEN JUMP ;
 : 7_17
 TRUE
 
@@ -1020,7 +1037,7 @@ TRUE
   ^Master_Handle_CharNumWaiting @@ 
   0    <
 LAND
-IF 1 ELSE -56 THEN JUMP ;
+IF 1 ELSE -57 THEN JUMP ;
 : 7_19
 TRUE
 
@@ -1028,7 +1045,7 @@ TRUE
   ^Master_Handle_CharNumWaiting @@ 
   0    >
 LAND
-IF -50 ELSE 5 THEN JUMP ;
+IF -51 ELSE 5 THEN JUMP ;
 : 7_25
 FALSE
 
@@ -1041,7 +1058,7 @@ LOR
   ^Master_Handle_CharNumWaiting @@ 
   -39    =
 LOR
-IF -58 ELSE -57 THEN JUMP ;
+IF -59 ELSE -58 THEN JUMP ;
 : 7_35
 TRUE
 
@@ -1049,7 +1066,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   0    =
 LAND
-IF -50 ELSE 4 THEN JUMP ;
+IF -51 ELSE 4 THEN JUMP ;
 : 7_39
 FALSE
 
@@ -1062,7 +1079,7 @@ LOR
   ^MasterCommandStringRcvd @@ 
   -39    =
 LOR
-IF -57 ELSE -56 THEN JUMP ;
+IF -58 ELSE -57 THEN JUMP ;
 : 7_66
 TRUE
 
@@ -1070,21 +1087,21 @@ TRUE
   ^Master_Handle_CharNumWaiting @@ 
   3    <
 LAND
-IF -57 ELSE -59 THEN JUMP ;
+IF -58 ELSE -60 THEN JUMP ;
 : 7_94
 TRUE
 
 1 LINE.NUM
   ^Socket_Timer   T0=
 LAND
-IF -56 ELSE -7 THEN JUMP ;
+IF -57 ELSE -7 THEN JUMP ;
 : 7_102
 TRUE
 
 1 LINE.NUM
   *Master_Handle   ?OPEN 0>
 LAND
-IF -2 ELSE -55 THEN JUMP ;
+IF -2 ELSE -56 THEN JUMP ;
 : 7_130
 TRUE
 
@@ -1092,7 +1109,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   0    <=
 LAND
-IF -5 ELSE -55 THEN JUMP ;
+IF -5 ELSE -56 THEN JUMP ;
 : 7_182
 TRUE
 
@@ -1100,21 +1117,21 @@ TRUE
   ^MasterCommandNum @@ 
   100    =
 LAND
-IF -53 ELSE 17 THEN JUMP ;
+IF -54 ELSE 17 THEN JUMP ;
 : 7_192
 TRUE
 
 1 LINE.NUM
   ~DI_Tail_Closed_LS   ?OFF
 LAND
-IF -53 ELSE 0 THEN JUMP ;
+IF -54 ELSE 0 THEN JUMP ;
 : 7_194
 TRUE
 
 1 LINE.NUM
   ~DI_Tail_Open_LS   ?OFF
 LAND
-IF -53 ELSE -52 THEN JUMP ;
+IF -54 ELSE -53 THEN JUMP ;
 : 7_210
 TRUE
 
@@ -1122,21 +1139,21 @@ TRUE
   ~DI_RightDoor_LS @@ 
   ~DI_LeftDoor_LS @@   LAND
 LAND
-IF -51 ELSE 0 THEN JUMP ;
+IF -52 ELSE 0 THEN JUMP ;
 : 7_211
 TRUE
 
 1 LINE.NUM
   ~DI_RightDoor_LS   ?ON
 LAND
-IF -51 ELSE 0 THEN JUMP ;
+IF -52 ELSE 0 THEN JUMP ;
 : 7_212
 TRUE
 
 1 LINE.NUM
   ~DI_LeftDoor_LS   ?ON
 LAND
-IF -51 ELSE -50 THEN JUMP ;
+IF -52 ELSE -51 THEN JUMP ;
 : 7_224
 TRUE
 
@@ -1144,35 +1161,35 @@ TRUE
   ~DI_TrapKey_SW @@ 
   ~DI_GoFast_SW @@   LAND
 LAND
-IF -50 ELSE 0 THEN JUMP ;
+IF -51 ELSE 0 THEN JUMP ;
 : 7_225
 TRUE
 
 1 LINE.NUM
   ~DI_TrapKey_SW   ?ON
 LAND
-IF -50 ELSE 0 THEN JUMP ;
+IF -51 ELSE 0 THEN JUMP ;
 : 7_226
 TRUE
 
 1 LINE.NUM
   ~DI_GoFast_SW   ?ON
 LAND
-IF -50 ELSE -49 THEN JUMP ;
+IF -51 ELSE -50 THEN JUMP ;
 : 7_247
 TRUE
 
 1 LINE.NUM
   ~DI_PoleSelect_SW   ?ON
 LAND
-IF -48 ELSE -49 THEN JUMP ;
+IF -49 ELSE -50 THEN JUMP ;
 : 7_248
 TRUE
 
 1 LINE.NUM
   ~DI_TailSelect_SW   ?ON
 LAND
-IF -48 ELSE -2 THEN JUMP ;
+IF -49 ELSE -2 THEN JUMP ;
 : 7_249
 TRUE
 
@@ -1180,27 +1197,27 @@ TRUE
   ~DI_PoleSelect_SW @@ 
   ~DI_TailSelect_SW @@   LAND
 LAND
-IF -48 ELSE -2 THEN JUMP ;
+IF -49 ELSE -2 THEN JUMP ;
 : 7_250
 TRUE
 
 1 LINE.NUM
   ~DI_Pole_Open_LS   ?OFF
 LAND
-IF -48 ELSE -61 THEN JUMP ;
+IF -49 ELSE -62 THEN JUMP ;
 : 7_252
 TRUE
 
 1 LINE.NUM
   ~DI_Pole_Closed_LS   ?OFF
 LAND
-IF -48 ELSE -2 THEN JUMP ;
+IF -49 ELSE -2 THEN JUMP ;
 : 7_257
 TRUE
-IF -46 ELSE 0 THEN JUMP ;
+IF -47 ELSE 0 THEN JUMP ;
 : 7_258
 TRUE
-IF -44 ELSE -46 THEN JUMP ;
+IF -45 ELSE -47 THEN JUMP ;
 : 7_278
 FALSE
 
@@ -1218,7 +1235,7 @@ LOR
   ^MasterCommandNum @@ 
   107    =
 LOR
-IF -40 ELSE 5 THEN JUMP ;
+IF -41 ELSE 5 THEN JUMP ;
 : 7_279
 FALSE
 
@@ -1236,20 +1253,20 @@ LOR
   ^MasterCommandNum @@ 
   106    =
 LOR
-IF -48 ELSE -2 THEN JUMP ;
+IF -49 ELSE -2 THEN JUMP ;
 : 7_281
 TRUE
 
 1 LINE.NUM
   ^AUTOMODE @@   0<>
 LAND
-IF 6 ELSE -51 THEN JUMP ;
+IF 6 ELSE -52 THEN JUMP ;
 : 7_302
 TRUE
-IF -46 ELSE -43 THEN JUMP ;
+IF -47 ELSE -44 THEN JUMP ;
 : 7_303
 TRUE
-IF -43 ELSE -2 THEN JUMP ;
+IF -44 ELSE -2 THEN JUMP ;
 : 7_308
 TRUE
 
@@ -1257,7 +1274,7 @@ TRUE
   ^MasterCommandNum @@ 
   111    =
 LAND
-IF -42 ELSE 5 THEN JUMP ;
+IF -34 ELSE 5 THEN JUMP ;
 : 7_309
 TRUE
 
@@ -1265,7 +1282,7 @@ TRUE
   ^MasterCommandNum @@ 
   109    =
 LAND
-IF -41 ELSE 1 THEN JUMP ;
+IF -42 ELSE 1 THEN JUMP ;
 : 7_310
 TRUE
 
@@ -1281,7 +1298,7 @@ TRUE
   ^MasterCommandNum @@ 
   110    =
 LAND
-IF -44 ELSE -4 THEN JUMP ;
+IF -45 ELSE -4 THEN JUMP ;
 : 7_312
 TRUE
 
@@ -1289,7 +1306,7 @@ TRUE
   ^MasterCommandNum @@ 
   101    =
 LAND
-IF -47 ELSE -9 THEN JUMP ;
+IF -48 ELSE -9 THEN JUMP ;
 : 7_331
 TRUE
 
@@ -1297,7 +1314,7 @@ TRUE
   ^MasterCommandNum @@ 
   113    =
 LAND
-IF -40 ELSE -39 THEN JUMP ;
+IF -41 ELSE -40 THEN JUMP ;
 : 7_352
 TRUE
 
@@ -1305,7 +1322,7 @@ TRUE
   ^MasterCommandNum @@ 
   114    =
 LAND
-IF -42 ELSE -2 THEN JUMP ;
+IF -43 ELSE -2 THEN JUMP ;
 T: T7
 DUMMY
 7_0
@@ -1367,6 +1384,7 @@ DUMMY
 7_327
 7_343
 7_347
+7_356
 7_7
 7_14
 7_17
@@ -2354,8 +2372,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 02/19/14 " ;
-: TIMESTAMP ." 14:17:48 " ;
+: DATESTAMP ." 04/16/14 " ;
+: TIMESTAMP ." 05:21:30 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

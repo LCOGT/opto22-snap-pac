@@ -33,6 +33,12 @@
 
 3 LINE.NUM
   &Pendant_manual   STOP.T
+
+4 LINE.NUM
+  &Pole   STOP.T
+
+5 LINE.NUM
+  &Tail   STOP.T
 4 JUMP ;
 : 3_165
 
