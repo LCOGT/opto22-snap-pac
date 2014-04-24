@@ -13,6 +13,7 @@
 0 IVAR ^EncAGrnFlag
 0 IVAR ^EncARedFlag
 0 IVAR ^ErrorFlag
+0 IVAR ^fake_Fan_Sw_2
 0 FVAR ^FamMemory
 0 IVAR ^FanSwMode
 0 IVAR ^FaultFlag
@@ -51,6 +52,7 @@
 0 IVAR ^SSBBlink
 0 IVAR ^SSBGrnFlag
 0 IVAR ^SSBRedFlag
+0 IVAR ^StringLenProbe
 0 FVAR ^SysTime
 0 IVAR ^TempLatch
 0 FVAR ^Total_Inflow
@@ -61,7 +63,7 @@
 8 0 $VAR *DewString 
 12 0 $VAR *ElapsedString 
 1024 0 $VAR *EnviroString 
-6 0 $VAR *EnviroTemp 
+15 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorString 
 1024 0 $VAR *FaultString 
 6 0 $VAR *FWVersion 

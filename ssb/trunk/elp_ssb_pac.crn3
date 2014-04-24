@@ -15,6 +15,7 @@ CREATE V.ARRAY
 ^EncAGrnFlag ,
 ^EncARedFlag ,
 ^ErrorFlag ,
+^fake_Fan_Sw_2 ,
 ^FamMemory ,
 ^FanSwMode ,
 ^FaultFlag ,
@@ -51,6 +52,7 @@ CREATE V.ARRAY
 ^SSBBlink ,
 ^SSBGrnFlag ,
 ^SSBRedFlag ,
+^StringLenProbe ,
 ^SysTime ,
 ^TempLatch ,
 ^Total_Inflow ,
@@ -241,6 +243,7 @@ CONFIG_PORTS
 0 ^EncAGrnFlag @!
 0 ^EncARedFlag @!
 0 ^ErrorFlag @!
+0 ^fake_Fan_Sw_2 @!
 0.00000000 ^FamMemory @!
 -1 ^FanSwMode @!
 0 ^FaultFlag @!
@@ -279,6 +282,7 @@ CONFIG_PORTS
 0 ^SSBBlink @!
 0 ^SSBGrnFlag @!
 0 ^SSBRedFlag @!
+0 ^StringLenProbe @!
 0.00000000 ^SysTime @!
 0 ^TempLatch @!
 0.00000000 ^Total_Inflow @!
@@ -295,7 +299,7 @@ CONFIG_PORTS
  *ElapsedString $MOVE
 " Enviro"
  *EnviroString $MOVE
-" "
+" null"
  *EnviroTemp $MOVE
 " "
  *ErrorString $MOVE
@@ -317,7 +321,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.14"
+" 001.15"
  *SWVersion $MOVE
 " "
  *TemperatureString $MOVE
