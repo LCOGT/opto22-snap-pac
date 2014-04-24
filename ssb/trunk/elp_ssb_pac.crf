@@ -847,76 +847,82 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 109 LINE.NUM 0 ~Fan_Red_LED @! 
 110 LINE.NUM " AUTO" *StatusString $CAT 
 
-112 LINE.NUM ~SSB_Internal_Temp @@ 26 I>F F>= IF 
+112 LINE.NUM ~SSB_Internal_Temp @@ 27 I>F F>= IF 
 113 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
 114 LINE.NUM 1 ~FAN_M2_4_ON @! 
 115 LINE.NUM 1 ~FAN_M2_7_ON @! 
 116 LINE.NUM 1 ~FAN_M3_2_ON @! 
 117 LINE.NUM 1 ~FAN_M3_5_ON @! 
-118 LINE.NUM 1 ^TempLatch @! 
-119 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
-120 LINE.NUM THEN 
-121 LINE.NUM ^TempLatch @@ 1 = ~SSB_Internal_Temp @@ 26 I>F F< LAND  IF 
-122 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-123 LINE.NUM 0 ~FAN_M2_4_ON @! 
-124 LINE.NUM 0 ~FAN_M2_7_ON @! 
-125 LINE.NUM 0 ~FAN_M3_2_ON @! 
-126 LINE.NUM 0 ~FAN_M3_5_ON @! 
-127 LINE.NUM 0 ^TempLatch @! 
-128 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
-129 LINE.NUM THEN 
-130 LINE.NUM ~SSB_Internal_Temp @@ 25 I>F F< IF 
-131 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-132 LINE.NUM 0 ~FAN_M2_4_ON @! 
-133 LINE.NUM 0 ~FAN_M2_7_ON @! 
-134 LINE.NUM 0 ~FAN_M3_2_ON @! 
-135 LINE.NUM 0 ~FAN_M3_5_ON @! 
-136 LINE.NUM 0 ^TempLatch @! 
-137 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
-138 LINE.NUM THEN 
-149 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
-157 LINE.NUM THEN 
-159 LINE.NUM ELSE 
-159 LINE.NUM ~Fan_Sw_1 @@I 1 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
-160 LINE.NUM 0 ^FanSwMode @! 
-161 LINE.NUM 0 ~Fan_Green_LED @! 
-162 LINE.NUM 1 ~Fan_Red_LED @! 
-163 LINE.NUM " OFF" *StatusString $CAT 
+118 LINE.NUM 1 ~SSB_status_Red_LED @! 
+119 LINE.NUM 0 ~SSB_status_Green_LED @! 
+120 LINE.NUM 1 ^TempLatch @! 
+121 LINE.NUM " >= 27C. FORCE_FAN_COOL" *TempServoState  $MOVE 
+122 LINE.NUM THEN 
+123 LINE.NUM ^TempLatch @@ 1 = ~SSB_Internal_Temp @@ 26 I>F F< LAND  IF 
+124 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+125 LINE.NUM 1 ~FAN_M2_4_ON @! 
+126 LINE.NUM 0 ~FAN_M2_7_ON @! 
+127 LINE.NUM 1 ~FAN_M3_2_ON @! 
+128 LINE.NUM 0 ~FAN_M3_5_ON @! 
+129 LINE.NUM 1 ~SSB_status_Red_LED @! 
+130 LINE.NUM 1 ~SSB_status_Green_LED @! 
+131 LINE.NUM 0 ^TempLatch @! 
+132 LINE.NUM " RETURNING_TO_NORMAL" *TempServoState  $MOVE 
+133 LINE.NUM THEN 
+134 LINE.NUM ~SSB_Internal_Temp @@ 25 I>F F< IF 
+135 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+136 LINE.NUM 0 ~FAN_M2_4_ON @! 
+137 LINE.NUM 0 ~FAN_M2_7_ON @! 
+138 LINE.NUM 0 ~FAN_M3_2_ON @! 
+139 LINE.NUM 0 ~FAN_M3_5_ON @! 
+140 LINE.NUM 0 ~SSB_status_Red_LED @! 
+141 LINE.NUM 1 ~SSB_status_Green_LED @! 
+142 LINE.NUM 0 ^TempLatch @! 
+143 LINE.NUM "  <= 24C. NORMAL" *TempServoState  $MOVE 
+144 LINE.NUM THEN 
+155 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
+163 LINE.NUM THEN 
+165 LINE.NUM ELSE 
+165 LINE.NUM ~Fan_Sw_1 @@I 1 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
+166 LINE.NUM 0 ^FanSwMode @! 
+167 LINE.NUM 0 ~Fan_Green_LED @! 
+168 LINE.NUM 1 ~Fan_Red_LED @! 
+169 LINE.NUM " OFF" *StatusString $CAT 
 
-164 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-165 LINE.NUM 0 ~FAN_M2_4_ON @! 
-166 LINE.NUM 0 ~FAN_M2_7_ON @! 
-167 LINE.NUM 0 ~FAN_M3_2_ON @! 
-168 LINE.NUM 0 ~FAN_M3_5_ON @! 
-169 LINE.NUM 0 ^TempLatch @! 
-170 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
-171 LINE.NUM ELSE 
-171 LINE.NUM ~Fan_Sw_1 @@I 0 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
-172 LINE.NUM 1 ^FanSwMode @! 
-173 LINE.NUM 1 ~Fan_Green_LED @! 
-174 LINE.NUM 1 ~Fan_Red_LED @! 
-175 LINE.NUM " ON" *StatusString $CAT 
+170 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+171 LINE.NUM 0 ~FAN_M2_4_ON @! 
+172 LINE.NUM 0 ~FAN_M2_7_ON @! 
+173 LINE.NUM 0 ~FAN_M3_2_ON @! 
+174 LINE.NUM 0 ~FAN_M3_5_ON @! 
+175 LINE.NUM 0 ^TempLatch @! 
+176 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
+177 LINE.NUM ELSE 
+177 LINE.NUM ~Fan_Sw_1 @@I 0 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
+178 LINE.NUM 1 ^FanSwMode @! 
+179 LINE.NUM 1 ~Fan_Green_LED @! 
+180 LINE.NUM 1 ~Fan_Red_LED @! 
+181 LINE.NUM " ON" *StatusString $CAT 
 
-176 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-177 LINE.NUM 1 ~FAN_M2_4_ON @! 
-178 LINE.NUM 1 ~FAN_M2_7_ON @! 
-179 LINE.NUM 1 ~FAN_M3_2_ON @! 
-180 LINE.NUM 1 ~FAN_M3_5_ON @! 
-181 LINE.NUM 0 ^TempLatch @! 
-182 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
-183 LINE.NUM ELSE 
-184 LINE.NUM 3 ^FanSwMode @! 
-185 LINE.NUM 0 ~Fan_Green_LED @! 
-186 LINE.NUM 0 ~Fan_Red_LED @! 
-187 LINE.NUM " FAULT" *StatusString $CAT 
+182 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+183 LINE.NUM 1 ~FAN_M2_4_ON @! 
+184 LINE.NUM 1 ~FAN_M2_7_ON @! 
+185 LINE.NUM 1 ~FAN_M3_2_ON @! 
+186 LINE.NUM 1 ~FAN_M3_5_ON @! 
+187 LINE.NUM 0 ^TempLatch @! 
+188 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
+189 LINE.NUM ELSE 
+190 LINE.NUM 3 ^FanSwMode @! 
+191 LINE.NUM 0 ~Fan_Green_LED @! 
+192 LINE.NUM 0 ~Fan_Red_LED @! 
+193 LINE.NUM " FAULT" *StatusString $CAT 
 
-188 LINE.NUM THEN THEN THEN 
-190 LINE.NUM " , TemperatureServoState=" *StatusString $CAT 
+194 LINE.NUM THEN THEN THEN 
+196 LINE.NUM " , TemperatureServoState=" *StatusString $CAT 
 
-191 LINE.NUM *TempServoState *StatusString $CAT 
+197 LINE.NUM *TempServoState *StatusString $CAT 
 
-194 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-195 LINE.NUM " Statux 1 Sent" *MasterCommand  $MOVE 
+200 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+201 LINE.NUM " Statux 1 Sent" *MasterCommand  $MOVE 
 14 JUMP ;
 : 6_370
 
@@ -1567,66 +1573,72 @@ T;
 35 LINE.NUM 0 ~Fan_Red_LED @! 
 36 LINE.NUM " AUTO" *StatusString $CAT 
 
-38 LINE.NUM ~SSB_Internal_Temp @@ 26 I>F F>= IF 
+38 LINE.NUM ~SSB_Internal_Temp @@ 27 I>F F>= IF 
 39 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
 40 LINE.NUM 1 ~FAN_M2_4_ON @! 
 41 LINE.NUM 1 ~FAN_M2_7_ON @! 
 42 LINE.NUM 1 ~FAN_M3_2_ON @! 
 43 LINE.NUM 1 ~FAN_M3_5_ON @! 
-44 LINE.NUM 1 ^TempLatch @! 
-45 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
-46 LINE.NUM THEN 
-47 LINE.NUM ^TempLatch @@ 1 = ~SSB_Internal_Temp @@ 26 I>F F< LAND  IF 
-48 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-49 LINE.NUM 0 ~FAN_M2_4_ON @! 
-50 LINE.NUM 0 ~FAN_M2_7_ON @! 
-51 LINE.NUM 0 ~FAN_M3_2_ON @! 
-52 LINE.NUM 0 ~FAN_M3_5_ON @! 
-53 LINE.NUM 0 ^TempLatch @! 
-54 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
-55 LINE.NUM THEN 
-56 LINE.NUM ~SSB_Internal_Temp @@ 25 I>F F< IF 
-57 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-58 LINE.NUM 0 ~FAN_M2_4_ON @! 
-59 LINE.NUM 0 ~FAN_M2_7_ON @! 
-60 LINE.NUM 0 ~FAN_M3_2_ON @! 
-61 LINE.NUM 0 ~FAN_M3_5_ON @! 
-62 LINE.NUM 0 ^TempLatch @! 
-63 LINE.NUM " RETURN_TO_NORMAL" *TempServoState  $MOVE 
-64 LINE.NUM THEN 
-75 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
-83 LINE.NUM THEN 
-85 LINE.NUM ELSE 
-85 LINE.NUM ~Fan_Sw_1 @@I 1 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
-86 LINE.NUM 0 ^FanSwMode @! 
-87 LINE.NUM 0 ~Fan_Green_LED @! 
-88 LINE.NUM 1 ~Fan_Red_LED @! 
-90 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-91 LINE.NUM 0 ~FAN_M2_4_ON @! 
-92 LINE.NUM 0 ~FAN_M2_7_ON @! 
-93 LINE.NUM 0 ~FAN_M3_2_ON @! 
-94 LINE.NUM 0 ~FAN_M3_5_ON @! 
-95 LINE.NUM 0 ^TempLatch @! 
-96 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
-97 LINE.NUM ELSE 
-97 LINE.NUM ~Fan_Sw_1 @@I 0 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
-98 LINE.NUM 1 ^FanSwMode @! 
-99 LINE.NUM 1 ~Fan_Green_LED @! 
-100 LINE.NUM 1 ~Fan_Red_LED @! 
-102 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-103 LINE.NUM 1 ~FAN_M2_4_ON @! 
-104 LINE.NUM 1 ~FAN_M2_7_ON @! 
-105 LINE.NUM 1 ~FAN_M3_2_ON @! 
-106 LINE.NUM 1 ~FAN_M3_5_ON @! 
-107 LINE.NUM 0 ^TempLatch @! 
-108 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
-109 LINE.NUM THEN THEN THEN 
-111 LINE.NUM ^ValidTemp @@ 0 = IF 
-112 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
-113 LINE.NUM ELSE 
-114 LINE.NUM ~SSB_Outgoing_Temp @@ *TemperatureString  $>F F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
-115 LINE.NUM THEN 
-116 LINE.NUM ~SSB_Internal_Temp @@ ~IT_Rack_Back_Temp @@ F+ 2 I>F F/ ^avg_T @@ 239 I>F F* F+ 240 I>F F/ ^avg_T @! 
+44 LINE.NUM 1 ~SSB_status_Red_LED @! 
+45 LINE.NUM 0 ~SSB_status_Green_LED @! 
+46 LINE.NUM 1 ^TempLatch @! 
+47 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
+48 LINE.NUM THEN 
+49 LINE.NUM ^TempLatch @@ 1 = ~SSB_Internal_Temp @@ 26 I>F F< LAND  IF 
+50 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+51 LINE.NUM 1 ~FAN_M2_4_ON @! 
+52 LINE.NUM 0 ~FAN_M2_7_ON @! 
+53 LINE.NUM 1 ~FAN_M3_2_ON @! 
+54 LINE.NUM 0 ~FAN_M3_5_ON @! 
+55 LINE.NUM 1 ~SSB_status_Red_LED @! 
+56 LINE.NUM 1 ~SSB_status_Green_LED @! 
+57 LINE.NUM 0 ^TempLatch @! 
+58 LINE.NUM " RETURNING_TO_NORMAL" *TempServoState  $MOVE 
+59 LINE.NUM THEN 
+60 LINE.NUM ~SSB_Internal_Temp @@ 25 I>F F< IF 
+61 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+62 LINE.NUM 0 ~FAN_M2_4_ON @! 
+63 LINE.NUM 0 ~FAN_M2_7_ON @! 
+64 LINE.NUM 0 ~FAN_M3_2_ON @! 
+65 LINE.NUM 0 ~FAN_M3_5_ON @! 
+66 LINE.NUM 0 ~SSB_status_Red_LED @! 
+67 LINE.NUM 1 ~SSB_status_Green_LED @! 
+68 LINE.NUM 0 ^TempLatch @! 
+69 LINE.NUM " RETURNED_TO_NORMAL" *TempServoState  $MOVE 
+70 LINE.NUM THEN 
+81 LINE.NUM ~SSB_Internal_Humidity @@ 12 I>F F< IF 
+89 LINE.NUM THEN 
+91 LINE.NUM ELSE 
+91 LINE.NUM ~Fan_Sw_1 @@I 1 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
+92 LINE.NUM 0 ^FanSwMode @! 
+93 LINE.NUM 0 ~Fan_Green_LED @! 
+94 LINE.NUM 1 ~Fan_Red_LED @! 
+96 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+97 LINE.NUM 0 ~FAN_M2_4_ON @! 
+98 LINE.NUM 0 ~FAN_M2_7_ON @! 
+99 LINE.NUM 0 ~FAN_M3_2_ON @! 
+100 LINE.NUM 0 ~FAN_M3_5_ON @! 
+101 LINE.NUM 0 ^TempLatch @! 
+102 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
+103 LINE.NUM ELSE 
+103 LINE.NUM ~Fan_Sw_1 @@I 0 = ^fake_Fan_Sw_2 @@ 1 = LAND  IF 
+104 LINE.NUM 1 ^FanSwMode @! 
+105 LINE.NUM 1 ~Fan_Green_LED @! 
+106 LINE.NUM 1 ~Fan_Red_LED @! 
+108 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+109 LINE.NUM 1 ~FAN_M2_4_ON @! 
+110 LINE.NUM 1 ~FAN_M2_7_ON @! 
+111 LINE.NUM 1 ~FAN_M3_2_ON @! 
+112 LINE.NUM 1 ~FAN_M3_5_ON @! 
+113 LINE.NUM 0 ^TempLatch @! 
+114 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
+115 LINE.NUM THEN THEN THEN 
+117 LINE.NUM ^ValidTemp @@ 0 = IF 
+118 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
+119 LINE.NUM ELSE 
+120 LINE.NUM ~SSB_Outgoing_Temp @@ *TemperatureString  $>F F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
+121 LINE.NUM THEN 
+122 LINE.NUM ~SSB_Internal_Temp @@ ~IT_Rack_Back_Temp @@ F+ 2 I>F F/ ^avg_T @@ 239 I>F F* F+ 240 I>F F/ ^avg_T @! 
 -2 JUMP ;
 T: T7
 DUMMY
@@ -2032,7 +2044,7 @@ CONFIG_PORTS
  *StateString $MOVE
 " "
  *StatusString $MOVE
-" 001.15"
+" 001.16"
  *SWVersion $MOVE
 " "
  *TemperatureString $MOVE
@@ -2052,8 +2064,8 @@ T;
    &_INIT_IO START.T DROP
    ;
 : DATESTAMP ." 04/24/14 " ;
-: TIMESTAMP ." 14:38:34 " ;
-: CRCSTAMP  ." 650962F4C0928FA6BEAB52B112133A80 " ;
+: TIMESTAMP ." 15:42:07 " ;
+: CRCSTAMP  ." 355844F3920A3967E8EC5C3512F45007 " ;
 MAKECHECK
 CLEAR.BREAKS
 
