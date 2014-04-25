@@ -208,7 +208,7 @@ $01F3FF3333133F30.. %Local_IO ENABLES!
  *TimeString $MOVE
 " "
  *yearString $MOVE
-" tcp:10.7.11.55:80"
+" tcp:10.5.15.55:80"
  *cAps2 $MOVE
 " tcp:22004"
  *Master_Handle $MOVE

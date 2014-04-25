@@ -22,9 +22,11 @@
 1 LINE.NUM " GET /state.xml HTTP/1.1" *sAps2  $MOVE 
 2 LINE.NUM 13 *sAps2 $APPEND 
 
-3 LINE.NUM 13 *sAps2 $APPEND 
+3 LINE.NUM 10 *sAps2 $APPEND 
 
 4 LINE.NUM 13 *sAps2 $APPEND 
+
+5 LINE.NUM 10 *sAps2 $APPEND 
 
 8 LINE.NUM *sAps2 *cAps2  PRT$ ^nAps2Status @! 
 9 LINE.NUM " " *sAps2  $MOVE 

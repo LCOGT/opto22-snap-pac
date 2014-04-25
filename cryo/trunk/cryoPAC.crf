@@ -3,13 +3,13 @@
 
 ?EXISTS DL.STAT SWAP DROP .IF 1 DL.STAT .THEN
 _END NEW $$$.RUN FORGET $$$.RUN
-GetPersistentTop  **cryoPAC_rev3**
+GetPersistentTop  **cryoPAC**
 PersistentMAKECHECK
 
 \ ********************** CRN File **********************
 
 _END NEW $$$.RUN
-: FILENAME  ." cryoPAC_rev3 " ;
+: FILENAME  ." cryoPAC " ;
 1 0 $VAR *_HSV_SEMA 
 1024 0 $VAR *_HSV_TEMP 
 200 0 $VAR *_HSV_INIT_IO 
@@ -181,9 +181,11 @@ SPOINT 0.0 INPUT 56 %Local_IO
 1 LINE.NUM " GET /state.xml HTTP/1.1" *sAps2  $MOVE 
 2 LINE.NUM 13 *sAps2 $APPEND 
 
-3 LINE.NUM 13 *sAps2 $APPEND 
+3 LINE.NUM 10 *sAps2 $APPEND 
 
 4 LINE.NUM 13 *sAps2 $APPEND 
+
+5 LINE.NUM 10 *sAps2 $APPEND 
 
 8 LINE.NUM *sAps2 *cAps2  PRT$ ^nAps2Status @! 
 9 LINE.NUM " " *sAps2  $MOVE 
@@ -1405,7 +1407,7 @@ $01F3FF3333133F30.. %Local_IO ENABLES!
  *TimeString $MOVE
 " "
  *yearString $MOVE
-" tcp:10.7.11.55:80"
+" tcp:10.5.15.55:80"
  *cAps2 $MOVE
 " tcp:22004"
  *Master_Handle $MOVE
@@ -1422,9 +1424,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/01/14 " ;
-: TIMESTAMP ." 16:54:34 " ;
-: CRCSTAMP  ." DC1E8CFEC8456DC4AE408704985CED31 " ;
+: DATESTAMP ." 04/25/14 " ;
+: TIMESTAMP ." 00:10:29 " ;
+: CRCSTAMP  ." 68CD0C875C464FD92735312BFED5ACC4 " ;
 MAKECHECK
 CLEAR.BREAKS
 

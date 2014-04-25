@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\cryoPAC_trunk\cryoPAC.idb
+# NAME :         C:\Documents and Settings\eng\Desktop\cryo_trunk\cryoPAC.idb
 # VERSION :      R9.1a
-# TIME/DATE :    16:54:34 4/1/2014
+# TIME/DATE :    0:10:29 4/25/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
