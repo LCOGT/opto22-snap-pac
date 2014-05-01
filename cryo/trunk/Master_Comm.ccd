@@ -289,7 +289,7 @@
 
 101 LINE.NUM " , LowerThermorackFlow=" *EnviroString $CAT 
 
-102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.600000e-001 F/ 5 1 *EnviroTemp  FF.R$ 
+102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.600000e-001 F/ 10 1 *EnviroTemp  FF.R$ 
 103 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 104 LINE.NUM " , UpperThermorackFlow=0.0" *EnviroString $CAT 

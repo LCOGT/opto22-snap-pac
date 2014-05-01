@@ -24,8 +24,14 @@
 0 IVAR ^MasterXmitStatus
 0 FVAR ^MergedTemp
 0 IVAR ^nAps2Status
+0 IVAR ^nASCII
 0 IVAR ^nCharCount
+0 IVAR ^nIndex0
+0 IVAR ^nIndex1
 0 IVAR ^nIndex2
+0 IVAR ^nIP_int
+0 IVAR ^nLength
+0 IVAR ^nOctet3
 0 IVAR ^nPosition
 0 IVAR ^OverTemp
 0 IVAR ^Position
@@ -40,7 +46,7 @@
 2 0 $VAR *dayString 
 12 0 $VAR *ElapsedString 
 1024 0 $VAR *EnviroString 
-7 0 $VAR *EnviroTemp 
+10 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorReport 
 12 0 $VAR *FWVersion 
 2 0 $VAR *hourString 
@@ -53,6 +59,12 @@
 2 0 $VAR *secString 
 1024 0 $VAR *SentString 
 20 0 $VAR *sGetaps2 
+20 0 $VAR *sIP_Aps2 
+20 0 $VAR *sIP_hex 
+20 0 $VAR *sIP_PAC 
+5 0 $VAR *sOctet1 
+5 0 $VAR *sOctet2 
+5 0 $VAR *sOctet3 
 1024 0 $VAR *StatusString 
 6 0 $VAR *SWVersion 
 8 0 $VAR *timeDatum 

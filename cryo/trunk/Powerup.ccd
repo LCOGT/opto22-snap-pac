@@ -64,7 +64,7 @@
 18 LINE.NUM
   &aps2_1m0a_monitor   START.T
   ^nIndex2 @! 
-2 JUMP ;
+4 JUMP ;
 : 0_1
 1 LINE.NUM ^Heartbeat_Timer @@F 0 I>F F<= IF 
 2 LINE.NUM 1 ^HeartFailure @! 
@@ -118,6 +118,9 @@
 18 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
 19 LINE.NUM THEN THEN 
 -3 JUMP ;
+: 0_24
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+-3 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -125,5 +128,6 @@ DUMMY
 0_2
 0_16
 0_20
+0_24
 T;
 &Powerup ' T0 SETTASK

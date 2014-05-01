@@ -23,8 +23,14 @@ CREATE V.ARRAY
 ^MasterXmitStatus ,
 ^MergedTemp ,
 ^nAps2Status ,
+^nASCII ,
 ^nCharCount ,
+^nIndex0 ,
+^nIndex1 ,
 ^nIndex2 ,
+^nIP_int ,
+^nLength ,
+^nOctet3 ,
 ^nPosition ,
 ^OverTemp ,
 ^Position ,
@@ -51,6 +57,12 @@ CREATE V.ARRAY
 *secString ,
 *SentString ,
 *sGetaps2 ,
+*sIP_Aps2 ,
+*sIP_hex ,
+*sIP_PAC ,
+*sOctet1 ,
+*sOctet2 ,
+*sOctet3 ,
 *StatusString ,
 *SWVersion ,
 *timeDatum ,
@@ -150,8 +162,14 @@ $01F3FF3333133F30.. %Local_IO ENABLES!
 0 ^MasterXmitStatus @!
 0.00000000 ^MergedTemp @!
 0 ^nAps2Status @!
+0 ^nASCII @!
 0 ^nCharCount @!
+0 ^nIndex0 @!
+0 ^nIndex1 @!
 0 ^nIndex2 @!
+0 ^nIP_int @!
+0 ^nLength @!
+0 ^nOctet3 @!
 0 ^nPosition @!
 0 ^OverTemp @!
 -1 ^Position @!
@@ -198,6 +216,18 @@ $01F3FF3333133F30.. %Local_IO ENABLES!
  *SentString $MOVE
 " "
  *sGetaps2 $MOVE
+" "
+ *sIP_Aps2 $MOVE
+" "
+ *sIP_hex $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sOctet1 $MOVE
+" "
+ *sOctet2 $MOVE
+" "
+ *sOctet3 $MOVE
 " Status"
  *StatusString $MOVE
 " 001.04"

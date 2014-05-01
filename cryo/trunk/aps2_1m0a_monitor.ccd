@@ -1,5 +1,5 @@
 : 2_0
-0 JUMP ;
+5 JUMP ;
 : 2_1
 4 LINE.NUM 1 ^nIndex2 @! 
 5 LINE.NUM *cAps2  STREAM.CLEAR.BUF 
@@ -47,7 +47,7 @@
 18 LINE.NUM 1.000000e-001  FDELAY 
 19 LINE.NUM THEN THEN THEN 
 20 LINE.NUM REPEAT 
-2 JUMP ;
+3 JUMP ;
 : 2_15
 2 LINE.NUM 8 0 {stAps2 *cAps2  S.GET#TABLE DROP  
 3 LINE.NUM " 3state>1" 0 5 {stAps2 $TABLE@  FindSubString ^nPosition @! 
@@ -74,6 +74,29 @@
 1 LINE.NUM
   500    DELAY
 -5 JUMP ;
+: 2_27
+6 LINE.NUM *sIP_PAC  IP$>I ^nIP_int @! 
+7 LINE.NUM ^nIP_int @@ *sIP_hex  I>HEX$ 
+8 LINE.NUM *sIP_hex  $LEN ^nLength @! 
+9 LINE.NUM ^nLength @@ 8 < IF 
+10 LINE.NUM *_HSV_SEMA Acquire1String " 0"  *_HSV_TEMP $MOVE *sIP_hex  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_hex $MOVE Release1String 
+11 LINE.NUM THEN 
+12 LINE.NUM *sIP_hex 0 2 *sOctet1  $SUB 
+13 LINE.NUM *sIP_hex 2 2 *sOctet2  $SUB 
+14 LINE.NUM *sIP_hex 4 2 *sOctet3  $SUB 
+15 LINE.NUM *sOctet3  HEX$>I ^nOctet3 @! 
+16 LINE.NUM ^nOctet3 @@ 1 +  ^nOctet3 @! 
+17 LINE.NUM ^nOctet3 @@ *sOctet3  I>HEX$ 
+18 LINE.NUM *sOctet3  $LEN ^nLength @! 
+19 LINE.NUM ^nLength @@ 2 < IF 
+20 LINE.NUM *_HSV_SEMA Acquire1String " 0"  *_HSV_TEMP $MOVE *sOctet3  *_HSV_TEMP $CAT *_HSV_TEMP *sOctet3 $MOVE Release1String 
+21 LINE.NUM THEN 
+22 LINE.NUM *_HSV_SEMA Acquire1String *sOctet1  *_HSV_TEMP $MOVE *sOctet2  *_HSV_TEMP $CAT *sOctet3  *_HSV_TEMP $CAT 51  *_HSV_TEMP $APPEND 55  *_HSV_TEMP $APPEND *_HSV_TEMP *sIP_hex $MOVE Release1String 
+23 LINE.NUM *sIP_hex  HEX$>I ^nIP_int @! 
+24 LINE.NUM ^nIP_int @@ *sIP_Aps2  I>IP$ 
+25 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sIP_Aps2  *_HSV_TEMP $CAT " :80"  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_Aps2 $MOVE Release1String 
+26 LINE.NUM *sIP_Aps2 *cAps2  $MOVE 
+-6 JUMP ;
 : 2_10
 TRUE
 
@@ -81,7 +104,7 @@ TRUE
   ^nCharCount @@ 
   0    >
 LAND
-IF -3 ELSE -2 THEN JUMP ;
+IF -4 ELSE -3 THEN JUMP ;
 T: T2
 DUMMY
 2_0
@@ -90,6 +113,7 @@ DUMMY
 2_8
 2_15
 2_18
+2_27
 2_10
 T;
 &aps2_1m0a_monitor ' T2 SETTASK
