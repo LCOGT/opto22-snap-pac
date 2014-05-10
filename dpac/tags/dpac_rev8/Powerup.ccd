@@ -1,0 +1,66 @@
+: 0_0
+1 JUMP ;
+: 0_5
+
+1 LINE.NUM
+  &Main   START.T
+  ^MainChartStarted @! 
+
+2 LINE.NUM
+  &Master_Comm   START.T
+  ^Master_CommStarted @! 
+
+3 LINE.NUM
+  &White_Lights   START.T
+  ^White_Lights_Chart @! 
+
+4 LINE.NUM
+  &Status_Monitor   START.T
+  ^Status_Monitor_Started @! 
+
+5 LINE.NUM
+  &Powerup   STOP.T
+3 JUMP ;
+: 0_12
+
+1 LINE.NUM
+  ~DO_slot08Fuse   ON
+
+2 LINE.NUM
+  ~DO_slot09Fuse   ON
+1 JUMP ;
+: 0_33
+
+1 LINE.NUM
+  10 I>F 
+  1 I>F 
+  ~AO_cabinetFanCtrl   F!RAMP
+-3 JUMP ;
+: 0_36
+4 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
+6 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
+9 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
+10 LINE.NUM ELSE 
+10 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
+12 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 
+13 LINE.NUM ELSE 
+13 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
+15 LINE.NUM " CLOSING" *sStatus_Shutter2  $MOVE 
+16 LINE.NUM ELSE 
+16 LINE.NUM ~SW_lowerOpenLimit @@I LNOT  ~SW_lowerCloseLimit @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
+21 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+22 LINE.NUM ELSE 
+22 LINE.NUM " ERROR" *sStatus_Shutter2  $MOVE 
+23 LINE.NUM THEN THEN THEN THEN THEN 
+-2 JUMP ;
+T: T0
+DUMMY
+0_0
+0_5
+0_12
+0_33
+0_36
+T;
+&Powerup ' T0 SETTASK
