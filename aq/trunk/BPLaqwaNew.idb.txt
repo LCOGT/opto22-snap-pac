@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\aqPAC_trunk\BPLaqwaNew.idb
 # VERSION :      R9.1a
-# TIME/DATE :    19:38:32 4/1/2014
+# TIME/DATE :    1:54:46 5/20/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -240,6 +240,7 @@ TAG1,nFindFacilityCmd                                  ,79   ,00000000,00000000,
 TAG1,nIndexEncl                                        ,71   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nOldHeartbeat                                     ,73   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nOpen                                             ,18   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nStormlocked                                      ,81   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,OLD_COOLING_FAN_FREQ                              ,33   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,OPEN_SLOW                                         ,50   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,PANEL_FANS_OK                                     ,41   ,00000000,00000000,00000000,00000008,0    ,0   
