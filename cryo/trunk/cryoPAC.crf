@@ -121,8 +121,6 @@ SPOINT 0.0 INPUT 29 %Local_IO
     0 POINT ~CryoTig_Deadman
 APOINT -200.0000 10 32 %Local_IO
     0 POINT ~MasterTemp
-APOINT -200.0000 10 33 %Local_IO
-    0 POINT ~Unused
 APOINT -200.0000 10 36 %Local_IO
     0 POINT ~ThermoTemp_Lower_M3_3
 APOINT -200.0000 10 37 %Local_IO
@@ -1181,8 +1179,8 @@ T;
 8 LINE.NUM 5 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 9 LINE.NUM 5 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 11 LINE.NUM THEN 
-13 LINE.NUM ~Unused @@ ~Intake_Fan_Temp @@ F>= IF 
-14 LINE.NUM ~Unused @@ ^MergedTemp @! 
+13 LINE.NUM ~MasterTemp @@ ~Intake_Fan_Temp @@ F>= IF 
+14 LINE.NUM ~MasterTemp @@ ^MergedTemp @! 
 15 LINE.NUM ELSE 
 16 LINE.NUM ~Intake_Fan_Temp @@ ^MergedTemp @! 
 17 LINE.NUM THEN 
@@ -1362,7 +1360,6 @@ CREATE P.ARRAY
 ~ThermoFlow_Upper_M3_7 ,
 ~ThermoTemp_Lower_M3_3 ,
 ~ThermoTemp_Upper_M3_7 ,
-~Unused ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -1374,7 +1371,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
-$01F3FF3333133F30.. %Local_IO ENABLES!
+$01F3FF3133133F30.. %Local_IO ENABLES!
 " %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
  0 ~DO_XformerPWR @!
@@ -1477,7 +1474,7 @@ $01F3FF3333133F30.. %Local_IO ENABLES!
  *TimeString $MOVE
 " "
  *yearString $MOVE
-" tcp:10.5.15.55:80"
+" "
  *cAps2 $MOVE
 " tcp:22004"
  *Master_Handle $MOVE
@@ -1494,9 +1491,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 05/01/14 " ;
-: TIMESTAMP ." 22:15:34 " ;
-: CRCSTAMP  ." 6E630F171CECBF570877505AC46413E9 " ;
+: DATESTAMP ." 06/02/14 " ;
+: TIMESTAMP ." 19:40:57 " ;
+: CRCSTAMP  ." D24567C6FCB5A9C7A8BC3990FD1F4F19 " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -123,7 +123,6 @@ CREATE P.ARRAY
 ~ThermoFlow_Upper_M3_7 ,
 ~ThermoTemp_Lower_M3_3 ,
 ~ThermoTemp_Upper_M3_7 ,
-~Unused ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -135,7 +134,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
-$01F3FF3333133F30.. %Local_IO ENABLES!
+$01F3FF3133133F30.. %Local_IO ENABLES!
 " %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
  0 ~DO_XformerPWR @!
@@ -238,7 +237,7 @@ $01F3FF3333133F30.. %Local_IO ENABLES!
  *TimeString $MOVE
 " "
  *yearString $MOVE
-" tcp:10.5.15.55:80"
+" "
  *cAps2 $MOVE
 " tcp:22004"
  *Master_Handle $MOVE
