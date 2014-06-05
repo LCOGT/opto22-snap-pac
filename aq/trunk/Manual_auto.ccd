@@ -1,98 +1,79 @@
 : 3_0
-8 JUMP ;
-: 3_32
-
-1 LINE.NUM
-  ~DO_PoleStop_NO   ON
-
-2 LINE.NUM
-  ~DO_TailStop_NO   ON
-
-3 LINE.NUM
-  ~DO_PoleEnable_NO   OFF
-
-4 LINE.NUM
-  ~DO_TailEnable_NO   OFF
-
-5 LINE.NUM
-  ^dtHeartbeat   StopTimer
-0 JUMP ;
-: 3_113
-
-1 LINE.NUM
-  " 0" 
- 
-  *ModeEnum   $MOVE
-
-2 LINE.NUM
-  ^AUTOMODE   FALSE@!
-
-3 LINE.NUM
-  &Pendant_manual   STOP.T
-4 JUMP ;
-: 3_165
-
-1 LINE.NUM
-  ^AUTOMODE   FALSE@!
-
-2 LINE.NUM
-  &Pendant_manual   START.T
-  ^CHART_STARTED @! 
-
-3 LINE.NUM
-  " 1" 
- 
-  *ModeEnum   $MOVE
-
-4 LINE.NUM
-  ^dtHeartbeat   StopTimer
-3 JUMP ;
-: 3_166
-
-1 LINE.NUM
-  ^AUTOMODE   TRUE@!
-
-2 LINE.NUM
-  &Pendant_manual   STOP.T
-
-3 LINE.NUM
-  " 2" 
- 
-  *ModeEnum   $MOVE
-2 JUMP ;
-: 3_181
-
-1 LINE.NUM
-  90.  
-  ^dtHeartbeat   SetTimer
-
-2 LINE.NUM
-  ^dtHeartbeat   StartTimer
-1 JUMP ;
-: 3_190
-
-1 LINE.NUM
-  ^dtHeartbeat   StopTimer
-
-2 LINE.NUM
-  ^OPEN   FALSE@!
-
-3 LINE.NUM
-  ^CLOSE   TRUE@!
-
-4 LINE.NUM
-  &Pole   START.T
-  ^CHART_STARTED @! 
-
-5 LINE.NUM
-  &Tail   START.T
-  ^CHART_STARTED @! 
-0 JUMP ;
+6 JUMP ;
 : 3_193
 
 1 LINE.NUM
-  200    DELAY
-1 JUMP ;
+  100    DELAY
+5 JUMP ;
+: 3_205
+1 LINE.NUM *sEnclOpMode " DISABLED" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM " DISABLED" *sEnclOpMode  $MOVE 
+5 LINE.NUM &Pendant_manual  STOP.T 
+6 LINE.NUM &Pole_Close  STOP.T 
+7 LINE.NUM &Pole_Open  STOP.T 
+8 LINE.NUM &Tail_Close  STOP.T 
+9 LINE.NUM &Tail_Open  STOP.T 
+10 LINE.NUM &Close_Sequential  STOP.T 
+11 LINE.NUM 0 ~DO_PoleEnable @! 
+12 LINE.NUM 1 ~DO_PoleStop @! 
+13 LINE.NUM 0 ~DO_TailEnable @! 
+14 LINE.NUM 1 ~DO_TailStop @! 
+15 LINE.NUM THEN 
+-2 JUMP ;
+: 3_212
+1 LINE.NUM *sEnclOpMode " MANUAL" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM &Pole_Close  STOP.T 
+5 LINE.NUM &Pole_Open  STOP.T 
+6 LINE.NUM &Tail_Close  STOP.T 
+7 LINE.NUM &Tail_Open  STOP.T 
+8 LINE.NUM &Close_Sequential  STOP.T 
+9 LINE.NUM 0 ~DO_PoleEnable @! 
+10 LINE.NUM 1 ~DO_PoleStop @! 
+11 LINE.NUM 0 ~DO_TailEnable @! 
+12 LINE.NUM 1 ~DO_TailStop @! 
+13 LINE.NUM &Pendant_manual  START.T DROP  
+14 LINE.NUM " MANUAL" *sEnclOpMode  $MOVE 
+15 LINE.NUM THEN 
+-3 JUMP ;
+: 3_217
+1 LINE.NUM *sEnclOpMode " AUTO" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM &Pendant_manual  STOP.T 
+5 LINE.NUM &Pole_Close  STOP.T 
+6 LINE.NUM &Pole_Open  STOP.T 
+7 LINE.NUM &Tail_Close  STOP.T 
+8 LINE.NUM &Tail_Open  STOP.T 
+9 LINE.NUM &Close_Sequential  STOP.T 
+10 LINE.NUM 0 ~DO_PoleEnable @! 
+11 LINE.NUM 1 ~DO_PoleStop @! 
+12 LINE.NUM 0 ~DO_TailEnable @! 
+13 LINE.NUM 1 ~DO_TailStop @! 
+14 LINE.NUM " AUTO" *sEnclOpMode  $MOVE 
+15 LINE.NUM THEN 
+-4 JUMP ;
+: 3_220
+1 LINE.NUM *sEnclOpMode " UNKNOWN" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM " UNKNOWN" *sEnclOpMode  $MOVE 
+5 LINE.NUM " , EnclOpMode=UNKNOWN " *sFaultList $CAT 
+
+6 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+7 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+8 LINE.NUM &Pendant_manual  STOP.T 
+9 LINE.NUM &Pole_Close  STOP.T 
+10 LINE.NUM &Pole_Open  STOP.T 
+11 LINE.NUM &Tail_Close  STOP.T 
+12 LINE.NUM &Tail_Open  STOP.T 
+13 LINE.NUM &Close_Sequential  STOP.T 
+14 LINE.NUM 0 ~DO_PoleEnable @! 
+15 LINE.NUM 1 ~DO_PoleStop @! 
+16 LINE.NUM 0 ~DO_TailEnable @! 
+17 LINE.NUM 1 ~DO_TailStop @! 
+18 LINE.NUM THEN 
+-5 JUMP ;
 : 3_1
 TRUE
 
@@ -101,13 +82,9 @@ TRUE
 LAND
 
 2 LINE.NUM
-  &Pendant_manual   ?STOPPED
-LAND
-
-3 LINE.NUM
   ~DI_RoofAuto_SW   ?OFF
 LAND
-IF -6 ELSE -2 THEN JUMP ;
+IF -4 ELSE 1 THEN JUMP ;
 : 3_2
 TRUE
 
@@ -118,7 +95,7 @@ LAND
 2 LINE.NUM
   ~DI_RoofDisable_SW   ?OFF
 LAND
-IF -9 ELSE 0 THEN JUMP ;
+IF -6 ELSE -2 THEN JUMP ;
 : 3_122
 TRUE
 
@@ -129,35 +106,29 @@ LAND
 2 LINE.NUM
   ~DI_RoofDisable_SW   ?ON
 LAND
-
-3 LINE.NUM
-  ^AUTOMODE @@   0=
-LAND
-IF -7 ELSE -3 THEN JUMP ;
-: 3_176
-TRUE
-IF -7 ELSE 0 THEN JUMP ;
-: 3_184
+IF -5 ELSE 0 THEN JUMP ;
+: 3_204
 TRUE
 
 1 LINE.NUM
-  ^dtHeartbeat   T0=
+  ~DI_RoofAuto_SW   ?ON
 LAND
-IF -7 ELSE -6 THEN JUMP ;
+
+2 LINE.NUM
+  ~DI_RoofDisable_SW   ?OFF
+LAND
+IF -5 ELSE -9 THEN JUMP ;
 T: T3
 DUMMY
 3_0
-3_32
-3_113
-3_165
-3_166
-3_181
-3_190
 3_193
+3_205
+3_212
+3_217
+3_220
 3_1
 3_2
 3_122
-3_176
-3_184
+3_204
 T;
 &Manual_auto ' T3 SETTASK
