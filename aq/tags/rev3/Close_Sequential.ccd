@@ -1,0 +1,19 @@
+: 27_0
+0 JUMP ;
+: 27_1
+1 LINE.NUM &Pole_Close  START.T DROP  
+2 LINE.NUM 360 I>F ^dtSequential @! 
+3 LINE.NUM ^dtSequential  StartTimer 
+4 LINE.NUM BEGIN ^dtSequential @@F 0 I>F F> WHILE 
+5 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = IF 
+6 LINE.NUM 0 I>F ^dtSequential @! 
+7 LINE.NUM THEN 
+8 LINE.NUM REPEAT 
+9 LINE.NUM &Tail_Close  START.T DROP  
+0 JUMP ;
+T: T27
+DUMMY
+27_0
+27_1
+T;
+&Close_Sequential ' T27 SETTASK
