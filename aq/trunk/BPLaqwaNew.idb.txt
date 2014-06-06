@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\aqPAC_trunk\BPLaqwaNew.idb
 # VERSION :      R9.1a
-# TIME/DATE :    0:36:52 6/5/2014
+# TIME/DATE :    1:45:11 6/6/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -154,6 +154,9 @@ TAG1,DI_TailSelect_SW                                  ,56   ,40000000,00000000,
 TAG1,DI_TrapKey_SW                                     ,13   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_Tscope_MCB                                     ,16   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_UltimateClosed_LS                              ,31   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_UpsAlarm                                       ,102  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_UpsBattCharge                                  ,101  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_UpsBattMode                                    ,103  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_Utility_TVS                                    ,32   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_Webcam_MCB                                     ,17   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_24vCTRL_MCB                                    ,95   ,10000000,00000000,00000000,00000000,0    ,0   
@@ -273,6 +276,7 @@ TAG1,nStormlocked                                      ,81   ,00000000,00000000,
 TAG1,nStringLength                                     ,108  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nStringPosition                                   ,107  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nTailTimeoutCounter                               ,85   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nTimeoutLength                                    ,117  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,OLD_COOLING_FAN_FREQ                              ,33   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,OPEN_SLOW                                         ,50   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,PANEL_FANS_OK                                     ,41   ,00000000,00000000,00000000,00000008,0    ,0   

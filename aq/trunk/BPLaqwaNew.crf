@@ -150,6 +150,7 @@ ENDCODE
 0 IVAR ^nStringLength
 0 IVAR ^nStringPosition
 0 IVAR ^nTailTimeoutCounter
+0 IVAR ^nTimeoutLength
 0 FVAR ^OLD_COOLING_FAN_FREQ
 0 IVAR ^OPEN_SLOW
 0 IVAR ^PANEL_FANS_OK
@@ -219,6 +220,9 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  4  0 %encPacInternal 0 POINT.TNG ~DI_PoleFans_MCB
 32  1 SPOINT 0.0     INPUT  5  0 %encPacInternal 0 POINT.TNG ~DI_TailFans_MCB
 32  1 SPOINT 0.0     INPUT  6  0 %encPacInternal 0 POINT.TNG ~DI_24vPSU_OK
+32  1 SPOINT 0.0     INPUT  7  0 %encPacInternal 0 POINT.TNG ~DI_UpsBattCharge
+32  1 SPOINT 0.0     INPUT  8  0 %encPacInternal 0 POINT.TNG ~DI_UpsAlarm
+32  1 SPOINT 0.0     INPUT  9  0 %encPacInternal 0 POINT.TNG ~DI_UpsBattMode
 32  1 SPOINT 0.0     INPUT 11  0 %encPacInternal 0 POINT.TNG ~DI_Tscope_MCB
 32  1 SPOINT 0.0     INPUT 12  0 %encPacInternal 0 POINT.TNG ~DI_Webcam_MCB
 32  1 SPOINT 0.0     INPUT 15  0 %encPacInternal 0 POINT.TNG ~DI_Utility_TVS
@@ -298,7 +302,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 1    0.0000   10.0000    0.0000    0.0000    0.0000   10.0000    5.0000   30.0000
    1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
 ~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
-$80000000 0 %encPacInternal 0 PID |PanelFans
+$80000002 0 %encPacInternal 0 PID |PanelFans
 : 35_0
 0 JUMP ;
 : 35_1
@@ -321,7 +325,7 @@ T;
 0 JUMP ;
 : 27_1
 1 LINE.NUM &Pole_Close  START.T DROP  
-2 LINE.NUM 300 I>F ^dtSequential @! 
+2 LINE.NUM 360 I>F ^dtSequential @! 
 3 LINE.NUM ^dtSequential  StartTimer 
 4 LINE.NUM BEGIN ^dtSequential @@F 0 I>F F> WHILE 
 5 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = IF 
@@ -343,7 +347,7 @@ T;
 1 LINE.NUM
   *cEncl_Port   LISTEN
   ^nEnclPortStatus @! 
-43 JUMP ;
+46 JUMP ;
 : 21_6
 
 1 LINE.NUM
@@ -354,7 +358,7 @@ T;
 1 LINE.NUM
   *cEncl_Port   ACCEPT
   ^nEnclPortStatus @! 
-42 JUMP ;
+45 JUMP ;
 : 21_13
 
 1 LINE.NUM
@@ -363,13 +367,14 @@ T;
 : 21_17
 1 LINE.NUM 120 I>F ^dtEnclSocket @! 
 2 LINE.NUM ^dtEnclSocket  StartTimer 
+3 LINE.NUM *cEncl_Port  STREAM.CLEAR.BUF 
 0 JUMP ;
 : 21_19
 
 1 LINE.NUM
   *cEncl_Port   ?STREAM.KEY
   ^nEnclCharCount @! 
-40 JUMP ;
+43 JUMP ;
 : 21_28
 
 1 LINE.NUM
@@ -387,12 +392,12 @@ T;
 : 21_43
 1 LINE.NUM 120 I>F ^dtEnclSocket @! 
 2 LINE.NUM ^dtEnclSocket  StartTimer 
-42 JUMP ;
+45 JUMP ;
 : 21_49
 1 LINE.NUM *sEnclCmd *cEncl_Port  GET$ ^nEnclReceiveStatus @! 
 2 LINE.NUM *sEnclCmd  $>Upper 
 3 LINE.NUM 0 ^nIndexEncl @! 
-42 JUMP ;
+45 JUMP ;
 : 21_55
 
 1 LINE.NUM
@@ -402,7 +407,7 @@ T;
 -7 JUMP ;
 : 21_64
 1 LINE.NUM " HEARTBEAT" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-41 JUMP ;
+44 JUMP ;
 : 21_69
 1 LINE.NUM " Success=TRUE " *sEnclStatus  $MOVE 
 2 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
@@ -520,10 +525,10 @@ T;
 17 LINE.NUM 1 ^nCmdFound @! 
 18 LINE.NUM THEN 
 19 LINE.NUM 1 +LOOP 
-37 JUMP ;
+40 JUMP ;
 : 21_84
 1 LINE.NUM " GET_ERRORS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-37 JUMP ;
+40 JUMP ;
 : 21_87
 5 LINE.NUM *sErrorList  $LEN ^nStringLength @! 
 6 LINE.NUM ^nStringLength @@ 0 = IF 
@@ -566,10 +571,10 @@ T;
 -2 JUMP ;
 : 21_99
 1 LINE.NUM " GET_FAULTS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-33 JUMP ;
+36 JUMP ;
 : 21_103
 1 LINE.NUM " RESET_PAC" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-33 JUMP ;
+36 JUMP ;
 : 21_106
 4 LINE.NUM &Heart_Monitor  STOP.T 
 5 LINE.NUM &Manual_auto  STOP.T 
@@ -770,20 +775,20 @@ T;
 131 LINE.NUM THEN 
 133 LINE.NUM " , PoleFanExhaustTach=" *sStatus $CAT 
 
-134 LINE.NUM ~AI_PoleFanExhaust_TACH @@ *Tempstring  F>$ 
+134 LINE.NUM ~AI_PoleFanExhaust_TACH @@ 3 0 *Tempstring  FF.R$ 
 135 LINE.NUM *Tempstring *sStatus $CAT 
 
 137 LINE.NUM " , PanelFanTach=" *sStatus $CAT 
 
-138 LINE.NUM ~AI_CabFanIntake_TACH @@ *Tempstring  F>$ 
+138 LINE.NUM ~AI_CabFanIntake_TACH @@ 3 0 *Tempstring  FF.R$ 
 139 LINE.NUM *Tempstring *sStatus $CAT 
 
 141 LINE.NUM " , PanelFanCtrlVmax=" *sStatus $CAT 
 
-142 LINE.NUM ^nFanCtrlMax @@ *Tempstring  I>$ 
+142 LINE.NUM ^nFanCtrlMax @@F 2 0 *Tempstring  FF.R$ 
 143 LINE.NUM *Tempstring *sStatus $CAT 
 
-145 LINE.NUM " , EntryDoor=" *sStatus $CAT 
+145 LINE.NUM " , EntryDoor1=" *sStatus $CAT 
 
 146 LINE.NUM ~DI_RightDoor_LS @@I 1 = IF 
 147 LINE.NUM " CLOSED" *sStatus $CAT 
@@ -792,9 +797,9 @@ T;
 149 LINE.NUM " OPEN" *sStatus $CAT 
 
 150 LINE.NUM THEN 
-152 LINE.NUM " , ExitDoor=" *sStatus $CAT 
+152 LINE.NUM " , EntryDoor2=" *sStatus $CAT 
 
-153 LINE.NUM ~DI_RightDoor_LS @@I 1 = IF 
+153 LINE.NUM ~DI_LeftDoor_LS @@I 1 = IF 
 154 LINE.NUM " CLOSED" *sStatus $CAT 
 
 155 LINE.NUM ELSE 
@@ -803,7 +808,7 @@ T;
 157 LINE.NUM THEN 
 159 LINE.NUM " , PanelDoor=" *sStatus $CAT 
 
-160 LINE.NUM ~DI_RightDoor_LS @@I 1 = IF 
+160 LINE.NUM ~DI_CabinetDoor_LS @@I 1 = IF 
 161 LINE.NUM " CLOSED" *sStatus $CAT 
 
 162 LINE.NUM ELSE 
@@ -812,27 +817,27 @@ T;
 164 LINE.NUM THEN 
 166 LINE.NUM " , EnclTemp=" *sStatus $CAT 
 
-167 LINE.NUM ~AI_AqTemp_SEN @@ *Tempstring  F>$ 
+167 LINE.NUM ~AI_AqTemp_SEN @@ 4 1 *Tempstring  FF.R$ 
 168 LINE.NUM *Tempstring *sStatus $CAT 
 
 170 LINE.NUM " , EnclHumidity=" *sStatus $CAT 
 
-171 LINE.NUM ~AI_AqHumidity_SEN @@ *Tempstring  F>$ 
+171 LINE.NUM ~AI_AqHumidity_SEN @@ 4 1 *Tempstring  FF.R$ 
 172 LINE.NUM *Tempstring *sStatus $CAT 
 
 174 LINE.NUM " , EnclIntakeTemp=" *sStatus $CAT 
 
-175 LINE.NUM ~AI_InletAir_RTD @@ *Tempstring  F>$ 
+175 LINE.NUM ~AI_InletAir_RTD @@ 4 1 *Tempstring  FF.R$ 
 176 LINE.NUM *Tempstring *sStatus $CAT 
 
 178 LINE.NUM " , EnclExhaustTemp=" *sStatus $CAT 
 
-179 LINE.NUM ~AI_OutletAir_RTD @@ *Tempstring  F>$ 
+179 LINE.NUM ~AI_OutletAir_RTD @@ 4 1 *Tempstring  FF.R$ 
 180 LINE.NUM *Tempstring *sStatus $CAT 
 
 182 LINE.NUM " , PanelExhaustTemp=" *sStatus $CAT 
 
-183 LINE.NUM ~AI_CabExhaust_RTD @@ *Tempstring  F>$ 
+183 LINE.NUM ~AI_CabExhaust_RTD @@ 4 1 *Tempstring  FF.R$ 
 184 LINE.NUM *Tempstring *sStatus $CAT 
 
 186 LINE.NUM " , UltimateClosed=" *sStatus $CAT 
@@ -844,14 +849,28 @@ T;
 190 LINE.NUM " FALSE" *sStatus $CAT 
 
 191 LINE.NUM THEN 
-194 LINE.NUM *sStatus *sEnclStatus $CAT 
+193 LINE.NUM " , 24VPSU_OK=" *sStatus $CAT 
 
-196 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-197 LINE.NUM " " *sEnclStatus  $MOVE 
+194 LINE.NUM ~DI_24vPSU_OK @@I 1 = IF 
+195 LINE.NUM " TRUE" *sStatus $CAT 
+
+196 LINE.NUM ELSE 
+197 LINE.NUM " FALSE" *sStatus $CAT 
+
+198 LINE.NUM THEN 
+200 LINE.NUM " , Heartbeat=" *sStatus $CAT 
+
+201 LINE.NUM ^dtHeartbeat @@F 2 0 *Tempstring  FF.R$ 
+202 LINE.NUM *Tempstring *sStatus $CAT 
+
+205 LINE.NUM *sStatus *sEnclStatus $CAT 
+
+207 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+208 LINE.NUM " " *sEnclStatus  $MOVE 
 -2 JUMP ;
 : 21_118
 1 LINE.NUM " STATUS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-29 JUMP ;
+32 JUMP ;
 : 21_123
 1 LINE.NUM " Success=FALSE, Heartbeat timer expired " *sEnclStatus  $MOVE 
 2 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
@@ -885,15 +904,15 @@ T;
 6 LINE.NUM " " *sEnclStatus  $MOVE 
 -19 JUMP ;
 : 21_145
-40 LINE.NUM 0 ^nCmdFound @! 
-41 LINE.NUM 0 ^nCounter @! 
-1 42 LINE.NUM 35 1 + 0 DO? I ^nCounter @! 
-43 LINE.NUM ^nCounter @@ {stFacilityCmds $TABLE@ 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-44 LINE.NUM ^nFindCmd @@ 0 = IF 
-45 LINE.NUM 1 ^nCmdFound @! 
-46 LINE.NUM THEN 
-47 LINE.NUM 1 +LOOP 
-29 JUMP ;
+39 LINE.NUM 0 ^nCmdFound @! 
+40 LINE.NUM 0 ^nCounter @! 
+1 41 LINE.NUM 34 1 + 0 DO? I ^nCounter @! 
+42 LINE.NUM ^nCounter @@ {stFacilityCmds $TABLE@ 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+43 LINE.NUM ^nFindCmd @@ 0 = IF 
+44 LINE.NUM 1 ^nCmdFound @! 
+45 LINE.NUM THEN 
+46 LINE.NUM 1 +LOOP 
+32 JUMP ;
 : 21_149
 1 LINE.NUM " LIGHTS_ON" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 2 LINE.NUM ^nFindCmd @@ -1 > IF 
@@ -1076,27 +1095,13 @@ T;
 231 LINE.NUM " BLINK" *sLED_Mode  $MOVE 
 232 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 233 LINE.NUM THEN 
-236 LINE.NUM " MCB_RESET_24V_CTRL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-237 LINE.NUM ^nFindCmd @@ -1 > IF 
-238 LINE.NUM ~DI_24vCtrl_MCB @@I 1 = IF 
-239 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
-240 LINE.NUM ELSE 
-241 LINE.NUM 1.500000e+000 ~DO_24vCTRL_MCB  PULSEON 
-242 LINE.NUM 400  DELAY 
-243 LINE.NUM ~DI_24vCtrl_MCB @@I 1 = IF 
-244 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-245 LINE.NUM ELSE 
-246 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
-247 LINE.NUM THEN 
-248 LINE.NUM THEN 
-249 LINE.NUM THEN 
 252 LINE.NUM " MCB_RESET_POLE_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 253 LINE.NUM ^nFindCmd @@ -1 > IF 
 254 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
 255 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 256 LINE.NUM ELSE 
 257 LINE.NUM 1.500000e+000 ~DO_PoleFans_MCB  PULSEON 
-258 LINE.NUM 400  DELAY 
+258 LINE.NUM 2000  DELAY 
 259 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
 260 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 261 LINE.NUM ELSE 
@@ -1110,7 +1115,7 @@ T;
 271 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 272 LINE.NUM ELSE 
 273 LINE.NUM 1.500000e+000 ~DO_TailFans_MCB  PULSEON 
-274 LINE.NUM 400  DELAY 
+274 LINE.NUM 2000  DELAY 
 275 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
 276 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 277 LINE.NUM ELSE 
@@ -1124,7 +1129,7 @@ T;
 287 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 288 LINE.NUM ELSE 
 289 LINE.NUM 1.500000e+000 ~DO_OTAblower_MCB  PULSEON 
-290 LINE.NUM 400  DELAY 
+290 LINE.NUM 2000  DELAY 
 291 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
 292 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 293 LINE.NUM ELSE 
@@ -1138,7 +1143,7 @@ T;
 303 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 304 LINE.NUM ELSE 
 305 LINE.NUM 1.500000e+000 ~DO_PanelFans_MCB  PULSEON 
-306 LINE.NUM 400  DELAY 
+306 LINE.NUM 2000  DELAY 
 307 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
 308 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 309 LINE.NUM ELSE 
@@ -1146,27 +1151,13 @@ T;
 311 LINE.NUM THEN 
 312 LINE.NUM THEN 
 313 LINE.NUM THEN 
-316 LINE.NUM " MCB_TRIP_24V_CTRL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-317 LINE.NUM ^nFindCmd @@ -1 > IF 
-318 LINE.NUM ~DI_24vCtrl_MCB @@I 0 = IF 
-319 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
-320 LINE.NUM ELSE 
-321 LINE.NUM 5.000000e-001 ~DO_24vCTRL_MCB  PULSEON 
-322 LINE.NUM 400  DELAY 
-323 LINE.NUM ~DI_24vCtrl_MCB @@I 0 = IF 
-324 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-325 LINE.NUM ELSE 
-326 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
-327 LINE.NUM THEN 
-328 LINE.NUM THEN 
-329 LINE.NUM THEN 
 332 LINE.NUM " MCB_TRIP_POLE_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 333 LINE.NUM ^nFindCmd @@ -1 > IF 
 334 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
 335 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 336 LINE.NUM ELSE 
 337 LINE.NUM 5.000000e-001 ~DO_PoleFans_MCB  PULSEON 
-338 LINE.NUM 400  DELAY 
+338 LINE.NUM 1000  DELAY 
 339 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
 340 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 341 LINE.NUM ELSE 
@@ -1180,7 +1171,7 @@ T;
 351 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 352 LINE.NUM ELSE 
 353 LINE.NUM 5.000000e-001 ~DO_TailFans_MCB  PULSEON 
-354 LINE.NUM 400  DELAY 
+354 LINE.NUM 1000  DELAY 
 355 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
 356 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 357 LINE.NUM ELSE 
@@ -1194,7 +1185,7 @@ T;
 367 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 368 LINE.NUM ELSE 
 369 LINE.NUM 5.000000e-001 ~DO_OTAblower_MCB  PULSEON 
-370 LINE.NUM 400  DELAY 
+370 LINE.NUM 1000  DELAY 
 371 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
 372 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 373 LINE.NUM ELSE 
@@ -1208,7 +1199,7 @@ T;
 383 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 384 LINE.NUM ELSE 
 385 LINE.NUM 5.000000e-001 ~DO_PanelFans_MCB  PULSEON 
-386 LINE.NUM 400  DELAY 
+386 LINE.NUM 1000  DELAY 
 387 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
 388 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 389 LINE.NUM ELSE 
@@ -1236,7 +1227,7 @@ T;
 -23 JUMP ;
 : 21_162
 1 LINE.NUM " CLEAR_FAULTS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-27 JUMP ;
+30 JUMP ;
 : 21_165
 5 LINE.NUM &TestFaults  CALL.T DROP  
 7 LINE.NUM *sFaultList  $LEN ^nStringLength @! 
@@ -1279,9 +1270,27 @@ T;
 1 JUMP ;
 : 21_171
 1 LINE.NUM " CLEAR_ERRORS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-24 JUMP ;
+27 JUMP ;
 : 21_176
 -39 JUMP ;
+: 21_188
+1 LINE.NUM " Success=FALSE, 24V PSU not OK " *sEnclStatus  $MOVE 
+2 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+3 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+
+5 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+6 LINE.NUM " " *sEnclStatus  $MOVE 
+-30 JUMP ;
+: 21_192
+-41 JUMP ;
+: 21_193
+5 LINE.NUM " Success=FALSE, Unknown command " *sEnclStatus  $MOVE 
+6 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+7 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+
+10 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+11 LINE.NUM " " *sEnclStatus  $MOVE 
+-2 JUMP ;
 : 21_4
 FALSE
 
@@ -1294,7 +1303,7 @@ LOR
   ^nEnclPortStatus @@ 
   -47    =
 LOR
-IF -43 ELSE -44 THEN JUMP ;
+IF -46 ELSE -47 THEN JUMP ;
 : 21_11
 FALSE
 
@@ -1307,7 +1316,7 @@ LOR
   ^nEnclPortStatus @@ 
   -47    =
 LOR
-IF -42 ELSE 22 THEN JUMP ;
+IF -45 ELSE 22 THEN JUMP ;
 : 21_22
 TRUE
 
@@ -1315,21 +1324,21 @@ TRUE
   ^nEnclCharCount @@ 
   0    >
 LAND
-IF -39 ELSE 0 THEN JUMP ;
+IF -42 ELSE 0 THEN JUMP ;
 : 21_23
 TRUE
 
 1 LINE.NUM
   *cEncl_Port   ?OPEN 0>
 LAND
-IF 0 ELSE -41 THEN JUMP ;
+IF 0 ELSE -44 THEN JUMP ;
 : 21_24
 TRUE
 
 1 LINE.NUM
   ^dtEnclSocket   T0=
 LAND
-IF -42 ELSE 0 THEN JUMP ;
+IF -45 ELSE 0 THEN JUMP ;
 : 21_25
 TRUE
 
@@ -1337,7 +1346,7 @@ TRUE
   ^nEnclCharCount @@ 
   0    <
 LAND
-IF 0 ELSE -44 THEN JUMP ;
+IF 0 ELSE -47 THEN JUMP ;
 : 21_26
 FALSE
 
@@ -1350,7 +1359,7 @@ LOR
   ^nEnclCharCount @@ 
   -39    =
 LOR
-IF -45 ELSE -44 THEN JUMP ;
+IF -48 ELSE -47 THEN JUMP ;
 : 21_45
 TRUE
 
@@ -1358,7 +1367,7 @@ TRUE
   ^nEnclCharCount @@ 
   4    <
 LAND
-IF -45 ELSE -43 THEN JUMP ;
+IF -48 ELSE -46 THEN JUMP ;
 : 21_51
 TRUE
 
@@ -1366,7 +1375,7 @@ TRUE
   ^nEnclReceiveStatus @@ 
   0    =
 LAND
-IF -43 ELSE 0 THEN JUMP ;
+IF -46 ELSE 0 THEN JUMP ;
 : 21_57
 TRUE
 
@@ -1374,7 +1383,7 @@ TRUE
   ^nEnclReceiveStatus @@ 
   -39    =
 LAND
-IF -43 ELSE -47 THEN JUMP ;
+IF -46 ELSE -50 THEN JUMP ;
 : 21_67
 TRUE
 
@@ -1382,7 +1391,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -42 ELSE -38 THEN JUMP ;
+IF -45 ELSE -41 THEN JUMP ;
 : 21_79
 TRUE
 
@@ -1390,7 +1399,7 @@ TRUE
   ^nCmdFound @@ 
   1    =
 LAND
-IF 4 ELSE -22 THEN JUMP ;
+IF 4 ELSE -25 THEN JUMP ;
 : 21_85
 TRUE
 
@@ -1398,7 +1407,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -38 ELSE -34 THEN JUMP ;
+IF -41 ELSE -37 THEN JUMP ;
 : 21_98
 TRUE
 
@@ -1406,7 +1415,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -36 ELSE -34 THEN JUMP ;
+IF -39 ELSE -37 THEN JUMP ;
 : 21_104
 TRUE
 
@@ -1414,7 +1423,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -34 ELSE -30 THEN JUMP ;
+IF -37 ELSE -33 THEN JUMP ;
 : 21_117
 TRUE
 
@@ -1422,7 +1431,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -32 ELSE -22 THEN JUMP ;
+IF -35 ELSE -25 THEN JUMP ;
 : 21_121
 TRUE
 
@@ -1432,7 +1441,7 @@ TRUE
   " AUTO" 
    $=
 LAND
-IF 0 ELSE -30 THEN JUMP ;
+IF 0 ELSE -33 THEN JUMP ;
 : 21_127
 TRUE
 
@@ -1440,21 +1449,21 @@ TRUE
   ^dtHeartbeat @@F 
   0 I>F   F>
 LAND
-IF 0 ELSE -32 THEN JUMP ;
+IF 0 ELSE -35 THEN JUMP ;
 : 21_133
 TRUE
 
 1 LINE.NUM
   ~DI_ESTOP_OK   ?OFF
 LAND
-IF -31 ELSE 0 THEN JUMP ;
+IF -34 ELSE 0 THEN JUMP ;
 : 21_134
 TRUE
 
 1 LINE.NUM
   ^nStormlocked @@   0<>
 LAND
-IF -31 ELSE 1 THEN JUMP ;
+IF -34 ELSE 1 THEN JUMP ;
 : 21_147
 TRUE
 
@@ -1462,7 +1471,7 @@ TRUE
   ^nCmdFound @@ 
   1    =
 LAND
-IF -30 ELSE -47 THEN JUMP ;
+IF -33 ELSE -50 THEN JUMP ;
 : 21_154
 TRUE
 
@@ -1472,7 +1481,7 @@ TRUE
   " UNKNOWN" 
    $=
 LAND
-IF -29 ELSE -50 THEN JUMP ;
+IF -32 ELSE 3 THEN JUMP ;
 : 21_163
 TRUE
 
@@ -1480,7 +1489,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -28 ELSE -25 THEN JUMP ;
+IF -31 ELSE -28 THEN JUMP ;
 : 21_172
 TRUE
 
@@ -1488,7 +1497,7 @@ TRUE
   ^nFindCmd @@ 
   -1    >
 LAND
-IF -27 ELSE -25 THEN JUMP ;
+IF -30 ELSE -25 THEN JUMP ;
 : 21_179
 TRUE
 
@@ -1496,7 +1505,14 @@ TRUE
   ^nEnclPortStatus @@ 
   -442    =
 LAND
-IF -66 ELSE -62 THEN JUMP ;
+IF -69 ELSE -65 THEN JUMP ;
+: 21_185
+TRUE
+
+1 LINE.NUM
+  ~DI_24vPSU_OK   ?ON
+LAND
+IF -57 ELSE -29 THEN JUMP ;
 T: T21
 DUMMY
 21_0
@@ -1544,6 +1560,9 @@ DUMMY
 21_170
 21_171
 21_176
+21_188
+21_192
+21_193
 21_4
 21_11
 21_22
@@ -1569,43 +1588,29 @@ DUMMY
 21_163
 21_172
 21_179
+21_185
 T;
 &Encl_Comm ' T21 SETTASK
 : 19_0
-3 JUMP ;
+1 JUMP ;
 : 19_7
 
 1 LINE.NUM
   1000    DELAY
-2 JUMP ;
-: 19_12
-1 LINE.NUM &Pole_Close  START.T DROP  
-2 LINE.NUM &Tail_Close  START.T DROP  
+0 JUMP ;
+: 19_15
+2 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= LAND  IF 
+3 LINE.NUM &Close_Sequential  START.T DROP  
+4 LINE.NUM ELSE 
+4 LINE.NUM *sEnclOpMode " AUTO" $= ~DI_24vPSU_OK @@I 0 = LAND  IF 
+5 LINE.NUM &Close_Sequential  START.T DROP  
+6 LINE.NUM THEN THEN 
 -2 JUMP ;
-: 19_3
-TRUE
-
-1 LINE.NUM
-  ^dtHeartbeat   T0=
-LAND
-IF -2 ELSE -3 THEN JUMP ;
-: 19_4
-TRUE
-
-1 LINE.NUM
-  *sEnclOpMode
- 
-  " AUTO" 
-   $=
-LAND
-IF -2 ELSE -4 THEN JUMP ;
 T: T19
 DUMMY
 19_0
 19_7
-19_12
-19_3
-19_4
+19_15
 T;
 &Heart_Monitor ' T19 SETTASK
 : 3_0
@@ -2079,7 +2084,7 @@ T;
 1 LINE.NUM 0 ~DO_PoleDirection @! 
 2 LINE.NUM 0 ~DO_PoleStop @! 
 3 LINE.NUM 1 ~DO_PoleEnable @! 
-4 LINE.NUM 90 I>F ^dtPoleTimer @! 
+4 LINE.NUM ^nTimeoutLength @@F ^dtPoleTimer @! 
 5 LINE.NUM ^dtPoleTimer  StartTimer 
 8 JUMP ;
 : 23_9
@@ -2184,7 +2189,7 @@ T;
 1 LINE.NUM 1 ~DO_PoleDirection @! 
 2 LINE.NUM 0 ~DO_PoleStop @! 
 3 LINE.NUM 1 ~DO_PoleEnable @! 
-4 LINE.NUM 90 I>F ^dtPoleTimer @! 
+4 LINE.NUM ^nTimeoutLength @@F ^dtPoleTimer @! 
 5 LINE.NUM ^dtPoleTimer  StartTimer 
 8 JUMP ;
 : 22_22
@@ -2282,7 +2287,7 @@ DUMMY
 T;
 &Pole_Open ' T22 SETTASK
 : 0_0
-3 JUMP ;
+2 JUMP ;
 : 0_14
 1 LINE.NUM 0 ~DO_PoleEnable @! 
 2 LINE.NUM 1 ~DO_PoleStop @! 
@@ -2298,117 +2303,78 @@ T;
 12 LINE.NUM 0 ~DO_PanelGreen_LED @! 
 13 LINE.NUM 0 ~DO_PanelRed_LED @! 
 14 LINE.NUM 0 ~DO_Sounder @! 
-16 LINE.NUM 0 I>F ^dt24h @! 
-17 LINE.NUM " " *sFaultList  $MOVE 
-18 LINE.NUM " " *sErrorList  $MOVE 
-19 LINE.NUM " " *sEnclStatus  $MOVE 
-21 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
-22 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
-23 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
-24 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
-25 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
-26 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
-27 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
-28 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
-30 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
-31 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
-32 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
-33 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
-34 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
-35 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
-36 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
-37 LINE.NUM 
-" OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
-38 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@  $MOVE 
-39 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
-40 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
-41 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
-42 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
-43 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
-44 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
-45 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
-46 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
-47 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
-48 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
-49 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
-50 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
-51 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
-52 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@ 
+15 LINE.NUM 120 ^nTimeoutLength @! 
+17 LINE.NUM 0 I>F ^dt24h @! 
+18 LINE.NUM " " *sFaultList  $MOVE 
+19 LINE.NUM " " *sErrorList  $MOVE 
+20 LINE.NUM " " *sEnclStatus  $MOVE 
+21 LINE.NUM " " *sWallFansOpMode  $MOVE 
+22 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
+23 LINE.NUM " " *sEnclOpMode  $MOVE 
+25 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
+26 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
+27 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
+28 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
+29 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
+30 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
+31 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
+32 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
+34 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
+35 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
+36 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
+37 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
+38 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
+39 LINE.NUM 
+" ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
+40 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
+41 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
+42 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@  $MOVE 
+43 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
+44 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
+45 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
+46 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
+47 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
+48 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
+49 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
+50 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
+51 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
+52 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
+53 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
+54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@ 
  $MOVE 
-53 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
-54 LINE.NUM " LED_STEADY" 24 {stFacilityCmds $TABLE@  $MOVE 
-55 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
-56 LINE.NUM " MCB_RESET_24V_CTRL" 26 {stFacilityCmds $TABLE@  $MOVE 
-57 LINE.NUM " MCB_RESET_POLE_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
-58 LINE.NUM " MCB_RESET_TAIL_FANS" 28 {stFacilityCmds $TABLE@  $MOVE 
-59 LINE.NUM " MCB_RESET_OTA_BLOWER" 29 {stFacilityCmds $TABLE@  $MOVE 
-60 LINE.NUM " MCB_RESET_PANEL_FANS" 30 {stFacilityCmds $TABLE@  $MOVE 
-61 LINE.NUM " MCB_TRIP_24V_CTRL" 31 {stFacilityCmds $TABLE@  $MOVE 
-62 LINE.NUM " MCB_TRIP_POLE_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
-63 LINE.NUM " MCB_TRIP_TAIL_FANS" 33 {stFacilityCmds $TABLE@  $MOVE 
-64 LINE.NUM " MCB_TRIP_OTA_BLOWER" 34 {stFacilityCmds $TABLE@  $MOVE 
-65 LINE.NUM " MCB_TRIP_PANEL_FANS" 35 {stFacilityCmds $TABLE@  $MOVE 
-67 LINE.NUM &TestErrors  START.T DROP  
-68 LINE.NUM &TestFaults  START.T DROP  
-69 LINE.NUM &Manual_auto  START.T DROP  
-70 LINE.NUM &SYSTEM_READY  START.T DROP  
+55 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
+56 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
+57 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
+58 LINE.NUM " LED_STEADY" 24 {stFacilityCmds $TABLE@  $MOVE 
+59 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
+60 LINE.NUM " MCB_RESET_POLE_FANS" 26 {stFacilityCmds $TABLE@  $MOVE 
+61 LINE.NUM " MCB_RESET_TAIL_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
+62 LINE.NUM " MCB_RESET_OTA_BLOWER" 28 {stFacilityCmds $TABLE@  $MOVE 
+63 LINE.NUM " MCB_RESET_PANEL_FANS" 29 {stFacilityCmds $TABLE@  $MOVE 
+64 LINE.NUM " MCB_TRIP_24V_CTRL" 30 {stFacilityCmds $TABLE@  $MOVE 
+65 LINE.NUM " MCB_TRIP_POLE_FANS" 31 {stFacilityCmds $TABLE@  $MOVE 
+66 LINE.NUM " MCB_TRIP_TAIL_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
+67 LINE.NUM " MCB_TRIP_OTA_BLOWER" 33 {stFacilityCmds $TABLE@  $MOVE 
+68 LINE.NUM " MCB_TRIP_PANEL_FANS" 34 {stFacilityCmds $TABLE@  $MOVE 
+70 LINE.NUM &Manual_auto  START.T DROP  
 71 LINE.NUM &Encl_Comm  START.T DROP  
 72 LINE.NUM &Heart_Monitor  START.T DROP  
 73 LINE.NUM &Blink  START.T DROP  
 74 LINE.NUM &Mute_Test_LED  START.T DROP  
-75 LINE.NUM &Powerup  STOP.T 
-4 JUMP ;
-: 0_16
-4 LINE.NUM &Pole_Close  ?RUNNING IF 
-5 LINE.NUM " CLOSING" *sPoleShutterState  $MOVE 
-6 LINE.NUM ELSE 
-6 LINE.NUM &Pole_Open  ?RUNNING IF 
-7 LINE.NUM " OPENING" *sPoleShutterState  $MOVE 
-8 LINE.NUM ELSE 
-9 LINE.NUM ~DI_Pole_Open_LS @@I 0 = ~DI_Pole_Closed_LS @@I 0 = LAND  IF 
-10 LINE.NUM " UNKNOWN" *sPoleShutterState  $MOVE 
-11 LINE.NUM ELSE 
-11 LINE.NUM ~DI_Pole_Open_LS @@I 0 = ~DI_Pole_Closed_LS @@I 1 = LAND  IF 
-12 LINE.NUM " OPEN" *sPoleShutterState  $MOVE 
-13 LINE.NUM ELSE 
-13 LINE.NUM ~DI_Pole_Open_LS @@I 1 = ~DI_Pole_Closed_LS @@I 0 = LAND  IF 
-14 LINE.NUM " CLOSED" *sPoleShutterState  $MOVE 
-15 LINE.NUM ELSE 
-15 LINE.NUM ~DI_Pole_Open_LS @@I 1 = ~DI_Pole_Closed_LS @@I 1 = LAND  IF 
-16 LINE.NUM " STOPPED" *sPoleShutterState  $MOVE 
-17 LINE.NUM THEN THEN THEN THEN 
-18 LINE.NUM THEN THEN 
-24 LINE.NUM &Tail_Close  ?RUNNING IF 
-25 LINE.NUM " CLOSING" *sTailShutterState  $MOVE 
-26 LINE.NUM ELSE 
-26 LINE.NUM &Tail_Open  ?RUNNING IF 
-27 LINE.NUM " OPENING" *sTailShutterState  $MOVE 
-28 LINE.NUM ELSE 
-29 LINE.NUM ~DI_Tail_Open_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
-30 LINE.NUM " UNKNOWN" *sTailShutterState  $MOVE 
-31 LINE.NUM ELSE 
-31 LINE.NUM ~DI_Tail_Open_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
-32 LINE.NUM " OPEN" *sTailShutterState  $MOVE 
-33 LINE.NUM ELSE 
-33 LINE.NUM ~DI_Tail_Open_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
-34 LINE.NUM " CLOSED" *sTailShutterState  $MOVE 
-35 LINE.NUM ELSE 
-35 LINE.NUM ~DI_Tail_Open_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
-36 LINE.NUM " STOPPED" *sTailShutterState  $MOVE 
-37 LINE.NUM THEN THEN THEN THEN 
-38 LINE.NUM THEN THEN 
-2 JUMP ;
+75 LINE.NUM &SYSTEM_READY  START.T DROP  
+76 LINE.NUM &TestErrors  START.T DROP  
+77 LINE.NUM &TestFaults  START.T DROP  
+0 JUMP ;
 : 0_19
 1 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
-3 LINE.NUM 5 I>F ~AO_Panel_Fans_VDC @! 
-4 LINE.NUM 2.000000e+001  FDELAY 
-5 LINE.NUM ~AI_CabFanIntake_TACH  MAX@F ^nMaxFanTach F@! 
-6 LINE.NUM ^nMaxFanTach @@ 100 >= IF 
+2 LINE.NUM |PanelFans 5 I>F  $0008.. 3 ROLL !PID 
+3 LINE.NUM 1.500000e+001  FDELAY 
+6 LINE.NUM ~AI_CabFanIntake_TACH @@ 100 I>F F>= IF 
 7 LINE.NUM 5 ^nFanCtrlMax @! 
 8 LINE.NUM ELSE 
-9 LINE.NUM 10 I>F ~AO_Panel_Fans_VDC @! 
-10 LINE.NUM 2.000000e+001  FDELAY 
-11 LINE.NUM ^nMaxFanTach @@ 100 >= IF 
+9 LINE.NUM |PanelFans 10 I>F  $0008.. 3 ROLL !PID 
+10 LINE.NUM 1.500000e+001  FDELAY 
+11 LINE.NUM ~AI_CabFanIntake_TACH @@ 100 I>F F>= IF 
 12 LINE.NUM 10 ^nFanCtrlMax @! 
 13 LINE.NUM ELSE 
 14 LINE.NUM 5 ^nFanCtrlMax @! 
@@ -2418,24 +2384,21 @@ T;
 
 17 LINE.NUM THEN 
 18 LINE.NUM THEN 
-19 LINE.NUM 0 I>F ~AO_Panel_Fans_VDC @! 
-20 LINE.NUM 1.000000e+001  FDELAY 
 22 LINE.NUM |PanelFans ^nFanCtrlMax @@F  $2000.. 3 ROLL !PID 
 23 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
 2 JUMP ;
 : 0_22
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
--3 JUMP ;
+0 JUMP ;
 : 0_26
 1 LINE.NUM " Rev.3" *sSWVersion  $MOVE 
 2 LINE.NUM *sFWVersion  Rev>$ 
-3 LINE.NUM " Aqawan PAC Rev.1" *sICDVersion  $MOVE 
--5 JUMP ;
+3 LINE.NUM " Aqawan_PAC_Rev.1" *sICDVersion  $MOVE 
+-4 JUMP ;
 T: T0
 DUMMY
 0_0
 0_14
-0_16
 0_19
 0_22
 0_26
@@ -2449,30 +2412,33 @@ T;
 6 LINE.NUM THEN 
 1 JUMP ;
 : 17_13
-1 LINE.NUM ~DI_FanAuto_SW  CLR.+LATCH@I ~DI_FanStop_SW @@I LAND  IF 
-2 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
-3 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+1 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
+2 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
-5 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-6 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
-8 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-9 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
-10 LINE.NUM ELSE 
-10 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
-11 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
-13 LINE.NUM ELSE 
-14 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-15 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
-16 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
+5 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
+6 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+7 LINE.NUM THEN 
+8 LINE.NUM ELSE 
+8 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+9 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+10 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
+11 LINE.NUM ELSE 
+11 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
+12 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+13 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
+14 LINE.NUM ELSE 
+14 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
+15 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+17 LINE.NUM ELSE 
+18 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+19 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
+20 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
 
-17 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-18 LINE.NUM *sTimestamp *sErrorList $CAT 
+21 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+22 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-19 LINE.NUM THEN 
-20 LINE.NUM THEN THEN THEN THEN 
+23 LINE.NUM THEN 
+24 LINE.NUM THEN THEN THEN THEN 
 -2 JUMP ;
 : 17_18
 9 LINE.NUM ^dtOneWeek @@F 0 I>F F= IF 
@@ -2481,34 +2447,37 @@ T;
 12 LINE.NUM THEN 
 2 JUMP ;
 : 17_25
-1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW  CLR.+LATCH@I LAND  IF 
-2 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-3 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-4 LINE.NUM " AUTO" *sOTAblowerOpMode  $MOVE 
-5 LINE.NUM ELSE 
-5 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
-6 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
-7 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
-8 LINE.NUM " MANUAL" *sOTAblowerOpMode  $MOVE 
+1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+2 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+4 LINE.NUM ELSE 
+5 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+6 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+7 LINE.NUM " AUTO" *sOTAblowerOpMode  $MOVE 
+8 LINE.NUM THEN 
 9 LINE.NUM ELSE 
-9 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
-10 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-11 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-12 LINE.NUM " DISABLED" *sOTAblowerOpMode  $MOVE 
+9 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+10 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
+11 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
+12 LINE.NUM " MANUAL" *sOTAblowerOpMode  $MOVE 
 13 LINE.NUM ELSE 
-13 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
-14 LINE.NUM *sOTAblowerOpMode " UNKNOWN" $= IF 
-16 LINE.NUM ELSE 
-17 LINE.NUM " UNKNOWN" *sOTAblowerOpMode  $MOVE 
-18 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-19 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-20 LINE.NUM " , OTAblowerOpMode=UNKNOWN " *sErrorList $CAT 
+13 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+14 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+15 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+16 LINE.NUM " DISABLED" *sOTAblowerOpMode  $MOVE 
+17 LINE.NUM ELSE 
+17 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+18 LINE.NUM *sOTAblowerOpMode " UNKNOWN" $= IF 
+20 LINE.NUM ELSE 
+21 LINE.NUM " UNKNOWN" *sOTAblowerOpMode  $MOVE 
+22 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+23 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+24 LINE.NUM " , OTAblowerOpMode=UNKNOWN " *sErrorList $CAT 
 
-21 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-22 LINE.NUM *sTimestamp *sErrorList $CAT 
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-23 LINE.NUM THEN 
-24 LINE.NUM THEN THEN THEN THEN 
+27 LINE.NUM THEN 
+28 LINE.NUM THEN THEN THEN THEN 
 0 JUMP ;
 : 17_28
 4 LINE.NUM ~DI_GoFast_SW @@I ~DI_FenceClosed_SEN @@I LOR  ~DI_TrapKey_SW @@I LOR  IF 
@@ -2666,7 +2635,7 @@ T;
 1 LINE.NUM 0 ~DO_TailDirection @! 
 2 LINE.NUM 0 ~DO_TailStop @! 
 3 LINE.NUM 1 ~DO_TailEnable @! 
-4 LINE.NUM 90 I>F ^dtTailTimer @! 
+4 LINE.NUM ^nTimeoutLength @@F ^dtTailTimer @! 
 5 LINE.NUM ^dtTailTimer  StartTimer 
 6 JUMP ;
 : 24_11
@@ -2765,7 +2734,7 @@ T;
 1 LINE.NUM 1 ~DO_TailDirection @! 
 2 LINE.NUM 0 ~DO_TailStop @! 
 3 LINE.NUM 1 ~DO_TailEnable @! 
-4 LINE.NUM 90 I>F ^dtTailTimer @! 
+4 LINE.NUM ^nTimeoutLength @@F ^dtTailTimer @! 
 5 LINE.NUM ^dtTailTimer  StartTimer 
 8 JUMP ;
 : 25_9
@@ -3162,6 +3131,7 @@ CREATE V.ARRAY
 ^nStringLength ,
 ^nStringPosition ,
 ^nTailTimeoutCounter ,
+^nTimeoutLength ,
 ^OLD_COOLING_FAN_FREQ ,
 ^OPEN_SLOW ,
 ^PANEL_FANS_OK ,
@@ -3295,6 +3265,9 @@ CREATE P.ARRAY
 ~DI_TrapKey_SW ,
 ~DI_Tscope_MCB ,
 ~DI_UltimateClosed_LS ,
+~DI_UpsAlarm ,
+~DI_UpsBattCharge ,
+~DI_UpsBattMode ,
 ~DI_Utility_TVS ,
 ~DI_Webcam_MCB ,
 ~DO_24vCTRL_MCB ,
@@ -3437,6 +3410,7 @@ CONFIG_PORTS
 0 ^nStringLength @!
 0 ^nStringPosition @!
 0 ^nTailTimeoutCounter @!
+0 ^nTimeoutLength @!
 0.00000000 ^OLD_COOLING_FAN_FREQ @!
 0 ^OPEN_SLOW @!
 0 ^PANEL_FANS_OK @!
@@ -3550,9 +3524,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 06/05/14 " ;
-: TIMESTAMP ." 00:25:59 " ;
-: CRCSTAMP  ." 6248657E7BE5ACB20B494C645204227C " ;
+: DATESTAMP ." 06/06/14 " ;
+: TIMESTAMP ." 01:45:11 " ;
+: CRCSTAMP  ." 019760A8737C4FF480F64DE9953391E5 " ;
 MAKECHECK
 CLEAR.BREAKS
 

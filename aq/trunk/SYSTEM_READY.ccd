@@ -6,30 +6,33 @@
 6 LINE.NUM THEN 
 1 JUMP ;
 : 17_13
-1 LINE.NUM ~DI_FanAuto_SW  CLR.+LATCH@I ~DI_FanStop_SW @@I LAND  IF 
-2 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
-3 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+1 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
+2 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
-5 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-6 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
-8 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-9 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
-10 LINE.NUM ELSE 
-10 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
-11 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
-13 LINE.NUM ELSE 
-14 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-15 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
-16 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
+5 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
+6 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+7 LINE.NUM THEN 
+8 LINE.NUM ELSE 
+8 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+9 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+10 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
+11 LINE.NUM ELSE 
+11 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
+12 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+13 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
+14 LINE.NUM ELSE 
+14 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
+15 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+17 LINE.NUM ELSE 
+18 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+19 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
+20 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
 
-17 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-18 LINE.NUM *sTimestamp *sErrorList $CAT 
+21 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+22 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-19 LINE.NUM THEN 
-20 LINE.NUM THEN THEN THEN THEN 
+23 LINE.NUM THEN 
+24 LINE.NUM THEN THEN THEN THEN 
 -2 JUMP ;
 : 17_18
 9 LINE.NUM ^dtOneWeek @@F 0 I>F F= IF 
@@ -38,34 +41,37 @@
 12 LINE.NUM THEN 
 2 JUMP ;
 : 17_25
-1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW  CLR.+LATCH@I LAND  IF 
-2 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-3 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-4 LINE.NUM " AUTO" *sOTAblowerOpMode  $MOVE 
-5 LINE.NUM ELSE 
-5 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
-6 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
-7 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
-8 LINE.NUM " MANUAL" *sOTAblowerOpMode  $MOVE 
+1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+2 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+4 LINE.NUM ELSE 
+5 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+6 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+7 LINE.NUM " AUTO" *sOTAblowerOpMode  $MOVE 
+8 LINE.NUM THEN 
 9 LINE.NUM ELSE 
-9 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
-10 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-11 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-12 LINE.NUM " DISABLED" *sOTAblowerOpMode  $MOVE 
+9 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+10 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
+11 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
+12 LINE.NUM " MANUAL" *sOTAblowerOpMode  $MOVE 
 13 LINE.NUM ELSE 
-13 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
-14 LINE.NUM *sOTAblowerOpMode " UNKNOWN" $= IF 
-16 LINE.NUM ELSE 
-17 LINE.NUM " UNKNOWN" *sOTAblowerOpMode  $MOVE 
-18 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-19 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-20 LINE.NUM " , OTAblowerOpMode=UNKNOWN " *sErrorList $CAT 
+13 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+14 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+15 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+16 LINE.NUM " DISABLED" *sOTAblowerOpMode  $MOVE 
+17 LINE.NUM ELSE 
+17 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+18 LINE.NUM *sOTAblowerOpMode " UNKNOWN" $= IF 
+20 LINE.NUM ELSE 
+21 LINE.NUM " UNKNOWN" *sOTAblowerOpMode  $MOVE 
+22 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+23 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+24 LINE.NUM " , OTAblowerOpMode=UNKNOWN " *sErrorList $CAT 
 
-21 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-22 LINE.NUM *sTimestamp *sErrorList $CAT 
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-23 LINE.NUM THEN 
-24 LINE.NUM THEN THEN THEN THEN 
+27 LINE.NUM THEN 
+28 LINE.NUM THEN THEN THEN THEN 
 0 JUMP ;
 : 17_28
 4 LINE.NUM ~DI_GoFast_SW @@I ~DI_FenceClosed_SEN @@I LOR  ~DI_TrapKey_SW @@I LOR  IF 

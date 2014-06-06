@@ -87,6 +87,7 @@ CREATE V.ARRAY
 ^nStringLength ,
 ^nStringPosition ,
 ^nTailTimeoutCounter ,
+^nTimeoutLength ,
 ^OLD_COOLING_FAN_FREQ ,
 ^OPEN_SLOW ,
 ^PANEL_FANS_OK ,
@@ -220,6 +221,9 @@ CREATE P.ARRAY
 ~DI_TrapKey_SW ,
 ~DI_Tscope_MCB ,
 ~DI_UltimateClosed_LS ,
+~DI_UpsAlarm ,
+~DI_UpsBattCharge ,
+~DI_UpsBattMode ,
 ~DI_Utility_TVS ,
 ~DI_Webcam_MCB ,
 ~DO_24vCTRL_MCB ,
@@ -362,6 +366,7 @@ CONFIG_PORTS
 0 ^nStringLength @!
 0 ^nStringPosition @!
 0 ^nTailTimeoutCounter @!
+0 ^nTimeoutLength @!
 0.00000000 ^OLD_COOLING_FAN_FREQ @!
 0 ^OPEN_SLOW @!
 0 ^PANEL_FANS_OK @!

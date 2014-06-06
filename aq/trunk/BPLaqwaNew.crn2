@@ -99,6 +99,7 @@
 0 IVAR ^nStringLength
 0 IVAR ^nStringPosition
 0 IVAR ^nTailTimeoutCounter
+0 IVAR ^nTimeoutLength
 0 FVAR ^OLD_COOLING_FAN_FREQ
 0 IVAR ^OPEN_SLOW
 0 IVAR ^PANEL_FANS_OK
@@ -168,6 +169,9 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  4  0 %encPacInternal 0 POINT.TNG ~DI_PoleFans_MCB
 32  1 SPOINT 0.0     INPUT  5  0 %encPacInternal 0 POINT.TNG ~DI_TailFans_MCB
 32  1 SPOINT 0.0     INPUT  6  0 %encPacInternal 0 POINT.TNG ~DI_24vPSU_OK
+32  1 SPOINT 0.0     INPUT  7  0 %encPacInternal 0 POINT.TNG ~DI_UpsBattCharge
+32  1 SPOINT 0.0     INPUT  8  0 %encPacInternal 0 POINT.TNG ~DI_UpsAlarm
+32  1 SPOINT 0.0     INPUT  9  0 %encPacInternal 0 POINT.TNG ~DI_UpsBattMode
 32  1 SPOINT 0.0     INPUT 11  0 %encPacInternal 0 POINT.TNG ~DI_Tscope_MCB
 32  1 SPOINT 0.0     INPUT 12  0 %encPacInternal 0 POINT.TNG ~DI_Webcam_MCB
 32  1 SPOINT 0.0     INPUT 15  0 %encPacInternal 0 POINT.TNG ~DI_Utility_TVS
@@ -247,4 +251,4 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 1    0.0000   10.0000    0.0000    0.0000    0.0000   10.0000    5.0000   30.0000
    1.0000    0.0000    0.0000    1.0000    0.0000    0.0000
 ~AI_OutletAir_RTD ~AI_CabExhaust_RTD ~AO_Panel_Fans_VDC
-$80000000 0 %encPacInternal 0 PID |PanelFans
+$80000002 0 %encPacInternal 0 PID |PanelFans

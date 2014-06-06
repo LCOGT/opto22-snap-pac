@@ -1,37 +1,22 @@
 : 19_0
-3 JUMP ;
+1 JUMP ;
 : 19_7
 
 1 LINE.NUM
   1000    DELAY
-2 JUMP ;
-: 19_12
-1 LINE.NUM &Pole_Close  START.T DROP  
-2 LINE.NUM &Tail_Close  START.T DROP  
+0 JUMP ;
+: 19_15
+2 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= LAND  IF 
+3 LINE.NUM &Close_Sequential  START.T DROP  
+4 LINE.NUM ELSE 
+4 LINE.NUM *sEnclOpMode " AUTO" $= ~DI_24vPSU_OK @@I 0 = LAND  IF 
+5 LINE.NUM &Close_Sequential  START.T DROP  
+6 LINE.NUM THEN THEN 
 -2 JUMP ;
-: 19_3
-TRUE
-
-1 LINE.NUM
-  ^dtHeartbeat   T0=
-LAND
-IF -2 ELSE -3 THEN JUMP ;
-: 19_4
-TRUE
-
-1 LINE.NUM
-  *sEnclOpMode
- 
-  " AUTO" 
-   $=
-LAND
-IF -2 ELSE -4 THEN JUMP ;
 T: T19
 DUMMY
 19_0
 19_7
-19_12
-19_3
-19_4
+19_15
 T;
 &Heart_Monitor ' T19 SETTASK
