@@ -319,15 +319,16 @@ T;
 : 27_0
 0 JUMP ;
 : 27_1
-1 LINE.NUM &Pole_Close  START.T DROP  
-2 LINE.NUM 360 I>F ^dtSequential @! 
-3 LINE.NUM ^dtSequential  StartTimer 
-4 LINE.NUM BEGIN ^dtSequential @@F 0 I>F F> WHILE 
-5 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = IF 
-6 LINE.NUM 0 I>F ^dtSequential @! 
-7 LINE.NUM THEN 
-8 LINE.NUM REPEAT 
-9 LINE.NUM &Tail_Close  START.T DROP  
+4 LINE.NUM &Tail_Close  STOP.T 
+5 LINE.NUM &Tail_Open  STOP.T 
+6 LINE.NUM 0 ~DO_TailEnable @! 
+7 LINE.NUM 1 ~DO_TailStop @! 
+12 LINE.NUM &Pole_Close  START.T DROP  
+13 LINE.NUM BEGIN &Pole_Close  ?RUNNING WHILE 
+15 LINE.NUM REPEAT 
+20 LINE.NUM &Tail_Close  START.T DROP  
+21 LINE.NUM BEGIN &Tail_Close  ?RUNNING WHILE 
+23 LINE.NUM REPEAT 
 0 JUMP ;
 T: T27
 DUMMY
@@ -453,114 +454,115 @@ T;
 : 21_76
 -11 JUMP ;
 : 21_77
-1 LINE.NUM " STOP" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-2 LINE.NUM ^nFindCmd @@ -1 > IF 
-3 LINE.NUM &Pole_Close  STOP.T 
-4 LINE.NUM &Pole_Open  STOP.T 
-5 LINE.NUM &Tail_Close  STOP.T 
-6 LINE.NUM &Tail_Open  STOP.T 
-7 LINE.NUM &Close_Sequential  STOP.T 
-8 LINE.NUM 0 ~DO_PoleEnable @! 
-9 LINE.NUM 1 ~DO_PoleStop @! 
-10 LINE.NUM 0 ~DO_TailEnable @! 
-11 LINE.NUM 1 ~DO_TailStop @! 
-12 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-13 LINE.NUM THEN 
-15 LINE.NUM " OPEN_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-16 LINE.NUM ^nFindCmd @@ -1 > IF 
-17 LINE.NUM ^nPoleOpenFault @@ 0 < ^nTailOpenFault @@ 0 < LAND  IF 
-18 LINE.NUM &Pole_Open  START.T DROP  
-19 LINE.NUM &Tail_Open  START.T DROP  
-20 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-21 LINE.NUM ELSE 
-21 LINE.NUM ^nPoleOpenFault @@ 0 >= IF 
-22 LINE.NUM " Success=FALSE, Shutter 2 opening, shutter 1 is faulted" *sEnclStatus  $MOVE 
+1 LINE.NUM &Close_Sequential  STOP.T 
+3 LINE.NUM " STOP" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+4 LINE.NUM ^nFindCmd @@ -1 > IF 
+5 LINE.NUM &Pole_Close  STOP.T 
+6 LINE.NUM &Pole_Open  STOP.T 
+7 LINE.NUM &Tail_Close  STOP.T 
+8 LINE.NUM &Tail_Open  STOP.T 
+9 LINE.NUM &Close_Sequential  STOP.T 
+10 LINE.NUM 0 ~DO_PoleEnable @! 
+11 LINE.NUM 1 ~DO_PoleStop @! 
+12 LINE.NUM 0 ~DO_TailEnable @! 
+13 LINE.NUM 1 ~DO_TailStop @! 
+14 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+15 LINE.NUM THEN 
+17 LINE.NUM " OPEN_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+18 LINE.NUM ^nFindCmd @@ -1 > IF 
+19 LINE.NUM ^nPoleOpenFault @@ 0 < ^nTailOpenFault @@ 0 < LAND  IF 
+20 LINE.NUM &Pole_Open  START.T DROP  
+21 LINE.NUM &Tail_Open  START.T DROP  
+22 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 23 LINE.NUM ELSE 
-23 LINE.NUM ^nTailOpenFault @@ 0 >= IF 
-24 LINE.NUM " Success=FALSE, Shutter 1 opening, shutter 2 is faulted" *sEnclStatus  $MOVE 
+23 LINE.NUM ^nPoleOpenFault @@ 0 >= IF 
+24 LINE.NUM " Success=FALSE, Shutter 2 opening, shutter 1 is faulted" *sEnclStatus  $MOVE 
 25 LINE.NUM ELSE 
-25 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nTailOpenFault @@ 0 = LAND  IF 
-26 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-27 LINE.NUM THEN THEN THEN THEN 
-28 LINE.NUM THEN 
-30 LINE.NUM " CLOSE_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-31 LINE.NUM ^nFindCmd @@ -1 > IF 
-32 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-33 LINE.NUM &Pole_Close  START.T DROP  
-34 LINE.NUM &Tail_Close  START.T DROP  
-35 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-36 LINE.NUM ELSE 
-36 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-37 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
+25 LINE.NUM ^nTailOpenFault @@ 0 >= IF 
+26 LINE.NUM " Success=FALSE, Shutter 1 opening, shutter 2 is faulted" *sEnclStatus  $MOVE 
+27 LINE.NUM ELSE 
+27 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nTailOpenFault @@ 0 = LAND  IF 
+28 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+29 LINE.NUM THEN THEN THEN THEN 
+30 LINE.NUM THEN 
+32 LINE.NUM " CLOSE_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+33 LINE.NUM ^nFindCmd @@ -1 > IF 
+34 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+35 LINE.NUM &Pole_Close  START.T DROP  
+36 LINE.NUM &Tail_Close  START.T DROP  
+37 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 38 LINE.NUM ELSE 
-38 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-39 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+38 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+39 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
 40 LINE.NUM ELSE 
-40 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-41 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-42 LINE.NUM THEN THEN THEN THEN 
-43 LINE.NUM THEN 
-45 LINE.NUM " CLOSE_SEQUENTIAL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-46 LINE.NUM ^nFindCmd @@ -1 > IF 
-47 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-48 LINE.NUM &Close_Sequential  START.T DROP  
-49 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-50 LINE.NUM ELSE 
-50 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-51 LINE.NUM &Tail_Close  START.T DROP  
-52 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
-53 LINE.NUM ELSE 
-53 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-54 LINE.NUM &Pole_Close  START.T DROP  
-55 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
-56 LINE.NUM ELSE 
-56 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-57 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-58 LINE.NUM THEN THEN THEN THEN 
-59 LINE.NUM THEN 
-61 LINE.NUM " OPEN_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-62 LINE.NUM ^nFindCmd @@ -1 > IF 
-63 LINE.NUM ^nPoleOpenFault @@ 0 < IF 
-64 LINE.NUM &Pole_Open  START.T DROP  
-65 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-66 LINE.NUM ELSE 
-67 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
-68 LINE.NUM THEN 
-69 LINE.NUM THEN 
-71 LINE.NUM " CLOSE_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-72 LINE.NUM ^nFindCmd @@ -1 > IF 
-73 LINE.NUM ^nPoleCloseFault @@ 0 < IF 
-74 LINE.NUM &Pole_Close  START.T DROP  
-75 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-76 LINE.NUM ELSE 
-77 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
-78 LINE.NUM THEN 
-79 LINE.NUM THEN 
-81 LINE.NUM " OPEN_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-82 LINE.NUM ^nFindCmd @@ -1 > IF 
-83 LINE.NUM ^nTailOpenFault @@ 0 < IF 
-84 LINE.NUM &Tail_Open  START.T DROP  
-85 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-86 LINE.NUM ELSE 
-87 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
-88 LINE.NUM THEN 
-89 LINE.NUM THEN 
-91 LINE.NUM " CLOSE_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-92 LINE.NUM ^nFindCmd @@ -1 > IF 
-93 LINE.NUM ^nTailOpenFault @@ 0 < IF 
-94 LINE.NUM &Tail_Close  START.T DROP  
-95 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-96 LINE.NUM ELSE 
-97 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
-98 LINE.NUM THEN 
-99 LINE.NUM THEN 
-101 LINE.NUM "  " *sEnclStatus $CAT 
+40 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+41 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+42 LINE.NUM ELSE 
+42 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+43 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+44 LINE.NUM THEN THEN THEN THEN 
+45 LINE.NUM THEN 
+47 LINE.NUM " CLOSE_SEQUENTIAL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+48 LINE.NUM ^nFindCmd @@ -1 > IF 
+49 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+50 LINE.NUM &Close_Sequential  START.T DROP  
+51 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+52 LINE.NUM ELSE 
+52 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+53 LINE.NUM &Tail_Close  START.T DROP  
+54 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
+55 LINE.NUM ELSE 
+55 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+56 LINE.NUM &Pole_Close  START.T DROP  
+57 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+58 LINE.NUM ELSE 
+58 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+59 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+60 LINE.NUM THEN THEN THEN THEN 
+61 LINE.NUM THEN 
+63 LINE.NUM " OPEN_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+64 LINE.NUM ^nFindCmd @@ -1 > IF 
+65 LINE.NUM ^nPoleOpenFault @@ 0 < IF 
+66 LINE.NUM &Pole_Open  START.T DROP  
+67 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+68 LINE.NUM ELSE 
+69 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+70 LINE.NUM THEN 
+71 LINE.NUM THEN 
+73 LINE.NUM " CLOSE_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+74 LINE.NUM ^nFindCmd @@ -1 > IF 
+75 LINE.NUM ^nPoleCloseFault @@ 0 < IF 
+76 LINE.NUM &Pole_Close  START.T DROP  
+77 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+78 LINE.NUM ELSE 
+79 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+80 LINE.NUM THEN 
+81 LINE.NUM THEN 
+83 LINE.NUM " OPEN_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+84 LINE.NUM ^nFindCmd @@ -1 > IF 
+85 LINE.NUM ^nTailOpenFault @@ 0 < IF 
+86 LINE.NUM &Tail_Open  START.T DROP  
+87 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+88 LINE.NUM ELSE 
+89 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+90 LINE.NUM THEN 
+91 LINE.NUM THEN 
+93 LINE.NUM " CLOSE_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+94 LINE.NUM ^nFindCmd @@ -1 > IF 
+95 LINE.NUM ^nTailOpenFault @@ 0 < IF 
+96 LINE.NUM &Tail_Close  START.T DROP  
+97 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+98 LINE.NUM ELSE 
+99 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+100 LINE.NUM THEN 
+101 LINE.NUM THEN 
+103 LINE.NUM "  " *sEnclStatus $CAT 
 
-102 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-103 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+104 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+105 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-105 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-106 LINE.NUM " " *sEnclStatus  $MOVE 
+107 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+108 LINE.NUM " " *sEnclStatus  $MOVE 
 -2 JUMP ;
 : 21_80
 12 LINE.NUM 0 ^nCmdFound @! 
@@ -1646,21 +1648,35 @@ T;
   1000    DELAY
 0 JUMP ;
 : 19_15
-2 LINE.NUM *sEnclOpMode " AUTO" $= IF 
-3 LINE.NUM ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  IF 
-4 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-5 LINE.NUM &Close_Sequential  START.T DROP  
-6 LINE.NUM ELSE 
-6 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-7 LINE.NUM &Tail_Close  START.T DROP  
-8 LINE.NUM ELSE 
-8 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-9 LINE.NUM &Pole_Close  START.T DROP  
-10 LINE.NUM ELSE 
-10 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-12 LINE.NUM THEN THEN THEN THEN 
-13 LINE.NUM THEN 
-14 LINE.NUM THEN 
+7 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  LAND  IF 
+11 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+12 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+13 LINE.NUM &Close_Sequential  START.T DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+15 LINE.NUM &Tail_Close  START.T DROP  
+16 LINE.NUM ELSE 
+16 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+17 LINE.NUM &Pole_Close  START.T DROP  
+18 LINE.NUM ELSE 
+18 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+20 LINE.NUM THEN THEN THEN THEN 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+26 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+28 LINE.NUM ELSE 
+29 LINE.NUM &Pole_Close  START.T DROP  
+30 LINE.NUM THEN 
+35 LINE.NUM ELSE 
+35 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+36 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+38 LINE.NUM ELSE 
+39 LINE.NUM &Tail_Close  START.T DROP  
+40 LINE.NUM THEN 
+45 LINE.NUM ELSE 
+45 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+47 LINE.NUM THEN THEN THEN THEN 
+48 LINE.NUM THEN 
 -2 JUMP ;
 T: T19
 DUMMY
@@ -2361,8 +2377,6 @@ T;
 14 LINE.NUM 0 ~DO_Sounder @! 
 15 LINE.NUM 120 ^nTimeoutLength @! 
 17 LINE.NUM 0 I>F ^dt24h @! 
-18 LINE.NUM " " *sFaultList  $MOVE 
-19 LINE.NUM " " *sErrorList  $MOVE 
 20 LINE.NUM " " *sEnclStatus  $MOVE 
 21 LINE.NUM " " *sWallFansOpMode  $MOVE 
 22 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
@@ -2380,9 +2394,9 @@ T;
 36 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
 37 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
 38 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
-39 LINE.NUM 
-" ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
-40 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
+39 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
+40 LINE.NUM " OTA_BLOWER_A_HI" 6 
+{stFacilityCmds $TABLE@  $MOVE 
 41 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
 42 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@  $MOVE 
 43 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
@@ -2396,10 +2410,10 @@ T;
 51 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
 52 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
 53 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
-54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@ 
- $MOVE 
+54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
 55 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
-56 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
+56 LINE.NUM 
+" SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
 57 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
 58 LINE.NUM " LED_STEADY" 24 {stFacilityCmds $TABLE@  $MOVE 
 59 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
@@ -2447,7 +2461,7 @@ T;
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 0 JUMP ;
 : 0_26
-1 LINE.NUM " Rev.3" *sSWVersion  $MOVE 
+1 LINE.NUM " Rev.4" *sSWVersion  $MOVE 
 2 LINE.NUM *sFWVersion  Rev>$ 
 3 LINE.NUM " Aqawan_PAC_Rev.1" *sICDVersion  $MOVE 
 -4 JUMP ;
@@ -3595,7 +3609,7 @@ T;
    &_INIT_IO START.T DROP
    ;
 : DATESTAMP ." 06/10/14 " ;
-: TIMESTAMP ." 01:42:32 " ;
+: TIMESTAMP ." 22:38:12 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

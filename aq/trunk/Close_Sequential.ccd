@@ -1,15 +1,16 @@
 : 27_0
 0 JUMP ;
 : 27_1
-1 LINE.NUM &Pole_Close  START.T DROP  
-2 LINE.NUM 360 I>F ^dtSequential @! 
-3 LINE.NUM ^dtSequential  StartTimer 
-4 LINE.NUM BEGIN ^dtSequential @@F 0 I>F F> WHILE 
-5 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = IF 
-6 LINE.NUM 0 I>F ^dtSequential @! 
-7 LINE.NUM THEN 
-8 LINE.NUM REPEAT 
-9 LINE.NUM &Tail_Close  START.T DROP  
+4 LINE.NUM &Tail_Close  STOP.T 
+5 LINE.NUM &Tail_Open  STOP.T 
+6 LINE.NUM 0 ~DO_TailEnable @! 
+7 LINE.NUM 1 ~DO_TailStop @! 
+12 LINE.NUM &Pole_Close  START.T DROP  
+13 LINE.NUM BEGIN &Pole_Close  ?RUNNING WHILE 
+15 LINE.NUM REPEAT 
+20 LINE.NUM &Tail_Close  START.T DROP  
+21 LINE.NUM BEGIN &Tail_Close  ?RUNNING WHILE 
+23 LINE.NUM REPEAT 
 0 JUMP ;
 T: T27
 DUMMY

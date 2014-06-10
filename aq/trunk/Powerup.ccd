@@ -17,8 +17,6 @@
 14 LINE.NUM 0 ~DO_Sounder @! 
 15 LINE.NUM 120 ^nTimeoutLength @! 
 17 LINE.NUM 0 I>F ^dt24h @! 
-18 LINE.NUM " " *sFaultList  $MOVE 
-19 LINE.NUM " " *sErrorList  $MOVE 
 20 LINE.NUM " " *sEnclStatus  $MOVE 
 21 LINE.NUM " " *sWallFansOpMode  $MOVE 
 22 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
@@ -36,9 +34,9 @@
 36 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
 37 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
 38 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
-39 LINE.NUM 
-" ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
-40 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
+39 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
+40 LINE.NUM " OTA_BLOWER_A_HI" 6 
+{stFacilityCmds $TABLE@  $MOVE 
 41 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
 42 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@  $MOVE 
 43 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
@@ -52,10 +50,10 @@
 51 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
 52 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
 53 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
-54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@ 
- $MOVE 
+54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
 55 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
-56 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
+56 LINE.NUM 
+" SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
 57 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
 58 LINE.NUM " LED_STEADY" 24 {stFacilityCmds $TABLE@  $MOVE 
 59 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
@@ -103,7 +101,7 @@
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 0 JUMP ;
 : 0_26
-1 LINE.NUM " Rev.3" *sSWVersion  $MOVE 
+1 LINE.NUM " Rev.4" *sSWVersion  $MOVE 
 2 LINE.NUM *sFWVersion  Rev>$ 
 3 LINE.NUM " Aqawan_PAC_Rev.1" *sICDVersion  $MOVE 
 -4 JUMP ;

@@ -6,21 +6,35 @@
   1000    DELAY
 0 JUMP ;
 : 19_15
-2 LINE.NUM *sEnclOpMode " AUTO" $= IF 
-3 LINE.NUM ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  IF 
-4 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-5 LINE.NUM &Close_Sequential  START.T DROP  
-6 LINE.NUM ELSE 
-6 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-7 LINE.NUM &Tail_Close  START.T DROP  
-8 LINE.NUM ELSE 
-8 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-9 LINE.NUM &Pole_Close  START.T DROP  
-10 LINE.NUM ELSE 
-10 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-12 LINE.NUM THEN THEN THEN THEN 
-13 LINE.NUM THEN 
-14 LINE.NUM THEN 
+7 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  LAND  IF 
+11 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+12 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+13 LINE.NUM &Close_Sequential  START.T DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+15 LINE.NUM &Tail_Close  START.T DROP  
+16 LINE.NUM ELSE 
+16 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+17 LINE.NUM &Pole_Close  START.T DROP  
+18 LINE.NUM ELSE 
+18 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+20 LINE.NUM THEN THEN THEN THEN 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+26 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+28 LINE.NUM ELSE 
+29 LINE.NUM &Pole_Close  START.T DROP  
+30 LINE.NUM THEN 
+35 LINE.NUM ELSE 
+35 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+36 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+38 LINE.NUM ELSE 
+39 LINE.NUM &Tail_Close  START.T DROP  
+40 LINE.NUM THEN 
+45 LINE.NUM ELSE 
+45 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+47 LINE.NUM THEN THEN THEN THEN 
+48 LINE.NUM THEN 
 -2 JUMP ;
 T: T19
 DUMMY
