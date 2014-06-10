@@ -1,0 +1,18 @@
+: 35_0
+0 JUMP ;
+: 35_1
+1 LINE.NUM BEGIN 1 WHILE 
+5 LINE.NUM 1 I>F ^dtBlink @! 
+6 LINE.NUM ^dtBlink  StartTimer 
+7 LINE.NUM BEGIN ^dtBlink @@F 0 I>F F> WHILE 
+9 LINE.NUM REPEAT 
+10 LINE.NUM ^nBlink @@ 1 XOR  ^nBlink @! 
+12 LINE.NUM 1  DELAY 
+14 LINE.NUM REPEAT 
+0 JUMP ;
+T: T35
+DUMMY
+35_0
+35_1
+T;
+&Blink ' T35 SETTASK
