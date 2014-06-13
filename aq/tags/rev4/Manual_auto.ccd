@@ -1,0 +1,134 @@
+: 3_0
+6 JUMP ;
+: 3_193
+
+1 LINE.NUM
+  100    DELAY
+5 JUMP ;
+: 3_205
+1 LINE.NUM *sEnclOpMode " DISABLED" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM " DISABLED" *sEnclOpMode  $MOVE 
+5 LINE.NUM &Pendant_manual  STOP.T 
+6 LINE.NUM &Pole_Close  STOP.T 
+7 LINE.NUM &Pole_Open  STOP.T 
+8 LINE.NUM &Tail_Close  STOP.T 
+9 LINE.NUM &Tail_Open  STOP.T 
+10 LINE.NUM &Close_Sequential  STOP.T 
+11 LINE.NUM 0 ~DO_PoleEnable @! 
+12 LINE.NUM 1 ~DO_PoleStop @! 
+13 LINE.NUM 0 ~DO_TailEnable @! 
+14 LINE.NUM 1 ~DO_TailStop @! 
+15 LINE.NUM THEN 
+-2 JUMP ;
+: 3_212
+1 LINE.NUM *sEnclOpMode " MANUAL" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM &Pole_Close  STOP.T 
+5 LINE.NUM &Pole_Open  STOP.T 
+6 LINE.NUM &Tail_Close  STOP.T 
+7 LINE.NUM &Tail_Open  STOP.T 
+8 LINE.NUM &Close_Sequential  STOP.T 
+9 LINE.NUM 0 ~DO_PoleEnable @! 
+10 LINE.NUM 1 ~DO_PoleStop @! 
+11 LINE.NUM 0 ~DO_TailEnable @! 
+12 LINE.NUM 1 ~DO_TailStop @! 
+13 LINE.NUM &Pendant_manual  START.T DROP  
+14 LINE.NUM " MANUAL" *sEnclOpMode  $MOVE 
+15 LINE.NUM THEN 
+-3 JUMP ;
+: 3_217
+1 LINE.NUM *sEnclOpMode " AUTO" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM &Pendant_manual  STOP.T 
+5 LINE.NUM &Pole_Close  STOP.T 
+6 LINE.NUM &Pole_Open  STOP.T 
+7 LINE.NUM &Tail_Close  STOP.T 
+8 LINE.NUM &Tail_Open  STOP.T 
+9 LINE.NUM &Close_Sequential  STOP.T 
+10 LINE.NUM 0 ~DO_PoleEnable @! 
+11 LINE.NUM 1 ~DO_PoleStop @! 
+12 LINE.NUM 0 ~DO_TailEnable @! 
+13 LINE.NUM 1 ~DO_TailStop @! 
+14 LINE.NUM " AUTO" *sEnclOpMode  $MOVE 
+15 LINE.NUM THEN 
+-4 JUMP ;
+: 3_220
+1 LINE.NUM *sEnclOpMode " UNKNOWN" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM " UNKNOWN" *sEnclOpMode  $MOVE 
+5 LINE.NUM " , EnclOpMode=UNKNOWN " *sFaultList $CAT 
+
+6 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+7 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+8 LINE.NUM &Pendant_manual  STOP.T 
+9 LINE.NUM &Pole_Close  STOP.T 
+10 LINE.NUM &Pole_Open  STOP.T 
+11 LINE.NUM &Tail_Close  STOP.T 
+12 LINE.NUM &Tail_Open  STOP.T 
+13 LINE.NUM &Close_Sequential  STOP.T 
+14 LINE.NUM 0 ~DO_PoleEnable @! 
+15 LINE.NUM 1 ~DO_PoleStop @! 
+16 LINE.NUM 0 ~DO_TailEnable @! 
+17 LINE.NUM 1 ~DO_TailStop @! 
+18 LINE.NUM THEN 
+-5 JUMP ;
+: 3_1
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofDisable_SW   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_RoofAuto_SW   ?OFF
+LAND
+IF -4 ELSE 1 THEN JUMP ;
+: 3_2
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofAuto_SW   ?OFF
+LAND
+
+2 LINE.NUM
+  ~DI_RoofDisable_SW   ?OFF
+LAND
+IF -6 ELSE -2 THEN JUMP ;
+: 3_122
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofAuto_SW   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_RoofDisable_SW   ?ON
+LAND
+IF -5 ELSE 0 THEN JUMP ;
+: 3_204
+TRUE
+
+1 LINE.NUM
+  ~DI_RoofAuto_SW   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_RoofDisable_SW   ?OFF
+LAND
+IF -5 ELSE -9 THEN JUMP ;
+T: T3
+DUMMY
+3_0
+3_193
+3_205
+3_212
+3_217
+3_220
+3_1
+3_2
+3_122
+3_204
+T;
+&Manual_auto ' T3 SETTASK
