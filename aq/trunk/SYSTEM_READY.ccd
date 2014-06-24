@@ -6,33 +6,49 @@
 6 LINE.NUM THEN 
 1 JUMP ;
 : 17_13
-1 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
-2 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-4 LINE.NUM ELSE 
-5 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
-6 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-7 LINE.NUM THEN 
-8 LINE.NUM ELSE 
-8 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
-9 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-10 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
+4 LINE.NUM &Pole_Close  ?RUNNING &Pole_Open  ?RUNNING LOR  &Tail_Close  ?RUNNING LOR  &Tail_Open  ?RUNNING LOR  IF 
+9 LINE.NUM ^nPauseWallFans @@ 1 = IF 
 11 LINE.NUM ELSE 
-11 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
-12 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-13 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
-14 LINE.NUM ELSE 
-14 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
-15 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
-17 LINE.NUM ELSE 
-18 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-19 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
-20 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
+12 LINE.NUM 1 ^nPauseWallFans @! 
+13 LINE.NUM ~AO_Wall_Fans_VDC @@ ^nOldWallFanCtrl F@! 
+14 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+16 LINE.NUM THEN 
+17 LINE.NUM THEN 
+23 LINE.NUM &Pole_Close  ?STOPPED &Pole_Open  ?STOPPED LAND  &Tail_Close  ?STOPPED LAND  &Tail_Open  ?STOPPED LAND  ^nPauseWallFans @@ 1 = LAND  IF 
+29 LINE.NUM 0 ^nPauseWallFans @! 
+30 LINE.NUM ^nOldWallFanCtrl @@F ~AO_Wall_Fans_VDC @! 
+31 LINE.NUM &TestEnclFans  START.T DROP  
+32 LINE.NUM THEN 
+38 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
+39 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
+41 LINE.NUM ELSE 
+42 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
+43 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+44 LINE.NUM THEN 
+45 LINE.NUM ELSE 
+45 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+46 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+48 LINE.NUM ELSE 
+49 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+50 LINE.NUM THEN 
+51 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
+52 LINE.NUM ELSE 
+52 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
+53 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+54 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
+55 LINE.NUM ELSE 
+55 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
+56 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+58 LINE.NUM ELSE 
+59 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+60 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
+61 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
 
-21 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-22 LINE.NUM *sTimestamp *sErrorList $CAT 
+62 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+63 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-23 LINE.NUM THEN 
-24 LINE.NUM THEN THEN THEN THEN 
+64 LINE.NUM THEN 
+65 LINE.NUM THEN THEN THEN THEN 
 -2 JUMP ;
 : 17_18
 9 LINE.NUM ^dtOneWeek @@F 0 I>F F= IF 

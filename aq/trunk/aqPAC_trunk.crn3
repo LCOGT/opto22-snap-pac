@@ -79,8 +79,10 @@ CREATE V.ARRAY
 ^nMaxFanTach ,
 ^nNTPstatus ,
 ^nOldHeartbeat ,
+^nOldWallFanCtrl ,
 ^nOpen ,
 ^nPanelLED_Enum ,
+^nPauseWallFans ,
 ^nPoleCloseFault ,
 ^nPoleOpenFault ,
 ^nPoleTimeoutCounter ,
@@ -363,8 +365,10 @@ CONFIG_PORTS
 0 ^nMaxFanTach @!
 0 ^nNTPstatus @!
 0 ^nOldHeartbeat @!
+0 ^nOldWallFanCtrl @!
 0 ^nOpen @!
 0 ^nPanelLED_Enum @!
+0 ^nPauseWallFans @!
 -1 ^nPoleCloseFault @!
 -1 ^nPoleOpenFault @!
 0 ^nPoleTimeoutCounter @!

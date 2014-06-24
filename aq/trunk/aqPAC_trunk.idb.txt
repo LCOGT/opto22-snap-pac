@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\aqPAC_trunk\aqPAC_trunk.idb
 # VERSION :      R9.1a
-# TIME/DATE :    22:38:12 6/10/2014
+# TIME/DATE :    22:28:53 6/24/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -268,8 +268,10 @@ TAG1,nIndexEncl                                        ,71   ,00000000,00000000,
 TAG1,nMaxFanTach                                       ,94   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nNTPstatus                                        ,102  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nOldHeartbeat                                     ,114  ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nOldWallFanCtrl                                   ,125  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nOpen                                             ,18   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nPanelLED_Enum                                    ,88   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nPauseWallFans                                    ,124  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nPoleCloseFault                                   ,121  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nPoleOpenFault                                    ,120  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nPoleTimeoutCounter                               ,84   ,00000000,00000000,00000000,00000008,0    ,0   
