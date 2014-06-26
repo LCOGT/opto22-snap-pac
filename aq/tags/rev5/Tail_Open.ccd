@@ -1,0 +1,105 @@
+: 25_0
+8 JUMP ;
+: 25_4
+13 JUMP ;
+: 25_5
+1 LINE.NUM 1 ~DO_TailDirection @! 
+2 LINE.NUM 0 ~DO_TailStop @! 
+3 LINE.NUM 1 ~DO_TailEnable @! 
+4 LINE.NUM ^nTimeoutLength @@F ^dtTailTimer @! 
+5 LINE.NUM ^dtTailTimer  StartTimer 
+8 JUMP ;
+: 25_9
+1 LINE.NUM 10  DELAY 
+7 JUMP ;
+: 25_12
+1 LINE.NUM 0 ~DO_TailEnable @! 
+2 LINE.NUM 1 ~DO_TailStop @! 
+-4 JUMP ;
+: 25_17
+1 LINE.NUM ^nTailTimeoutCounter  1+@! 
+2 LINE.NUM " , Shutter2OpenTimeout=TRUE " *sErrorList $CAT 
+
+3 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+4 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+5 LINE.NUM ^dtTailTimer  StopTimer 
+7 JUMP ;
+: 25_23
+1 LINE.NUM 0 ~DO_TailEnable @! 
+2 LINE.NUM 1 ~DO_TailStop @! 
+3 LINE.NUM " , Shutter2Open=TRUE " *sFaultList $CAT 
+
+4 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+5 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+-6 JUMP ;
+: 25_24
+1 LINE.NUM 0 ~DO_TailEnable @! 
+2 LINE.NUM 1 ~DO_TailStop @! 
+3 LINE.NUM 5 I>F  FDELAY 
+-6 JUMP ;
+: 25_31
+1 LINE.NUM &Tail_Close  STOP.T 
+2 LINE.NUM 0 ~DO_TailEnable @! 
+3 LINE.NUM 1 ~DO_TailStop @! 
+4 LINE.NUM 1 I>F  FDELAY 
+1 JUMP ;
+: 25_37
+1 LINE.NUM 0 ^nTailTimeoutCounter @! 
+4 JUMP ;
+: 25_2
+TRUE
+
+1 LINE.NUM
+  ~DI_Tail_Open_LS   ?OFF
+LAND
+IF -10 ELSE -9 THEN JUMP ;
+: 25_3
+TRUE
+
+1 LINE.NUM
+  ~DI_Tail_Open_LS   ?OFF
+LAND
+IF -8 ELSE 0 THEN JUMP ;
+: 25_18
+TRUE
+
+1 LINE.NUM
+  ^dtTailTimer   T0=
+LAND
+IF -8 ELSE -10 THEN JUMP ;
+: 25_22
+TRUE
+
+1 LINE.NUM
+  ^nTailTimeoutCounter @@ 
+  2    >
+LAND
+IF -8 ELSE -7 THEN JUMP ;
+: 25_30
+TRUE
+
+1 LINE.NUM
+  &Tail_Close   ?RUNNING
+LAND
+IF -7 ELSE -5 THEN JUMP ;
+T: T25
+DUMMY
+25_0
+25_4
+25_5
+25_9
+25_12
+25_17
+25_23
+25_24
+25_31
+25_37
+25_2
+25_3
+25_18
+25_22
+25_30
+T;
+&Tail_Open ' T25 SETTASK
