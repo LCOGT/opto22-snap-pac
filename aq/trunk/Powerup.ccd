@@ -101,7 +101,7 @@
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 0 JUMP ;
 : 0_26
-1 LINE.NUM " Rev.4" *sSWVersion  $MOVE 
+1 LINE.NUM " Rev.5" *sSWVersion  $MOVE 
 2 LINE.NUM *sFWVersion  Rev>$ 
 3 LINE.NUM " Aqawan_PAC_Rev.1" *sICDVersion  $MOVE 
 -4 JUMP ;

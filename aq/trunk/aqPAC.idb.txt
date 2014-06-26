@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\trunk\aqPAC.idb
+# NAME :         C:\Users\jdevera\Desktop\aq\aqPAC.idb
 # VERSION :      R9.1a
-# TIME/DATE :    19:0:48 6/26/2014
+# TIME/DATE :    19:40:9 6/26/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -92,6 +92,7 @@
 
 # TAG1,NAME,ID,BITMASK_0,BITMASK_1,BITMASK_2,BITMASK_3,TABLE_LENGTH,STRING_WIDTH
 
+TAG1,AutoLightsOff                                     ,36   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Blink                                             ,35   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Close_Sequential                                  ,27   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Encl_Comm                                         ,21   ,00000000,00000100,00000000,00000000,0    ,0   

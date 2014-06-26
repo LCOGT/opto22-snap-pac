@@ -138,93 +138,99 @@
 22 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 23 LINE.NUM ELSE 
 23 LINE.NUM ^nPoleOpenFault @@ 0 >= IF 
-24 LINE.NUM " Success=FALSE, Shutter 2 opening, shutter 1 is faulted" *sEnclStatus  $MOVE 
-25 LINE.NUM ELSE 
-25 LINE.NUM ^nTailOpenFault @@ 0 >= IF 
-26 LINE.NUM " Success=FALSE, Shutter 1 opening, shutter 2 is faulted" *sEnclStatus  $MOVE 
-27 LINE.NUM ELSE 
-27 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nTailOpenFault @@ 0 = LAND  IF 
-28 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-29 LINE.NUM THEN THEN THEN THEN 
-30 LINE.NUM THEN 
-32 LINE.NUM " CLOSE_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-33 LINE.NUM ^nFindCmd @@ -1 > IF 
-34 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-35 LINE.NUM &Pole_Close  START.T DROP  
-36 LINE.NUM &Tail_Close  START.T DROP  
-37 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-38 LINE.NUM ELSE 
-38 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-39 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
-40 LINE.NUM ELSE 
-40 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-41 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+24 LINE.NUM &Tail_Open  START.T DROP  
+25 LINE.NUM " Success=FALSE, Shutter 2 opening, shutter 1 is faulted" *sEnclStatus  $MOVE 
+26 LINE.NUM ELSE 
+26 LINE.NUM ^nTailOpenFault @@ 0 >= IF 
+27 LINE.NUM &Pole_Open  START.T DROP  
+28 LINE.NUM " Success=FALSE, Shutter 1 opening, shutter 2 is faulted" *sEnclStatus  $MOVE 
+29 LINE.NUM ELSE 
+29 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nTailOpenFault @@ 0 = LAND  IF 
+30 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+31 LINE.NUM THEN THEN THEN THEN 
+32 LINE.NUM 100  DELAY 
+33 LINE.NUM &AutoLightsOff  START.T DROP  
+34 LINE.NUM THEN 
+36 LINE.NUM " CLOSE_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+37 LINE.NUM ^nFindCmd @@ -1 > IF 
+38 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+39 LINE.NUM &Pole_Close  START.T DROP  
+40 LINE.NUM &Tail_Close  START.T DROP  
+41 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 42 LINE.NUM ELSE 
-42 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-43 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-44 LINE.NUM THEN THEN THEN THEN 
-45 LINE.NUM THEN 
-47 LINE.NUM " CLOSE_SEQUENTIAL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-48 LINE.NUM ^nFindCmd @@ -1 > IF 
-49 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-50 LINE.NUM &Close_Sequential  START.T DROP  
-51 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-52 LINE.NUM ELSE 
-52 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-53 LINE.NUM &Tail_Close  START.T DROP  
-54 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
-55 LINE.NUM ELSE 
-55 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-56 LINE.NUM &Pole_Close  START.T DROP  
-57 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+42 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+43 LINE.NUM &Tail_Close  START.T DROP  
+44 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
+45 LINE.NUM ELSE 
+45 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+46 LINE.NUM &Pole_Close  START.T DROP  
+47 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+48 LINE.NUM ELSE 
+48 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+49 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+50 LINE.NUM THEN THEN THEN THEN 
+51 LINE.NUM THEN 
+53 LINE.NUM " CLOSE_SEQUENTIAL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+54 LINE.NUM ^nFindCmd @@ -1 > IF 
+55 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+56 LINE.NUM &Close_Sequential  START.T DROP  
+57 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 58 LINE.NUM ELSE 
-58 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-59 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-60 LINE.NUM THEN THEN THEN THEN 
-61 LINE.NUM THEN 
-63 LINE.NUM " OPEN_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-64 LINE.NUM ^nFindCmd @@ -1 > IF 
-65 LINE.NUM ^nPoleOpenFault @@ 0 < IF 
-66 LINE.NUM &Pole_Open  START.T DROP  
-67 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-68 LINE.NUM ELSE 
-69 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
-70 LINE.NUM THEN 
-71 LINE.NUM THEN 
-73 LINE.NUM " CLOSE_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-74 LINE.NUM ^nFindCmd @@ -1 > IF 
-75 LINE.NUM ^nPoleCloseFault @@ 0 < IF 
-76 LINE.NUM &Pole_Close  START.T DROP  
-77 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-78 LINE.NUM ELSE 
-79 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
-80 LINE.NUM THEN 
-81 LINE.NUM THEN 
-83 LINE.NUM " OPEN_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-84 LINE.NUM ^nFindCmd @@ -1 > IF 
-85 LINE.NUM ^nTailOpenFault @@ 0 < IF 
-86 LINE.NUM &Tail_Open  START.T DROP  
-87 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-88 LINE.NUM ELSE 
-89 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
-90 LINE.NUM THEN 
-91 LINE.NUM THEN 
-93 LINE.NUM " CLOSE_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-94 LINE.NUM ^nFindCmd @@ -1 > IF 
-95 LINE.NUM ^nTailOpenFault @@ 0 < IF 
-96 LINE.NUM &Tail_Close  START.T DROP  
-97 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-98 LINE.NUM ELSE 
-99 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
-100 LINE.NUM THEN 
-101 LINE.NUM THEN 
-103 LINE.NUM "  " *sEnclStatus $CAT 
+58 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+59 LINE.NUM &Tail_Close  START.T DROP  
+60 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
+61 LINE.NUM ELSE 
+61 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+62 LINE.NUM &Pole_Close  START.T DROP  
+63 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+64 LINE.NUM ELSE 
+64 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+65 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+66 LINE.NUM THEN THEN THEN THEN 
+67 LINE.NUM THEN 
+69 LINE.NUM " OPEN_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+70 LINE.NUM ^nFindCmd @@ -1 > IF 
+71 LINE.NUM ^nPoleOpenFault @@ 0 < IF 
+72 LINE.NUM &Pole_Open  START.T DROP  
+73 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+74 LINE.NUM ELSE 
+75 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+76 LINE.NUM THEN 
+77 LINE.NUM THEN 
+79 LINE.NUM " CLOSE_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+80 LINE.NUM ^nFindCmd @@ -1 > IF 
+81 LINE.NUM ^nPoleCloseFault @@ 0 < IF 
+82 LINE.NUM &Pole_Close  START.T DROP  
+83 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+84 LINE.NUM ELSE 
+85 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+86 LINE.NUM THEN 
+87 LINE.NUM THEN 
+89 LINE.NUM " OPEN_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+90 LINE.NUM ^nFindCmd @@ -1 > IF 
+91 LINE.NUM ^nTailOpenFault @@ 0 < IF 
+92 LINE.NUM &Tail_Open  START.T DROP  
+93 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+94 LINE.NUM ELSE 
+95 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+96 LINE.NUM THEN 
+97 LINE.NUM THEN 
+99 LINE.NUM " CLOSE_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+100 LINE.NUM ^nFindCmd @@ -1 > IF 
+101 LINE.NUM ^nTailOpenFault @@ 0 < IF 
+102 LINE.NUM &Tail_Close  START.T DROP  
+103 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+104 LINE.NUM ELSE 
+105 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+106 LINE.NUM THEN 
+107 LINE.NUM THEN 
+109 LINE.NUM "  " *sEnclStatus $CAT 
 
-104 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-105 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+110 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+111 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-107 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-108 LINE.NUM " " *sEnclStatus  $MOVE 
+113 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+114 LINE.NUM " " *sEnclStatus  $MOVE 
 -2 JUMP ;
 : 21_80
 12 LINE.NUM 0 ^nCmdFound @! 
