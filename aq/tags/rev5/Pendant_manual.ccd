@@ -1,0 +1,227 @@
+: 5_0
+14 JUMP ;
+: 5_82
+1 LINE.NUM ~DI_PendantOpen_SW @@I 0 = ~DI_PendantClose_SW @@I 0 = LAND  IF 
+2 LINE.NUM &Pole_Close  STOP.T 
+3 LINE.NUM &Pole_Open  STOP.T 
+4 LINE.NUM &Tail_Close  STOP.T 
+5 LINE.NUM &Tail_Open  STOP.T 
+6 LINE.NUM 0 ~DO_PoleEnable @! 
+7 LINE.NUM 1 ~DO_PoleStop @! 
+8 LINE.NUM 0 ~DO_TailEnable @! 
+9 LINE.NUM 1 ~DO_TailStop @! 
+10 LINE.NUM ELSE 
+10 LINE.NUM ~DI_PendantOpen_SW @@I 1 = ~DI_PendantClose_SW @@I 0 = LAND  IF 
+11 LINE.NUM &Pole_Open  START.T DROP  
+12 LINE.NUM ELSE 
+12 LINE.NUM ~DI_PendantOpen_SW @@I 0 = ~DI_PendantClose_SW @@I 1 = LAND  IF 
+13 LINE.NUM &Pole_Close  START.T DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM ~DI_PendantOpen_SW @@I 1 = ~DI_PendantClose_SW @@I 1 = LAND  IF 
+15 LINE.NUM &Pole_Close  STOP.T 
+16 LINE.NUM &Pole_Open  STOP.T 
+17 LINE.NUM &Tail_Close  STOP.T 
+18 LINE.NUM &Tail_Open  STOP.T 
+19 LINE.NUM 0 ~DO_PoleEnable @! 
+20 LINE.NUM 1 ~DO_PoleStop @! 
+21 LINE.NUM 0 ~DO_TailEnable @! 
+22 LINE.NUM 1 ~DO_TailStop @! 
+23 LINE.NUM THEN THEN THEN THEN 
+4 JUMP ;
+: 5_86
+1 LINE.NUM ~DI_PendantOpen_SW @@I 0 = ~DI_PendantClose_SW @@I 0 = LAND  IF 
+2 LINE.NUM &Pole_Close  STOP.T 
+3 LINE.NUM &Pole_Open  STOP.T 
+4 LINE.NUM &Tail_Close  STOP.T 
+5 LINE.NUM &Tail_Open  STOP.T 
+6 LINE.NUM 0 ~DO_PoleEnable @! 
+7 LINE.NUM 1 ~DO_PoleStop @! 
+8 LINE.NUM 0 ~DO_TailEnable @! 
+9 LINE.NUM 1 ~DO_TailStop @! 
+10 LINE.NUM ELSE 
+10 LINE.NUM ~DI_PendantOpen_SW @@I 1 = ~DI_PendantClose_SW @@I 0 = LAND  IF 
+11 LINE.NUM &Pole_Open  START.T DROP  
+12 LINE.NUM &Tail_Open  START.T DROP  
+13 LINE.NUM ELSE 
+13 LINE.NUM ~DI_PendantOpen_SW @@I 0 = ~DI_PendantClose_SW @@I 1 = LAND  IF 
+14 LINE.NUM &Pole_Close  START.T DROP  
+15 LINE.NUM &Tail_Close  START.T DROP  
+16 LINE.NUM ELSE 
+16 LINE.NUM ~DI_PendantOpen_SW @@I 1 = ~DI_PendantClose_SW @@I 1 = LAND  IF 
+17 LINE.NUM &Pole_Close  STOP.T 
+18 LINE.NUM &Pole_Open  STOP.T 
+19 LINE.NUM &Tail_Close  STOP.T 
+20 LINE.NUM &Tail_Open  STOP.T 
+21 LINE.NUM 0 ~DO_PoleEnable @! 
+22 LINE.NUM 1 ~DO_PoleStop @! 
+23 LINE.NUM 0 ~DO_TailEnable @! 
+24 LINE.NUM 1 ~DO_TailStop @! 
+25 LINE.NUM THEN THEN THEN THEN 
+3 JUMP ;
+: 5_90
+1 LINE.NUM ~DI_PendantOpen_SW @@I 0 = ~DI_PendantClose_SW @@I 0 = LAND  IF 
+2 LINE.NUM &Pole_Close  STOP.T 
+3 LINE.NUM &Pole_Open  STOP.T 
+4 LINE.NUM &Tail_Close  STOP.T 
+5 LINE.NUM &Tail_Open  STOP.T 
+6 LINE.NUM 0 ~DO_PoleEnable @! 
+7 LINE.NUM 1 ~DO_PoleStop @! 
+8 LINE.NUM 0 ~DO_TailEnable @! 
+9 LINE.NUM 1 ~DO_TailStop @! 
+10 LINE.NUM ELSE 
+10 LINE.NUM ~DI_PendantOpen_SW @@I 1 = ~DI_PendantClose_SW @@I 0 = LAND  IF 
+11 LINE.NUM &Tail_Open  START.T DROP  
+12 LINE.NUM ELSE 
+12 LINE.NUM ~DI_PendantOpen_SW @@I 0 = ~DI_PendantClose_SW @@I 1 = LAND  IF 
+13 LINE.NUM &Tail_Close  START.T DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM ~DI_PendantOpen_SW @@I 1 = ~DI_PendantClose_SW @@I 1 = LAND  IF 
+15 LINE.NUM &Pole_Close  STOP.T 
+16 LINE.NUM &Pole_Open  STOP.T 
+17 LINE.NUM &Tail_Close  STOP.T 
+18 LINE.NUM &Tail_Open  STOP.T 
+19 LINE.NUM 0 ~DO_PoleEnable @! 
+20 LINE.NUM 1 ~DO_PoleStop @! 
+21 LINE.NUM 0 ~DO_TailEnable @! 
+22 LINE.NUM 1 ~DO_TailStop @! 
+23 LINE.NUM THEN THEN THEN THEN 
+2 JUMP ;
+: 5_94
+1 LINE.NUM *sShutterSelectMode " UNKNOWN" $= IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM " UNKNOWN" *sShutterSelectMode  $MOVE 
+5 LINE.NUM &Pole_Close  STOP.T 
+6 LINE.NUM &Pole_Open  STOP.T 
+7 LINE.NUM &Tail_Close  STOP.T 
+8 LINE.NUM &Tail_Open  STOP.T 
+9 LINE.NUM &Close_Sequential  STOP.T 
+10 LINE.NUM 0 ~DO_PoleEnable @! 
+11 LINE.NUM 1 ~DO_PoleStop @! 
+12 LINE.NUM 0 ~DO_TailEnable @! 
+13 LINE.NUM 1 ~DO_TailStop @! 
+14 LINE.NUM " , ShutterSelectMode=UNKNOWN " *sErrorList $CAT 
+
+15 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+16 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+17 LINE.NUM THEN 
+1 JUMP ;
+: 5_99
+1 LINE.NUM &Tail_Close  STOP.T 
+2 LINE.NUM &Tail_Open  STOP.T 
+3 LINE.NUM 0 ~DO_TailEnable @! 
+4 LINE.NUM 1 ~DO_TailStop @! 
+-5 JUMP ;
+: 5_103
+1 LINE.NUM 10  DELAY 
+8 JUMP ;
+: 5_107
+1 LINE.NUM &Pole_Close  STOP.T 
+2 LINE.NUM &Pole_Open  STOP.T 
+3 LINE.NUM 0 ~DO_PoleEnable @! 
+4 LINE.NUM 1 ~DO_PoleStop @! 
+-5 JUMP ;
+: 5_121
+1 LINE.NUM &Pole_Close  STOP.T 
+2 LINE.NUM &Pole_Open  STOP.T 
+3 LINE.NUM &Tail_Close  STOP.T 
+4 LINE.NUM &Tail_Open  STOP.T 
+5 LINE.NUM &Close_Sequential  STOP.T 
+6 LINE.NUM 0 ~DO_PoleEnable @! 
+7 LINE.NUM 1 ~DO_PoleStop @! 
+8 LINE.NUM 0 ~DO_TailEnable @! 
+9 LINE.NUM 1 ~DO_TailStop @! 
+-3 JUMP ;
+: 5_79
+TRUE
+
+1 LINE.NUM
+  ~DI_PoleSelect_SW   ?OFF
+LAND
+
+2 LINE.NUM
+  ~DI_TailSelect_SW   ?OFF
+LAND
+IF 3 ELSE 0 THEN JUMP ;
+: 5_83
+TRUE
+
+1 LINE.NUM
+  ~DI_PoleSelect_SW   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_TailSelect_SW   ?OFF
+LAND
+IF -9 ELSE 0 THEN JUMP ;
+: 5_88
+TRUE
+
+1 LINE.NUM
+  ~DI_PoleSelect_SW   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_TailSelect_SW   ?ON
+LAND
+IF 2 ELSE 4 THEN JUMP ;
+: 5_92
+TRUE
+
+1 LINE.NUM
+  ~DI_PoleSelect_SW   ?OFF
+LAND
+
+2 LINE.NUM
+  ~DI_TailSelect_SW   ?ON
+LAND
+IF -9 ELSE -4 THEN JUMP ;
+: 5_96
+FALSE
+
+1 LINE.NUM
+  &Tail_Close   ?RUNNING
+LOR
+
+2 LINE.NUM
+  &Tail_Open   ?RUNNING
+LOR
+IF -9 ELSE -13 THEN JUMP ;
+: 5_105
+FALSE
+
+1 LINE.NUM
+  &Pole_Close   ?RUNNING
+LOR
+
+2 LINE.NUM
+  &Pole_Open   ?RUNNING
+LOR
+IF -8 ELSE -12 THEN JUMP ;
+: 5_116
+TRUE
+
+1 LINE.NUM
+  ^nStormlocked @@   0<>
+LAND
+IF -8 ELSE -4 THEN JUMP ;
+T: T5
+DUMMY
+5_0
+5_82
+5_86
+5_90
+5_94
+5_99
+5_103
+5_107
+5_121
+5_79
+5_83
+5_88
+5_92
+5_96
+5_105
+5_116
+T;
+&Pendant_manual ' T5 SETTASK

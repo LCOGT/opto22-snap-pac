@@ -1,0 +1,116 @@
+: 0_0
+2 JUMP ;
+: 0_14
+1 LINE.NUM 0 ~DO_PoleEnable @! 
+2 LINE.NUM 1 ~DO_PoleStop @! 
+3 LINE.NUM 0 ~DO_TailEnable @! 
+4 LINE.NUM 1 ~DO_TailStop @! 
+5 LINE.NUM 0 ~DO_Lights_RLA @! 
+6 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+7 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+8 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+9 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+10 LINE.NUM 0 ~DO_DoorRed_LED @! 
+11 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+12 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+13 LINE.NUM 0 ~DO_PanelRed_LED @! 
+14 LINE.NUM 0 ~DO_Sounder @! 
+15 LINE.NUM 120 ^nTimeoutLength @! 
+17 LINE.NUM 0 I>F ^dt24h @! 
+20 LINE.NUM " " *sEnclStatus  $MOVE 
+21 LINE.NUM " " *sWallFansOpMode  $MOVE 
+22 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
+23 LINE.NUM " " *sEnclOpMode  $MOVE 
+25 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
+26 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
+27 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
+28 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
+29 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
+30 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
+31 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
+32 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
+34 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
+35 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
+36 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
+37 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
+38 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
+39 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
+40 LINE.NUM " OTA_BLOWER_A_HI" 6 
+{stFacilityCmds $TABLE@  $MOVE 
+41 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
+42 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@  $MOVE 
+43 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
+44 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
+45 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
+46 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
+47 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
+48 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
+49 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
+50 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
+51 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
+52 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
+53 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
+54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
+55 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
+56 LINE.NUM 
+" SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
+57 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
+58 LINE.NUM " LED_STEADY" 24 {stFacilityCmds $TABLE@  $MOVE 
+59 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
+60 LINE.NUM " MCB_RESET_POLE_FANS" 26 {stFacilityCmds $TABLE@  $MOVE 
+61 LINE.NUM " MCB_RESET_TAIL_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
+62 LINE.NUM " MCB_RESET_OTA_BLOWER" 28 {stFacilityCmds $TABLE@  $MOVE 
+63 LINE.NUM " MCB_RESET_PANEL_FANS" 29 {stFacilityCmds $TABLE@  $MOVE 
+64 LINE.NUM " MCB_TRIP_24V_CTRL" 30 {stFacilityCmds $TABLE@  $MOVE 
+65 LINE.NUM " MCB_TRIP_POLE_FANS" 31 {stFacilityCmds $TABLE@  $MOVE 
+66 LINE.NUM " MCB_TRIP_TAIL_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
+67 LINE.NUM " MCB_TRIP_OTA_BLOWER" 33 {stFacilityCmds $TABLE@  $MOVE 
+68 LINE.NUM " MCB_TRIP_PANEL_FANS" 34 {stFacilityCmds $TABLE@  $MOVE 
+70 LINE.NUM &Manual_auto  START.T DROP  
+71 LINE.NUM &Encl_Comm  START.T DROP  
+72 LINE.NUM &Heart_Monitor  START.T DROP  
+73 LINE.NUM &Blink  START.T DROP  
+74 LINE.NUM &Mute_Test_LED  START.T DROP  
+75 LINE.NUM &SYSTEM_READY  START.T DROP  
+76 LINE.NUM &TestErrors  START.T DROP  
+77 LINE.NUM &TestFaults  START.T DROP  
+0 JUMP ;
+: 0_19
+1 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
+2 LINE.NUM |PanelFans 5 I>F  $0008.. 3 ROLL !PID 
+3 LINE.NUM 1.500000e+001  FDELAY 
+6 LINE.NUM ~AI_CabFanIntake_TACH @@ 100 I>F F>= IF 
+7 LINE.NUM 5 ^nFanCtrlMax @! 
+8 LINE.NUM ELSE 
+9 LINE.NUM |PanelFans 10 I>F  $0008.. 3 ROLL !PID 
+10 LINE.NUM 1.500000e+001  FDELAY 
+11 LINE.NUM ~AI_CabFanIntake_TACH @@ 100 I>F F>= IF 
+12 LINE.NUM 10 ^nFanCtrlMax @! 
+13 LINE.NUM ELSE 
+14 LINE.NUM 5 ^nFanCtrlMax @! 
+15 LINE.NUM " , PanelFansUnderSpd=TRUE " *sErrorList $CAT 
+
+16 LINE.NUM " Time not synched" *sErrorList $CAT 
+
+17 LINE.NUM THEN 
+18 LINE.NUM THEN 
+22 LINE.NUM |PanelFans ^nFanCtrlMax @@F  $2000.. 3 ROLL !PID 
+23 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
+2 JUMP ;
+: 0_22
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+0 JUMP ;
+: 0_26
+1 LINE.NUM " Rev.5" *sSWVersion  $MOVE 
+2 LINE.NUM *sFWVersion  Rev>$ 
+3 LINE.NUM " Aqawan_PAC_Rev.1" *sICDVersion  $MOVE 
+-4 JUMP ;
+T: T0
+DUMMY
+0_0
+0_14
+0_19
+0_22
+0_26
+T;
+&Powerup ' T0 SETTASK
