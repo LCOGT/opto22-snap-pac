@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Documents and Settings\eng\Desktop\ssb\elp_ssb_pac.idb
+# NAME :         C:\Users\eng\Desktop\ssb\elp_ssb_pac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    15:42:7 4/24/2014
+# TIME/DATE :    21:50:43 6/28/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -194,12 +194,12 @@ TAG1,SSB_status_Red_LED                                ,154  ,10000000,00000000,
 TAG1,SSBdoorSwitch                                     ,104  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,ACP_Fan_Tach                                      ,12   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Acp_Panel_Fan_Speed                               ,6    ,00000000,00000002,00000000,00000000,0    ,0   
-TAG1,ACP_Utility_VAC                                   ,20   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,ai_acp_1002                                       ,16   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,ai_acp_1003                                       ,17   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Air_Dewpoint1                                     ,0    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Air_Dewpoint2                                     ,1    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AirPressure                                       ,14   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,HVAC_24VAC                                        ,20   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,HVAC_Cool_Voltage                                 ,23   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,HVAC_Fan_Voltage                                  ,22   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,HVAC_Heat_Voltage                                 ,21   ,00000000,00000001,00000000,00000000,0    ,0   
