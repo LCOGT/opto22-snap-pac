@@ -18,7 +18,7 @@
 -4 JUMP ;
 : 23_17
 1 LINE.NUM ^nPoleTimeoutCounter  1+@! 
-2 LINE.NUM " , Shutter1CloseTimeout=TRUE " *sErrorList $CAT 
+2 LINE.NUM " , Shutter1CloseTimeout " *sErrorList $CAT 
 
 3 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 4 LINE.NUM *sTimestamp *sErrorList $CAT 
@@ -28,7 +28,7 @@
 : 23_23
 1 LINE.NUM 0 ~DO_PoleEnable @! 
 2 LINE.NUM 1 ~DO_PoleStop @! 
-3 LINE.NUM " , Shutter1Close=TRUE " *sFaultList $CAT 
+3 LINE.NUM " , Shutter1Close " *sFaultList $CAT 
 
 4 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 5 LINE.NUM *sTimestamp *sFaultList $CAT 

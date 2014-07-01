@@ -42,7 +42,7 @@
 58 LINE.NUM ELSE 
 59 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
 60 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
-61 LINE.NUM " , WallFanOpMode=UNKNOWN " *sErrorList $CAT 
+61 LINE.NUM " , WallFanOpMode " *sErrorList $CAT 
 
 62 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 63 LINE.NUM *sTimestamp *sErrorList $CAT 
@@ -89,7 +89,7 @@
 21 LINE.NUM " UNKNOWN" *sOTAblowerOpMode  $MOVE 
 22 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
 23 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-24 LINE.NUM " , OTAblowerOpMode=UNKNOWN " *sErrorList $CAT 
+24 LINE.NUM " , OTAblowerOpMode " *sErrorList $CAT 
 
 25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 26 LINE.NUM *sTimestamp *sErrorList $CAT 
@@ -198,44 +198,44 @@
 0 JUMP ;
 : 17_36
 5 LINE.NUM ~DI_ESTOP_OK  CLR.-LATCH@I IF 
-6 LINE.NUM " , Estop=TRUE " *sFaultList $CAT 
+6 LINE.NUM " , Estop " *sFaultList $CAT 
 
 7 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 8 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 9 LINE.NUM ELSE 
 9 LINE.NUM ~DI_24vCtrl_MCB  CLR.-LATCH@I IF 
-10 LINE.NUM " , 24vCtrl_MCB=TRUE " *sFaultList $CAT 
+10 LINE.NUM " , 24vCtrl_MCB " *sFaultList $CAT 
 
 11 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 12 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 13 LINE.NUM ELSE 
 13 LINE.NUM ~DI_Tscope_MCB  CLR.-LATCH@I IF 
-14 LINE.NUM " , TSCOPE_MCB=TRUE " *sFaultList $CAT 
+14 LINE.NUM " , TSCOPE_MCB " *sFaultList $CAT 
 
 15 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 16 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 17 LINE.NUM ELSE 
 17 LINE.NUM ~DI_Smoke_SEN  CLR.+LATCH@I IF 
-18 LINE.NUM " , SmokeAlarm=TRUE " *sFaultList $CAT 
+18 LINE.NUM " , SmokeAlarm " *sFaultList $CAT 
 
 19 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 20 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 21 LINE.NUM ELSE 
 21 LINE.NUM ~DI_SmokeHeat_SEN  CLR.+LATCH@I IF 
-22 LINE.NUM " , SmokeAlarmHeat=TRUE " *sFaultList $CAT 
+22 LINE.NUM " , SmokeAlarmHeat " *sFaultList $CAT 
 
 23 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 24 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 25 LINE.NUM THEN THEN THEN THEN THEN 
-27 LINE.NUM " Shutter1Open=TRUE" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
-28 LINE.NUM " Shutter2Open=TRUE" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
-29 LINE.NUM " Shutter1Close=TRUE" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
-30 LINE.NUM " Shutter2Close=TRUE" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
+27 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
+28 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
+29 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
+30 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
 0 JUMP ;
 : 17_46
 1 LINE.NUM 100  DELAY 

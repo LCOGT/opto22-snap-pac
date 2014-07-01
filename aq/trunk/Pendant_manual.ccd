@@ -99,7 +99,7 @@
 11 LINE.NUM 1 ~DO_PoleStop @! 
 12 LINE.NUM 0 ~DO_TailEnable @! 
 13 LINE.NUM 1 ~DO_TailStop @! 
-14 LINE.NUM " , ShutterSelectMode=UNKNOWN " *sErrorList $CAT 
+14 LINE.NUM " , ShutterSelectMode " *sErrorList $CAT 
 
 15 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 16 LINE.NUM *sTimestamp *sErrorList $CAT 

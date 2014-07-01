@@ -7,7 +7,7 @@
 4 LINE.NUM 0 ^nMaxFanTach @! 
 5 LINE.NUM ~AI_CabFanIntake_TACH  MAX@F ^nMaxFanTach F@! 
 6 LINE.NUM ^nMaxFanTach @@ 100 < IF 
-7 LINE.NUM " , PanelFansUnderSpd=TRUE " *sErrorList $CAT 
+7 LINE.NUM " , PanelFansUnderSpd " *sErrorList $CAT 
 
 8 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 9 LINE.NUM *sTimestamp *sErrorList $CAT 

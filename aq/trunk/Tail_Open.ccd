@@ -18,7 +18,7 @@
 -4 JUMP ;
 : 25_17
 1 LINE.NUM ^nTailTimeoutCounter  1+@! 
-2 LINE.NUM " , Shutter2OpenTimeout=TRUE " *sErrorList $CAT 
+2 LINE.NUM " , Shutter2OpenTimeout " *sErrorList $CAT 
 
 3 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 4 LINE.NUM *sTimestamp *sErrorList $CAT 
@@ -28,7 +28,7 @@
 : 25_23
 1 LINE.NUM 0 ~DO_TailEnable @! 
 2 LINE.NUM 1 ~DO_TailStop @! 
-3 LINE.NUM " , Shutter2Open=TRUE " *sFaultList $CAT 
+3 LINE.NUM " , Shutter2Open " *sFaultList $CAT 
 
 4 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 5 LINE.NUM *sTimestamp *sFaultList $CAT 

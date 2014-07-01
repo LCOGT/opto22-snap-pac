@@ -88,22 +88,23 @@
 12 LINE.NUM 10 ^nFanCtrlMax @! 
 13 LINE.NUM ELSE 
 14 LINE.NUM 5 ^nFanCtrlMax @! 
-15 LINE.NUM " , PanelFansUnderSpd=TRUE " *sErrorList $CAT 
+15 LINE.NUM " , PanelFansUnderSpd " *sErrorList $CAT 
 
-16 LINE.NUM " Time not synched" *sErrorList $CAT 
+16 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+17 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-17 LINE.NUM THEN 
-18 LINE.NUM THEN 
-22 LINE.NUM |PanelFans ^nFanCtrlMax @@F  $2000.. 3 ROLL !PID 
-23 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
+19 LINE.NUM THEN 
+20 LINE.NUM THEN 
+24 LINE.NUM |PanelFans ^nFanCtrlMax @@F  $2000.. 3 ROLL !PID 
+25 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
 2 JUMP ;
 : 0_22
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 0 JUMP ;
 : 0_26
-1 LINE.NUM " Rev.5" *sSWVersion  $MOVE 
+1 LINE.NUM " 6" *sSWVersion  $MOVE 
 2 LINE.NUM *sFWVersion  Rev>$ 
-3 LINE.NUM " Aqawan_PAC_Rev.1" *sICDVersion  $MOVE 
+3 LINE.NUM " 1.1" *sICDVersion  $MOVE 
 -4 JUMP ;
 T: T0
 DUMMY

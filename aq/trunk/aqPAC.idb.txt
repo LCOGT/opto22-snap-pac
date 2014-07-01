@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\aq\aqPAC.idb
+# NAME :         C:\Users\jdevera\Desktop\aqPAC\trunk\aqPAC.idb
 # VERSION :      R9.1a
-# TIME/DATE :    19:40:9 6/26/2014
+# TIME/DATE :    22:24:19 7/1/2014
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -264,8 +264,10 @@ TAG1,nFanCtrlMax                                       ,93   ,00000000,00000000,
 TAG1,nFindCmd                                          ,72   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nFindFacilityCmd                                  ,79   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nHeartbeat                                        ,118  ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nIndex                                            ,128  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nIndex2                                           ,101  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nIndexEncl                                        ,71   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nLength                                           ,129  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nMaxFanTach                                       ,94   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nNTPstatus                                        ,102  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nOldHeartbeat                                     ,114  ,00000000,00000000,00000000,00000008,0    ,0   
@@ -299,6 +301,7 @@ TAG1,switchAccum                                       ,62   ,00000000,00000000,
 TAG1,System_Health_Status                              ,45   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,System_Safe_To_Run                                ,43   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Tel_Go_Fast_OK                                    ,48   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,TempFloat                                         ,127  ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,Ups_Breaker_Ok                                    ,40   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,UTIL_BREAKER_OK                                   ,42   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,DateString                                        ,10   ,00000000,00000000,00000000,00000040,0    ,12  

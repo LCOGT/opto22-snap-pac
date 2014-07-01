@@ -57,7 +57,7 @@
 1 LINE.NUM *sEnclOpMode " UNKNOWN" $= IF 
 3 LINE.NUM ELSE 
 4 LINE.NUM " UNKNOWN" *sEnclOpMode  $MOVE 
-5 LINE.NUM " , EnclOpMode=UNKNOWN " *sFaultList $CAT 
+5 LINE.NUM " , EnclOpMode " *sFaultList $CAT 
 
 6 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 7 LINE.NUM *sTimestamp *sFaultList $CAT 

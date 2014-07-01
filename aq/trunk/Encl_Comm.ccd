@@ -491,99 +491,113 @@
 131 LINE.NUM THEN 
 133 LINE.NUM " , PoleFanExhaustTach=" *sStatus $CAT 
 
-134 LINE.NUM ~AI_PoleFanExhaust_TACH @@ 3 0 *Tempstring  FF.R$ 
-135 LINE.NUM *Tempstring *sStatus $CAT 
+136 LINE.NUM ~AI_PoleFanExhaust_TACH @@ ^TempFloat @! 
+137 LINE.NUM ^TempFloat @@ 1.475000e+002 F/ ^TempFloat @! 
+138 LINE.NUM ^TempFloat @@ 100 I>F F* ^TempFloat @! 
+139 LINE.NUM ^TempFloat @@ 3 0 *Tempstring  FF.R$ 
+140 LINE.NUM *Tempstring 3  SWAP $TRIM 
+141 LINE.NUM *Tempstring *sStatus $CAT 
 
-137 LINE.NUM " , PanelFanTach=" *sStatus $CAT 
+143 LINE.NUM " , PanelFanTach=" *sStatus $CAT 
 
-138 LINE.NUM ~AI_CabFanIntake_TACH @@ 3 0 *Tempstring  FF.R$ 
-139 LINE.NUM *Tempstring *sStatus $CAT 
+146 LINE.NUM ~AI_CabFanIntake_TACH @@ ^TempFloat @! 
+147 LINE.NUM ^TempFloat @@ 110 I>F F/ ^TempFloat @! 
+148 LINE.NUM ^TempFloat @@ 100 I>F F* ^TempFloat @! 
+149 LINE.NUM ^TempFloat @@ 3 0 *Tempstring  FF.R$ 
+150 LINE.NUM *Tempstring 3  SWAP $TRIM 
+151 LINE.NUM *Tempstring *sStatus $CAT 
 
-141 LINE.NUM " , PanelFanCtrlVmax=" *sStatus $CAT 
+153 LINE.NUM " , PanelFanCtrlVmax=" *sStatus $CAT 
 
-142 LINE.NUM ^nFanCtrlMax @@F 2 0 *Tempstring  FF.R$ 
-143 LINE.NUM *Tempstring *sStatus $CAT 
+154 LINE.NUM ^nFanCtrlMax @@F 2 0 *Tempstring  FF.R$ 
+155 LINE.NUM *Tempstring 3  SWAP $TRIM 
+156 LINE.NUM *Tempstring *sStatus $CAT 
 
-145 LINE.NUM " , EntryDoor1=" *sStatus $CAT 
+158 LINE.NUM " , EntryDoor1=" *sStatus $CAT 
 
-146 LINE.NUM ~DI_RightDoor_LS @@I 1 = IF 
-147 LINE.NUM " CLOSED" *sStatus $CAT 
+159 LINE.NUM ~DI_RightDoor_LS @@I 1 = IF 
+160 LINE.NUM " CLOSED" *sStatus $CAT 
 
-148 LINE.NUM ELSE 
-149 LINE.NUM " OPEN" *sStatus $CAT 
+161 LINE.NUM ELSE 
+162 LINE.NUM " OPEN" *sStatus $CAT 
 
-150 LINE.NUM THEN 
-152 LINE.NUM " , EntryDoor2=" *sStatus $CAT 
+163 LINE.NUM THEN 
+165 LINE.NUM " , EntryDoor2=" *sStatus $CAT 
 
-153 LINE.NUM ~DI_LeftDoor_LS @@I 1 = IF 
-154 LINE.NUM " CLOSED" *sStatus $CAT 
+166 LINE.NUM ~DI_LeftDoor_LS @@I 1 = IF 
+167 LINE.NUM " CLOSED" *sStatus $CAT 
 
-155 LINE.NUM ELSE 
-156 LINE.NUM " OPEN" *sStatus $CAT 
+168 LINE.NUM ELSE 
+169 LINE.NUM " OPEN" *sStatus $CAT 
 
-157 LINE.NUM THEN 
-159 LINE.NUM " , PanelDoor=" *sStatus $CAT 
+170 LINE.NUM THEN 
+172 LINE.NUM " , PanelDoor=" *sStatus $CAT 
 
-160 LINE.NUM ~DI_CabinetDoor_LS @@I 1 = IF 
-161 LINE.NUM " CLOSED" *sStatus $CAT 
+173 LINE.NUM ~DI_CabinetDoor_LS @@I 1 = IF 
+174 LINE.NUM " CLOSED" *sStatus $CAT 
 
-162 LINE.NUM ELSE 
-163 LINE.NUM " OPEN" *sStatus $CAT 
+175 LINE.NUM ELSE 
+176 LINE.NUM " OPEN" *sStatus $CAT 
 
-164 LINE.NUM THEN 
-166 LINE.NUM " , EnclTemp=" *sStatus $CAT 
+177 LINE.NUM THEN 
+179 LINE.NUM " , EnclTemp=" *sStatus $CAT 
 
-167 LINE.NUM ~AI_AqTemp_SEN @@ 4 1 *Tempstring  FF.R$ 
-168 LINE.NUM *Tempstring *sStatus $CAT 
+180 LINE.NUM ~AI_AqTemp_SEN @@ 5 1 *Tempstring  FF.R$ 
+181 LINE.NUM *Tempstring 3  SWAP $TRIM 
+182 LINE.NUM *Tempstring *sStatus $CAT 
 
-170 LINE.NUM " , EnclHumidity=" *sStatus $CAT 
+184 LINE.NUM " , EnclHumidity=" *sStatus $CAT 
 
-171 LINE.NUM ~AI_AqHumidity_SEN @@ 4 1 *Tempstring  FF.R$ 
-172 LINE.NUM *Tempstring *sStatus $CAT 
+185 LINE.NUM ~AI_AqHumidity_SEN @@ 4 1 *Tempstring  FF.R$ 
+186 LINE.NUM *Tempstring 3  SWAP $TRIM 
+187 LINE.NUM *Tempstring *sStatus $CAT 
 
-174 LINE.NUM " , EnclIntakeTemp=" *sStatus $CAT 
+189 LINE.NUM " , EnclIntakeTemp=" *sStatus $CAT 
 
-175 LINE.NUM ~AI_InletAir_RTD @@ 4 1 *Tempstring  FF.R$ 
-176 LINE.NUM *Tempstring *sStatus $CAT 
+190 LINE.NUM ~AI_InletAir_RTD @@ 5 1 *Tempstring  FF.R$ 
+191 LINE.NUM *Tempstring 3  SWAP $TRIM 
+192 LINE.NUM *Tempstring *sStatus $CAT 
 
-178 LINE.NUM " , EnclExhaustTemp=" *sStatus $CAT 
+194 LINE.NUM " , EnclExhaustTemp=" *sStatus $CAT 
 
-179 LINE.NUM ~AI_OutletAir_RTD @@ 4 1 *Tempstring  FF.R$ 
-180 LINE.NUM *Tempstring *sStatus $CAT 
+195 LINE.NUM ~AI_OutletAir_RTD @@ 5 1 *Tempstring  FF.R$ 
+196 LINE.NUM *Tempstring 3  SWAP $TRIM 
+197 LINE.NUM *Tempstring *sStatus $CAT 
 
-182 LINE.NUM " , PanelExhaustTemp=" *sStatus $CAT 
+199 LINE.NUM " , PanelExhaustTemp=" *sStatus $CAT 
 
-183 LINE.NUM ~AI_CabExhaust_RTD @@ 4 1 *Tempstring  FF.R$ 
-184 LINE.NUM *Tempstring *sStatus $CAT 
+200 LINE.NUM ~AI_CabExhaust_RTD @@ 5 1 *Tempstring  FF.R$ 
+201 LINE.NUM *Tempstring 3  SWAP $TRIM 
+202 LINE.NUM *Tempstring *sStatus $CAT 
 
-186 LINE.NUM " , UltimateClosed=" *sStatus $CAT 
+204 LINE.NUM " , UltimateClosed=" *sStatus $CAT 
 
-187 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
-188 LINE.NUM " TRUE" *sStatus $CAT 
+205 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
+206 LINE.NUM " TRUE" *sStatus $CAT 
 
-189 LINE.NUM ELSE 
-190 LINE.NUM " FALSE" *sStatus $CAT 
+207 LINE.NUM ELSE 
+208 LINE.NUM " FALSE" *sStatus $CAT 
 
-191 LINE.NUM THEN 
-193 LINE.NUM " , 24VPSU_OK=" *sStatus $CAT 
+209 LINE.NUM THEN 
+211 LINE.NUM " , 24VPSU_OK=" *sStatus $CAT 
 
-194 LINE.NUM ~DI_24vPSU_OK @@I 1 = IF 
-195 LINE.NUM " TRUE" *sStatus $CAT 
+212 LINE.NUM ~DI_24vPSU_OK @@I 1 = IF 
+213 LINE.NUM " TRUE" *sStatus $CAT 
 
-196 LINE.NUM ELSE 
-197 LINE.NUM " FALSE" *sStatus $CAT 
+214 LINE.NUM ELSE 
+215 LINE.NUM " FALSE" *sStatus $CAT 
 
-198 LINE.NUM THEN 
-200 LINE.NUM " , Heartbeat=" *sStatus $CAT 
+216 LINE.NUM THEN 
+218 LINE.NUM " , Heartbeat=" *sStatus $CAT 
 
-201 LINE.NUM ^dtHeartbeat @@F ^nHeartbeat F@! 
-202 LINE.NUM ^nHeartbeat @@ *Tempstring  I>$ 
-203 LINE.NUM *Tempstring *sStatus $CAT 
+219 LINE.NUM ^dtHeartbeat @@F ^nHeartbeat F@! 
+220 LINE.NUM ^nHeartbeat @@ *Tempstring  I>$ 
+221 LINE.NUM *Tempstring *sStatus $CAT 
 
-206 LINE.NUM *sStatus *sEnclStatus $CAT 
+224 LINE.NUM *sStatus *sEnclStatus $CAT 
 
-208 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-209 LINE.NUM " " *sEnclStatus  $MOVE 
+226 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+227 LINE.NUM " " *sEnclStatus  $MOVE 
 -2 JUMP ;
 : 21_118
 1 LINE.NUM " STATUS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
