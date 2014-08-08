@@ -1108,64 +1108,61 @@ T;
   ~DO_XformerPWR   ON
 
 2 LINE.NUM
-  ~Honeysucker_CTRL   ON
-
-3 LINE.NUM
   ^HeartbeatPreset @@ 
   ^Heartbeat_Timer   SetTimer
 
-4 LINE.NUM
+3 LINE.NUM
   &Master_Comm   START.T
   ^MasterCommEstablished @! 
+
+4 LINE.NUM
+  1500    DELAY
 
 5 LINE.NUM
   1500    DELAY
 
 6 LINE.NUM
-  1500    DELAY
-
-7 LINE.NUM
   ~ThermoPWR_Lower_M3_3   ON
 
-8 LINE.NUM
+7 LINE.NUM
   1500    DELAY
 
-9 LINE.NUM
+8 LINE.NUM
   ~ThermoPWR_Upper_M3_7   OFF
+
+9 LINE.NUM
+  10 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 10 LINE.NUM
   10 I>F 
   1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
-
-11 LINE.NUM
-  10 I>F 
-  1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
-12 LINE.NUM
+11 LINE.NUM
   3000    DELAY
 
-13 LINE.NUM
+12 LINE.NUM
   ~Honeysucker_CTRL   ON
+
+13 LINE.NUM
+  6 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 14 LINE.NUM
   6 I>F 
   1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
-
-15 LINE.NUM
-  6 I>F 
-  1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
-16 LINE.NUM
-  3000    DELAY
+15 LINE.NUM
+  10.0    FDELAY
 
-17 LINE.NUM
+16 LINE.NUM
   ~Honeysucker_CTRL   OFF
 
-18 LINE.NUM
+17 LINE.NUM
   &aps2_1m0a_monitor   START.T
   ^nIndex2 @! 
 4 JUMP ;
@@ -1491,9 +1488,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 06/02/14 " ;
-: TIMESTAMP ." 19:40:57 " ;
-: CRCSTAMP  ." D24567C6FCB5A9C7A8BC3990FD1F4F19 " ;
+: DATESTAMP ." 08/08/14 " ;
+: TIMESTAMP ." 10:21:07 " ;
+: CRCSTAMP  ." 706EA1ED60BF067D4B6BC2CBF412854E " ;
 MAKECHECK
 CLEAR.BREAKS
 
