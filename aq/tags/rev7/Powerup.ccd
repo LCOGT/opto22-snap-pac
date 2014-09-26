@@ -102,7 +102,7 @@
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 0 JUMP ;
 : 0_26
-1 LINE.NUM " 6" *sSWVersion  $MOVE 
+1 LINE.NUM " 7" *sSWVersion  $MOVE 
 2 LINE.NUM *sFWVersion  Rev>$ 
 3 LINE.NUM " 1.1" *sICDVersion  $MOVE 
 -4 JUMP ;
