@@ -98,8 +98,8 @@
 28 LINE.NUM THEN THEN THEN THEN 
 36 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
 37 LINE.NUM ~DI_UltimateClosed_LS  CLR.-LATCH@I IF 
-38 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_A @! 
-39 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_B @! 
+38 LINE.NUM 1.000000e+001 ~AO_OTA_Blower_A @! 
+39 LINE.NUM 1.000000e+001 ~AO_OTA_Blower_B @! 
 40 LINE.NUM ELSE 
 40 LINE.NUM ~DI_UltimateClosed_LS  CLR.+LATCH@I IF 
 41 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
@@ -113,12 +113,12 @@
 6 LINE.NUM ELSE 
 7 LINE.NUM 0 ^FastMode @! 
 8 LINE.NUM THEN 
-15 LINE.NUM ^FastMode @@ 0 = ~DI_Pole_Fast_LS @@I 0 = ^nClose @@ LAND  LOR  IF 
+15 LINE.NUM ^FastMode @@ 0 = ~DI_Pole_Fast_LS @@I 0 = &Pole_Close  ?RUNNING LAND  LOR  IF 
 16 LINE.NUM 0 ~DO_PoleGoFast @! 
 17 LINE.NUM ELSE 
 18 LINE.NUM 1 ~DO_PoleGoFast @! 
 19 LINE.NUM THEN 
-26 LINE.NUM ^FastMode @@ 0 = ~DI_Tail_Fast_LS @@I 0 = ^nClose @@ LAND  LOR  IF 
+26 LINE.NUM ^FastMode @@ 0 = ~DI_Tail_Fast_LS @@I 0 = &Tail_Close  ?RUNNING LAND  LOR  IF 
 27 LINE.NUM 0 ~DO_TailGoFast @! 
 28 LINE.NUM ELSE 
 29 LINE.NUM 1 ~DO_TailGoFast @! 
