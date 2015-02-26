@@ -241,13 +241,20 @@
 23 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 24 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-25 LINE.NUM THEN THEN THEN THEN THEN 
-27 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
-28 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
-29 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
-30 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
-31 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
-32 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~DI_24vPSU_OK  CLR.-LATCH@I IF 
+26 LINE.NUM " , 24V_Supply " *sFaultList $CAT 
+
+27 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+28 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+29 LINE.NUM THEN THEN THEN THEN THEN THEN 
+31 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
+32 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
+33 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
+34 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
+35 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
+36 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
 0 JUMP ;
 : 17_46
 1 LINE.NUM 100  DELAY 
