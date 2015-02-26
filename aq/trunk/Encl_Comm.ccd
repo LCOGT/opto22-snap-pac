@@ -132,105 +132,105 @@
 15 LINE.NUM THEN 
 17 LINE.NUM " OPEN_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 18 LINE.NUM ^nFindCmd @@ -1 > IF 
-19 LINE.NUM ^nPoleOpenFault @@ 0 < ^nTailOpenFault @@ 0 < LAND  IF 
+19 LINE.NUM ^nPoleOpenFault @@ 0 < ^nTailOpenFault @@ 0 < LAND  ^nPoleOpenL2Fault @@ 0 < LAND  ^nTailOpenL2Fault @@ 0 < LAND  IF 
 20 LINE.NUM &Pole_Open  START.T DROP  
 21 LINE.NUM &Tail_Open  START.T DROP  
 22 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 23 LINE.NUM ELSE 
-23 LINE.NUM ^nPoleOpenFault @@ 0 >= IF 
-24 LINE.NUM &Tail_Open  START.T DROP  
-25 LINE.NUM " Success=FALSE, Shutter 2 opening, shutter 1 is faulted" *sEnclStatus  $MOVE 
+23 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nPoleOpenL2Fault @@ 0 >= LOR  ^nTailOpenFault @@ 0 >= ^nTailOpenL2Fault @@ 0 >= LOR  LAND  IF 
+25 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
 26 LINE.NUM ELSE 
-26 LINE.NUM ^nTailOpenFault @@ 0 >= IF 
-27 LINE.NUM &Pole_Open  START.T DROP  
-28 LINE.NUM " Success=FALSE, Shutter 1 opening, shutter 2 is faulted" *sEnclStatus  $MOVE 
+26 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nPoleOpenL2Fault @@ 0 >= LOR  IF 
+27 LINE.NUM &Tail_Open  START.T DROP  
+28 LINE.NUM " Success=FALSE, Shutter 2 opening, shutter 1 is faulted" *sEnclStatus  $MOVE 
 29 LINE.NUM ELSE 
-29 LINE.NUM ^nPoleOpenFault @@ 0 >= ^nTailOpenFault @@ 0 = LAND  IF 
-30 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-31 LINE.NUM THEN THEN THEN THEN 
-32 LINE.NUM 100  DELAY 
-33 LINE.NUM &AutoLightsOff  START.T DROP  
-34 LINE.NUM THEN 
-36 LINE.NUM " CLOSE_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-37 LINE.NUM ^nFindCmd @@ -1 > IF 
-38 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-39 LINE.NUM &Pole_Close  START.T DROP  
-40 LINE.NUM &Tail_Close  START.T DROP  
-41 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-42 LINE.NUM ELSE 
-42 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-43 LINE.NUM &Tail_Close  START.T DROP  
-44 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
-45 LINE.NUM ELSE 
-45 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-46 LINE.NUM &Pole_Close  START.T DROP  
-47 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
-48 LINE.NUM ELSE 
-48 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-49 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-50 LINE.NUM THEN THEN THEN THEN 
-51 LINE.NUM THEN 
-53 LINE.NUM " CLOSE_SEQUENTIAL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-54 LINE.NUM ^nFindCmd @@ -1 > IF 
-55 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-56 LINE.NUM &Close_Sequential  START.T DROP  
-57 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-58 LINE.NUM ELSE 
-58 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-59 LINE.NUM &Tail_Close  START.T DROP  
-60 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
-61 LINE.NUM ELSE 
-61 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-62 LINE.NUM &Pole_Close  START.T DROP  
-63 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
-64 LINE.NUM ELSE 
-64 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
-65 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
-66 LINE.NUM THEN THEN THEN THEN 
-67 LINE.NUM THEN 
-69 LINE.NUM " OPEN_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-70 LINE.NUM ^nFindCmd @@ -1 > IF 
-71 LINE.NUM ^nPoleOpenFault @@ 0 < IF 
-72 LINE.NUM &Pole_Open  START.T DROP  
-73 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-74 LINE.NUM ELSE 
-75 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+29 LINE.NUM ^nTailOpenFault @@ 0 >= ^nTailOpenL2Fault @@ 0 >= LOR  IF 
+30 LINE.NUM &Pole_Open  START.T DROP  
+31 LINE.NUM " Success=FALSE, Shutter 1 opening, shutter 2 is faulted" *sEnclStatus  $MOVE 
+40 LINE.NUM THEN THEN THEN THEN 
+41 LINE.NUM 100  DELAY 
+42 LINE.NUM &AutoLightsOff  START.T DROP  
+43 LINE.NUM THEN 
+45 LINE.NUM " CLOSE_SHUTTERS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+46 LINE.NUM ^nFindCmd @@ -1 > IF 
+47 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+48 LINE.NUM &Pole_Close  START.T DROP  
+49 LINE.NUM &Tail_Close  START.T DROP  
+50 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+51 LINE.NUM ELSE 
+51 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+52 LINE.NUM &Tail_Close  START.T DROP  
+53 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
+54 LINE.NUM ELSE 
+54 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+55 LINE.NUM &Pole_Close  START.T DROP  
+56 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+57 LINE.NUM ELSE 
+57 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+58 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+59 LINE.NUM THEN THEN THEN THEN 
+60 LINE.NUM THEN 
+62 LINE.NUM " CLOSE_SEQUENTIAL" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+63 LINE.NUM ^nFindCmd @@ -1 > IF 
+64 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+65 LINE.NUM &Close_Sequential  START.T DROP  
+66 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+67 LINE.NUM ELSE 
+67 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+68 LINE.NUM &Tail_Close  START.T DROP  
+69 LINE.NUM " Success=FALSE, Shutter 2 Closing, shutter 1 is faulted" *sEnclStatus  $MOVE 
+70 LINE.NUM ELSE 
+70 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+71 LINE.NUM &Pole_Close  START.T DROP  
+72 LINE.NUM " Success=FALSE, Shutter 1 Closing, shutter 2 is faulted" *sEnclStatus  $MOVE 
+73 LINE.NUM ELSE 
+73 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+74 LINE.NUM " Success=FALSE, shutter 1 & 2 faulted" *sEnclStatus  $MOVE 
+75 LINE.NUM THEN THEN THEN THEN 
 76 LINE.NUM THEN 
-77 LINE.NUM THEN 
-79 LINE.NUM " CLOSE_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-80 LINE.NUM ^nFindCmd @@ -1 > IF 
-81 LINE.NUM ^nPoleCloseFault @@ 0 < IF 
-82 LINE.NUM &Pole_Close  START.T DROP  
-83 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-84 LINE.NUM ELSE 
-85 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+78 LINE.NUM " OPEN_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+79 LINE.NUM ^nFindCmd @@ -1 > IF 
+80 LINE.NUM ^nPoleOpenFault @@ 0 < ^nPoleOpenL2Fault @@ 0 < LAND  IF 
+81 LINE.NUM &Pole_Open  START.T DROP  
+82 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+83 LINE.NUM ELSE 
+84 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+85 LINE.NUM THEN 
 86 LINE.NUM THEN 
-87 LINE.NUM THEN 
-89 LINE.NUM " OPEN_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-90 LINE.NUM ^nFindCmd @@ -1 > IF 
-91 LINE.NUM ^nTailOpenFault @@ 0 < IF 
-92 LINE.NUM &Tail_Open  START.T DROP  
-93 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-94 LINE.NUM ELSE 
-95 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+88 LINE.NUM " CLOSE_SHUTTER_1" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+89 LINE.NUM ^nFindCmd @@ -1 > IF 
+90 LINE.NUM ^nPoleCloseFault @@ 0 < IF 
+91 LINE.NUM &Pole_Close  START.T DROP  
+92 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+93 LINE.NUM ELSE 
+94 LINE.NUM " Success=FALSE, shutter 1 faulted" *sEnclStatus  $MOVE 
+95 LINE.NUM THEN 
 96 LINE.NUM THEN 
-97 LINE.NUM THEN 
-99 LINE.NUM " CLOSE_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-100 LINE.NUM ^nFindCmd @@ -1 > IF 
-101 LINE.NUM ^nTailOpenFault @@ 0 < IF 
-102 LINE.NUM &Tail_Close  START.T DROP  
-103 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-104 LINE.NUM ELSE 
-105 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+98 LINE.NUM " OPEN_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+99 LINE.NUM ^nFindCmd @@ -1 > IF 
+100 LINE.NUM ^nTailOpenFault @@ 0 < ^nTailOpenL2Fault @@ 0 < LAND  IF 
+101 LINE.NUM &Tail_Open  START.T DROP  
+102 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+103 LINE.NUM ELSE 
+104 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+105 LINE.NUM THEN 
 106 LINE.NUM THEN 
-107 LINE.NUM THEN 
-109 LINE.NUM "  " *sEnclStatus $CAT 
+108 LINE.NUM " CLOSE_SHUTTER_2" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+109 LINE.NUM ^nFindCmd @@ -1 > IF 
+110 LINE.NUM ^nTailOpenFault @@ 0 < IF 
+111 LINE.NUM &Tail_Close  START.T DROP  
+112 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+113 LINE.NUM ELSE 
+114 LINE.NUM " Success=FALSE, shutter 2 faulted" *sEnclStatus  $MOVE 
+115 LINE.NUM THEN 
+116 LINE.NUM THEN 
+118 LINE.NUM "  " *sEnclStatus $CAT 
 
-110 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-111 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+119 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+120 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-113 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-114 LINE.NUM " " *sEnclStatus  $MOVE 
+122 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+123 LINE.NUM " " *sEnclStatus  $MOVE 
 -2 JUMP ;
 : 21_80
 12 LINE.NUM 0 ^nCmdFound @! 
@@ -649,317 +649,327 @@
 2 LINE.NUM ^nFindCmd @@ -1 > IF 
 3 LINE.NUM 1 ~DO_Lights_RLA @! 
 4 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-6 LINE.NUM THEN 
-9 LINE.NUM " LIGHTS_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-10 LINE.NUM ^nFindCmd @@ -1 > IF 
-11 LINE.NUM 0 ~DO_Lights_RLA @! 
-12 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-14 LINE.NUM THEN 
-17 LINE.NUM " ENC_FANS_HI" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-18 LINE.NUM ^nFindCmd @@ -1 > IF 
-19 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-20 LINE.NUM ^nPauseWallFans @@ 0 = IF 
-21 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-22 LINE.NUM &TestEnclFans  START.T DROP  
-23 LINE.NUM ELSE 
-23 LINE.NUM ^nPauseWallFans @@ 1 = IF 
-24 LINE.NUM 10 ^nOldWallFanCtrl @! 
-25 LINE.NUM THEN THEN 
-26 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-27 LINE.NUM ELSE 
-28 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
-29 LINE.NUM THEN 
-30 LINE.NUM THEN 
-33 LINE.NUM " ENC_FANS_MED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-34 LINE.NUM ^nFindCmd @@ -1 > IF 
-35 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-36 LINE.NUM ^nPauseWallFans @@ 0 = IF 
-37 LINE.NUM 5 I>F ~AO_Wall_Fans_VDC @! 
-38 LINE.NUM &TestEnclFans  START.T DROP  
-39 LINE.NUM ELSE 
-39 LINE.NUM ^nPauseWallFans @@ 1 = IF 
-40 LINE.NUM 5 ^nOldWallFanCtrl @! 
-41 LINE.NUM THEN THEN 
-42 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-43 LINE.NUM ELSE 
-44 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
-45 LINE.NUM THEN 
-46 LINE.NUM THEN 
-49 LINE.NUM " ENC_FANS_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-50 LINE.NUM ^nFindCmd @@ -1 > IF 
-51 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-52 LINE.NUM ^nPauseWallFans @@ 0 = IF 
-53 LINE.NUM 1.500000e+000 ~AO_Wall_Fans_VDC @! 
-54 LINE.NUM &TestEnclFans  START.T DROP  
-55 LINE.NUM ELSE 
-55 LINE.NUM ^nPauseWallFans @@ 1 = IF 
-56 LINE.NUM 1.500000e+000 ^nOldWallFanCtrl F@! 
-57 LINE.NUM THEN THEN 
-58 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-59 LINE.NUM ELSE 
-60 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
-61 LINE.NUM THEN 
-62 LINE.NUM THEN 
-65 LINE.NUM " ENC_FANS_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-66 LINE.NUM ^nFindCmd @@ -1 > IF 
-67 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-68 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-69 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-70 LINE.NUM ELSE 
-71 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
-72 LINE.NUM THEN 
-73 LINE.NUM THEN 
-76 LINE.NUM " OTA_BLOWER_A_HI" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-77 LINE.NUM ^nFindCmd @@ -1 > IF 
-78 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-79 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
-80 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-81 LINE.NUM ELSE 
-82 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-83 LINE.NUM THEN 
-84 LINE.NUM THEN 
-87 LINE.NUM " OTA_BLOWER_A_MED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-88 LINE.NUM ^nFindCmd @@ -1 > IF 
-89 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-90 LINE.NUM 5 I>F ~AO_OTA_Blower_A @! 
-91 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-92 LINE.NUM ELSE 
-93 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-94 LINE.NUM THEN 
-95 LINE.NUM THEN 
-98 LINE.NUM " OTA_BLOWER_A_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-99 LINE.NUM ^nFindCmd @@ -1 > IF 
-100 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-101 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_A @! 
-102 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-103 LINE.NUM ELSE 
-104 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-105 LINE.NUM THEN 
-106 LINE.NUM THEN 
-109 LINE.NUM " OTA_BLOWER_A_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-110 LINE.NUM ^nFindCmd @@ -1 > IF 
-111 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-112 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-113 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-114 LINE.NUM ELSE 
-115 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-116 LINE.NUM THEN 
-117 LINE.NUM THEN 
-120 LINE.NUM " OTA_BLOWER_B_HI" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-121 LINE.NUM ^nFindCmd @@ -1 > IF 
-122 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-123 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
-124 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-125 LINE.NUM ELSE 
-126 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-127 LINE.NUM THEN 
-128 LINE.NUM THEN 
-131 LINE.NUM " OTA_BLOWER_B_MED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-132 LINE.NUM ^nFindCmd @@ -1 > IF 
-133 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-134 LINE.NUM 5 I>F ~AO_OTA_Blower_B @! 
-135 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-136 LINE.NUM ELSE 
-137 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-138 LINE.NUM THEN 
-139 LINE.NUM THEN 
-142 LINE.NUM " OTA_BLOWER_B_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-143 LINE.NUM ^nFindCmd @@ -1 > IF 
-144 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-145 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_B @! 
-146 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-147 LINE.NUM ELSE 
-148 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-149 LINE.NUM THEN 
-150 LINE.NUM THEN 
-153 LINE.NUM " OTA_BLOWER_B_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-154 LINE.NUM ^nFindCmd @@ -1 > IF 
-155 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-156 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-157 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-158 LINE.NUM ELSE 
-159 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
-160 LINE.NUM THEN 
-161 LINE.NUM THEN 
-164 LINE.NUM " PANEL_LED_GREEN" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-165 LINE.NUM ^nFindCmd @@ -1 > IF 
-166 LINE.NUM 1 ^nPanelLED_Enum @! 
-167 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-168 LINE.NUM THEN 
-171 LINE.NUM " PANEL_LED_YELLOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-172 LINE.NUM ^nFindCmd @@ -1 > IF 
-173 LINE.NUM 2 ^nPanelLED_Enum @! 
-174 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+7 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+8 LINE.NUM " , AutoON " *sLightsTest $CAT 
+
+9 LINE.NUM *sTimestamp *sLightsTest $CAT 
+
+13 LINE.NUM THEN 
+16 LINE.NUM " LIGHTS_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+17 LINE.NUM ^nFindCmd @@ -1 > IF 
+18 LINE.NUM 0 ~DO_Lights_RLA @! 
+19 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+22 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+23 LINE.NUM " , AutoOFF " *sLightsTest $CAT 
+
+24 LINE.NUM *sTimestamp *sLightsTest $CAT 
+
+28 LINE.NUM THEN 
+31 LINE.NUM " ENC_FANS_HI" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+32 LINE.NUM ^nFindCmd @@ -1 > IF 
+33 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
+34 LINE.NUM ^nPauseWallFans @@ 0 = IF 
+35 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+36 LINE.NUM &TestEnclFans  START.T DROP  
+37 LINE.NUM ELSE 
+37 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+38 LINE.NUM 10 ^nOldWallFanCtrl @! 
+39 LINE.NUM THEN THEN 
+40 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+41 LINE.NUM ELSE 
+42 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
+43 LINE.NUM THEN 
+44 LINE.NUM THEN 
+47 LINE.NUM " ENC_FANS_MED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+48 LINE.NUM ^nFindCmd @@ -1 > IF 
+49 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
+50 LINE.NUM ^nPauseWallFans @@ 0 = IF 
+51 LINE.NUM 5 I>F ~AO_Wall_Fans_VDC @! 
+52 LINE.NUM &TestEnclFans  START.T DROP  
+53 LINE.NUM ELSE 
+53 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+54 LINE.NUM 5 ^nOldWallFanCtrl @! 
+55 LINE.NUM THEN THEN 
+56 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+57 LINE.NUM ELSE 
+58 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
+59 LINE.NUM THEN 
+60 LINE.NUM THEN 
+63 LINE.NUM " ENC_FANS_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+64 LINE.NUM ^nFindCmd @@ -1 > IF 
+65 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
+66 LINE.NUM ^nPauseWallFans @@ 0 = IF 
+67 LINE.NUM 1.500000e+000 ~AO_Wall_Fans_VDC @! 
+68 LINE.NUM &TestEnclFans  START.T DROP  
+69 LINE.NUM ELSE 
+69 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+70 LINE.NUM 1.500000e+000 ^nOldWallFanCtrl F@! 
+71 LINE.NUM THEN THEN 
+72 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+73 LINE.NUM ELSE 
+74 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
+75 LINE.NUM THEN 
+76 LINE.NUM THEN 
+79 LINE.NUM " ENC_FANS_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+80 LINE.NUM ^nFindCmd @@ -1 > IF 
+81 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
+82 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+83 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+84 LINE.NUM ELSE 
+85 LINE.NUM " Success=FALSE, Enclosure fans not in AUTO" *sEnclStatus  $MOVE 
+86 LINE.NUM THEN 
+87 LINE.NUM THEN 
+90 LINE.NUM " OTA_BLOWER_A_HI" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+91 LINE.NUM ^nFindCmd @@ -1 > IF 
+92 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+93 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
+94 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+95 LINE.NUM ELSE 
+96 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+97 LINE.NUM THEN 
+98 LINE.NUM THEN 
+101 LINE.NUM " OTA_BLOWER_A_MED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+102 LINE.NUM ^nFindCmd @@ -1 > IF 
+103 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+104 LINE.NUM 5 I>F ~AO_OTA_Blower_A @! 
+105 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+106 LINE.NUM ELSE 
+107 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+108 LINE.NUM THEN 
+109 LINE.NUM THEN 
+112 LINE.NUM " OTA_BLOWER_A_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+113 LINE.NUM ^nFindCmd @@ -1 > IF 
+114 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+115 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_A @! 
+116 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+117 LINE.NUM ELSE 
+118 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+119 LINE.NUM THEN 
+120 LINE.NUM THEN 
+123 LINE.NUM " OTA_BLOWER_A_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+124 LINE.NUM ^nFindCmd @@ -1 > IF 
+125 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+126 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+127 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+128 LINE.NUM ELSE 
+129 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+130 LINE.NUM THEN 
+131 LINE.NUM THEN 
+134 LINE.NUM " OTA_BLOWER_B_HI" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+135 LINE.NUM ^nFindCmd @@ -1 > IF 
+136 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+137 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
+138 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+139 LINE.NUM ELSE 
+140 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+141 LINE.NUM THEN 
+142 LINE.NUM THEN 
+145 LINE.NUM " OTA_BLOWER_B_MED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+146 LINE.NUM ^nFindCmd @@ -1 > IF 
+147 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+148 LINE.NUM 5 I>F ~AO_OTA_Blower_B @! 
+149 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+150 LINE.NUM ELSE 
+151 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+152 LINE.NUM THEN 
+153 LINE.NUM THEN 
+156 LINE.NUM " OTA_BLOWER_B_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+157 LINE.NUM ^nFindCmd @@ -1 > IF 
+158 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+159 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_B @! 
+160 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+161 LINE.NUM ELSE 
+162 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+163 LINE.NUM THEN 
+164 LINE.NUM THEN 
+167 LINE.NUM " OTA_BLOWER_B_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+168 LINE.NUM ^nFindCmd @@ -1 > IF 
+169 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+170 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+171 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+172 LINE.NUM ELSE 
+173 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
+174 LINE.NUM THEN 
 175 LINE.NUM THEN 
-178 LINE.NUM " PANEL_LED_RED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+178 LINE.NUM " PANEL_LED_GREEN" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 179 LINE.NUM ^nFindCmd @@ -1 > IF 
-180 LINE.NUM 3 ^nPanelLED_Enum @! 
+180 LINE.NUM 1 ^nPanelLED_Enum @! 
 181 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 182 LINE.NUM THEN 
-185 LINE.NUM " PANEL_LED_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+185 LINE.NUM " PANEL_LED_YELLOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 186 LINE.NUM ^nFindCmd @@ -1 > IF 
-187 LINE.NUM 0 ^nPanelLED_Enum @! 
+187 LINE.NUM 2 ^nPanelLED_Enum @! 
 188 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 189 LINE.NUM THEN 
-192 LINE.NUM " DOOR_LED_GREEN" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+192 LINE.NUM " PANEL_LED_RED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 193 LINE.NUM ^nFindCmd @@ -1 > IF 
-194 LINE.NUM 1 ^nDoorLED_Enum @! 
+194 LINE.NUM 3 ^nPanelLED_Enum @! 
 195 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 196 LINE.NUM THEN 
-199 LINE.NUM " DOOR_LED_YELLOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+199 LINE.NUM " PANEL_LED_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 200 LINE.NUM ^nFindCmd @@ -1 > IF 
-201 LINE.NUM 2 ^nDoorLED_Enum @! 
+201 LINE.NUM 0 ^nPanelLED_Enum @! 
 202 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 203 LINE.NUM THEN 
-206 LINE.NUM " DOOR_LED_RED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+206 LINE.NUM " DOOR_LED_GREEN" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 207 LINE.NUM ^nFindCmd @@ -1 > IF 
-208 LINE.NUM 3 ^nDoorLED_Enum @! 
+208 LINE.NUM 1 ^nDoorLED_Enum @! 
 209 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 210 LINE.NUM THEN 
-213 LINE.NUM " DOOR_LED_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+213 LINE.NUM " DOOR_LED_YELLOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 214 LINE.NUM ^nFindCmd @@ -1 > IF 
-215 LINE.NUM 0 ^nDoorLED_Enum @! 
+215 LINE.NUM 2 ^nDoorLED_Enum @! 
 216 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 217 LINE.NUM THEN 
-220 LINE.NUM " SON_ALERT_ON" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+220 LINE.NUM " DOOR_LED_RED" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 221 LINE.NUM ^nFindCmd @@ -1 > IF 
-222 LINE.NUM 1 ~DO_Sounder @! 
+222 LINE.NUM 3 ^nDoorLED_Enum @! 
 223 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 224 LINE.NUM THEN 
-227 LINE.NUM " SON_ALERT_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+227 LINE.NUM " DOOR_LED_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 228 LINE.NUM ^nFindCmd @@ -1 > IF 
-229 LINE.NUM 0 ~DO_Sounder @! 
+229 LINE.NUM 0 ^nDoorLED_Enum @! 
 230 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 231 LINE.NUM THEN 
-234 LINE.NUM " LED_STEADY" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+234 LINE.NUM " SON_ALERT_ON" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 235 LINE.NUM ^nFindCmd @@ -1 > IF 
-236 LINE.NUM " STEADY" *sLED_Mode  $MOVE 
+236 LINE.NUM 1 ~DO_Sounder @! 
 237 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 238 LINE.NUM THEN 
-241 LINE.NUM " LED_BLINK" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+241 LINE.NUM " SON_ALERT_OFF" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 242 LINE.NUM ^nFindCmd @@ -1 > IF 
-243 LINE.NUM " BLINK" *sLED_Mode  $MOVE 
+243 LINE.NUM 0 ~DO_Sounder @! 
 244 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 245 LINE.NUM THEN 
-264 LINE.NUM " MCB_RESET_POLE_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-265 LINE.NUM ^nFindCmd @@ -1 > IF 
-266 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
-267 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
-268 LINE.NUM ELSE 
-269 LINE.NUM 1.500000e+000 ~DO_PoleFans_MCB  PULSEON 
-270 LINE.NUM 2000  DELAY 
-271 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
-272 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-273 LINE.NUM ELSE 
-274 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
-275 LINE.NUM THEN 
-276 LINE.NUM THEN 
-277 LINE.NUM THEN 
-280 LINE.NUM " MCB_RESET_TAIL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-281 LINE.NUM ^nFindCmd @@ -1 > IF 
-282 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
-283 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
-284 LINE.NUM ELSE 
-285 LINE.NUM 1.500000e+000 ~DO_TailFans_MCB  PULSEON 
-286 LINE.NUM 2000  DELAY 
-287 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
-288 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-289 LINE.NUM ELSE 
-290 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+248 LINE.NUM " LED_STEADY" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+249 LINE.NUM ^nFindCmd @@ -1 > IF 
+250 LINE.NUM " STEADY" *sLED_Mode  $MOVE 
+251 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+252 LINE.NUM THEN 
+255 LINE.NUM " LED_BLINK" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+256 LINE.NUM ^nFindCmd @@ -1 > IF 
+257 LINE.NUM " BLINK" *sLED_Mode  $MOVE 
+258 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+259 LINE.NUM THEN 
+278 LINE.NUM " MCB_RESET_POLE_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+279 LINE.NUM ^nFindCmd @@ -1 > IF 
+280 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
+281 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
+282 LINE.NUM ELSE 
+283 LINE.NUM 1.500000e+000 ~DO_PoleFans_MCB  PULSEON 
+284 LINE.NUM 2000  DELAY 
+285 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
+286 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+287 LINE.NUM ELSE 
+288 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+289 LINE.NUM THEN 
+290 LINE.NUM THEN 
 291 LINE.NUM THEN 
-292 LINE.NUM THEN 
-293 LINE.NUM THEN 
-296 LINE.NUM " MCB_RESET_OTA_BLOWER" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-297 LINE.NUM ^nFindCmd @@ -1 > IF 
-298 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
-299 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
-300 LINE.NUM ELSE 
-301 LINE.NUM 1.500000e+000 ~DO_OTAblower_MCB  PULSEON 
-302 LINE.NUM 2000  DELAY 
-303 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
-304 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-305 LINE.NUM ELSE 
-306 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+294 LINE.NUM " MCB_RESET_TAIL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+295 LINE.NUM ^nFindCmd @@ -1 > IF 
+296 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
+297 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
+298 LINE.NUM ELSE 
+299 LINE.NUM 1.500000e+000 ~DO_TailFans_MCB  PULSEON 
+300 LINE.NUM 2000  DELAY 
+301 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
+302 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+303 LINE.NUM ELSE 
+304 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+305 LINE.NUM THEN 
+306 LINE.NUM THEN 
 307 LINE.NUM THEN 
-308 LINE.NUM THEN 
-309 LINE.NUM THEN 
-312 LINE.NUM " MCB_RESET_PANEL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-313 LINE.NUM ^nFindCmd @@ -1 > IF 
-314 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
-315 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
-316 LINE.NUM ELSE 
-317 LINE.NUM 1.500000e+000 ~DO_PanelFans_MCB  PULSEON 
-318 LINE.NUM 2000  DELAY 
-319 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
-320 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-321 LINE.NUM ELSE 
-322 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+310 LINE.NUM " MCB_RESET_OTA_BLOWER" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+311 LINE.NUM ^nFindCmd @@ -1 > IF 
+312 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
+313 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
+314 LINE.NUM ELSE 
+315 LINE.NUM 1.500000e+000 ~DO_OTAblower_MCB  PULSEON 
+316 LINE.NUM 2000  DELAY 
+317 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
+318 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+319 LINE.NUM ELSE 
+320 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+321 LINE.NUM THEN 
+322 LINE.NUM THEN 
 323 LINE.NUM THEN 
-324 LINE.NUM THEN 
-325 LINE.NUM THEN 
-344 LINE.NUM " MCB_TRIP_POLE_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-345 LINE.NUM ^nFindCmd @@ -1 > IF 
-346 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
-347 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
-348 LINE.NUM ELSE 
-349 LINE.NUM 5.000000e-001 ~DO_PoleFans_MCB  PULSEON 
-350 LINE.NUM 1000  DELAY 
-351 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
-352 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-353 LINE.NUM ELSE 
-354 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
-355 LINE.NUM THEN 
-356 LINE.NUM THEN 
-357 LINE.NUM THEN 
-360 LINE.NUM " MCB_TRIP_TAIL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-361 LINE.NUM ^nFindCmd @@ -1 > IF 
-362 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
-363 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
-364 LINE.NUM ELSE 
-365 LINE.NUM 5.000000e-001 ~DO_TailFans_MCB  PULSEON 
-366 LINE.NUM 1000  DELAY 
-367 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
-368 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-369 LINE.NUM ELSE 
-370 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+326 LINE.NUM " MCB_RESET_PANEL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+327 LINE.NUM ^nFindCmd @@ -1 > IF 
+328 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
+329 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
+330 LINE.NUM ELSE 
+331 LINE.NUM 1.500000e+000 ~DO_PanelFans_MCB  PULSEON 
+332 LINE.NUM 2000  DELAY 
+333 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
+334 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+335 LINE.NUM ELSE 
+336 LINE.NUM " Success=FALSE, Reset failed" *sEnclStatus  $MOVE 
+337 LINE.NUM THEN 
+338 LINE.NUM THEN 
+339 LINE.NUM THEN 
+358 LINE.NUM " MCB_TRIP_POLE_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+359 LINE.NUM ^nFindCmd @@ -1 > IF 
+360 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
+361 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
+362 LINE.NUM ELSE 
+363 LINE.NUM 5.000000e-001 ~DO_PoleFans_MCB  PULSEON 
+364 LINE.NUM 1000  DELAY 
+365 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
+366 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+367 LINE.NUM ELSE 
+368 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+369 LINE.NUM THEN 
+370 LINE.NUM THEN 
 371 LINE.NUM THEN 
-372 LINE.NUM THEN 
-373 LINE.NUM THEN 
-376 LINE.NUM " MCB_TRIP_OTA_BLOWER" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-377 LINE.NUM ^nFindCmd @@ -1 > IF 
-378 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
-379 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
-380 LINE.NUM ELSE 
-381 LINE.NUM 5.000000e-001 ~DO_OTAblower_MCB  PULSEON 
-382 LINE.NUM 1000  DELAY 
-383 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
-384 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-385 LINE.NUM ELSE 
-386 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+374 LINE.NUM " MCB_TRIP_TAIL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+375 LINE.NUM ^nFindCmd @@ -1 > IF 
+376 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
+377 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
+378 LINE.NUM ELSE 
+379 LINE.NUM 5.000000e-001 ~DO_TailFans_MCB  PULSEON 
+380 LINE.NUM 1000  DELAY 
+381 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
+382 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+383 LINE.NUM ELSE 
+384 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+385 LINE.NUM THEN 
+386 LINE.NUM THEN 
 387 LINE.NUM THEN 
-388 LINE.NUM THEN 
-389 LINE.NUM THEN 
-392 LINE.NUM " MCB_TRIP_PANEL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
-393 LINE.NUM ^nFindCmd @@ -1 > IF 
-394 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
-395 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
-396 LINE.NUM ELSE 
-397 LINE.NUM 5.000000e-001 ~DO_PanelFans_MCB  PULSEON 
-398 LINE.NUM 1000  DELAY 
-399 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
-400 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-401 LINE.NUM ELSE 
-402 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+390 LINE.NUM " MCB_TRIP_OTA_BLOWER" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+391 LINE.NUM ^nFindCmd @@ -1 > IF 
+392 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
+393 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
+394 LINE.NUM ELSE 
+395 LINE.NUM 5.000000e-001 ~DO_OTAblower_MCB  PULSEON 
+396 LINE.NUM 1000  DELAY 
+397 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
+398 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+399 LINE.NUM ELSE 
+400 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+401 LINE.NUM THEN 
+402 LINE.NUM THEN 
 403 LINE.NUM THEN 
-404 LINE.NUM THEN 
-405 LINE.NUM THEN 
-407 LINE.NUM "  " *sEnclStatus $CAT 
+406 LINE.NUM " MCB_TRIP_PANEL_FANS" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
+407 LINE.NUM ^nFindCmd @@ -1 > IF 
+408 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
+409 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
+410 LINE.NUM ELSE 
+411 LINE.NUM 5.000000e-001 ~DO_PanelFans_MCB  PULSEON 
+412 LINE.NUM 1000  DELAY 
+413 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
+414 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+415 LINE.NUM ELSE 
+416 LINE.NUM " Success=FALSE, Trip failed" *sEnclStatus  $MOVE 
+417 LINE.NUM THEN 
+418 LINE.NUM THEN 
+419 LINE.NUM THEN 
+421 LINE.NUM "  " *sEnclStatus $CAT 
 
-408 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-409 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+422 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+423 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-411 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-412 LINE.NUM " " *sEnclStatus  $MOVE 
+425 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+426 LINE.NUM " " *sEnclStatus  $MOVE 
 0 JUMP ;
 : 21_151
 -32 JUMP ;

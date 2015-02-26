@@ -3,7 +3,17 @@
 : 17_12
 1 LINE.NUM ~DI_Lights_Enter_SW  CLR.+LATCH@I ~DI_Lights_Enter_SW  CLR.-LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.+LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.-LATCH@I LOR  IF 
 5 LINE.NUM ~DO_Lights_RLA @@I 1 XOR  ~DO_Lights_RLA @! 
-6 LINE.NUM THEN 
+8 LINE.NUM ~DO_Lights_RLA @@I 1 = IF 
+9 LINE.NUM " , ManualON " *sLightsTest $CAT 
+
+10 LINE.NUM ELSE 
+11 LINE.NUM " , ManualOFF " *sLightsTest $CAT 
+
+12 LINE.NUM THEN 
+13 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+14 LINE.NUM *sTimestamp *sLightsTest $CAT 
+
+16 LINE.NUM THEN 
 1 JUMP ;
 : 17_13
 4 LINE.NUM &Pole_Close  ?RUNNING &Pole_Open  ?RUNNING LOR  &Tail_Close  ?RUNNING LOR  &Tail_Open  ?RUNNING LOR  IF 
@@ -236,6 +246,8 @@
 28 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
 29 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
 30 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
+31 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
+32 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
 0 JUMP ;
 : 17_46
 1 LINE.NUM 100  DELAY 
