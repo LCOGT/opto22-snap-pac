@@ -1,0 +1,130 @@
+CREATE T.ARRAY
+&DatatakerComm ,
+&Powerup ,
+ 0 ,
+CREATE V.ARRAY
+^DTcommStatus ,
+^fRTD1_R0 ,
+^fRTD2_R0 ,
+^fRTD3_R0 ,
+^fRTD4_R0 ,
+^fRTD5_R0 ,
+^fRTD6_R0 ,
+^fRTD7_R0 ,
+^fRTD8_R0 ,
+^nIP_int ,
+^nLength ,
+^nOctet3 ,
+*sDT_IP ,
+*sIP_hex ,
+*sIP_PAC ,
+*sOctet1 ,
+*sOctet2 ,
+*sOctet3 ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*DTcommHandle ,
+ 0 ,
+CREATE TI.ARRAY
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%local_io ,
+ 0 ,
+CREATE P.ARRAY
+~DI_AirCon_CR_NC ,
+~DI_AirConPWR_OK ,
+~DI_CryoTig_CR_NC ,
+~DI_ECB_Comm ,
+~DI_ECB_OK ,
+~DI_EntryDoor ,
+~DI_HeatAlarm ,
+~DI_LightSW ,
+~DI_NRES_CR_NC ,
+~DI_NRES_Deadman ,
+~DI_NRES_PWR_OK ,
+~DI_PanelDoor ,
+~DI_RedLink_CR_NC ,
+~DI_RedLink_CR_NO ,
+~DI_SmokeAlarm ,
+~DI_SmokePWR_OK ,
+~DI_Thermostat_CR_NC ,
+~DI_Thermostat_CR_NO ,
+~DI_ThermostatMCB ,
+~DI_UPS_TVS ,
+~DI_Utility_TVS ,
+~DO_AirCon_CR ,
+~DO_CryoTig_CR ,
+~DO_ECB_Comm ,
+~DO_NRES_CR ,
+~DO_RedLink_CR ,
+~DO_Thermostat_CR ,
+~AI_CryoTig_Current ,
+~AI_CryoTig_OutputPressure ,
+~AI_CryoTig_ReturnPressure ,
+~AI_CryoTig_Volt ,
+~AI_ExhaustTentFan_Tach ,
+~AI_IntakeTentFan_Tach ,
+~AI_PanelFan1_Tach ,
+~AI_PanelFan2_Tach ,
+~AI_Utility_Volt ,
+~AO_PanelFans_CTRL ,
+~AO_StirFans_CTRL ,
+~AO_TentFan_CTRL ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+" %local_io  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%local_io ENABLE
+ -1 ~DO_AirCon_CR @!
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^DTcommStatus @!
+0.00000000 ^fRTD1_R0 @!
+0.00000000 ^fRTD2_R0 @!
+0.00000000 ^fRTD3_R0 @!
+0.00000000 ^fRTD4_R0 @!
+0.00000000 ^fRTD5_R0 @!
+0.00000000 ^fRTD6_R0 @!
+0.00000000 ^fRTD7_R0 @!
+0.00000000 ^fRTD8_R0 @!
+0 ^nIP_int @!
+0 ^nLength @!
+0 ^nOctet3 @!
+" "
+ *sDT_IP $MOVE
+" "
+ *sIP_hex $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sOctet1 $MOVE
+" "
+ *sOctet2 $MOVE
+" "
+ *sOctet3 $MOVE
+" "
+ *DTcommHandle $MOVE
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;

@@ -1,0 +1,512 @@
+CREATE T.ARRAY
+&AutoLightsOff ,
+&Blink ,
+&Close_Sequential ,
+&Encl_Comm ,
+&Heart_Monitor ,
+&Manual_auto ,
+&Mute_Test_LED ,
+&Pendant_manual ,
+&Pole_Close ,
+&Pole_Open ,
+&Powerup ,
+&SYSTEM_READY ,
+&Tail_Close ,
+&Tail_Open ,
+&TestEnclFans ,
+&TestErrors ,
+&TestFaults ,
+&TestPanelFans ,
+ 0 ,
+CREATE V.ARRAY
+^AQ_Go_Fast_Ok ,
+^AqDemand ,
+^AUTOMODE ,
+^Blue_Light_Time ,
+^CCC_started ,
+^cdmOPENSLOW ,
+^CHART_STARTED ,
+^CLOSE_SLOW ,
+^CmdCLEAR_FAULTS ,
+^CmdCLOSE ,
+^CmdCLOSESLOW ,
+^CmdGET_FAULTS ,
+^CmdHEARTBEAT ,
+^CmdOPEN ,
+^CmdPOLE_CLOSE ,
+^CmdPOLE_OPEN ,
+^CmdSTATUS ,
+^CmdSTOP ,
+^CmdTAIL_CLOSE ,
+^CmdTAIL_OPEN ,
+^CmdTOGGLE_LIGHTS ,
+^Contactors_OK ,
+^CURRENT_COOLING_FAN_FREQ ,
+^door ,
+^f120 ,
+^f24hrsInSec ,
+^FastMode ,
+^flag_status ,
+^ListeningForMaster ,
+^Master_CommClosed ,
+^Master_Handle_CharNumWaiting ,
+^mastercommandFL ,
+^MasterCommandNum ,
+^MasterCommandStringRcvd ,
+^MasterCommEstablished ,
+^n1 ,
+^nAbort ,
+^nBlink ,
+^nCharCount ,
+^nClose ,
+^nCmdFound ,
+^nCounter ,
+^nDoorLED_Enum ,
+^nEnclCharCount ,
+^nEnclPortStatus ,
+^nEnclReceiveStatus ,
+^nEnclTransmitStatus ,
+^nExitLoop ,
+^nFacilityCharCount ,
+^nFacilityPortStatus ,
+^nFacilityReceiveStatus ,
+^nFacilityTransmitStatus ,
+^nFanCtrlMax ,
+^nFindCmd ,
+^nFindFacilityCmd ,
+^nHeartbeat ,
+^nIndex ,
+^nIndex2 ,
+^nIndexEncl ,
+^nLength ,
+^nMaxFanTach ,
+^nNTPstatus ,
+^nOldHeartbeat ,
+^nOldWallFanCtrl ,
+^nOpen ,
+^nPanelLED_Enum ,
+^nPauseWallFans ,
+^nPoleCloseFault ,
+^nPoleOpenFault ,
+^nPoleOpenL2Fault ,
+^nPoleTimeoutCounter ,
+^nReceiveStatus ,
+^nSetTimeDateStatus ,
+^nStormlocked ,
+^nStringLength ,
+^nStringPosition ,
+^nTailCloseFault ,
+^nTailOpenFault ,
+^nTailOpenL2Fault ,
+^nTailTimeoutCounter ,
+^nTimeoutLength ,
+^OLD_COOLING_FAN_FREQ ,
+^OPEN_SLOW ,
+^PANEL_FANS_OK ,
+^Second_reading ,
+^Server_Ok_To_Go_Fast ,
+^SocketElapsed ,
+^SocketUpTime ,
+^SPD_OK ,
+^status ,
+^switchAccum ,
+^System_Health_Status ,
+^System_Safe_To_Run ,
+^Tel_Go_Fast_OK ,
+^TempFloat ,
+^Ups_Breaker_Ok ,
+^UTIL_BREAKER_OK ,
+*DateString ,
+*DoorEnum ,
+*ElapsedString ,
+*lastCommand ,
+*MasterCommand ,
+*PoleEnum ,
+*sDay ,
+*sEnclCmd ,
+*sEnclOpMode ,
+*sEnclStatus ,
+*sErrorList ,
+*sFacilityCmd ,
+*sFacilityStatus ,
+*sFaultList ,
+*sFWVersion ,
+*sICDVersion ,
+*SideEnum ,
+*sIP_PAC ,
+*sLED_Mode ,
+*sLightsTest ,
+*sMonth ,
+*sOldHeartbeat ,
+*sOTAblowerOpMode ,
+*sPoleShutterState ,
+*sShutterSelectMode ,
+*sStatus ,
+*sSWVersion ,
+*sTailShutterState ,
+*sTime ,
+*sTimestamp ,
+*StormEnum ,
+*sWallFansOpMode ,
+*SwitchEnum ,
+*sYear ,
+*TailEnum ,
+*TempC ,
+*Tempstring ,
+*TimeString ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*cEncl_Port ,
+*cFacilityPort ,
+*cNTPserver ,
+*Master_Handle ,
+ 0 ,
+CREATE TI.ARRAY
+^COMMWATCHDOG ,
+^dt20sec ,
+^dt24h ,
+^dtBlink ,
+^dtEnclSocket ,
+^dtFacilitySocket ,
+^dtGetChar ,
+^dtGetTime ,
+^dtHeartbeat ,
+^dtOneWeek ,
+^dtPoleTimer ,
+^dtSequential ,
+^dtTailTimer ,
+^dtTestSWtimer ,
+^Socket_Timer ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+{stEnclCmds ,
+{stFacilityCmds ,
+{stTimeDate ,
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%encPacInternal ,
+ 0 ,
+CREATE P.ARRAY
+~DI_24vCtrl_MCB ,
+~DI_24vPSU_OK ,
+~DI_CabinetDoor_LS ,
+~DI_DUPS_TVS ,
+~DI_Enet_OK ,
+~DI_ESTOP_OK ,
+~DI_FanAuto_SW ,
+~DI_FanStop_SW ,
+~DI_FenceClosed_SEN ,
+~DI_FUPS_TVS ,
+~DI_GoFast_SW ,
+~DI_LeftDoor_LS ,
+~DI_LeftStormLock_LS ,
+~DI_Lights_Enter_SW ,
+~DI_Lights_Exit_SW ,
+~DI_MuteTest_SW ,
+~DI_OTA_BlowerAuto_SW ,
+~DI_OTA_BlowerStop_SW ,
+~DI_OTAblower_MCB ,
+~DI_PAC_MCB ,
+~DI_PanelFans_MCB ,
+~DI_PendantClose_SW ,
+~DI_PendantOpen_SW ,
+~DI_PendantStow_SW ,
+~DI_Pole_Closed_LS ,
+~DI_Pole_Fast_LS ,
+~DI_Pole_Open_LS ,
+~DI_Pole_Open_LS2 ,
+~DI_PoleFans_MCB ,
+~DI_PoleSelect_SW ,
+~DI_RightDoor_LS ,
+~DI_RightStormLock_LS ,
+~DI_RoofAuto_SW ,
+~DI_RoofDisable_SW ,
+~DI_Smoke_SEN ,
+~DI_SmokeHeat_SEN ,
+~DI_SmokePWR_SEN ,
+~DI_Tail_Closed_LS ,
+~DI_Tail_Fast_LS ,
+~DI_Tail_Open_LS ,
+~DI_Tail_Open_LS2 ,
+~DI_TailFans_MCB ,
+~DI_TailSelect_SW ,
+~DI_TrapKey_SW ,
+~DI_Tscope_MCB ,
+~DI_UltimateClosed_LS ,
+~DI_UpsAlarm ,
+~DI_UpsBattCharge ,
+~DI_UpsBattMode ,
+~DI_Utility_TVS ,
+~DI_Webcam_MCB ,
+~DO_24vCTRL_MCB ,
+~DO_DoorGreen_LED ,
+~DO_DoorRed_LED ,
+~DO_Lights_RLA ,
+~DO_OTAblower_MCB ,
+~DO_PAC_MCB ,
+~DO_PanelBlue_LED ,
+~DO_PanelFans_MCB ,
+~DO_PanelGreen_LED ,
+~DO_PanelRed_LED ,
+~DO_PoleDirection ,
+~DO_PoleEnable ,
+~DO_PoleFans_MCB ,
+~DO_PoleGoFast ,
+~DO_PoleStop ,
+~DO_Sounder ,
+~DO_TailDirection ,
+~DO_TailEnable ,
+~DO_TailFans_MCB ,
+~DO_TailGoFast ,
+~DO_TailStop ,
+~DO_Webcam_RLA ,
+~AI_AqHumidity_SEN ,
+~AI_AqTemp_SEN ,
+~AI_CabExhaust_RTD ,
+~AI_CabFanIntake_TACH ,
+~AI_Coolant_RTD ,
+~AI_InletAir_RTD ,
+~AI_OutletAir_RTD ,
+~AI_PoleFanExhaust_TACH ,
+~AO_OTA_Blower_A ,
+~AO_OTA_Blower_B ,
+~AO_Panel_Fans_VDC ,
+~AO_Wall_Fans_VDC ,
+ 0 ,
+CREATE PID.ARRAY
+ |PanelFans ,
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+|PanelFans ENABLE
+" %encPacInternal  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%encPacInternal ENABLE
+ 0 ~DO_PAC_MCB @!
+ 0 ~DO_24vCTRL_MCB @!
+ 0 ~DO_PoleFans_MCB @!
+ 0 ~DO_TailFans_MCB @!
+ 0 ~DO_OTAblower_MCB @!
+   0.0000 ~AI_PoleFanExhaust_TACH IN.F!POINT
+   0.0000 ~AI_CabFanIntake_TACH IN.F!POINT
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^AQ_Go_Fast_Ok @!
+9 ^AqDemand @!
+0 ^AUTOMODE @!
+0 ^Blue_Light_Time @!
+0 ^CCC_started @!
+0 ^cdmOPENSLOW @!
+0 ^CHART_STARTED @!
+0 ^CLOSE_SLOW @!
+0 ^CmdCLEAR_FAULTS @!
+0 ^CmdCLOSE @!
+0 ^CmdCLOSESLOW @!
+0 ^CmdGET_FAULTS @!
+0 ^CmdHEARTBEAT @!
+0 ^CmdOPEN @!
+0 ^CmdPOLE_CLOSE @!
+0 ^CmdPOLE_OPEN @!
+0 ^CmdSTATUS @!
+0 ^CmdSTOP @!
+0 ^CmdTAIL_CLOSE @!
+0 ^CmdTAIL_OPEN @!
+0 ^CmdTOGGLE_LIGHTS @!
+0.0 ^COMMWATCHDOG @!
+0 ^Contactors_OK @!
+0.00000000 ^CURRENT_COOLING_FAN_FREQ @!
+0 ^door @!
+0.0 ^dt20sec @!
+0.0 ^dt24h @!
+0.0 ^dtBlink @!
+0.0 ^dtEnclSocket @!
+0.0 ^dtFacilitySocket @!
+0.0 ^dtGetChar @!
+0.0 ^dtGetTime @!
+0.0 ^dtHeartbeat @!
+0.0 ^dtOneWeek @!
+0.0 ^dtPoleTimer @!
+0.0 ^dtSequential @!
+0.0 ^dtTailTimer @!
+0.0 ^dtTestSWtimer @!
+120.00000 ^f120 @!
+86400.000 ^f24hrsInSec @!
+0 ^FastMode @!
+0 ^flag_status @!
+0 ^ListeningForMaster @!
+0 ^Master_CommClosed @!
+0 ^Master_Handle_CharNumWaiting @!
+0 ^mastercommandFL @!
+0 ^MasterCommandNum @!
+0 ^MasterCommandStringRcvd @!
+0 ^MasterCommEstablished @!
+1 ^n1 @!
+0 ^nAbort @!
+0 ^nBlink @!
+0 ^nCharCount @!
+0 ^nClose @!
+0 ^nCmdFound @!
+0 ^nCounter @!
+0 ^nDoorLED_Enum @!
+0 ^nEnclCharCount @!
+0 ^nEnclPortStatus @!
+0 ^nEnclReceiveStatus @!
+0 ^nEnclTransmitStatus @!
+0 ^nExitLoop @!
+0 ^nFacilityCharCount @!
+0 ^nFacilityPortStatus @!
+0 ^nFacilityReceiveStatus @!
+0 ^nFacilityTransmitStatus @!
+0 ^nFanCtrlMax @!
+0 ^nFindCmd @!
+0 ^nFindFacilityCmd @!
+0 ^nHeartbeat @!
+0 ^nIndex @!
+0 ^nIndex2 @!
+0 ^nIndexEncl @!
+0 ^nLength @!
+0 ^nMaxFanTach @!
+0 ^nNTPstatus @!
+0 ^nOldHeartbeat @!
+0 ^nOldWallFanCtrl @!
+0 ^nOpen @!
+0 ^nPanelLED_Enum @!
+0 ^nPauseWallFans @!
+-1 ^nPoleCloseFault @!
+-1 ^nPoleOpenFault @!
+0 ^nPoleOpenL2Fault @!
+0 ^nPoleTimeoutCounter @!
+0 ^nReceiveStatus @!
+0 ^nSetTimeDateStatus @!
+0 ^nStormlocked @!
+0 ^nStringLength @!
+0 ^nStringPosition @!
+-1 ^nTailCloseFault @!
+-1 ^nTailOpenFault @!
+0 ^nTailOpenL2Fault @!
+0 ^nTailTimeoutCounter @!
+0 ^nTimeoutLength @!
+0.00000000 ^OLD_COOLING_FAN_FREQ @!
+0 ^OPEN_SLOW @!
+0 ^PANEL_FANS_OK @!
+1 ^Second_reading @!
+0 ^Server_Ok_To_Go_Fast @!
+0.0 ^Socket_Timer @!
+0.00000000 ^SocketElapsed @!
+0.00000000 ^SocketUpTime @!
+0 ^SPD_OK @!
+0 ^status @!
+0 ^switchAccum @!
+0 ^System_Health_Status @!
+0 ^System_Safe_To_Run @!
+0 ^Tel_Go_Fast_OK @!
+0.00000000 ^TempFloat @!
+0 ^Ups_Breaker_Ok @!
+0 ^UTIL_BREAKER_OK @!
+" "
+ *DateString $MOVE
+" 9"
+ *DoorEnum $MOVE
+" 0.0"
+ *ElapsedString $MOVE
+" "
+ *lastCommand $MOVE
+" xxx"
+ *MasterCommand $MOVE
+" 9"
+ *PoleEnum $MOVE
+" "
+ *sDay $MOVE
+" "
+ *sEnclCmd $MOVE
+" UNKNOWN"
+ *sEnclOpMode $MOVE
+" "
+ *sEnclStatus $MOVE
+" "
+ *sErrorList $MOVE
+" "
+ *sFacilityCmd $MOVE
+" "
+ *sFacilityStatus $MOVE
+" "
+ *sFaultList $MOVE
+" "
+ *sFWVersion $MOVE
+" "
+ *sICDVersion $MOVE
+" 9"
+ *SideEnum $MOVE
+" UNKNOWN"
+ *sIP_PAC $MOVE
+" STEADY"
+ *sLED_Mode $MOVE
+" Lights Test Log"
+ *sLightsTest $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sOldHeartbeat $MOVE
+" UNKNOWN"
+ *sOTAblowerOpMode $MOVE
+" UNKNOWN"
+ *sPoleShutterState $MOVE
+" "
+ *sShutterSelectMode $MOVE
+" "
+ *sStatus $MOVE
+" "
+ *sSWVersion $MOVE
+" UNKNOWN"
+ *sTailShutterState $MOVE
+" "
+ *sTime $MOVE
+" "
+ *sTimestamp $MOVE
+" 9"
+ *StormEnum $MOVE
+" UNKNOWN"
+ *sWallFansOpMode $MOVE
+" 9"
+ *SwitchEnum $MOVE
+" "
+ *sYear $MOVE
+" 9"
+ *TailEnum $MOVE
+" "
+ *TempC $MOVE
+" "
+ *Tempstring $MOVE
+" "
+ *TimeString $MOVE
+" tcp:22004"
+ *cEncl_Port $MOVE
+" tcp:22005"
+ *cFacilityPort $MOVE
+" 0.0.0.0"
+ *cNTPserver $MOVE
+ " "
+0 -1 {stEnclCmds Init$Table
+ " "
+0 -1 {stFacilityCmds Init$Table
+ " "
+0 -1 {stTimeDate Init$Table
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;

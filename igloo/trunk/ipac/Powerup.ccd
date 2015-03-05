@@ -1,0 +1,40 @@
+: 0_0
+0 JUMP ;
+: 0_1
+1 LINE.NUM 1 ~DO_AirCon_CR @! 
+2 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+0 JUMP ;
+: 0_3
+3 LINE.NUM 9.990500e+001 ^fRTD1_R0 @! 
+4 LINE.NUM 9.995600e+001 ^fRTD2_R0 @! 
+5 LINE.NUM 9.995100e+001 ^fRTD3_R0 @! 
+6 LINE.NUM 9.990000e+001 ^fRTD4_R0 @! 
+7 LINE.NUM 9.998400e+001 ^fRTD5_R0 @! 
+8 LINE.NUM 9.980000e+001 ^fRTD6_R0 @! 
+9 LINE.NUM 9.980200e+001 ^fRTD7_R0 @! 
+10 LINE.NUM 9.985300e+001 ^fRTD8_R0 @! 
+0 JUMP ;
+: 0_5
+11 LINE.NUM *sIP_PAC  IP$>I ^nIP_int @! 
+12 LINE.NUM ^nIP_int @@ *sIP_hex  I>HEX$ 
+13 LINE.NUM *sIP_hex  $LEN ^nLength @! 
+14 LINE.NUM ^nLength @@ 8 < IF 
+15 LINE.NUM *_HSV_SEMA Acquire1String " 0"  *_HSV_TEMP $MOVE *sIP_hex  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_hex $MOVE Release1String 
+16 LINE.NUM THEN 
+17 LINE.NUM *sIP_hex 0 2 *sOctet1  $SUB 
+18 LINE.NUM *sIP_hex 2 2 *sOctet2  $SUB 
+19 LINE.NUM *sIP_hex 4 2 *sOctet3  $SUB 
+31 LINE.NUM *_HSV_SEMA Acquire1String *sOctet1  *_HSV_TEMP $MOVE *sOctet2  *_HSV_TEMP $CAT *sOctet3  *_HSV_TEMP $CAT 48  *_HSV_TEMP $APPEND 51  *_HSV_TEMP $APPEND *_HSV_TEMP *sIP_hex $MOVE Release1String 
+33 LINE.NUM *sIP_hex  HEX$>I ^nIP_int @! 
+34 LINE.NUM ^nIP_int @@ *sDT_IP  I>IP$ 
+35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sDT_IP  *_HSV_TEMP $CAT " :8"  *_HSV_TEMP $CAT *_HSV_TEMP *sDT_IP $MOVE Release1String 
+36 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
+0 JUMP ;
+T: T0
+DUMMY
+0_0
+0_1
+0_3
+0_5
+T;
+&Powerup ' T0 SETTASK
