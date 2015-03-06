@@ -1,8 +1,10 @@
 CREATE T.ARRAY
 &DatatakerComm ,
+&Housekeeper ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
+^DTcharCount ,
 ^DTcommStatus ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
@@ -12,24 +14,40 @@ CREATE V.ARRAY
 ^fRTD6_R0 ,
 ^fRTD7_R0 ,
 ^fRTD8_R0 ,
+^nDTcharacterCount ,
+^nDTreceiveStatus ,
 ^nIP_int ,
 ^nLength ,
 ^nOctet3 ,
 *sDT_IP ,
+*sDTrequest ,
+*sFaultList ,
 *sIP_hex ,
 *sIP_PAC ,
 *sOctet1 ,
 *sOctet2 ,
 *sOctet3 ,
+*sRTD1_R0 ,
+*sRTD2_R0 ,
+*sRTD3_R0 ,
+*sRTD4_R0 ,
+*sRTD5_R0 ,
+*sRTD6_R0 ,
+*sRTD7_R0 ,
+*sRTD8_R0 ,
+*sTimestamp ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
 *DTcommHandle ,
  0 ,
 CREATE TI.ARRAY
+^dtAwaitingDT ,
+^dtRequestTimer ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
+{stDTdata ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -91,7 +109,10 @@ CONFIG_PORTS
 %local_io ENABLE
  -1 ~DO_AirCon_CR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
+0.0 ^dtAwaitingDT @!
+0 ^DTcharCount @!
 0 ^DTcommStatus @!
+0.0 ^dtRequestTimer @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
 0.00000000 ^fRTD3_R0 @!
@@ -100,11 +121,17 @@ CONFIG_PORTS
 0.00000000 ^fRTD6_R0 @!
 0.00000000 ^fRTD7_R0 @!
 0.00000000 ^fRTD8_R0 @!
+0 ^nDTcharacterCount @!
+0 ^nDTreceiveStatus @!
 0 ^nIP_int @!
 0 ^nLength @!
 0 ^nOctet3 @!
 " "
  *sDT_IP $MOVE
+" "
+ *sDTrequest $MOVE
+" "
+ *sFaultList $MOVE
 " "
  *sIP_hex $MOVE
 " "
@@ -116,7 +143,27 @@ CONFIG_PORTS
 " "
  *sOctet3 $MOVE
 " "
+ *sRTD1_R0 $MOVE
+" "
+ *sRTD2_R0 $MOVE
+" "
+ *sRTD3_R0 $MOVE
+" "
+ *sRTD4_R0 $MOVE
+" "
+ *sRTD5_R0 $MOVE
+" "
+ *sRTD6_R0 $MOVE
+" "
+ *sRTD7_R0 $MOVE
+" "
+ *sRTD8_R0 $MOVE
+" "
+ *sTimestamp $MOVE
+" "
  *DTcommHandle $MOVE
+ " "
+0 -1 {stDTdata Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO

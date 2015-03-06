@@ -1,7 +1,11 @@
 0 TASK  &_INIT_IO
 0 TASK &DatatakerComm
+0 TASK &Housekeeper
 0 TASK &Powerup
+0 TVAR ^dtAwaitingDT
+0 IVAR ^DTcharCount
 0 IVAR ^DTcommStatus
+0 TVAR ^dtRequestTimer
 0 FVAR ^fRTD1_R0
 0 FVAR ^fRTD2_R0
 0 FVAR ^fRTD3_R0
@@ -10,16 +14,30 @@
 0 FVAR ^fRTD6_R0
 0 FVAR ^fRTD7_R0
 0 FVAR ^fRTD8_R0
+0 IVAR ^nDTcharacterCount
+0 IVAR ^nDTreceiveStatus
 0 IVAR ^nIP_int
 0 IVAR ^nLength
 0 IVAR ^nOctet3
 1024 0 $VAR *sDT_IP 
+1024 0 $VAR *sDTrequest 
+1024 0 $VAR *sFaultList 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
 10 0 $VAR *sOctet1 
 10 0 $VAR *sOctet2 
 10 0 $VAR *sOctet3 
+20 0 $VAR *sRTD1_R0 
+20 0 $VAR *sRTD2_R0 
+20 0 $VAR *sRTD3_R0 
+20 0 $VAR *sRTD4_R0 
+20 0 $VAR *sRTD5_R0 
+20 0 $VAR *sRTD6_R0 
+20 0 $VAR *sRTD7_R0 
+20 0 $VAR *sRTD8_R0 
+50 0 $VAR *sTimestamp 
 1024 0 COMVAR *DTcommHandle 
+20 10 0 $TABLE {stDTdata 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
 32  1 SPOINT 0.0     INPUT  0  0 %local_io 0 POINT.TNG ~DI_AirCon_CR_NC
