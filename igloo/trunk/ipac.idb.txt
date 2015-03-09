@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    4:41:57 3/6/2015
+# TIME/DATE :    18:52:59 3/6/2015
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -119,6 +119,7 @@ TAG1,DI_UPS_TVS                                        ,7    ,40000000,00000000,
 TAG1,DI_Utility_TVS                                    ,5    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_AirCon_CR                                      ,0    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_CryoTig_CR                                     ,23   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,DO_DTreset                                        ,27   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_ECB_Comm                                       ,24   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_NRES_CR                                        ,22   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_RedLink_CR                                     ,26   ,10000000,00000000,00000000,00000000,0    ,0   

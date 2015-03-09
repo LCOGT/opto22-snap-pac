@@ -5,75 +5,75 @@
 1 LINE.NUM
   *DTcommHandle   OPEN
   ^DTcommStatus @! 
-12 JUMP ;
+13 JUMP ;
 : 1_5
 1 LINE.NUM 10  DELAY 
 -2 JUMP ;
 : 1_8
-1 LINE.NUM " /h /e /u /n" *sDTrequest  $MOVE 
-4 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
+1 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
 
-5 LINE.NUM *sRTD1_R0 *sDTrequest $CAT 
+2 LINE.NUM *sRTD1_R0 *sDTrequest $CAT 
 
-6 LINE.NUM " )" *sDTrequest $CAT 
+3 LINE.NUM " )" *sDTrequest $CAT 
 
-8 LINE.NUM "  2PT385(4W," *sDTrequest $CAT 
+5 LINE.NUM "  2PT385(4W," *sDTrequest $CAT 
 
-9 LINE.NUM *sRTD2_R0 *sDTrequest $CAT 
+6 LINE.NUM *sRTD2_R0 *sDTrequest $CAT 
 
-10 LINE.NUM " )" *sDTrequest $CAT 
+7 LINE.NUM " )" *sDTrequest $CAT 
 
-12 LINE.NUM "  3PT385(4W," *sDTrequest $CAT 
+9 LINE.NUM "  3PT385(4W," *sDTrequest $CAT 
 
-13 LINE.NUM *sRTD3_R0 *sDTrequest $CAT 
+10 LINE.NUM *sRTD3_R0 *sDTrequest $CAT 
 
-14 LINE.NUM " )" *sDTrequest $CAT 
+11 LINE.NUM " )" *sDTrequest $CAT 
 
-16 LINE.NUM "  4PT385(4W," *sDTrequest $CAT 
+13 LINE.NUM "  4PT385(4W," *sDTrequest $CAT 
 
-17 LINE.NUM *sRTD4_R0 *sDTrequest $CAT 
+14 LINE.NUM *sRTD4_R0 *sDTrequest $CAT 
 
-18 LINE.NUM " )" *sDTrequest $CAT 
+15 LINE.NUM " )" *sDTrequest $CAT 
 
-20 LINE.NUM "  5PT385(4W," *sDTrequest $CAT 
+17 LINE.NUM "  5PT385(4W," *sDTrequest $CAT 
 
-21 LINE.NUM *sRTD5_R0 *sDTrequest $CAT 
+18 LINE.NUM *sRTD5_R0 *sDTrequest $CAT 
 
-22 LINE.NUM " )" *sDTrequest $CAT 
+19 LINE.NUM " )" *sDTrequest $CAT 
 
-24 LINE.NUM "  6PT385(4W," *sDTrequest $CAT 
+21 LINE.NUM "  6PT385(4W," *sDTrequest $CAT 
 
-25 LINE.NUM *sRTD6_R0 *sDTrequest $CAT 
+22 LINE.NUM *sRTD6_R0 *sDTrequest $CAT 
 
-26 LINE.NUM " )" *sDTrequest $CAT 
+23 LINE.NUM " )" *sDTrequest $CAT 
 
-28 LINE.NUM "  7PT385(4W," *sDTrequest $CAT 
+25 LINE.NUM "  7PT385(4W," *sDTrequest $CAT 
 
-29 LINE.NUM *sRTD7_R0 *sDTrequest $CAT 
+26 LINE.NUM *sRTD7_R0 *sDTrequest $CAT 
 
-30 LINE.NUM " )" *sDTrequest $CAT 
+27 LINE.NUM " )" *sDTrequest $CAT 
 
-32 LINE.NUM "  8PT385(4W," *sDTrequest $CAT 
+29 LINE.NUM "  8PT385(4W," *sDTrequest $CAT 
 
-33 LINE.NUM *sRTD8_R0 *sDTrequest $CAT 
+30 LINE.NUM *sRTD8_R0 *sDTrequest $CAT 
 
-34 LINE.NUM " )" *sDTrequest $CAT 
+31 LINE.NUM " )" *sDTrequest $CAT 
 
-36 LINE.NUM "  9PT385(4W)" *sDTrequest $CAT 
+33 LINE.NUM "  9PT385(4W)" *sDTrequest $CAT 
 
-37 LINE.NUM "  10PT385(4W)" *sDTrequest $CAT 
+34 LINE.NUM "  10PT385(4W)" *sDTrequest $CAT 
 
-38 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
+35 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
 
-40 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+37 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+38 LINE.NUM " " *sDTrequest  $MOVE 
 3 JUMP ;
 : 1_10
 1 LINE.NUM 10 I>F ^dtRequestTimer @! 
 2 LINE.NUM ^dtRequestTimer  StartTimer 
-10 JUMP ;
+11 JUMP ;
 : 1_14
 1 LINE.NUM 100  DELAY 
-10 JUMP ;
+11 JUMP ;
 : 1_21
 1 LINE.NUM *DTcommHandle  CLOSE DROP  
 -6 JUMP ;
@@ -83,12 +83,12 @@
 0 JUMP ;
 : 1_27
 1 LINE.NUM *DTcommHandle  ?STREAM.KEY ^DTcharCount @! 
-8 JUMP ;
+9 JUMP ;
 : 1_31
 1 LINE.NUM *DTcommHandle 32  S.!EOL 
 2 LINE.NUM " " 0 -1 {stDTdata  Init$Table 
 3 LINE.NUM 11 0 {stDTdata *DTcommHandle  S.GET#TABLE ^nDTreceiveStatus @! 
-12 JUMP ;
+13 JUMP ;
 : 1_40
 1 LINE.NUM 10  DELAY 
 -3 JUMP ;
@@ -99,6 +99,13 @@
 0 JUMP ;
 : 1_57
 -10 JUMP ;
+: 1_65
+1 LINE.NUM " BEGIN /h /e /u /n END" *sDTrequest  $MOVE 
+3 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+4 LINE.NUM " " *sDTrequest  $MOVE 
+5 LINE.NUM 500  DELAY 
+6 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
+-11 JUMP ;
 : 1_3
 FALSE
 
@@ -111,21 +118,21 @@ LOR
   ^DTcommStatus @@ 
   -47    LAND
 LOR
-IF -11 ELSE -13 THEN JUMP ;
+IF -2 ELSE -14 THEN JUMP ;
 : 1_11
 TRUE
 
 1 LINE.NUM
   ^dtRequestTimer   T0=
 LAND
-IF -13 ELSE -11 THEN JUMP ;
+IF -14 ELSE -12 THEN JUMP ;
 : 1_17
 TRUE
 
 1 LINE.NUM
   *DTcommHandle   ?OPEN 0>
 LAND
-IF -2 ELSE -11 THEN JUMP ;
+IF -2 ELSE -12 THEN JUMP ;
 : 1_29
 TRUE
 
@@ -141,14 +148,14 @@ TRUE
   ^DTcharCount @@ 
   -52    =
 LAND
-IF -13 ELSE 0 THEN JUMP ;
+IF -14 ELSE 0 THEN JUMP ;
 : 1_35
 TRUE
 
 1 LINE.NUM
   ^dtAwaitingDT   T0=
 LAND
-IF -14 ELSE 0 THEN JUMP ;
+IF -15 ELSE 0 THEN JUMP ;
 : 1_36
 FALSE
 
@@ -166,7 +173,7 @@ LOR
   ^DTcharCount @@ 
   -39    =
 LOR
-IF -11 ELSE -15 THEN JUMP ;
+IF -12 ELSE -16 THEN JUMP ;
 : 1_44
 TRUE
 
@@ -174,7 +181,7 @@ TRUE
   ^DTcharCount @@ 
   4    <
 LAND
-IF -16 ELSE -13 THEN JUMP ;
+IF -17 ELSE -14 THEN JUMP ;
 : 1_48
 TRUE
 
@@ -182,7 +189,7 @@ TRUE
   ^nDTreceiveStatus @@ 
   0    =
 LAND
-IF -11 ELSE 0 THEN JUMP ;
+IF -12 ELSE 0 THEN JUMP ;
 : 1_49
 TRUE
 
@@ -190,7 +197,7 @@ TRUE
   ^nDTreceiveStatus @@ 
   -39    =
 LAND
-IF -13 ELSE -18 THEN JUMP ;
+IF -14 ELSE -19 THEN JUMP ;
 T: T1
 DUMMY
 1_0
@@ -207,6 +214,7 @@ DUMMY
 1_53
 1_55
 1_57
+1_65
 1_3
 1_11
 1_17

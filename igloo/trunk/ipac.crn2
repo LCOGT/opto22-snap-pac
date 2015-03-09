@@ -76,6 +76,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2  1 APOINT    0.0000 69  1  7 %local_io 0 POINT.TNG ~AI_PanelFan2_Tach
  4  1 SPOINT 0.0    OUTPUT  0  8 %local_io 0 POINT.TNG ~DO_Thermostat_CR
  4  1 SPOINT 0.0    OUTPUT  1  8 %local_io 0 POINT.TNG ~DO_RedLink_CR
+ 4  1 SPOINT 0.0    OUTPUT  3  8 %local_io 0 POINT.TNG ~DO_DTreset
  2  1 APOINT    0.0000 69  0 12 %local_io 0 POINT.TNG ~AI_IntakeTentFan_Tach
  2  1 APOINT    0.0000 69  1 12 %local_io 0 POINT.TNG ~AI_ExhaustTentFan_Tach
  2  1 APOINT    0.0000 165  0 13 %local_io 0 POINT.TNG ~AO_TentFan_CTRL

@@ -78,6 +78,7 @@ CREATE P.ARRAY
 ~DI_Utility_TVS ,
 ~DO_AirCon_CR ,
 ~DO_CryoTig_CR ,
+~DO_DTreset ,
 ~DO_ECB_Comm ,
 ~DO_NRES_CR ,
 ~DO_RedLink_CR ,
