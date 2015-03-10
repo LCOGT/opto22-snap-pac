@@ -51,11 +51,15 @@ DUMMY
 ENDCODE
 0 TASK  &_INIT_IO
 0 TASK &DatatakerComm
+0 TASK &GoogleComm
 0 TASK &Housekeeper
 0 TASK &Powerup
+0 IVAR ^done
 0 TVAR ^dtAwaitingDT
 0 IVAR ^DTcharCount
 0 IVAR ^DTcommStatus
+0 IVAR ^DTdataErrorPosition
+0 TVAR ^dtGooglePost
 0 TVAR ^dtRequestTimer
 0 FVAR ^fRTD1_R0
 0 FVAR ^fRTD2_R0
@@ -65,14 +69,29 @@ ENDCODE
 0 FVAR ^fRTD6_R0
 0 FVAR ^fRTD7_R0
 0 FVAR ^fRTD8_R0
+0 IVAR ^GoogleCommStatus
+0 IVAR ^Length1
+0 IVAR ^nCounter1
 0 IVAR ^nDTcharacterCount
 0 IVAR ^nDTreceiveStatus
+0 IVAR ^nGooglePostDataLength
 0 IVAR ^nIP_int
 0 IVAR ^nLength
 0 IVAR ^nOctet3
+0 IVAR ^OldPosition
+0 IVAR ^Position
+0 IVAR ^SubStringLength
+10 0 $VAR *CRLF 
+1024 0 $VAR *DTdata 
+1024 0 $VAR *DTmessageReceived 
+10 0 $VAR *LF 
 1024 0 $VAR *sDT_IP 
+10 0 $VAR *sDTerror 
 1024 0 $VAR *sDTrequest 
 1024 0 $VAR *sFaultList 
+500 0 $VAR *sGooglePostData 
+10 0 $VAR *sGooglePostDataLength 
+500 0 $VAR *sGooglePostHeader 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
 10 0 $VAR *sOctet1 
@@ -88,7 +107,8 @@ ENDCODE
 20 0 $VAR *sRTD8_R0 
 50 0 $VAR *sTimestamp 
 1024 0 COMVAR *DTcommHandle 
-20 10 0 $TABLE {stDTdata 
+1024 0 COMVAR *GoogleCommHandle 
+20 30 0 $TABLE {stDTdata 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
 32  1 SPOINT 0.0     INPUT  0  0 %local_io 0 POINT.TNG ~DI_AirCon_CR_NC
@@ -197,8 +217,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 35 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
 
-37 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
-38 LINE.NUM " " *sDTrequest  $MOVE 
+37 LINE.NUM *CRLF *sDTrequest $CAT 
+
+38 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+39 LINE.NUM " " *sDTrequest  $MOVE 
 3 JUMP ;
 : 1_10
 1 LINE.NUM 10 I>F ^dtRequestTimer @! 
@@ -211,16 +233,27 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 1 LINE.NUM *DTcommHandle  CLOSE DROP  
 -6 JUMP ;
 : 1_25
-1 LINE.NUM 2 I>F ^dtAwaitingDT @! 
+1 LINE.NUM 12 I>F ^dtAwaitingDT @! 
 2 LINE.NUM ^dtAwaitingDT  StartTimer 
 0 JUMP ;
 : 1_27
 1 LINE.NUM *DTcommHandle  ?STREAM.KEY ^DTcharCount @! 
 9 JUMP ;
 : 1_31
-1 LINE.NUM *DTcommHandle 32  S.!EOL 
-2 LINE.NUM " " 0 -1 {stDTdata  Init$Table 
-3 LINE.NUM 11 0 {stDTdata *DTcommHandle  S.GET#TABLE ^nDTreceiveStatus @! 
+9 LINE.NUM *DTcommHandle 13  S.!EOL 
+10 LINE.NUM " " *DTmessageReceived  $MOVE 
+11 LINE.NUM " " *sDTerror  $MOVE 
+12 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+13 LINE.NUM 69 0 *DTmessageReceived  FindChar ^DTdataErrorPosition @! 
+14 LINE.NUM ^DTdataErrorPosition @@ 0 >= IF 
+15 LINE.NUM *DTmessageReceived *sDTerror  $MOVE 
+16 LINE.NUM *DTcommHandle 10  S.!EOL 
+17 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+18 LINE.NUM *DTcommHandle 13  S.!EOL 
+19 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+20 LINE.NUM THEN 
+34 LINE.NUM 12 I>F ^dtAwaitingDT @! 
+35 LINE.NUM ^dtAwaitingDT  StartTimer 
 13 JUMP ;
 : 1_40
 1 LINE.NUM 10  DELAY 
@@ -231,14 +264,97 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 1 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
 0 JUMP ;
 : 1_57
--10 JUMP ;
+1 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+2 LINE.NUM *sTimestamp 0 {stDTdata $TABLE@  $MOVE 
+4 LINE.NUM " " *DTdata $MOVE 32 *DTdata  $APPEND 
+5 LINE.NUM *DTmessageReceived *DTdata $CAT 
+
+6 LINE.NUM 32 *DTdata $APPEND 
+
+7 LINE.NUM *DTdata  $LEN ^Length1 @! 
+8 LINE.NUM 1 ^nCounter1 @! 
+9 LINE.NUM 0 ^Position @! 
+10 LINE.NUM 0 ^done @! 
+12 LINE.NUM BEGIN 
+13 LINE.NUM ^Position @@ ^OldPosition @! 
+14 LINE.NUM ^OldPosition @@ ^Length1 @@ 1 -  = IF 
+15 LINE.NUM 1 ^done @! 
+16 LINE.NUM THEN 
+17 LINE.NUM 32 ^OldPosition @@ 1 +  *DTdata  FindChar ^Position @! 
+18 LINE.NUM ^Position @@ ^OldPosition @@ -  1 -  ^SubStringLength @! 
+19 LINE.NUM *DTdata ^OldPosition @@ 1 +  ^SubStringLength @@ ^nCounter1 @@ {stDTdata $TABLE@  $SUB 
+20 LINE.NUM ^nCounter1 @@ 1 +  ^nCounter1 @! 
+21 LINE.NUM ^done @@ 1 = UNTIL 
+-6 JUMP ;
 : 1_65
-1 LINE.NUM " BEGIN /h /e /u /n END" *sDTrequest  $MOVE 
-3 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
-4 LINE.NUM " " *sDTrequest  $MOVE 
-5 LINE.NUM 500  DELAY 
-6 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
--11 JUMP ;
+1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
+2 LINE.NUM "  /h /e /u /n" *sDTrequest $CAT 
+
+3 LINE.NUM "  RD10S" *sDTrequest $CAT 
+
+5 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
+
+6 LINE.NUM *sRTD1_R0 *sDTrequest $CAT 
+
+7 LINE.NUM " )" *sDTrequest $CAT 
+
+9 LINE.NUM "  2PT385(4W," *sDTrequest $CAT 
+
+10 LINE.NUM *sRTD2_R0 *sDTrequest $CAT 
+
+11 LINE.NUM " )" *sDTrequest $CAT 
+
+13 LINE.NUM "  3PT385(4W," *sDTrequest $CAT 
+
+14 LINE.NUM *sRTD3_R0 *sDTrequest $CAT 
+
+15 LINE.NUM " )" *sDTrequest $CAT 
+
+17 LINE.NUM "  4PT385(4W," *sDTrequest $CAT 
+
+18 LINE.NUM *sRTD4_R0 *sDTrequest $CAT 
+
+19 LINE.NUM " )" *sDTrequest $CAT 
+
+21 LINE.NUM "  5PT385(4W," *sDTrequest $CAT 
+
+22 LINE.NUM *sRTD5_R0 *sDTrequest $CAT 
+
+23 LINE.NUM " )" *sDTrequest $CAT 
+
+25 LINE.NUM "  6PT385(4W," *sDTrequest $CAT 
+
+26 LINE.NUM *sRTD6_R0 *sDTrequest $CAT 
+
+27 LINE.NUM " )" *sDTrequest $CAT 
+
+29 LINE.NUM "  7PT385(4W," *sDTrequest $CAT 
+
+30 LINE.NUM *sRTD7_R0 *sDTrequest $CAT 
+
+31 LINE.NUM " )" *sDTrequest $CAT 
+
+33 LINE.NUM "  8PT385(4W," *sDTrequest $CAT 
+
+34 LINE.NUM *sRTD8_R0 *sDTrequest $CAT 
+
+35 LINE.NUM " )" *sDTrequest $CAT 
+
+37 LINE.NUM "  9PT385(4W)" *sDTrequest $CAT 
+
+38 LINE.NUM "  10PT385(4W)" *sDTrequest $CAT 
+
+39 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
+
+41 LINE.NUM "  END" *sDTrequest $CAT 
+
+42 LINE.NUM *CRLF *sDTrequest $CAT 
+
+44 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+45 LINE.NUM " " *sDTrequest  $MOVE 
+46 LINE.NUM 2 I>F  FDELAY 
+47 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
+-8 JUMP ;
 : 1_3
 FALSE
 
@@ -249,7 +365,7 @@ LOR
 
 2 LINE.NUM
   ^DTcommStatus @@ 
-  -47    LAND
+  -47    =
 LOR
 IF -2 ELSE -14 THEN JUMP ;
 : 1_11
@@ -360,26 +476,210 @@ DUMMY
 1_49
 T;
 &DatatakerComm ' T1 SETTASK
+: 3_0
+2 JUMP ;
+: 3_2
+1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
+2 LINE.NUM "  /h /e /u /n" *sDTrequest $CAT 
+
+3 LINE.NUM "  RD10S" *sDTrequest $CAT 
+
+5 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
+
+6 LINE.NUM *sRTD1_R0 *sDTrequest $CAT 
+
+7 LINE.NUM " )" *sDTrequest $CAT 
+
+9 LINE.NUM "  2PT385(4W," *sDTrequest $CAT 
+
+10 LINE.NUM *sRTD2_R0 *sDTrequest $CAT 
+
+11 LINE.NUM " )" *sDTrequest $CAT 
+
+13 LINE.NUM "  3PT385(4W," *sDTrequest $CAT 
+
+14 LINE.NUM *sRTD3_R0 *sDTrequest $CAT 
+
+15 LINE.NUM " )" *sDTrequest $CAT 
+
+17 LINE.NUM "  4PT385(4W," *sDTrequest $CAT 
+
+18 LINE.NUM *sRTD4_R0 *sDTrequest $CAT 
+
+19 LINE.NUM " )" *sDTrequest $CAT 
+
+21 LINE.NUM "  5PT385(4W," *sDTrequest $CAT 
+
+22 LINE.NUM *sRTD5_R0 *sDTrequest $CAT 
+
+23 LINE.NUM " )" *sDTrequest $CAT 
+
+25 LINE.NUM "  6PT385(4W," *sDTrequest $CAT 
+
+26 LINE.NUM *sRTD6_R0 *sDTrequest $CAT 
+
+27 LINE.NUM " )" *sDTrequest $CAT 
+
+33 LINE.NUM "  8PT385(4W," *sDTrequest $CAT 
+
+34 LINE.NUM *sRTD8_R0 *sDTrequest $CAT 
+
+35 LINE.NUM " )" *sDTrequest $CAT 
+
+37 LINE.NUM "  9PT385(4W)" *sDTrequest $CAT 
+
+38 LINE.NUM "  10PT385(4W)" *sDTrequest $CAT 
+
+39 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
+
+41 LINE.NUM "  END" *sDTrequest $CAT 
+
+42 LINE.NUM *CRLF *sDTrequest $CAT 
+
+44 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+45 LINE.NUM " " *sDTrequest  $MOVE 
+46 LINE.NUM 2 I>F  FDELAY 
+47 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
+9 JUMP ;
+: 3_5
+1 LINE.NUM 2 I>F  FDELAY 
+0 JUMP ;
+: 3_8
+
+1 LINE.NUM
+  *GoogleCommHandle   OPEN
+  ^GoogleCommStatus @! 
+4 JUMP ;
+: 3_11
+1 LINE.NUM *GoogleCommHandle  CLOSE DROP  
+-2 JUMP ;
+: 3_16
+1 LINE.NUM 100  DELAY 
+3 JUMP ;
+: 3_19
+1 LINE.NUM 30 I>F ^dtGooglePost @! 
+2 LINE.NUM ^dtGooglePost  StartTimer 
+3 JUMP ;
+: 3_20
+1 LINE.NUM " " *sGooglePostData  $MOVE 
+2 LINE.NUM 0 ^nGooglePostDataLength @! 
+3 LINE.NUM " " *sGooglePostDataLength  $MOVE 
+4 LINE.NUM " " *sGooglePostHeader  $MOVE 
+6 LINE.NUM " entry.2024874833=" *sGooglePostData $CAT 
+
+7 LINE.NUM 0 {stDTdata $TABLE@ *sGooglePostData $CAT 
+
+8 LINE.NUM " &" *sGooglePostData $CAT 
+
+9 LINE.NUM " entry.757903361=" *sGooglePostData $CAT 
+
+10 LINE.NUM 1 {stDTdata $TABLE@ *sGooglePostData $CAT 
+
+11 LINE.NUM " &" *sGooglePostData $CAT 
+
+12 LINE.NUM " submit=Submit" *sGooglePostData $CAT 
+
+13 LINE.NUM *sGooglePostData  $LEN ^nGooglePostDataLength @! 
+14 LINE.NUM ^nGooglePostDataLength @@ *sGooglePostDataLength  I>$ 
+16 LINE.NUM " POST /formResponse?formkey=" *sGooglePostHeader $CAT 
+
+17 LINE.NUM " 10R4nOO5nooYZWUYanMYz1qx_lkdwBeV59FZfeKOidDQ" *sGooglePostHeader $CAT 
+
+18 LINE.NUM " &ifq HTTP/1.1" *sGooglePostHeader $CAT 
+
+19 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+20 LINE.NUM " Host: spreadsheets.google.com" *sGooglePostHeader $CAT 
+
+21 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+22 LINE.NUM " Content-Type: application/x-www-form-urlencoded" *sGooglePostHeader $CAT 
+
+23 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+24 LINE.NUM " Connection: close" *sGooglePostHeader $CAT 
+
+25 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+26 LINE.NUM " Content-Length: " *sGooglePostHeader $CAT 
+
+27 LINE.NUM *sGooglePostDataLength *sGooglePostHeader $CAT 
+
+28 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+29 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+30 LINE.NUM *sGooglePostData *sGooglePostHeader $CAT 
+
+31 LINE.NUM *CRLF *sGooglePostHeader $CAT 
+
+33 LINE.NUM *sGooglePostHeader *GoogleCommHandle  PRT$ DROP  
+-2 JUMP ;
+: 3_7
+FALSE
+
+1 LINE.NUM
+  ^GoogleCommStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^GoogleCommStatus @@ 
+  -47    =
+LOR
+IF -3 ELSE -7 THEN JUMP ;
+: 3_14
+TRUE
+
+1 LINE.NUM
+  *GoogleCommHandle   ?OPEN 0>
+LAND
+IF 0 ELSE -6 THEN JUMP ;
+: 3_18
+TRUE
+
+1 LINE.NUM
+  ^dtGooglePost   T0=
+LAND
+IF -4 ELSE -6 THEN JUMP ;
+T: T3
+DUMMY
+3_0
+3_2
+3_5
+3_8
+3_11
+3_16
+3_19
+3_20
+3_7
+3_14
+3_18
+T;
+&GoogleComm ' T3 SETTASK
 : 2_0
 1 JUMP ;
 : 2_1
 1 LINE.NUM *DTcommHandle  ?OPEN 0> IF 
 3 LINE.NUM ELSE 
-4 LINE.NUM " , DatatakerComm " *sFaultList $CAT 
+5 LINE.NUM " , DatatakerComm " *sFaultList $CAT 
 
-5 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-6 LINE.NUM *sTimestamp *sFaultList $CAT 
+6 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+7 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-7 LINE.NUM THEN 
+8 LINE.NUM THEN 
 0 JUMP ;
 : 2_2
 1 LINE.NUM 1 I>F  FDELAY 
 -2 JUMP ;
+: 2_6
+0 JUMP ;
 T: T2
 DUMMY
 2_0
 2_1
 2_2
+2_6
 T;
 &Housekeeper ' T2 SETTASK
 : 0_0
@@ -387,6 +687,8 @@ T;
 : 0_1
 1 LINE.NUM 1 ~DO_AirCon_CR @! 
 2 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+3 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
+4 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -416,6 +718,7 @@ T;
 0 JUMP ;
 : 0_7
 1 LINE.NUM &DatatakerComm  START.T DROP  
+2 LINE.NUM &GoogleComm  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY
@@ -428,12 +731,15 @@ T;
 &Powerup ' T0 SETTASK
 CREATE T.ARRAY
 &DatatakerComm ,
+&GoogleComm ,
 &Housekeeper ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
+^done ,
 ^DTcharCount ,
 ^DTcommStatus ,
+^DTdataErrorPosition ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
 ^fRTD3_R0 ,
@@ -442,14 +748,29 @@ CREATE V.ARRAY
 ^fRTD6_R0 ,
 ^fRTD7_R0 ,
 ^fRTD8_R0 ,
+^GoogleCommStatus ,
+^Length1 ,
+^nCounter1 ,
 ^nDTcharacterCount ,
 ^nDTreceiveStatus ,
+^nGooglePostDataLength ,
 ^nIP_int ,
 ^nLength ,
 ^nOctet3 ,
+^OldPosition ,
+^Position ,
+^SubStringLength ,
+*CRLF ,
+*DTdata ,
+*DTmessageReceived ,
+*LF ,
 *sDT_IP ,
+*sDTerror ,
 *sDTrequest ,
 *sFaultList ,
+*sGooglePostData ,
+*sGooglePostDataLength ,
+*sGooglePostHeader ,
 *sIP_hex ,
 *sIP_PAC ,
 *sOctet1 ,
@@ -467,9 +788,11 @@ CREATE V.ARRAY
 *_HSV_SEMA ,
 *_HSV_TEMP ,
 *DTcommHandle ,
+*GoogleCommHandle ,
  0 ,
 CREATE TI.ARRAY
 ^dtAwaitingDT ,
+^dtGooglePost ,
 ^dtRequestTimer ,
  0 ,
 CREATE PTR.ARRAY
@@ -538,9 +861,12 @@ CONFIG_PORTS
 %local_io ENABLE
  -1 ~DO_AirCon_CR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^done @!
 0.0 ^dtAwaitingDT @!
 0 ^DTcharCount @!
 0 ^DTcommStatus @!
+0 ^DTdataErrorPosition @!
+0.0 ^dtGooglePost @!
 0.0 ^dtRequestTimer @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
@@ -550,17 +876,40 @@ CONFIG_PORTS
 0.00000000 ^fRTD6_R0 @!
 0.00000000 ^fRTD7_R0 @!
 0.00000000 ^fRTD8_R0 @!
+0 ^GoogleCommStatus @!
+0 ^Length1 @!
+0 ^nCounter1 @!
 0 ^nDTcharacterCount @!
 0 ^nDTreceiveStatus @!
+0 ^nGooglePostDataLength @!
 0 ^nIP_int @!
 0 ^nLength @!
 0 ^nOctet3 @!
+0 ^OldPosition @!
+0 ^Position @!
+0 ^SubStringLength @!
+" "
+ *CRLF $MOVE
+" "
+ *DTdata $MOVE
+" "
+ *DTmessageReceived $MOVE
+" "
+ *LF $MOVE
 " "
  *sDT_IP $MOVE
+" "
+ *sDTerror $MOVE
 " "
  *sDTrequest $MOVE
 " "
  *sFaultList $MOVE
+" "
+ *sGooglePostData $MOVE
+" "
+ *sGooglePostDataLength $MOVE
+" "
+ *sGooglePostHeader $MOVE
 " "
  *sIP_hex $MOVE
 " "
@@ -591,6 +940,8 @@ CONFIG_PORTS
  *sTimestamp $MOVE
 " "
  *DTcommHandle $MOVE
+" tcp:216.58.218.174:80"
+ *GoogleCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
  " " *_HSV_INIT_IO $MOVE
@@ -604,9 +955,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/06/15 " ;
-: TIMESTAMP ." 18:52:59 " ;
-: CRCSTAMP  ." 0DCDC5033793B92499A75B1C49C3685A " ;
+: DATESTAMP ." 03/10/15 " ;
+: TIMESTAMP ." 08:37:02 " ;
+: CRCSTAMP  ." BD648F6D6861B9D063E8FFA6DE9C9D11 " ;
 MAKECHECK
 CLEAR.BREAKS
 

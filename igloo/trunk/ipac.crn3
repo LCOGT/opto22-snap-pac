@@ -1,11 +1,14 @@
 CREATE T.ARRAY
 &DatatakerComm ,
+&GoogleComm ,
 &Housekeeper ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
+^done ,
 ^DTcharCount ,
 ^DTcommStatus ,
+^DTdataErrorPosition ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
 ^fRTD3_R0 ,
@@ -14,14 +17,29 @@ CREATE V.ARRAY
 ^fRTD6_R0 ,
 ^fRTD7_R0 ,
 ^fRTD8_R0 ,
+^GoogleCommStatus ,
+^Length1 ,
+^nCounter1 ,
 ^nDTcharacterCount ,
 ^nDTreceiveStatus ,
+^nGooglePostDataLength ,
 ^nIP_int ,
 ^nLength ,
 ^nOctet3 ,
+^OldPosition ,
+^Position ,
+^SubStringLength ,
+*CRLF ,
+*DTdata ,
+*DTmessageReceived ,
+*LF ,
 *sDT_IP ,
+*sDTerror ,
 *sDTrequest ,
 *sFaultList ,
+*sGooglePostData ,
+*sGooglePostDataLength ,
+*sGooglePostHeader ,
 *sIP_hex ,
 *sIP_PAC ,
 *sOctet1 ,
@@ -39,9 +57,11 @@ CREATE V.ARRAY
 *_HSV_SEMA ,
 *_HSV_TEMP ,
 *DTcommHandle ,
+*GoogleCommHandle ,
  0 ,
 CREATE TI.ARRAY
 ^dtAwaitingDT ,
+^dtGooglePost ,
 ^dtRequestTimer ,
  0 ,
 CREATE PTR.ARRAY
@@ -110,9 +130,12 @@ CONFIG_PORTS
 %local_io ENABLE
  -1 ~DO_AirCon_CR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^done @!
 0.0 ^dtAwaitingDT @!
 0 ^DTcharCount @!
 0 ^DTcommStatus @!
+0 ^DTdataErrorPosition @!
+0.0 ^dtGooglePost @!
 0.0 ^dtRequestTimer @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
@@ -122,17 +145,40 @@ CONFIG_PORTS
 0.00000000 ^fRTD6_R0 @!
 0.00000000 ^fRTD7_R0 @!
 0.00000000 ^fRTD8_R0 @!
+0 ^GoogleCommStatus @!
+0 ^Length1 @!
+0 ^nCounter1 @!
 0 ^nDTcharacterCount @!
 0 ^nDTreceiveStatus @!
+0 ^nGooglePostDataLength @!
 0 ^nIP_int @!
 0 ^nLength @!
 0 ^nOctet3 @!
+0 ^OldPosition @!
+0 ^Position @!
+0 ^SubStringLength @!
+" "
+ *CRLF $MOVE
+" "
+ *DTdata $MOVE
+" "
+ *DTmessageReceived $MOVE
+" "
+ *LF $MOVE
 " "
  *sDT_IP $MOVE
+" "
+ *sDTerror $MOVE
 " "
  *sDTrequest $MOVE
 " "
  *sFaultList $MOVE
+" "
+ *sGooglePostData $MOVE
+" "
+ *sGooglePostDataLength $MOVE
+" "
+ *sGooglePostHeader $MOVE
 " "
  *sIP_hex $MOVE
 " "
@@ -163,6 +209,8 @@ CONFIG_PORTS
  *sTimestamp $MOVE
 " "
  *DTcommHandle $MOVE
+" tcp:216.58.218.174:80"
+ *GoogleCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
  " " *_HSV_INIT_IO $MOVE

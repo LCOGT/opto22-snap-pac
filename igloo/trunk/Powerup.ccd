@@ -3,6 +3,8 @@
 : 0_1
 1 LINE.NUM 1 ~DO_AirCon_CR @! 
 2 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+3 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
+4 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -32,6 +34,7 @@
 0 JUMP ;
 : 0_7
 1 LINE.NUM &DatatakerComm  START.T DROP  
+2 LINE.NUM &GoogleComm  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY
