@@ -132,6 +132,7 @@
 19 LINE.NUM *DTdata ^OldPosition @@ 1 +  ^SubStringLength @@ ^nCounter1 @@ {stDTdata $TABLE@  $SUB 
 20 LINE.NUM ^nCounter1 @@ 1 +  ^nCounter1 @! 
 21 LINE.NUM ^done @@ 1 = UNTIL 
+23 LINE.NUM 1 ^DTlogFlag @! 
 -6 JUMP ;
 : 1_65
 1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 

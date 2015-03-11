@@ -9,6 +9,7 @@ CREATE V.ARRAY
 ^DTcharCount ,
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
+^DTlogFlag ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
 ^fRTD3_R0 ,
@@ -36,6 +37,7 @@ CREATE V.ARRAY
 *sDT_IP ,
 *sDTerror ,
 *sDTrequest ,
+*sErrorList ,
 *sFaultList ,
 *sGooglePostData ,
 *sGooglePostDataLength ,
@@ -57,7 +59,9 @@ CREATE V.ARRAY
 *_HSV_SEMA ,
 *_HSV_TEMP ,
 *DTcommHandle ,
+*FTPcommHandle ,
 *GoogleCommHandle ,
+*LogCommHandle ,
  0 ,
 CREATE TI.ARRAY
 ^dtAwaitingDT ,
@@ -136,6 +140,7 @@ CONFIG_PORTS
 0 ^DTcommStatus @!
 0 ^DTdataErrorPosition @!
 0.0 ^dtGooglePost @!
+0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
@@ -171,6 +176,8 @@ CONFIG_PORTS
  *sDTerror $MOVE
 " "
  *sDTrequest $MOVE
+" "
+ *sErrorList $MOVE
 " "
  *sFaultList $MOVE
 " "
@@ -209,8 +216,12 @@ CONFIG_PORTS
  *sTimestamp $MOVE
 " "
  *DTcommHandle $MOVE
-" tcp:216.58.218.174:80"
+" ftp:207.71.206.55:21,eng,sbatoo1"
+ *FTPcommHandle $MOVE
+" tcp:74.125.224.135:80"
  *GoogleCommHandle $MOVE
+" file:a,/Data_files/IglooDataLog.txt"
+ *LogCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
  " " *_HSV_INIT_IO $MOVE

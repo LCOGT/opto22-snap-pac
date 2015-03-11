@@ -50,6 +50,7 @@ ENDCODE
 0 IVAR ^DTcommStatus
 0 IVAR ^DTdataErrorPosition
 0 TVAR ^dtGooglePost
+0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
 0 FVAR ^fRTD1_R0
 0 FVAR ^fRTD2_R0
@@ -78,6 +79,7 @@ ENDCODE
 1024 0 $VAR *sDT_IP 
 10 0 $VAR *sDTerror 
 1024 0 $VAR *sDTrequest 
+1024 0 $VAR *sErrorList 
 1024 0 $VAR *sFaultList 
 500 0 $VAR *sGooglePostData 
 10 0 $VAR *sGooglePostDataLength 
@@ -97,7 +99,9 @@ ENDCODE
 20 0 $VAR *sRTD8_R0 
 50 0 $VAR *sTimestamp 
 1024 0 COMVAR *DTcommHandle 
+1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
+1024 0 COMVAR *LogCommHandle 
 20 30 0 $TABLE {stDTdata 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
@@ -275,6 +279,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 19 LINE.NUM *DTdata ^OldPosition @@ 1 +  ^SubStringLength @@ ^nCounter1 @@ {stDTdata $TABLE@  $SUB 
 20 LINE.NUM ^nCounter1 @@ 1 +  ^nCounter1 @! 
 21 LINE.NUM ^done @@ 1 = UNTIL 
+23 LINE.NUM 1 ^DTlogFlag @! 
 -6 JUMP ;
 : 1_65
 1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
@@ -467,70 +472,7 @@ DUMMY
 T;
 &DatatakerComm ' T1 SETTASK
 : 3_0
-2 JUMP ;
-: 3_2
-1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
-2 LINE.NUM "  /h /e /u /n" *sDTrequest $CAT 
-
-3 LINE.NUM "  RD10S" *sDTrequest $CAT 
-
-5 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
-
-6 LINE.NUM *sRTD1_R0 *sDTrequest $CAT 
-
-7 LINE.NUM " )" *sDTrequest $CAT 
-
-9 LINE.NUM "  2PT385(4W," *sDTrequest $CAT 
-
-10 LINE.NUM *sRTD2_R0 *sDTrequest $CAT 
-
-11 LINE.NUM " )" *sDTrequest $CAT 
-
-13 LINE.NUM "  3PT385(4W," *sDTrequest $CAT 
-
-14 LINE.NUM *sRTD3_R0 *sDTrequest $CAT 
-
-15 LINE.NUM " )" *sDTrequest $CAT 
-
-17 LINE.NUM "  4PT385(4W," *sDTrequest $CAT 
-
-18 LINE.NUM *sRTD4_R0 *sDTrequest $CAT 
-
-19 LINE.NUM " )" *sDTrequest $CAT 
-
-21 LINE.NUM "  5PT385(4W," *sDTrequest $CAT 
-
-22 LINE.NUM *sRTD5_R0 *sDTrequest $CAT 
-
-23 LINE.NUM " )" *sDTrequest $CAT 
-
-25 LINE.NUM "  6PT385(4W," *sDTrequest $CAT 
-
-26 LINE.NUM *sRTD6_R0 *sDTrequest $CAT 
-
-27 LINE.NUM " )" *sDTrequest $CAT 
-
-33 LINE.NUM "  8PT385(4W," *sDTrequest $CAT 
-
-34 LINE.NUM *sRTD8_R0 *sDTrequest $CAT 
-
-35 LINE.NUM " )" *sDTrequest $CAT 
-
-37 LINE.NUM "  9PT385(4W)" *sDTrequest $CAT 
-
-38 LINE.NUM "  10PT385(4W)" *sDTrequest $CAT 
-
-39 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
-
-41 LINE.NUM "  END" *sDTrequest $CAT 
-
-42 LINE.NUM *CRLF *sDTrequest $CAT 
-
-44 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
-45 LINE.NUM " " *sDTrequest  $MOVE 
-46 LINE.NUM 2 I>F  FDELAY 
-47 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
-9 JUMP ;
+1 JUMP ;
 : 3_5
 1 LINE.NUM 2 I>F  FDELAY 
 0 JUMP ;
@@ -635,7 +577,6 @@ IF -4 ELSE -6 THEN JUMP ;
 T: T3
 DUMMY
 3_0
-3_2
 3_5
 3_8
 3_11
@@ -658,18 +599,37 @@ T;
 7 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 8 LINE.NUM THEN 
-0 JUMP ;
+1 JUMP ;
 : 2_2
-1 LINE.NUM 1 I>F  FDELAY 
+1 LINE.NUM 100  DELAY 
 -2 JUMP ;
 : 2_6
 0 JUMP ;
+: 2_8
+1 LINE.NUM ^DTlogFlag @@ 1 = IF 
+2 LINE.NUM *LogCommHandle  OPEN DROP  
+3 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+4 LINE.NUM *LogCommHandle 32  S.!EOL 
+5 LINE.NUM 12 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
+6 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+7 LINE.NUM *LogCommHandle  CLOSE DROP  
+8 LINE.NUM ELSE 
+9 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+10 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
+
+11 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+12 LINE.NUM THEN 
+13 LINE.NUM 0 ^DTlogFlag @! 
+14 LINE.NUM THEN 
+-3 JUMP ;
 T: T2
 DUMMY
 2_0
 2_1
 2_2
 2_6
+2_8
 T;
 &Housekeeper ' T2 SETTASK
 : 0_0
@@ -709,6 +669,7 @@ T;
 : 0_7
 1 LINE.NUM &DatatakerComm  START.T DROP  
 2 LINE.NUM &GoogleComm  START.T DROP  
+3 LINE.NUM &Housekeeper  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY
@@ -730,6 +691,7 @@ CREATE V.ARRAY
 ^DTcharCount ,
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
+^DTlogFlag ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
 ^fRTD3_R0 ,
@@ -757,6 +719,7 @@ CREATE V.ARRAY
 *sDT_IP ,
 *sDTerror ,
 *sDTrequest ,
+*sErrorList ,
 *sFaultList ,
 *sGooglePostData ,
 *sGooglePostDataLength ,
@@ -778,7 +741,9 @@ CREATE V.ARRAY
 *_HSV_SEMA ,
 *_HSV_TEMP ,
 *DTcommHandle ,
+*FTPcommHandle ,
 *GoogleCommHandle ,
+*LogCommHandle ,
  0 ,
 CREATE TI.ARRAY
 ^dtAwaitingDT ,
@@ -857,6 +822,7 @@ CONFIG_PORTS
 0 ^DTcommStatus @!
 0 ^DTdataErrorPosition @!
 0.0 ^dtGooglePost @!
+0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
@@ -892,6 +858,8 @@ CONFIG_PORTS
  *sDTerror $MOVE
 " "
  *sDTrequest $MOVE
+" "
+ *sErrorList $MOVE
 " "
  *sFaultList $MOVE
 " "
@@ -930,8 +898,12 @@ CONFIG_PORTS
  *sTimestamp $MOVE
 " "
  *DTcommHandle $MOVE
-" tcp:216.58.218.174:80"
+" ftp:207.71.206.55:21,eng,sbatoo1"
+ *FTPcommHandle $MOVE
+" tcp:74.125.224.135:80"
  *GoogleCommHandle $MOVE
+" file:a,/Data_files/IglooDataLog.txt"
+ *LogCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
  " " *_HSV_INIT_IO $MOVE
@@ -945,8 +917,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/10/15 " ;
-: TIMESTAMP ." 08:37:02 " ;
+: DATESTAMP ." 03/11/15 " ;
+: TIMESTAMP ." 21:56:17 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

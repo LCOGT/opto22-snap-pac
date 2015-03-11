@@ -9,6 +9,7 @@
 0 IVAR ^DTcommStatus
 0 IVAR ^DTdataErrorPosition
 0 TVAR ^dtGooglePost
+0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
 0 FVAR ^fRTD1_R0
 0 FVAR ^fRTD2_R0
@@ -37,6 +38,7 @@
 1024 0 $VAR *sDT_IP 
 10 0 $VAR *sDTerror 
 1024 0 $VAR *sDTrequest 
+1024 0 $VAR *sErrorList 
 1024 0 $VAR *sFaultList 
 500 0 $VAR *sGooglePostData 
 10 0 $VAR *sGooglePostDataLength 
@@ -56,7 +58,9 @@
 20 0 $VAR *sRTD8_R0 
 50 0 $VAR *sTimestamp 
 1024 0 COMVAR *DTcommHandle 
+1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
+1024 0 COMVAR *LogCommHandle 
 20 30 0 $TABLE {stDTdata 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
