@@ -86,16 +86,26 @@ ENDCODE
 1024 0 $VAR *DTdata 
 1024 0 $VAR *DTmessageReceived 
 10 0 $VAR *LF 
+20 0 $VAR *sCurrentDate 
+50 0 $VAR *sCurrentLogCommHandle 
+20 0 $VAR *sCurrentLogFile 
+20 0 $VAR *sDate 
+20 0 $VAR *sDatestamp 
+10 0 $VAR *sDay 
 1024 0 $VAR *sDT_IP 
 10 0 $VAR *sDTerror 
 1024 0 $VAR *sDTrequest 
 1024 0 $VAR *sErrorList 
 1024 0 $VAR *sFaultList 
+50 0 $VAR *sFTPcmd 
 500 0 $VAR *sGooglePostData 
 10 0 $VAR *sGooglePostDataLength 
 500 0 $VAR *sGooglePostHeader 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
+10 0 $VAR *sMonth 
+50 0 $VAR *sNewLogCommHandle 
+20 0 $VAR *sNewLogFile 
 10 0 $VAR *sOctet1 
 10 0 $VAR *sOctet2 
 10 0 $VAR *sOctet3 
@@ -616,22 +626,58 @@ T;
 : 2_6
 0 JUMP ;
 : 2_8
-1 LINE.NUM ^DTlogFlag @@ 1 = IF 
-2 LINE.NUM *LogCommHandle  OPEN DROP  
-3 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
-4 LINE.NUM *LogCommHandle 32  S.!EOL 
-5 LINE.NUM 12 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
-6 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
-7 LINE.NUM *LogCommHandle  CLOSE DROP  
-8 LINE.NUM ELSE 
-9 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-10 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
+4 LINE.NUM ^DTlogFlag @@ 1 = IF 
+5 LINE.NUM *LogCommHandle  OPEN DROP  
+6 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+7 LINE.NUM *LogCommHandle 32  S.!EOL 
+8 LINE.NUM 12 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
+9 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+10 LINE.NUM *LogCommHandle  CLOSE DROP  
+11 LINE.NUM ELSE 
+12 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+13 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
 
-11 LINE.NUM *sTimestamp *sErrorList $CAT 
+14 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-12 LINE.NUM THEN 
-13 LINE.NUM 0 ^DTlogFlag @! 
-14 LINE.NUM THEN 
+15 LINE.NUM THEN 
+16 LINE.NUM 0 ^DTlogFlag @! 
+17 LINE.NUM THEN 
+23 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+24 LINE.NUM *sTimestamp 0 10 *sDate  $SUB 
+25 LINE.NUM *sDate 0 4 *sDate  $SUB 
+26 LINE.NUM " -" *sDate $CAT 
+
+27 LINE.NUM *sDate 5 2 *sMonth  $SUB 
+28 LINE.NUM *sMonth *sDate $CAT 
+
+29 LINE.NUM " -" *sDate $CAT 
+
+30 LINE.NUM *sDate 8 2 *sDay  $SUB 
+31 LINE.NUM *sDay *sDate $CAT 
+
+33 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
+34 LINE.NUM *sDate *sCurrentDate  $MOVE 
+35 LINE.NUM *FTPcommHandle  OPEN DROP  
+36 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+37 LINE.NUM " " *sFTPcmd  $MOVE 
+38 LINE.NUM " send:IglooData.txt" *sFTPcmd $CAT 
+
+39 LINE.NUM " ," *sFTPcmd $CAT 
+
+40 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
+
+41 LINE.NUM " _" *sFTPcmd $CAT 
+
+42 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+
+43 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+44 LINE.NUM *FTPcommHandle  CLOSE DROP  
+46 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+47 LINE.NUM *LogCommHandle  OPEN DROP  
+48 LINE.NUM *LogCommHandle  CLOSE DROP  
+49 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+50 LINE.NUM THEN 
+51 LINE.NUM THEN 
 -3 JUMP ;
 T: T2
 DUMMY
@@ -645,10 +691,24 @@ T;
 : 0_0
 0 JUMP ;
 : 0_1
-1 LINE.NUM 1 ~DO_AirCon_CR @! 
-2 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
-3 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
-4 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
+2 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+3 LINE.NUM *sTimestamp 0 10 *sDate  $SUB 
+4 LINE.NUM *sDate 0 4 *sDate  $SUB 
+5 LINE.NUM " -" *sDate $CAT 
+
+6 LINE.NUM *sDate 5 2 *sMonth  $SUB 
+7 LINE.NUM *sMonth *sDate $CAT 
+
+8 LINE.NUM " -" *sDate $CAT 
+
+9 LINE.NUM *sDate 8 2 *sDay  $SUB 
+10 LINE.NUM *sDay *sDate $CAT 
+
+28 LINE.NUM *sDate *sCurrentDate  $MOVE 
+29 LINE.NUM 1 ~DO_AirCon_CR @! 
+30 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+31 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
+32 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -678,7 +738,6 @@ T;
 0 JUMP ;
 : 0_7
 1 LINE.NUM &DatatakerComm  START.T DROP  
-2 LINE.NUM &GoogleComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
 0 JUMP ;
 T: T0
@@ -726,16 +785,26 @@ CREATE V.ARRAY
 *DTdata ,
 *DTmessageReceived ,
 *LF ,
+*sCurrentDate ,
+*sCurrentLogCommHandle ,
+*sCurrentLogFile ,
+*sDate ,
+*sDatestamp ,
+*sDay ,
 *sDT_IP ,
 *sDTerror ,
 *sDTrequest ,
 *sErrorList ,
 *sFaultList ,
+*sFTPcmd ,
 *sGooglePostData ,
 *sGooglePostDataLength ,
 *sGooglePostHeader ,
 *sIP_hex ,
 *sIP_PAC ,
+*sMonth ,
+*sNewLogCommHandle ,
+*sNewLogFile ,
 *sOctet1 ,
 *sOctet2 ,
 *sOctet3 ,
@@ -863,6 +932,18 @@ CONFIG_PORTS
 " "
  *LF $MOVE
 " "
+ *sCurrentDate $MOVE
+" "
+ *sCurrentLogCommHandle $MOVE
+" "
+ *sCurrentLogFile $MOVE
+" "
+ *sDate $MOVE
+" "
+ *sDatestamp $MOVE
+" "
+ *sDay $MOVE
+" "
  *sDT_IP $MOVE
 " "
  *sDTerror $MOVE
@@ -873,6 +954,8 @@ CONFIG_PORTS
 " "
  *sFaultList $MOVE
 " "
+ *sFTPcmd $MOVE
+" "
  *sGooglePostData $MOVE
 " "
  *sGooglePostDataLength $MOVE
@@ -882,6 +965,12 @@ CONFIG_PORTS
  *sIP_hex $MOVE
 " "
  *sIP_PAC $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sNewLogCommHandle $MOVE
+" "
+ *sNewLogFile $MOVE
 " "
  *sOctet1 $MOVE
 " "
@@ -912,7 +1001,7 @@ CONFIG_PORTS
  *FTPcommHandle $MOVE
 " tcp:74.125.224.135:80"
  *GoogleCommHandle $MOVE
-" file:a,/Data_files/IglooDataLog.txt"
+" file:a,IglooData.txt"
  *LogCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
@@ -927,9 +1016,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/11/15 " ;
-: TIMESTAMP ." 21:56:17 " ;
-: CRCSTAMP  ." 3376681D123BCFE4552FD556E4BC3037 " ;
+: DATESTAMP ." 03/12/15 " ;
+: TIMESTAMP ." 06:02:21 " ;
+: CRCSTAMP  ." 6B0B0C978E815A463283A42F4C568BC4 " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -1,10 +1,24 @@
 : 0_0
 0 JUMP ;
 : 0_1
-1 LINE.NUM 1 ~DO_AirCon_CR @! 
-2 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
-3 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
-4 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
+2 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+3 LINE.NUM *sTimestamp 0 10 *sDate  $SUB 
+4 LINE.NUM *sDate 0 4 *sDate  $SUB 
+5 LINE.NUM " -" *sDate $CAT 
+
+6 LINE.NUM *sDate 5 2 *sMonth  $SUB 
+7 LINE.NUM *sMonth *sDate $CAT 
+
+8 LINE.NUM " -" *sDate $CAT 
+
+9 LINE.NUM *sDate 8 2 *sDay  $SUB 
+10 LINE.NUM *sDay *sDate $CAT 
+
+28 LINE.NUM *sDate *sCurrentDate  $MOVE 
+29 LINE.NUM 1 ~DO_AirCon_CR @! 
+30 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+31 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
+32 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -34,7 +48,6 @@
 0 JUMP ;
 : 0_7
 1 LINE.NUM &DatatakerComm  START.T DROP  
-2 LINE.NUM &GoogleComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
 0 JUMP ;
 T: T0

@@ -34,16 +34,26 @@ CREATE V.ARRAY
 *DTdata ,
 *DTmessageReceived ,
 *LF ,
+*sCurrentDate ,
+*sCurrentLogCommHandle ,
+*sCurrentLogFile ,
+*sDate ,
+*sDatestamp ,
+*sDay ,
 *sDT_IP ,
 *sDTerror ,
 *sDTrequest ,
 *sErrorList ,
 *sFaultList ,
+*sFTPcmd ,
 *sGooglePostData ,
 *sGooglePostDataLength ,
 *sGooglePostHeader ,
 *sIP_hex ,
 *sIP_PAC ,
+*sMonth ,
+*sNewLogCommHandle ,
+*sNewLogFile ,
 *sOctet1 ,
 *sOctet2 ,
 *sOctet3 ,
@@ -171,6 +181,18 @@ CONFIG_PORTS
 " "
  *LF $MOVE
 " "
+ *sCurrentDate $MOVE
+" "
+ *sCurrentLogCommHandle $MOVE
+" "
+ *sCurrentLogFile $MOVE
+" "
+ *sDate $MOVE
+" "
+ *sDatestamp $MOVE
+" "
+ *sDay $MOVE
+" "
  *sDT_IP $MOVE
 " "
  *sDTerror $MOVE
@@ -181,6 +203,8 @@ CONFIG_PORTS
 " "
  *sFaultList $MOVE
 " "
+ *sFTPcmd $MOVE
+" "
  *sGooglePostData $MOVE
 " "
  *sGooglePostDataLength $MOVE
@@ -190,6 +214,12 @@ CONFIG_PORTS
  *sIP_hex $MOVE
 " "
  *sIP_PAC $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sNewLogCommHandle $MOVE
+" "
+ *sNewLogFile $MOVE
 " "
  *sOctet1 $MOVE
 " "
@@ -220,7 +250,7 @@ CONFIG_PORTS
  *FTPcommHandle $MOVE
 " tcp:74.125.224.135:80"
  *GoogleCommHandle $MOVE
-" file:a,/Data_files/IglooDataLog.txt"
+" file:a,IglooData.txt"
  *LogCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
