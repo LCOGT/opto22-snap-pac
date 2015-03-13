@@ -10,6 +10,8 @@ CREATE V.ARRAY
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
 ^DTlogFlag ,
+^fFanSpd ,
+^fPidInput ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
 ^fRTD3_R0 ,
@@ -68,6 +70,7 @@ CREATE V.ARRAY
 *sTimestamp ,
 *sTimestamp1 ,
 *sTimestamp2 ,
+*sVar ,
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
@@ -134,6 +137,7 @@ CREATE P.ARRAY
 ~AO_TentFan_CTRL ,
  0 ,
 CREATE PID.ARRAY
+ |pidTentFans ,
  0 ,
 CREATE E/R.ARRAY
  0 ,
@@ -143,6 +147,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
+|pidTentFans ENABLE
 " %local_io  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %local_io ENABLE
  -1 ~DO_AirCon_CR @!
@@ -155,6 +160,8 @@ CONFIG_PORTS
 0.0 ^dtGooglePost @!
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
+0.00000000 ^fFanSpd @!
+0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
 0.00000000 ^fRTD3_R0 @!
@@ -251,6 +258,8 @@ CONFIG_PORTS
  *sTimestamp1 $MOVE
 " "
  *sTimestamp2 $MOVE
+" "
+ *sVar $MOVE
 " "
  *sYear $MOVE
 " "

@@ -11,6 +11,8 @@
 0 TVAR ^dtGooglePost
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
+0 FVAR ^fFanSpd
+0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
 0 FVAR ^fRTD2_R0
 0 FVAR ^fRTD3_R0
@@ -69,12 +71,13 @@
 50 0 $VAR *sTimestamp 
 50 0 $VAR *sTimestamp1 
 50 0 $VAR *sTimestamp2 
+10 0 $VAR *sVar 
 10 0 $VAR *sYear 
 1024 0 COMVAR *DTcommHandle 
 1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
 1024 0 COMVAR *LogCommHandle 
-20 30 0 $TABLE {stDTdata 
+30 30 0 $TABLE {stDTdata 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
 32  1 SPOINT 0.0     INPUT  0  0 %local_io 0 POINT.TNG ~DI_AirCon_CR_NC
@@ -117,3 +120,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2  1 APOINT    0.0000 69  0 12 %local_io 0 POINT.TNG ~AI_IntakeTentFan_Tach
  2  1 APOINT    0.0000 69  1 12 %local_io 0 POINT.TNG ~AI_ExhaustTentFan_Tach
  2  1 APOINT    0.0000 165  0 13 %local_io 0 POINT.TNG ~AO_TentFan_CTRL
+1    0.0000    0.0000    0.0000    0.0000    0.2000    5.0000    0.0000   50.0000
+   0.0010    0.0000    0.0000   20.0000    1.5000    0.0000
+   0.0000    0.0000 ~AO_TentFan_CTRL
+$b0000000 0 %local_io 0 PID |pidTentFans

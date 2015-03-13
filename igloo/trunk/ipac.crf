@@ -62,6 +62,8 @@ ENDCODE
 0 TVAR ^dtGooglePost
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
+0 FVAR ^fFanSpd
+0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
 0 FVAR ^fRTD2_R0
 0 FVAR ^fRTD3_R0
@@ -120,12 +122,13 @@ ENDCODE
 50 0 $VAR *sTimestamp 
 50 0 $VAR *sTimestamp1 
 50 0 $VAR *sTimestamp2 
+10 0 $VAR *sVar 
 10 0 $VAR *sYear 
 1024 0 COMVAR *DTcommHandle 
 1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
 1024 0 COMVAR *LogCommHandle 
-20 30 0 $TABLE {stDTdata 
+30 30 0 $TABLE {stDTdata 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
 32  1 SPOINT 0.0     INPUT  0  0 %local_io 0 POINT.TNG ~DI_AirCon_CR_NC
@@ -168,6 +171,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2  1 APOINT    0.0000 69  0 12 %local_io 0 POINT.TNG ~AI_IntakeTentFan_Tach
  2  1 APOINT    0.0000 69  1 12 %local_io 0 POINT.TNG ~AI_ExhaustTentFan_Tach
  2  1 APOINT    0.0000 165  0 13 %local_io 0 POINT.TNG ~AO_TentFan_CTRL
+1    0.0000    0.0000    0.0000    0.0000    0.2000    5.0000    0.0000   50.0000
+   0.0010    0.0000    0.0000   20.0000    1.5000    0.0000
+   0.0000    0.0000 ~AO_TentFan_CTRL
+$b0000000 0 %local_io 0 PID |pidTentFans
 : 1_0
 0 JUMP ;
 : 1_1
@@ -308,7 +315,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
 2 LINE.NUM "  /h /e /u /n" *sDTrequest $CAT 
 
-3 LINE.NUM "  RD10S" *sDTrequest $CAT 
+3 LINE.NUM "  RD3S" *sDTrequest $CAT 
 
 5 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
 
@@ -630,58 +637,82 @@ T;
 0 JUMP ;
 : 2_8
 4 LINE.NUM ^DTlogFlag @@ 1 = IF 
-5 LINE.NUM *LogCommHandle  OPEN DROP  
-6 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
-7 LINE.NUM *LogCommHandle 32  S.!EOL 
-8 LINE.NUM 12 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
-9 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
-10 LINE.NUM *LogCommHandle  CLOSE DROP  
-11 LINE.NUM ELSE 
-12 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
-13 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
+5 LINE.NUM |pidTentFans  $0002.. ROT PID@ 4 1 *sVar  FF.R$ 
+6 LINE.NUM *sVar 12 {stDTdata $TABLE@  $MOVE 
+7 LINE.NUM |pidTentFans  $0001.. ROT PID@ 4 1 *sVar  FF.R$ 
+8 LINE.NUM *sVar 13 {stDTdata $TABLE@  $MOVE 
+9 LINE.NUM |pidTentFans  $0008.. ROT PID@ 4 1 *sVar  FF.R$ 
+10 LINE.NUM *sVar 14 {stDTdata $TABLE@  $MOVE 
+12 LINE.NUM ~AI_IntakeTentFan_Tach @@ 100 I>F F* 710 I>F F/ ^fFanSpd @! 
+13 LINE.NUM ^fFanSpd @@ 3 0 *sVar  FF.R$ 
+14 LINE.NUM *sVar 15 {stDTdata $TABLE@  $MOVE 
+15 LINE.NUM ~AI_ExhaustTentFan_Tach @@ 100 I>F F* 710 I>F F/ ^fFanSpd @! 
+16 LINE.NUM ^fFanSpd @@ 3 0 *sVar  FF.R$ 
+17 LINE.NUM *sVar 16 {stDTdata $TABLE@  $MOVE 
+19 LINE.NUM |pidTentFans  $0010.. ROT PID@ 4 1 *sVar  FF.R$ 
+20 LINE.NUM *sVar 17 {stDTdata $TABLE@  $MOVE 
+21 LINE.NUM |pidTentFans  $0020.. ROT PID@ 4 1 *sVar  FF.R$ 
+22 LINE.NUM *sVar 18 {stDTdata $TABLE@  $MOVE 
+23 LINE.NUM |pidTentFans  $0040.. ROT PID@ 4 1 *sVar  FF.R$ 
+24 LINE.NUM *sVar 19 {stDTdata $TABLE@  $MOVE 
+25 LINE.NUM |pidTentFans  $4000.. ROT PID@ 5 3 *sVar  FF.R$ 
+26 LINE.NUM *sVar 20 {stDTdata $TABLE@  $MOVE 
+28 LINE.NUM *LogCommHandle  OPEN DROP  
+29 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+30 LINE.NUM *LogCommHandle 32  S.!EOL 
+31 LINE.NUM 21 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
+32 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+33 LINE.NUM *LogCommHandle  CLOSE DROP  
+34 LINE.NUM ELSE 
+35 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
+36 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
 
-14 LINE.NUM *sTimestamp *sErrorList $CAT 
+37 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-15 LINE.NUM THEN 
-16 LINE.NUM 0 ^DTlogFlag @! 
-17 LINE.NUM THEN 
-23 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
-24 LINE.NUM *sTimestamp2 0 4 *sDate  $SUB 
-25 LINE.NUM " -" *sDate $CAT 
+38 LINE.NUM THEN 
+39 LINE.NUM 0 ^DTlogFlag @! 
+40 LINE.NUM THEN 
+46 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
+47 LINE.NUM *sTimestamp2 0 4 *sDate  $SUB 
+48 LINE.NUM " -" *sDate $CAT 
 
-26 LINE.NUM *sTimestamp2 5 2 *sMonth  $SUB 
-27 LINE.NUM *sMonth *sDate $CAT 
+49 LINE.NUM *sTimestamp2 5 2 *sMonth  $SUB 
+50 LINE.NUM *sMonth *sDate $CAT 
 
-28 LINE.NUM " -" *sDate $CAT 
+51 LINE.NUM " -" *sDate $CAT 
 
-29 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
-30 LINE.NUM *sDay *sDate $CAT 
+52 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
+53 LINE.NUM *sDay *sDate $CAT 
 
-32 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
-33 LINE.NUM *FTPcommHandle  OPEN DROP  
-34 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-35 LINE.NUM " " *sFTPcmd  $MOVE 
-36 LINE.NUM " send:IglooData.txt" *sFTPcmd $CAT 
+55 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
+56 LINE.NUM *FTPcommHandle  OPEN DROP  
+57 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+58 LINE.NUM " " *sFTPcmd  $MOVE 
+59 LINE.NUM " send:IglooData.txt" *sFTPcmd $CAT 
 
-37 LINE.NUM " ," *sFTPcmd $CAT 
+60 LINE.NUM " ," *sFTPcmd $CAT 
 
-38 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
+61 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
 
-39 LINE.NUM " _" *sFTPcmd $CAT 
+62 LINE.NUM " _" *sFTPcmd $CAT 
 
-40 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+63 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-42 LINE.NUM *sDate *sCurrentDate  $MOVE 
-44 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
-45 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-46 LINE.NUM *FTPcommHandle  CLOSE DROP  
-48 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-49 LINE.NUM *LogCommHandle  OPEN DROP  
-50 LINE.NUM *LogCommHandle  CLOSE DROP  
-51 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-52 LINE.NUM THEN 
-53 LINE.NUM THEN 
--3 JUMP ;
+65 LINE.NUM *sDate *sCurrentDate  $MOVE 
+67 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+68 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+69 LINE.NUM *FTPcommHandle  CLOSE DROP  
+71 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+72 LINE.NUM *LogCommHandle  OPEN DROP  
+73 LINE.NUM *LogCommHandle  CLOSE DROP  
+74 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+75 LINE.NUM THEN 
+76 LINE.NUM THEN 
+0 JUMP ;
+: 2_15
+1 LINE.NUM 3 {stDTdata $TABLE@  $>F ^fPidInput @! 
+2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
+-4 JUMP ;
 T: T2
 DUMMY
 2_0
@@ -689,6 +720,7 @@ DUMMY
 2_2
 2_6
 2_8
+2_15
 T;
 &Housekeeper ' T2 SETTASK
 : 0_0
@@ -711,6 +743,7 @@ T;
 29 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 30 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 31 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
+32 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -763,6 +796,8 @@ CREATE V.ARRAY
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
 ^DTlogFlag ,
+^fFanSpd ,
+^fPidInput ,
 ^fRTD1_R0 ,
 ^fRTD2_R0 ,
 ^fRTD3_R0 ,
@@ -821,6 +856,7 @@ CREATE V.ARRAY
 *sTimestamp ,
 *sTimestamp1 ,
 *sTimestamp2 ,
+*sVar ,
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
@@ -887,6 +923,7 @@ CREATE P.ARRAY
 ~AO_TentFan_CTRL ,
  0 ,
 CREATE PID.ARRAY
+ |pidTentFans ,
  0 ,
 CREATE E/R.ARRAY
  0 ,
@@ -896,6 +933,7 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
+|pidTentFans ENABLE
 " %local_io  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %local_io ENABLE
  -1 ~DO_AirCon_CR @!
@@ -908,6 +946,8 @@ CONFIG_PORTS
 0.0 ^dtGooglePost @!
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
+0.00000000 ^fFanSpd @!
+0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
 0.00000000 ^fRTD2_R0 @!
 0.00000000 ^fRTD3_R0 @!
@@ -1005,6 +1045,8 @@ CONFIG_PORTS
 " "
  *sTimestamp2 $MOVE
 " "
+ *sVar $MOVE
+" "
  *sYear $MOVE
 " "
  *DTcommHandle $MOVE
@@ -1027,9 +1069,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/12/15 " ;
-: TIMESTAMP ." 17:39:56 " ;
-: CRCSTAMP  ." 2642954F0254A8A1E084BA412CFCFC2B " ;
+: DATESTAMP ." 03/13/15 " ;
+: TIMESTAMP ." 22:11:21 " ;
+: CRCSTAMP  ." C047EFD4F4FF094D2DB9558F582C1C9B " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -138,7 +138,7 @@
 1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
 2 LINE.NUM "  /h /e /u /n" *sDTrequest $CAT 
 
-3 LINE.NUM "  RD10S" *sDTrequest $CAT 
+3 LINE.NUM "  RD3S" *sDTrequest $CAT 
 
 5 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
 
