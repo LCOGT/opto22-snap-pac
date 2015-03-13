@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    6:2:21 3/12/2015
+# TIME/DATE :    17:39:56 3/12/2015
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -201,6 +201,9 @@ TAG1,sRTD6_R0                                          ,11   ,00000000,00000000,
 TAG1,sRTD7_R0                                          ,12   ,00000000,00000000,00000000,00000040,0    ,20  
 TAG1,sRTD8_R0                                          ,13   ,00000000,00000000,00000000,00000040,0    ,20  
 TAG1,sTimestamp                                        ,17   ,00000000,00000000,00000000,00000040,0    ,50  
+TAG1,sTimestamp1                                       ,38   ,00000000,00000000,00000000,00000040,0    ,50  
+TAG1,sTimestamp2                                       ,39   ,00000000,00000000,00000000,00000040,0    ,50  
+TAG1,sYear                                             ,37   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,stDTdata                                          ,0    ,00000000,00000000,00000000,00000800,20   ,30  
 TAG1,DTcommHandle                                      ,0    ,00000000,00000000,00000000,00040000,0    ,1024
 TAG1,FTPcommHandle                                     ,3    ,00000000,00000000,00000000,00040000,0    ,1024

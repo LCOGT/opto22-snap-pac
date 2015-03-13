@@ -111,8 +111,8 @@
 1 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
 0 JUMP ;
 : 1_57
-1 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-2 LINE.NUM *sTimestamp 0 {stDTdata $TABLE@  $MOVE 
+1 LINE.NUM *sTimestamp1 &Timestamp CALL.SUB DROP  
+2 LINE.NUM *sTimestamp1 0 {stDTdata $TABLE@  $MOVE 
 4 LINE.NUM " " *DTdata $MOVE 32 *DTdata  $APPEND 
 5 LINE.NUM *DTmessageReceived *DTdata $CAT 
 
