@@ -39,6 +39,7 @@ CREATE V.ARRAY
 *sCurrentDate ,
 *sCurrentLogCommHandle ,
 *sCurrentLogFile ,
+*sCurrentTime ,
 *sDate ,
 *sDatestamp ,
 *sDay ,
@@ -196,6 +197,8 @@ CONFIG_PORTS
  *sCurrentLogCommHandle $MOVE
 " "
  *sCurrentLogFile $MOVE
+" "
+ *sCurrentTime $MOVE
 " "
  *sDate $MOVE
 " "

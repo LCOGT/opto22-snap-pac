@@ -91,6 +91,7 @@ ENDCODE
 20 0 $VAR *sCurrentDate 
 50 0 $VAR *sCurrentLogCommHandle 
 20 0 $VAR *sCurrentLogFile 
+20 0 $VAR *sCurrentTime 
 20 0 $VAR *sDate 
 20 0 $VAR *sDatestamp 
 10 0 $VAR *sDay 
@@ -684,30 +685,55 @@ T;
 52 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
 53 LINE.NUM *sDay *sDate $CAT 
 
-55 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
-56 LINE.NUM *FTPcommHandle  OPEN DROP  
-57 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-58 LINE.NUM " " *sFTPcmd  $MOVE 
-59 LINE.NUM " send:IglooData.txt" *sFTPcmd $CAT 
+59 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
+60 LINE.NUM *FTPcommHandle  OPEN DROP  
+61 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+62 LINE.NUM " " *sFTPcmd  $MOVE 
+63 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
 
-60 LINE.NUM " ," *sFTPcmd $CAT 
+64 LINE.NUM " ," *sFTPcmd $CAT 
 
-61 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
+65 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
 
-62 LINE.NUM " _" *sFTPcmd $CAT 
+66 LINE.NUM " _" *sFTPcmd $CAT 
 
-63 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+67 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-65 LINE.NUM *sDate *sCurrentDate  $MOVE 
-67 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
-68 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-69 LINE.NUM *FTPcommHandle  CLOSE DROP  
-71 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-72 LINE.NUM *LogCommHandle  OPEN DROP  
-73 LINE.NUM *LogCommHandle  CLOSE DROP  
-74 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-75 LINE.NUM THEN 
-76 LINE.NUM THEN 
+69 LINE.NUM *sDate *sCurrentDate  $MOVE 
+71 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+72 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+73 LINE.NUM *FTPcommHandle  CLOSE DROP  
+75 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+76 LINE.NUM *LogCommHandle  OPEN DROP  
+77 LINE.NUM *LogCommHandle  CLOSE DROP  
+78 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+79 LINE.NUM THEN 
+80 LINE.NUM THEN 
+86 LINE.NUM *sCurrentTime  TIME>$ 
+87 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
+88 LINE.NUM *sCurrentTime " 12;00"  $CMP 0 = IF 
+89 LINE.NUM *FTPcommHandle  OPEN DROP  
+90 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+91 LINE.NUM " " *sFTPcmd  $MOVE 
+92 LINE.NUM " send:IglooData.txt" *sFTPcmd $CAT 
+
+93 LINE.NUM " ," *sFTPcmd $CAT 
+
+94 LINE.NUM *sDate *sFTPcmd $CAT 
+
+95 LINE.NUM " _" *sFTPcmd $CAT 
+
+96 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+
+99 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+100 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+101 LINE.NUM *FTPcommHandle  CLOSE DROP  
+103 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+104 LINE.NUM *LogCommHandle  OPEN DROP  
+105 LINE.NUM *LogCommHandle  CLOSE DROP  
+106 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+107 LINE.NUM THEN 
+108 LINE.NUM THEN 
 0 JUMP ;
 : 2_15
 1 LINE.NUM 3 {stDTdata $TABLE@  $>F ^fPidInput @! 
@@ -825,6 +851,7 @@ CREATE V.ARRAY
 *sCurrentDate ,
 *sCurrentLogCommHandle ,
 *sCurrentLogFile ,
+*sCurrentTime ,
 *sDate ,
 *sDatestamp ,
 *sDay ,
@@ -983,6 +1010,8 @@ CONFIG_PORTS
 " "
  *sCurrentLogFile $MOVE
 " "
+ *sCurrentTime $MOVE
+" "
  *sDate $MOVE
 " "
  *sDatestamp $MOVE
@@ -1069,9 +1098,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/13/15 " ;
-: TIMESTAMP ." 22:11:21 " ;
-: CRCSTAMP  ." C047EFD4F4FF094D2DB9558F582C1C9B " ;
+: DATESTAMP ." 03/16/15 " ;
+: TIMESTAMP ." 23:05:21 " ;
+: CRCSTAMP  ." 73327A364FD853A8D54FFDEACB7A8EA8 " ;
 MAKECHECK
 CLEAR.BREAKS
 

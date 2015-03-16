@@ -40,6 +40,7 @@
 20 0 $VAR *sCurrentDate 
 50 0 $VAR *sCurrentLogCommHandle 
 20 0 $VAR *sCurrentLogFile 
+20 0 $VAR *sCurrentTime 
 20 0 $VAR *sDate 
 20 0 $VAR *sDatestamp 
 10 0 $VAR *sDay 
