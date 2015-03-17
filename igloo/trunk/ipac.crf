@@ -130,6 +130,7 @@ ENDCODE
 1024 0 COMVAR *GoogleCommHandle 
 1024 0 COMVAR *LogCommHandle 
 30 30 0 $TABLE {stDTdata 
+30 30 0 $TABLE {stHeader 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
 32  1 SPOINT 0.0     INPUT  0  0 %local_io 0 POINT.TNG ~DI_AirCon_CR_NC
@@ -703,37 +704,44 @@ T;
 71 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
 72 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
 73 LINE.NUM *FTPcommHandle  CLOSE DROP  
-75 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-76 LINE.NUM *LogCommHandle  OPEN DROP  
-77 LINE.NUM *LogCommHandle  CLOSE DROP  
-78 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-79 LINE.NUM THEN 
-80 LINE.NUM THEN 
-86 LINE.NUM *sCurrentTime  TIME>$ 
-87 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
-88 LINE.NUM *sCurrentTime " 12;00"  $CMP 0 = IF 
-89 LINE.NUM *FTPcommHandle  OPEN DROP  
-90 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-91 LINE.NUM " " *sFTPcmd  $MOVE 
-92 LINE.NUM " send:IglooData.txt" *sFTPcmd $CAT 
+76 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+77 LINE.NUM *LogCommHandle  OPEN DROP  
+78 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+79 LINE.NUM *LogCommHandle 32  S.!EOL 
+80 LINE.NUM 21 0 {stHeader *LogCommHandle  S.PUT#TABLE DROP  
+81 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+82 LINE.NUM *LogCommHandle  CLOSE DROP  
+83 LINE.NUM ELSE 
+84 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
+85 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
 
-93 LINE.NUM " ," *sFTPcmd $CAT 
+86 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-94 LINE.NUM *sDate *sFTPcmd $CAT 
+87 LINE.NUM THEN 
+90 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+91 LINE.NUM THEN 
+92 LINE.NUM THEN 
+98 LINE.NUM *sCurrentTime  TIME>$ 
+99 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
+100 LINE.NUM *sCurrentTime " 18:03"  $CMP 0 = IF 
+101 LINE.NUM *FTPcommHandle  OPEN DROP  
+102 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+103 LINE.NUM " " *sFTPcmd  $MOVE 
+104 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
 
-95 LINE.NUM " _" *sFTPcmd $CAT 
+105 LINE.NUM " ," *sFTPcmd $CAT 
 
-96 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+106 LINE.NUM *sDate *sFTPcmd $CAT 
 
-99 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
-100 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-101 LINE.NUM *FTPcommHandle  CLOSE DROP  
-103 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-104 LINE.NUM *LogCommHandle  OPEN DROP  
-105 LINE.NUM *LogCommHandle  CLOSE DROP  
-106 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-107 LINE.NUM THEN 
-108 LINE.NUM THEN 
+107 LINE.NUM " _" *sFTPcmd $CAT 
+
+108 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+
+111 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+112 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+113 LINE.NUM *FTPcommHandle  CLOSE DROP  
+119 LINE.NUM THEN 
+120 LINE.NUM THEN 
 0 JUMP ;
 : 2_15
 1 LINE.NUM 3 {stDTdata $TABLE@  $>F ^fPidInput @! 
@@ -770,6 +778,28 @@ T;
 30 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 31 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 32 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
+34 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
+35 LINE.NUM " RTD1" 1 {stHeader $TABLE@  $MOVE 
+36 LINE.NUM " RTD2" 2 {stHeader $TABLE@  $MOVE 
+37 LINE.NUM " RTD3" 3 {stHeader $TABLE@  $MOVE 
+38 LINE.NUM " RTD4" 4 {stHeader $TABLE@  $MOVE 
+39 LINE.NUM " RTD5" 5 {stHeader $TABLE@  $MOVE 
+40 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
+41 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
+42 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
+43 LINE.NUM " RTD9" 9 {stHeader $TABLE@  $MOVE 
+44 LINE.NUM " RTD10" 10 {stHeader $TABLE@  $MOVE 
+45 LINE.NUM " PanelRTD" 11 {stHeader $TABLE@  $MOVE 
+46 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
+47 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
+48 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
+49 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
+50 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
+51 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
+52 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
+53 LINE.NUM " PID_Derivative" 19 {stHeader $TABLE@ 
+ $MOVE 
+54 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -901,6 +931,7 @@ CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
 {stDTdata ,
+{stHeader ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -1087,6 +1118,8 @@ CONFIG_PORTS
  *LogCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
+ " "
+0 -1 {stHeader Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO
@@ -1098,9 +1131,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/16/15 " ;
-: TIMESTAMP ." 23:05:21 " ;
-: CRCSTAMP  ." 73327A364FD853A8D54FFDEACB7A8EA8 " ;
+: DATESTAMP ." 03/17/15 " ;
+: TIMESTAMP ." 20:04:24 " ;
+: CRCSTAMP  ." 851FCE5506973D82556A2192AB20DB55 " ;
 MAKECHECK
 CLEAR.BREAKS
 

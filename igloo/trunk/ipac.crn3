@@ -89,6 +89,7 @@ CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
 {stDTdata ,
+{stHeader ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -275,6 +276,8 @@ CONFIG_PORTS
  *LogCommHandle $MOVE
  " "
 0 -1 {stDTdata Init$Table
+ " "
+0 -1 {stHeader Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO
