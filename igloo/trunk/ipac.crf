@@ -53,15 +53,18 @@ ENDCODE
 0 TASK &DatatakerComm
 0 TASK &GoogleComm
 0 TASK &Housekeeper
+0 TASK &MasterComm
 0 TASK &Powerup
 0 IVAR ^done
 0 TVAR ^dtAwaitingDT
 0 IVAR ^DTcharCount
 0 IVAR ^DTcommStatus
 0 IVAR ^DTdataErrorPosition
+0 IVAR ^DTerrorFlag
 0 TVAR ^dtGooglePost
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
+0 TVAR ^dtSocket
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
@@ -74,20 +77,28 @@ ENDCODE
 0 FVAR ^fRTD8_R0
 0 IVAR ^GoogleCommStatus
 0 IVAR ^Length1
+0 IVAR ^nCharCount
 0 IVAR ^nCounter1
 0 IVAR ^nDTcharacterCount
 0 IVAR ^nDTreceiveStatus
+0 IVAR ^nFindCmd
 0 IVAR ^nGooglePostDataLength
+0 IVAR ^nIndex
 0 IVAR ^nIP_int
 0 IVAR ^nLength
 0 IVAR ^nOctet3
+0 IVAR ^nPortStatus
+0 IVAR ^nReceiveStatus
+0 IVAR ^nStirFansSpd
 0 IVAR ^OldPosition
 0 IVAR ^Position
 0 IVAR ^SubStringLength
+0 IVAR ^WriteToLogFailedFlag
 10 0 $VAR *CRLF 
 1024 0 $VAR *DTdata 
 1024 0 $VAR *DTmessageReceived 
 10 0 $VAR *LF 
+32 0 $VAR *sCmd 
 20 0 $VAR *sCurrentDate 
 50 0 $VAR *sCurrentLogCommHandle 
 20 0 $VAR *sCurrentLogFile 
@@ -104,6 +115,7 @@ ENDCODE
 500 0 $VAR *sGooglePostData 
 10 0 $VAR *sGooglePostDataLength 
 500 0 $VAR *sGooglePostHeader 
+1024 0 $VAR *sIglooStatus 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
 10 0 $VAR *sMonth 
@@ -112,6 +124,7 @@ ENDCODE
 10 0 $VAR *sOctet1 
 10 0 $VAR *sOctet2 
 10 0 $VAR *sOctet3 
+20 0 $VAR *sOldDTerror 
 20 0 $VAR *sRTD1_R0 
 20 0 $VAR *sRTD2_R0 
 20 0 $VAR *sRTD3_R0 
@@ -120,11 +133,15 @@ ENDCODE
 20 0 $VAR *sRTD6_R0 
 20 0 $VAR *sRTD7_R0 
 20 0 $VAR *sRTD8_R0 
+5 0 $VAR *sStirFansSpd 
 50 0 $VAR *sTimestamp 
 50 0 $VAR *sTimestamp1 
 50 0 $VAR *sTimestamp2 
+30 0 $VAR *sTimestamp3 
+30 0 $VAR *sTimestamp4 
 10 0 $VAR *sVar 
 10 0 $VAR *sYear 
+1024 0 COMVAR *cPort 
 1024 0 COMVAR *DTcommHandle 
 1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
@@ -273,13 +290,14 @@ $b0000000 0 %local_io 0 PID |pidTentFans
 13 LINE.NUM 69 0 *DTmessageReceived  FindChar ^DTdataErrorPosition @! 
 14 LINE.NUM ^DTdataErrorPosition @@ 0 >= IF 
 15 LINE.NUM *DTmessageReceived *sDTerror  $MOVE 
-16 LINE.NUM *DTcommHandle 10  S.!EOL 
-17 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
-18 LINE.NUM *DTcommHandle 13  S.!EOL 
-19 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
-20 LINE.NUM THEN 
-34 LINE.NUM 12 I>F ^dtAwaitingDT @! 
-35 LINE.NUM ^dtAwaitingDT  StartTimer 
+16 LINE.NUM 1 ^DTerrorFlag @! 
+17 LINE.NUM *DTcommHandle 10  S.!EOL 
+18 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+19 LINE.NUM *DTcommHandle 13  S.!EOL 
+20 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+21 LINE.NUM THEN 
+35 LINE.NUM 12 I>F ^dtAwaitingDT @! 
+36 LINE.NUM ^dtAwaitingDT  StartTimer 
 13 JUMP ;
 : 1_40
 1 LINE.NUM 10  DELAY 
@@ -636,6 +654,25 @@ T;
 1 LINE.NUM 100  DELAY 
 -2 JUMP ;
 : 2_6
+4 LINE.NUM ^WriteToLogFailedFlag @@ 1 = IF 
+5 LINE.NUM *sTimestamp3 &Timestamp CALL.SUB DROP  
+6 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
+
+7 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+8 LINE.NUM 0 ^WriteToLogFailedFlag @! 
+9 LINE.NUM THEN 
+11 LINE.NUM ^DTerrorFlag @@ 1 = *sOldDTerror *sDTerror  $CMP 0 <> LAND  IF 
+12 LINE.NUM *sTimestamp3 &Timestamp CALL.SUB DROP  
+13 LINE.NUM " , " *sErrorList $CAT 
+
+14 LINE.NUM *sDTerror *sErrorList $CAT 
+
+15 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+16 LINE.NUM 0 ^DTerrorFlag @! 
+17 LINE.NUM *sDTerror *sOldDTerror  $MOVE 
+18 LINE.NUM THEN 
 0 JUMP ;
 : 2_8
 4 LINE.NUM ^DTlogFlag @@ 1 = IF 
@@ -666,82 +703,78 @@ T;
 32 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
 33 LINE.NUM *LogCommHandle  CLOSE DROP  
 34 LINE.NUM ELSE 
-35 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
-36 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
-
-37 LINE.NUM *sTimestamp *sErrorList $CAT 
-
+35 LINE.NUM 1 ^WriteToLogFailedFlag @! 
+36 LINE.NUM THEN 
+37 LINE.NUM 0 ^DTlogFlag @! 
 38 LINE.NUM THEN 
-39 LINE.NUM 0 ^DTlogFlag @! 
-40 LINE.NUM THEN 
-46 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
-47 LINE.NUM *sTimestamp2 0 4 *sDate  $SUB 
-48 LINE.NUM " -" *sDate $CAT 
+44 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
+45 LINE.NUM *sTimestamp2 0 4 *sDate  $SUB 
+46 LINE.NUM " -" *sDate $CAT 
 
-49 LINE.NUM *sTimestamp2 5 2 *sMonth  $SUB 
-50 LINE.NUM *sMonth *sDate $CAT 
+47 LINE.NUM *sTimestamp2 5 2 *sMonth  $SUB 
+48 LINE.NUM *sMonth *sDate $CAT 
 
-51 LINE.NUM " -" *sDate $CAT 
+49 LINE.NUM " -" *sDate $CAT 
 
-52 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
-53 LINE.NUM *sDay *sDate $CAT 
+50 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
+51 LINE.NUM *sDay *sDate $CAT 
 
-59 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
-60 LINE.NUM *FTPcommHandle  OPEN DROP  
-61 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-62 LINE.NUM " " *sFTPcmd  $MOVE 
-63 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
+57 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
+58 LINE.NUM *FTPcommHandle  OPEN DROP  
+59 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+60 LINE.NUM " " *sFTPcmd  $MOVE 
+61 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
 
-64 LINE.NUM " ," *sFTPcmd $CAT 
+62 LINE.NUM " ," *sFTPcmd $CAT 
 
-65 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
+63 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
 
-66 LINE.NUM " _" *sFTPcmd $CAT 
+64 LINE.NUM " _" *sFTPcmd $CAT 
 
-67 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+65 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-69 LINE.NUM *sDate *sCurrentDate  $MOVE 
-71 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
-72 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-73 LINE.NUM *FTPcommHandle  CLOSE DROP  
-76 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-77 LINE.NUM *LogCommHandle  OPEN DROP  
-78 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
-79 LINE.NUM *LogCommHandle 32  S.!EOL 
-80 LINE.NUM 21 0 {stHeader *LogCommHandle  S.PUT#TABLE DROP  
-81 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
-82 LINE.NUM *LogCommHandle  CLOSE DROP  
-83 LINE.NUM ELSE 
-84 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
-85 LINE.NUM " , WriteToLogFailed" *sErrorList $CAT 
-
-86 LINE.NUM *sTimestamp *sErrorList $CAT 
-
+67 LINE.NUM *sDate *sCurrentDate  $MOVE 
+69 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+70 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+71 LINE.NUM *FTPcommHandle  CLOSE DROP  
+74 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+75 LINE.NUM *LogCommHandle  OPEN DROP  
+76 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+77 LINE.NUM *LogCommHandle 32  S.!EOL 
+78 LINE.NUM 21 0 {stHeader *LogCommHandle  S.PUT#TABLE DROP  
+79 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+80 LINE.NUM *LogCommHandle  CLOSE DROP  
+81 LINE.NUM ELSE 
+82 LINE.NUM 1 ^WriteToLogFailedFlag @! 
+83 LINE.NUM THEN 
+86 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
 87 LINE.NUM THEN 
-90 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-91 LINE.NUM THEN 
-92 LINE.NUM THEN 
-98 LINE.NUM *sCurrentTime  TIME>$ 
-99 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
-100 LINE.NUM *sCurrentTime " 18:03"  $CMP 0 = IF 
-101 LINE.NUM *FTPcommHandle  OPEN DROP  
-102 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-103 LINE.NUM " " *sFTPcmd  $MOVE 
-104 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
+88 LINE.NUM THEN 
+94 LINE.NUM *sCurrentTime  TIME>$ 
+95 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
+96 LINE.NUM *sCurrentTime " 12:00"  $CMP 0 = IF 
+97 LINE.NUM *FTPcommHandle  OPEN DROP  
+98 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+99 LINE.NUM " " *sFTPcmd  $MOVE 
+100 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
 
-105 LINE.NUM " ," *sFTPcmd $CAT 
+101 LINE.NUM " ," *sFTPcmd $CAT 
 
-106 LINE.NUM *sDate *sFTPcmd $CAT 
+102 LINE.NUM *sDate *sFTPcmd $CAT 
 
-107 LINE.NUM " _" *sFTPcmd $CAT 
+103 LINE.NUM " _" *sFTPcmd $CAT 
 
-108 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+104 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-111 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
-112 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-113 LINE.NUM *FTPcommHandle  CLOSE DROP  
-119 LINE.NUM THEN 
-120 LINE.NUM THEN 
+107 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+108 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+109 LINE.NUM *FTPcommHandle  CLOSE DROP  
+111 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+112 LINE.NUM *LogCommHandle  OPEN DROP  
+113 LINE.NUM *LogCommHandle  CLOSE DROP  
+114 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+115 LINE.NUM THEN 
+116 LINE.NUM THEN 
 0 JUMP ;
 : 2_15
 1 LINE.NUM 3 {stDTdata $TABLE@  $>F ^fPidInput @! 
@@ -757,6 +790,209 @@ DUMMY
 2_15
 T;
 &Housekeeper ' T2 SETTASK
+: 4_0
+0 JUMP ;
+: 4_2
+
+1 LINE.NUM
+  *cPort   LISTEN
+  ^nPortStatus @! 
+13 JUMP ;
+: 4_6
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 4_9
+
+1 LINE.NUM
+  *cPort   ACCEPT
+  ^nPortStatus @! 
+12 JUMP ;
+: 4_13
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 4_17
+1 LINE.NUM 120 I>F ^dtSocket @! 
+2 LINE.NUM ^dtSocket  StartTimer 
+0 JUMP ;
+: 4_19
+
+1 LINE.NUM
+  *cPort   ?STREAM.KEY
+  ^nCharCount @! 
+10 JUMP ;
+: 4_28
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 4_37
+
+1 LINE.NUM
+  *cPort   STREAM.CLEAR.BUF
+
+2 LINE.NUM
+  *cPort   CLOSE
+  ^nPortStatus @! 
+-8 JUMP ;
+: 4_43
+1 LINE.NUM 120 I>F ^dtSocket @! 
+2 LINE.NUM ^dtSocket  StartTimer 
+12 JUMP ;
+: 4_49
+1 LINE.NUM *sCmd *cPort  GET$ ^nReceiveStatus @! 
+2 LINE.NUM *sCmd  $>Upper 
+3 LINE.NUM 0 ^nIndex @! 
+12 JUMP ;
+: 4_55
+
+1 LINE.NUM
+  *cPort   STREAM.CLEAR.BUF
+1 JUMP ;
+: 4_59
+-7 JUMP ;
+: 4_64
+1 LINE.NUM " STIR_FANS" 0 *sCmd  FindSubString ^nFindCmd @! 
+2 LINE.NUM ^nFindCmd @@ -1 > IF 
+3 LINE.NUM *sCmd ^nFindCmd @@ 10 +  3 *sStirFansSpd  $SUB 
+4 LINE.NUM *sStirFansSpd  $>I I>F  ~AO_StirFans_CTRL @! 
+6 LINE.NUM " Success=TRUE" *sIglooStatus  $MOVE 
+7 LINE.NUM "  " *sIglooStatus $CAT 
+
+8 LINE.NUM *sTimestamp4 &Timestamp CALL.SUB DROP  
+9 LINE.NUM *sTimestamp4 *sIglooStatus $CAT 
+
+11 LINE.NUM *sIglooStatus *cPort  PRT$ DROP  
+12 LINE.NUM " " *sIglooStatus  $MOVE 
+13 LINE.NUM THEN 
+0 JUMP ;
+: 4_70
+-9 JUMP ;
+: 4_4
+FALSE
+
+1 LINE.NUM
+  ^nPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nPortStatus @@ 
+  -47    =
+LOR
+IF -13 ELSE -14 THEN JUMP ;
+: 4_11
+FALSE
+
+1 LINE.NUM
+  ^nPortStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^nPortStatus @@ 
+  -47    =
+LOR
+IF -12 ELSE -13 THEN JUMP ;
+: 4_22
+TRUE
+
+1 LINE.NUM
+  ^nCharCount @@ 
+  0    >
+LAND
+IF -9 ELSE 0 THEN JUMP ;
+: 4_23
+TRUE
+
+1 LINE.NUM
+  *cPort   ?OPEN 0>
+LAND
+IF 0 ELSE -11 THEN JUMP ;
+: 4_24
+TRUE
+
+1 LINE.NUM
+  ^dtSocket   T0=
+LAND
+IF -12 ELSE 0 THEN JUMP ;
+: 4_25
+TRUE
+
+1 LINE.NUM
+  ^nCharCount @@ 
+  0    <
+LAND
+IF 0 ELSE -14 THEN JUMP ;
+: 4_26
+FALSE
+
+1 LINE.NUM
+  ^nCharCount @@ 
+  -37    =
+LOR
+
+2 LINE.NUM
+  ^nCharCount @@ 
+  -39    =
+LOR
+IF -15 ELSE -14 THEN JUMP ;
+: 4_45
+TRUE
+
+1 LINE.NUM
+  ^nCharCount @@ 
+  4    <
+LAND
+IF -15 ELSE -13 THEN JUMP ;
+: 4_51
+TRUE
+
+1 LINE.NUM
+  ^nReceiveStatus @@ 
+  0    =
+LAND
+IF -13 ELSE 0 THEN JUMP ;
+: 4_57
+TRUE
+
+1 LINE.NUM
+  ^nReceiveStatus @@ 
+  -39    =
+LAND
+IF -13 ELSE -17 THEN JUMP ;
+T: T4
+DUMMY
+4_0
+4_2
+4_6
+4_9
+4_13
+4_17
+4_19
+4_28
+4_37
+4_43
+4_49
+4_55
+4_59
+4_64
+4_70
+4_4
+4_11
+4_22
+4_23
+4_24
+4_25
+4_26
+4_45
+4_51
+4_57
+T;
+&MasterComm ' T4 SETTASK
 : 0_0
 0 JUMP ;
 : 0_1
@@ -844,6 +1080,7 @@ CREATE T.ARRAY
 &DatatakerComm ,
 &GoogleComm ,
 &Housekeeper ,
+&MasterComm ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
@@ -851,6 +1088,7 @@ CREATE V.ARRAY
 ^DTcharCount ,
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
+^DTerrorFlag ,
 ^DTlogFlag ,
 ^fFanSpd ,
 ^fPidInput ,
@@ -864,20 +1102,28 @@ CREATE V.ARRAY
 ^fRTD8_R0 ,
 ^GoogleCommStatus ,
 ^Length1 ,
+^nCharCount ,
 ^nCounter1 ,
 ^nDTcharacterCount ,
 ^nDTreceiveStatus ,
+^nFindCmd ,
 ^nGooglePostDataLength ,
+^nIndex ,
 ^nIP_int ,
 ^nLength ,
 ^nOctet3 ,
+^nPortStatus ,
+^nReceiveStatus ,
+^nStirFansSpd ,
 ^OldPosition ,
 ^Position ,
 ^SubStringLength ,
+^WriteToLogFailedFlag ,
 *CRLF ,
 *DTdata ,
 *DTmessageReceived ,
 *LF ,
+*sCmd ,
 *sCurrentDate ,
 *sCurrentLogCommHandle ,
 *sCurrentLogFile ,
@@ -894,6 +1140,7 @@ CREATE V.ARRAY
 *sGooglePostData ,
 *sGooglePostDataLength ,
 *sGooglePostHeader ,
+*sIglooStatus ,
 *sIP_hex ,
 *sIP_PAC ,
 *sMonth ,
@@ -902,6 +1149,7 @@ CREATE V.ARRAY
 *sOctet1 ,
 *sOctet2 ,
 *sOctet3 ,
+*sOldDTerror ,
 *sRTD1_R0 ,
 *sRTD2_R0 ,
 *sRTD3_R0 ,
@@ -910,13 +1158,17 @@ CREATE V.ARRAY
 *sRTD6_R0 ,
 *sRTD7_R0 ,
 *sRTD8_R0 ,
+*sStirFansSpd ,
 *sTimestamp ,
 *sTimestamp1 ,
 *sTimestamp2 ,
+*sTimestamp3 ,
+*sTimestamp4 ,
 *sVar ,
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*cPort ,
 *DTcommHandle ,
 *FTPcommHandle ,
 *GoogleCommHandle ,
@@ -926,6 +1178,7 @@ CREATE TI.ARRAY
 ^dtAwaitingDT ,
 ^dtGooglePost ,
 ^dtRequestTimer ,
+^dtSocket ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
@@ -1001,9 +1254,11 @@ CONFIG_PORTS
 0 ^DTcharCount @!
 0 ^DTcommStatus @!
 0 ^DTdataErrorPosition @!
+0 ^DTerrorFlag @!
 0.0 ^dtGooglePost @!
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
+0.0 ^dtSocket @!
 0.00000000 ^fFanSpd @!
 0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
@@ -1016,16 +1271,23 @@ CONFIG_PORTS
 0.00000000 ^fRTD8_R0 @!
 0 ^GoogleCommStatus @!
 0 ^Length1 @!
+0 ^nCharCount @!
 0 ^nCounter1 @!
 0 ^nDTcharacterCount @!
 0 ^nDTreceiveStatus @!
+0 ^nFindCmd @!
 0 ^nGooglePostDataLength @!
+0 ^nIndex @!
 0 ^nIP_int @!
 0 ^nLength @!
 0 ^nOctet3 @!
+0 ^nPortStatus @!
+0 ^nReceiveStatus @!
+0 ^nStirFansSpd @!
 0 ^OldPosition @!
 0 ^Position @!
 0 ^SubStringLength @!
+0 ^WriteToLogFailedFlag @!
 " "
  *CRLF $MOVE
 " "
@@ -1034,6 +1296,8 @@ CONFIG_PORTS
  *DTmessageReceived $MOVE
 " "
  *LF $MOVE
+" "
+ *sCmd $MOVE
 " "
  *sCurrentDate $MOVE
 " "
@@ -1067,6 +1331,8 @@ CONFIG_PORTS
 " "
  *sGooglePostHeader $MOVE
 " "
+ *sIglooStatus $MOVE
+" "
  *sIP_hex $MOVE
 " "
  *sIP_PAC $MOVE
@@ -1082,6 +1348,8 @@ CONFIG_PORTS
  *sOctet2 $MOVE
 " "
  *sOctet3 $MOVE
+" "
+ *sOldDTerror $MOVE
 " "
  *sRTD1_R0 $MOVE
 " "
@@ -1099,15 +1367,23 @@ CONFIG_PORTS
 " "
  *sRTD8_R0 $MOVE
 " "
+ *sStirFansSpd $MOVE
+" "
  *sTimestamp $MOVE
 " "
  *sTimestamp1 $MOVE
 " "
  *sTimestamp2 $MOVE
 " "
+ *sTimestamp3 $MOVE
+" "
+ *sTimestamp4 $MOVE
+" "
  *sVar $MOVE
 " "
  *sYear $MOVE
+" tcp:22004"
+ *cPort $MOVE
 " "
  *DTcommHandle $MOVE
 " ftp:207.71.206.55:21,eng,sbatoo1"
@@ -1131,9 +1407,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/17/15 " ;
-: TIMESTAMP ." 20:04:24 " ;
-: CRCSTAMP  ." 851FCE5506973D82556A2192AB20DB55 " ;
+: DATESTAMP ." 03/18/15 " ;
+: TIMESTAMP ." 16:30:42 " ;
+: CRCSTAMP  ." 33F125C2C90478ED378A3B121097C180 " ;
 MAKECHECK
 CLEAR.BREAKS
 

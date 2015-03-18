@@ -2,6 +2,7 @@ CREATE T.ARRAY
 &DatatakerComm ,
 &GoogleComm ,
 &Housekeeper ,
+&MasterComm ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
@@ -9,6 +10,7 @@ CREATE V.ARRAY
 ^DTcharCount ,
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
+^DTerrorFlag ,
 ^DTlogFlag ,
 ^fFanSpd ,
 ^fPidInput ,
@@ -22,20 +24,28 @@ CREATE V.ARRAY
 ^fRTD8_R0 ,
 ^GoogleCommStatus ,
 ^Length1 ,
+^nCharCount ,
 ^nCounter1 ,
 ^nDTcharacterCount ,
 ^nDTreceiveStatus ,
+^nFindCmd ,
 ^nGooglePostDataLength ,
+^nIndex ,
 ^nIP_int ,
 ^nLength ,
 ^nOctet3 ,
+^nPortStatus ,
+^nReceiveStatus ,
+^nStirFansSpd ,
 ^OldPosition ,
 ^Position ,
 ^SubStringLength ,
+^WriteToLogFailedFlag ,
 *CRLF ,
 *DTdata ,
 *DTmessageReceived ,
 *LF ,
+*sCmd ,
 *sCurrentDate ,
 *sCurrentLogCommHandle ,
 *sCurrentLogFile ,
@@ -52,6 +62,7 @@ CREATE V.ARRAY
 *sGooglePostData ,
 *sGooglePostDataLength ,
 *sGooglePostHeader ,
+*sIglooStatus ,
 *sIP_hex ,
 *sIP_PAC ,
 *sMonth ,
@@ -60,6 +71,7 @@ CREATE V.ARRAY
 *sOctet1 ,
 *sOctet2 ,
 *sOctet3 ,
+*sOldDTerror ,
 *sRTD1_R0 ,
 *sRTD2_R0 ,
 *sRTD3_R0 ,
@@ -68,13 +80,17 @@ CREATE V.ARRAY
 *sRTD6_R0 ,
 *sRTD7_R0 ,
 *sRTD8_R0 ,
+*sStirFansSpd ,
 *sTimestamp ,
 *sTimestamp1 ,
 *sTimestamp2 ,
+*sTimestamp3 ,
+*sTimestamp4 ,
 *sVar ,
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*cPort ,
 *DTcommHandle ,
 *FTPcommHandle ,
 *GoogleCommHandle ,
@@ -84,6 +100,7 @@ CREATE TI.ARRAY
 ^dtAwaitingDT ,
 ^dtGooglePost ,
 ^dtRequestTimer ,
+^dtSocket ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
@@ -159,9 +176,11 @@ CONFIG_PORTS
 0 ^DTcharCount @!
 0 ^DTcommStatus @!
 0 ^DTdataErrorPosition @!
+0 ^DTerrorFlag @!
 0.0 ^dtGooglePost @!
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
+0.0 ^dtSocket @!
 0.00000000 ^fFanSpd @!
 0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
@@ -174,16 +193,23 @@ CONFIG_PORTS
 0.00000000 ^fRTD8_R0 @!
 0 ^GoogleCommStatus @!
 0 ^Length1 @!
+0 ^nCharCount @!
 0 ^nCounter1 @!
 0 ^nDTcharacterCount @!
 0 ^nDTreceiveStatus @!
+0 ^nFindCmd @!
 0 ^nGooglePostDataLength @!
+0 ^nIndex @!
 0 ^nIP_int @!
 0 ^nLength @!
 0 ^nOctet3 @!
+0 ^nPortStatus @!
+0 ^nReceiveStatus @!
+0 ^nStirFansSpd @!
 0 ^OldPosition @!
 0 ^Position @!
 0 ^SubStringLength @!
+0 ^WriteToLogFailedFlag @!
 " "
  *CRLF $MOVE
 " "
@@ -192,6 +218,8 @@ CONFIG_PORTS
  *DTmessageReceived $MOVE
 " "
  *LF $MOVE
+" "
+ *sCmd $MOVE
 " "
  *sCurrentDate $MOVE
 " "
@@ -225,6 +253,8 @@ CONFIG_PORTS
 " "
  *sGooglePostHeader $MOVE
 " "
+ *sIglooStatus $MOVE
+" "
  *sIP_hex $MOVE
 " "
  *sIP_PAC $MOVE
@@ -240,6 +270,8 @@ CONFIG_PORTS
  *sOctet2 $MOVE
 " "
  *sOctet3 $MOVE
+" "
+ *sOldDTerror $MOVE
 " "
  *sRTD1_R0 $MOVE
 " "
@@ -257,15 +289,23 @@ CONFIG_PORTS
 " "
  *sRTD8_R0 $MOVE
 " "
+ *sStirFansSpd $MOVE
+" "
  *sTimestamp $MOVE
 " "
  *sTimestamp1 $MOVE
 " "
  *sTimestamp2 $MOVE
 " "
+ *sTimestamp3 $MOVE
+" "
+ *sTimestamp4 $MOVE
+" "
  *sVar $MOVE
 " "
  *sYear $MOVE
+" tcp:22004"
+ *cPort $MOVE
 " "
  *DTcommHandle $MOVE
 " ftp:207.71.206.55:21,eng,sbatoo1"

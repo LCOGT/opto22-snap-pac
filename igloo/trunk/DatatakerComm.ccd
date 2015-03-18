@@ -94,13 +94,14 @@
 13 LINE.NUM 69 0 *DTmessageReceived  FindChar ^DTdataErrorPosition @! 
 14 LINE.NUM ^DTdataErrorPosition @@ 0 >= IF 
 15 LINE.NUM *DTmessageReceived *sDTerror  $MOVE 
-16 LINE.NUM *DTcommHandle 10  S.!EOL 
-17 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
-18 LINE.NUM *DTcommHandle 13  S.!EOL 
-19 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
-20 LINE.NUM THEN 
-34 LINE.NUM 12 I>F ^dtAwaitingDT @! 
-35 LINE.NUM ^dtAwaitingDT  StartTimer 
+16 LINE.NUM 1 ^DTerrorFlag @! 
+17 LINE.NUM *DTcommHandle 10  S.!EOL 
+18 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+19 LINE.NUM *DTcommHandle 13  S.!EOL 
+20 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+21 LINE.NUM THEN 
+35 LINE.NUM 12 I>F ^dtAwaitingDT @! 
+36 LINE.NUM ^dtAwaitingDT  StartTimer 
 13 JUMP ;
 : 1_40
 1 LINE.NUM 10  DELAY 

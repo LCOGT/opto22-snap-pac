@@ -2,15 +2,18 @@
 0 TASK &DatatakerComm
 0 TASK &GoogleComm
 0 TASK &Housekeeper
+0 TASK &MasterComm
 0 TASK &Powerup
 0 IVAR ^done
 0 TVAR ^dtAwaitingDT
 0 IVAR ^DTcharCount
 0 IVAR ^DTcommStatus
 0 IVAR ^DTdataErrorPosition
+0 IVAR ^DTerrorFlag
 0 TVAR ^dtGooglePost
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
+0 TVAR ^dtSocket
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
@@ -23,20 +26,28 @@
 0 FVAR ^fRTD8_R0
 0 IVAR ^GoogleCommStatus
 0 IVAR ^Length1
+0 IVAR ^nCharCount
 0 IVAR ^nCounter1
 0 IVAR ^nDTcharacterCount
 0 IVAR ^nDTreceiveStatus
+0 IVAR ^nFindCmd
 0 IVAR ^nGooglePostDataLength
+0 IVAR ^nIndex
 0 IVAR ^nIP_int
 0 IVAR ^nLength
 0 IVAR ^nOctet3
+0 IVAR ^nPortStatus
+0 IVAR ^nReceiveStatus
+0 IVAR ^nStirFansSpd
 0 IVAR ^OldPosition
 0 IVAR ^Position
 0 IVAR ^SubStringLength
+0 IVAR ^WriteToLogFailedFlag
 10 0 $VAR *CRLF 
 1024 0 $VAR *DTdata 
 1024 0 $VAR *DTmessageReceived 
 10 0 $VAR *LF 
+32 0 $VAR *sCmd 
 20 0 $VAR *sCurrentDate 
 50 0 $VAR *sCurrentLogCommHandle 
 20 0 $VAR *sCurrentLogFile 
@@ -53,6 +64,7 @@
 500 0 $VAR *sGooglePostData 
 10 0 $VAR *sGooglePostDataLength 
 500 0 $VAR *sGooglePostHeader 
+1024 0 $VAR *sIglooStatus 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
 10 0 $VAR *sMonth 
@@ -61,6 +73,7 @@
 10 0 $VAR *sOctet1 
 10 0 $VAR *sOctet2 
 10 0 $VAR *sOctet3 
+20 0 $VAR *sOldDTerror 
 20 0 $VAR *sRTD1_R0 
 20 0 $VAR *sRTD2_R0 
 20 0 $VAR *sRTD3_R0 
@@ -69,11 +82,15 @@
 20 0 $VAR *sRTD6_R0 
 20 0 $VAR *sRTD7_R0 
 20 0 $VAR *sRTD8_R0 
+5 0 $VAR *sStirFansSpd 
 50 0 $VAR *sTimestamp 
 50 0 $VAR *sTimestamp1 
 50 0 $VAR *sTimestamp2 
+30 0 $VAR *sTimestamp3 
+30 0 $VAR *sTimestamp4 
 10 0 $VAR *sVar 
 10 0 $VAR *sYear 
+1024 0 COMVAR *cPort 
 1024 0 COMVAR *DTcommHandle 
 1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
