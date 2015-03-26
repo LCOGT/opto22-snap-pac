@@ -4,16 +4,23 @@
 0 TASK &Housekeeper
 0 TASK &MasterComm
 0 TASK &Powerup
+0 IVAR ^AirCon_CR_ErrorFlag
+0 IVAR ^AirConOffFlag
+0 IVAR ^Cryotig_CR_ErrorFlag
+0 TVAR ^CryoTigThermalTimer
 0 IVAR ^done
+0 TVAR ^dtAirCon_CR
 0 TVAR ^dtAwaitingDT
 0 IVAR ^DTcharCount
 0 IVAR ^DTcommStatus
 0 IVAR ^DTdataErrorPosition
 0 IVAR ^DTerrorFlag
 0 TVAR ^dtGooglePost
+0 TVAR ^dtHeartbeat
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
 0 TVAR ^dtSocket
+0 IVAR ^Fan10V_TestFlag
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
@@ -24,12 +31,15 @@
 0 FVAR ^fRTD6_R0
 0 FVAR ^fRTD7_R0
 0 FVAR ^fRTD8_R0
+0 FVAR ^fSystemUpTime
 0 IVAR ^GoogleCommStatus
 0 IVAR ^Length1
 0 IVAR ^nCharCount
 0 IVAR ^nCounter1
+0 IVAR ^nCounter2
 0 IVAR ^nDTcharacterCount
 0 IVAR ^nDTreceiveStatus
+0 IVAR ^nFanSpd
 0 IVAR ^nFindCmd
 0 IVAR ^nGooglePostDataLength
 0 IVAR ^nIndex
@@ -38,16 +48,29 @@
 0 IVAR ^nOctet3
 0 IVAR ^nPortStatus
 0 IVAR ^nReceiveStatus
+0 IVAR ^NRES_CR_ErrorFlag
 0 IVAR ^nStirFansSpd
 0 IVAR ^OldPosition
+0 IVAR ^PanelFanM184_ErrorFlag
+0 IVAR ^PanelFanM186_ErrorFlag
+0 FVAR ^PanelFanMaxCtrl
+0 FVAR ^PanelTemp
 0 IVAR ^Position
+0 IVAR ^RedLink_CR_ErrorFlag
 0 IVAR ^SubStringLength
+0 IVAR ^TentStirFanM323_ErrorFlag
+0 IVAR ^TentStirFanM325_ErrorFlag
+0 FVAR ^TentStirFanMaxCtrl
+0 IVAR ^Thermostat_CR_ErrorFlag
+0 IVAR ^Utility_Volt_WatchdogFlag
 0 IVAR ^WriteToLogFailedFlag
 10 0 $VAR *CRLF 
 1024 0 $VAR *DTdata 
 1024 0 $VAR *DTmessageReceived 
 10 0 $VAR *LF 
 32 0 $VAR *sCmd 
+10 0 $VAR *sCounter2 
+10 0 $VAR *sCurrent 
 20 0 $VAR *sCurrentDate 
 50 0 $VAR *sCurrentLogCommHandle 
 20 0 $VAR *sCurrentLogFile 
@@ -59,12 +82,15 @@
 10 0 $VAR *sDTerror 
 1024 0 $VAR *sDTrequest 
 1024 0 $VAR *sErrorList 
+10 0 $VAR *sFanSpd 
 1024 0 $VAR *sFaultList 
 50 0 $VAR *sFTPcmd 
+10 0 $VAR *sFWversion 
 500 0 $VAR *sGooglePostData 
 10 0 $VAR *sGooglePostDataLength 
 500 0 $VAR *sGooglePostHeader 
-1024 0 $VAR *sIglooStatus 
+10 0 $VAR *sHeartbeat 
+10 0 $VAR *sICDversion 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
 10 0 $VAR *sMonth 
@@ -74,6 +100,10 @@
 10 0 $VAR *sOctet2 
 10 0 $VAR *sOctet3 
 20 0 $VAR *sOldDTerror 
+10 0 $VAR *sPACuptime 
+10 0 $VAR *sPID 
+10 0 $VAR *sPidSetpoint 
+10 0 $VAR *sPressure 
 20 0 $VAR *sRTD1_R0 
 20 0 $VAR *sRTD2_R0 
 20 0 $VAR *sRTD3_R0 
@@ -83,12 +113,16 @@
 20 0 $VAR *sRTD7_R0 
 20 0 $VAR *sRTD8_R0 
 5 0 $VAR *sStirFansSpd 
+10 0 $VAR *sSWversion 
+1024 0 $VAR *Status 
+10 0 $VAR *sTentFansSpd 
 50 0 $VAR *sTimestamp 
 50 0 $VAR *sTimestamp1 
 50 0 $VAR *sTimestamp2 
 30 0 $VAR *sTimestamp3 
 30 0 $VAR *sTimestamp4 
 10 0 $VAR *sVar 
+10 0 $VAR *sVoltage 
 10 0 $VAR *sYear 
 1024 0 COMVAR *cPort 
 1024 0 COMVAR *DTcommHandle 
@@ -131,15 +165,24 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 APOINT  -10.0000 12  1  5 %local_io 0 POINT.TNG ~AI_CryoTig_ReturnPressure
  2  1 APOINT    0.0000 165  0  6 %local_io 0 POINT.TNG ~AO_PanelFans_CTRL
  2  1 APOINT    0.0000 165  1  6 %local_io 0 POINT.TNG ~AO_StirFans_CTRL
- 2  1 APOINT    0.0000 69  0  7 %local_io 0 POINT.TNG ~AI_PanelFan1_Tach
- 2  1 APOINT    0.0000 69  1  7 %local_io 0 POINT.TNG ~AI_PanelFan2_Tach
+ 2  1 APOINT    0.0000 69  0  7 %local_io 0 POINT.TNG ~AI_PanelFanM184_Tach
+ 2  1 APOINT    0.0000 69  1  7 %local_io 0 POINT.TNG ~AI_PanelFanM186_Tach
  4  1 SPOINT 0.0    OUTPUT  0  8 %local_io 0 POINT.TNG ~DO_Thermostat_CR
  4  1 SPOINT 0.0    OUTPUT  1  8 %local_io 0 POINT.TNG ~DO_RedLink_CR
  4  1 SPOINT 0.0    OUTPUT  3  8 %local_io 0 POINT.TNG ~DO_DTreset
- 2  1 APOINT    0.0000 69  0 12 %local_io 0 POINT.TNG ~AI_IntakeTentFan_Tach
- 2  1 APOINT    0.0000 69  1 12 %local_io 0 POINT.TNG ~AI_ExhaustTentFan_Tach
- 2  1 APOINT    0.0000 165  0 13 %local_io 0 POINT.TNG ~AO_TentFan_CTRL
+ 2  1 APOINT    0.0000 69  0  9 %local_io 0 POINT.TNG ~AI_IglooStirFanM282_Tach
+ 2  1 APOINT    0.0000 69  1  9 %local_io 0 POINT.TNG ~AI_IglooStirFanM284_Tach
+ 2  1 APOINT    0.0000 69  0 10 %local_io 0 POINT.TNG ~AI_IglooStirFanM292_Tach
+ 2  1 APOINT    0.0000 69  1 10 %local_io 0 POINT.TNG ~AI_IglooStirFanM294_Tach
+ 2  1 APOINT    0.0000 69  0 11 %local_io 0 POINT.TNG ~AI_TentStirFanM323_Tach
+ 2  1 APOINT    0.0000 69  1 11 %local_io 0 POINT.TNG ~AI_TentStirFanM325_Tach
+ 2  1 APOINT    0.0000 69  0 12 %local_io 0 POINT.TNG ~AI_TentIntakeFanM304_Tach
+ 2  1 APOINT    0.0000 69  1 12 %local_io 0 POINT.TNG ~AI_TentExhaustFanM306_Tach
+ 2  1 APOINT    0.0000 165  0 13 %local_io 0 POINT.TNG ~AO_TentServoFan_Ctrl
+ 2  1 APOINT    0.0000 165  1 13 %local_io 0 POINT.TNG ~AO_TentStirFan_Ctrl
+ 2  1 APOINT    0.0000 69  0 14 %local_io 0 POINT.TNG ~AI_TentIntakeFanM312_Tach
+ 2  1 APOINT    0.0000 69  1 14 %local_io 0 POINT.TNG ~AI_TentExhaustFanM314_Tach
 1    0.0000    0.0000    0.0000    0.0000    0.2000    5.0000    0.0000   50.0000
    0.0010    0.0000    0.0000   20.0000    1.5000    0.0000
-   0.0000    0.0000 ~AO_TentFan_CTRL
+   0.0000    0.0000 ~AO_TentServoFan_Ctrl
 $b0000000 0 %local_io 0 PID |pidTentFans

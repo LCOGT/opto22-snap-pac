@@ -6,12 +6,16 @@ CREATE T.ARRAY
 &Powerup ,
  0 ,
 CREATE V.ARRAY
+^AirCon_CR_ErrorFlag ,
+^AirConOffFlag ,
+^Cryotig_CR_ErrorFlag ,
 ^done ,
 ^DTcharCount ,
 ^DTcommStatus ,
 ^DTdataErrorPosition ,
 ^DTerrorFlag ,
 ^DTlogFlag ,
+^Fan10V_TestFlag ,
 ^fFanSpd ,
 ^fPidInput ,
 ^fRTD1_R0 ,
@@ -22,12 +26,15 @@ CREATE V.ARRAY
 ^fRTD6_R0 ,
 ^fRTD7_R0 ,
 ^fRTD8_R0 ,
+^fSystemUpTime ,
 ^GoogleCommStatus ,
 ^Length1 ,
 ^nCharCount ,
 ^nCounter1 ,
+^nCounter2 ,
 ^nDTcharacterCount ,
 ^nDTreceiveStatus ,
+^nFanSpd ,
 ^nFindCmd ,
 ^nGooglePostDataLength ,
 ^nIndex ,
@@ -36,16 +43,29 @@ CREATE V.ARRAY
 ^nOctet3 ,
 ^nPortStatus ,
 ^nReceiveStatus ,
+^NRES_CR_ErrorFlag ,
 ^nStirFansSpd ,
 ^OldPosition ,
+^PanelFanM184_ErrorFlag ,
+^PanelFanM186_ErrorFlag ,
+^PanelFanMaxCtrl ,
+^PanelTemp ,
 ^Position ,
+^RedLink_CR_ErrorFlag ,
 ^SubStringLength ,
+^TentStirFanM323_ErrorFlag ,
+^TentStirFanM325_ErrorFlag ,
+^TentStirFanMaxCtrl ,
+^Thermostat_CR_ErrorFlag ,
+^Utility_Volt_WatchdogFlag ,
 ^WriteToLogFailedFlag ,
 *CRLF ,
 *DTdata ,
 *DTmessageReceived ,
 *LF ,
 *sCmd ,
+*sCounter2 ,
+*sCurrent ,
 *sCurrentDate ,
 *sCurrentLogCommHandle ,
 *sCurrentLogFile ,
@@ -57,12 +77,15 @@ CREATE V.ARRAY
 *sDTerror ,
 *sDTrequest ,
 *sErrorList ,
+*sFanSpd ,
 *sFaultList ,
 *sFTPcmd ,
+*sFWversion ,
 *sGooglePostData ,
 *sGooglePostDataLength ,
 *sGooglePostHeader ,
-*sIglooStatus ,
+*sHeartbeat ,
+*sICDversion ,
 *sIP_hex ,
 *sIP_PAC ,
 *sMonth ,
@@ -72,6 +95,10 @@ CREATE V.ARRAY
 *sOctet2 ,
 *sOctet3 ,
 *sOldDTerror ,
+*sPACuptime ,
+*sPID ,
+*sPidSetpoint ,
+*sPressure ,
 *sRTD1_R0 ,
 *sRTD2_R0 ,
 *sRTD3_R0 ,
@@ -81,12 +108,16 @@ CREATE V.ARRAY
 *sRTD7_R0 ,
 *sRTD8_R0 ,
 *sStirFansSpd ,
+*sSWversion ,
+*Status ,
+*sTentFansSpd ,
 *sTimestamp ,
 *sTimestamp1 ,
 *sTimestamp2 ,
 *sTimestamp3 ,
 *sTimestamp4 ,
 *sVar ,
+*sVoltage ,
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
@@ -97,8 +128,11 @@ CREATE V.ARRAY
 *LogCommHandle ,
  0 ,
 CREATE TI.ARRAY
+^CryoTigThermalTimer ,
+^dtAirCon_CR ,
 ^dtAwaitingDT ,
 ^dtGooglePost ,
+^dtHeartbeat ,
 ^dtRequestTimer ,
 ^dtSocket ,
  0 ,
@@ -146,14 +180,23 @@ CREATE P.ARRAY
 ~AI_CryoTig_OutputPressure ,
 ~AI_CryoTig_ReturnPressure ,
 ~AI_CryoTig_Volt ,
-~AI_ExhaustTentFan_Tach ,
-~AI_IntakeTentFan_Tach ,
-~AI_PanelFan1_Tach ,
-~AI_PanelFan2_Tach ,
+~AI_IglooStirFanM282_Tach ,
+~AI_IglooStirFanM284_Tach ,
+~AI_IglooStirFanM292_Tach ,
+~AI_IglooStirFanM294_Tach ,
+~AI_PanelFanM184_Tach ,
+~AI_PanelFanM186_Tach ,
+~AI_TentExhaustFanM306_Tach ,
+~AI_TentExhaustFanM314_Tach ,
+~AI_TentIntakeFanM304_Tach ,
+~AI_TentIntakeFanM312_Tach ,
+~AI_TentStirFanM323_Tach ,
+~AI_TentStirFanM325_Tach ,
 ~AI_Utility_Volt ,
 ~AO_PanelFans_CTRL ,
 ~AO_StirFans_CTRL ,
-~AO_TentFan_CTRL ,
+~AO_TentServoFan_Ctrl ,
+~AO_TentStirFan_Ctrl ,
  0 ,
 CREATE PID.ARRAY
  |pidTentFans ,
@@ -171,16 +214,23 @@ CONFIG_PORTS
 %local_io ENABLE
  -1 ~DO_AirCon_CR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^AirCon_CR_ErrorFlag @!
+0 ^AirConOffFlag @!
+0 ^Cryotig_CR_ErrorFlag @!
+0.0 ^CryoTigThermalTimer @!
 0 ^done @!
+0.0 ^dtAirCon_CR @!
 0.0 ^dtAwaitingDT @!
 0 ^DTcharCount @!
 0 ^DTcommStatus @!
 0 ^DTdataErrorPosition @!
 0 ^DTerrorFlag @!
 0.0 ^dtGooglePost @!
+0.0 ^dtHeartbeat @!
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
 0.0 ^dtSocket @!
+0 ^Fan10V_TestFlag @!
 0.00000000 ^fFanSpd @!
 0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
@@ -191,12 +241,15 @@ CONFIG_PORTS
 0.00000000 ^fRTD6_R0 @!
 0.00000000 ^fRTD7_R0 @!
 0.00000000 ^fRTD8_R0 @!
+0.00000000 ^fSystemUpTime @!
 0 ^GoogleCommStatus @!
 0 ^Length1 @!
 0 ^nCharCount @!
 0 ^nCounter1 @!
+0 ^nCounter2 @!
 0 ^nDTcharacterCount @!
 0 ^nDTreceiveStatus @!
+0 ^nFanSpd @!
 0 ^nFindCmd @!
 0 ^nGooglePostDataLength @!
 0 ^nIndex @!
@@ -205,10 +258,21 @@ CONFIG_PORTS
 0 ^nOctet3 @!
 0 ^nPortStatus @!
 0 ^nReceiveStatus @!
+0 ^NRES_CR_ErrorFlag @!
 0 ^nStirFansSpd @!
 0 ^OldPosition @!
+0 ^PanelFanM184_ErrorFlag @!
+0 ^PanelFanM186_ErrorFlag @!
+0.00000000 ^PanelFanMaxCtrl @!
+0.00000000 ^PanelTemp @!
 0 ^Position @!
+0 ^RedLink_CR_ErrorFlag @!
 0 ^SubStringLength @!
+0 ^TentStirFanM323_ErrorFlag @!
+0 ^TentStirFanM325_ErrorFlag @!
+0.00000000 ^TentStirFanMaxCtrl @!
+0 ^Thermostat_CR_ErrorFlag @!
+0 ^Utility_Volt_WatchdogFlag @!
 0 ^WriteToLogFailedFlag @!
 " "
  *CRLF $MOVE
@@ -220,6 +284,10 @@ CONFIG_PORTS
  *LF $MOVE
 " "
  *sCmd $MOVE
+" "
+ *sCounter2 $MOVE
+" "
+ *sCurrent $MOVE
 " "
  *sCurrentDate $MOVE
 " "
@@ -243,9 +311,13 @@ CONFIG_PORTS
 " "
  *sErrorList $MOVE
 " "
+ *sFanSpd $MOVE
+" "
  *sFaultList $MOVE
 " "
  *sFTPcmd $MOVE
+" "
+ *sFWversion $MOVE
 " "
  *sGooglePostData $MOVE
 " "
@@ -253,7 +325,9 @@ CONFIG_PORTS
 " "
  *sGooglePostHeader $MOVE
 " "
- *sIglooStatus $MOVE
+ *sHeartbeat $MOVE
+" "
+ *sICDversion $MOVE
 " "
  *sIP_hex $MOVE
 " "
@@ -273,6 +347,14 @@ CONFIG_PORTS
 " "
  *sOldDTerror $MOVE
 " "
+ *sPACuptime $MOVE
+" "
+ *sPID $MOVE
+" "
+ *sPidSetpoint $MOVE
+" "
+ *sPressure $MOVE
+" "
  *sRTD1_R0 $MOVE
 " "
  *sRTD2_R0 $MOVE
@@ -291,6 +373,12 @@ CONFIG_PORTS
 " "
  *sStirFansSpd $MOVE
 " "
+ *sSWversion $MOVE
+" "
+ *Status $MOVE
+" "
+ *sTentFansSpd $MOVE
+" "
  *sTimestamp $MOVE
 " "
  *sTimestamp1 $MOVE
@@ -302,6 +390,8 @@ CONFIG_PORTS
  *sTimestamp4 $MOVE
 " "
  *sVar $MOVE
+" "
+ *sVoltage $MOVE
 " "
  *sYear $MOVE
 " tcp:22004"
