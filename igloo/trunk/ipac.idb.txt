@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    23:53:10 3/31/2015
+# TIME/DATE :    23:58:10 4/1/2015
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -186,6 +186,7 @@ TAG1,IglooStirFanM284_ErrorFlag                        ,70   ,00000000,00000000,
 TAG1,IglooStirFanM292_ErrorFlag                        ,73   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,IglooStirFanM294_ErrorFlag                        ,74   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,IglooTemp                                         ,64   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,IglooTempOK                                       ,86   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Length1                                           ,23   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nCharCount                                        ,35   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nCounter1                                         ,24   ,00000000,00000000,00000000,00000008,0    ,0   
@@ -207,8 +208,10 @@ TAG1,Old_AO_PanelFans_CTRL                             ,77   ,00000000,00000000,
 TAG1,Old_AO_StirFansCTRL                               ,76   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,Old_AO_TentServoFan_Ctrl                          ,79   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,Old_AO_TentStirFan_Ctrl                           ,80   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,OldDTcommHandle                                   ,85   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,OldPosition                                       ,27   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,P119Temp                                          ,65   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,P119TempOK                                        ,88   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,PanelFanM184_ErrorFlag                            ,56   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,PanelFanM186_ErrorFlag                            ,55   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,PanelFanMaxCtrl                                   ,54   ,00000000,00000000,00000000,00000010,0    ,0   
@@ -225,6 +228,7 @@ TAG1,TentStirFanM323_ErrorFlag                         ,60   ,00000000,00000000,
 TAG1,TentStirFanM325_ErrorFlag                         ,59   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,TentStirFanMaxCtrl                                ,58   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,TentTemp                                          ,63   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,TentTempOK                                        ,87   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Thermostat_CR_ErrorFlag                           ,61   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Utility_Volt_WatchdogFlag                         ,50   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,WriteToLogFailedFlag                              ,32   ,00000000,00000000,00000000,00000008,0    ,0   

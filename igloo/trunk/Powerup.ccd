@@ -44,78 +44,80 @@
 57 LINE.NUM " 0.1" *sICDversion  $MOVE 
 58 LINE.NUM *sFWversion  Rev>$ 
 59 LINE.NUM " 0.1" *sSWversion  $MOVE 
-62 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
-63 LINE.NUM 1 ~DO_CryoTig_CR @! 
-64 LINE.NUM ELSE 
-65 LINE.NUM 0 ~DO_CryoTig_CR @! 
-66 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-67 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-68 LINE.NUM THEN 
-74 LINE.NUM 5 I>F ~AO_PanelFans_CTRL @! 
-75 LINE.NUM 5 I>F ~AO_TentStirFan_Ctrl @! 
-77 LINE.NUM 10 I>F  FDELAY 
-80 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-81 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-82 LINE.NUM ELSE 
-82 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-83 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-84 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+61 LINE.NUM 300 I>F ^dtFanMonitor @! 
+62 LINE.NUM ^dtFanMonitor  StartTimer 
+65 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
+66 LINE.NUM 1 ~DO_CryoTig_CR @! 
+67 LINE.NUM ELSE 
+68 LINE.NUM 0 ~DO_CryoTig_CR @! 
+69 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
+70 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+71 LINE.NUM THEN 
+77 LINE.NUM 5 I>F ~AO_PanelFans_CTRL @! 
+78 LINE.NUM 5 I>F ~AO_TentStirFan_Ctrl @! 
+80 LINE.NUM 10 I>F  FDELAY 
+83 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+84 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
 85 LINE.NUM ELSE 
-85 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+85 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
 86 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-87 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+87 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
 88 LINE.NUM ELSE 
-88 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-89 LINE.NUM 10 I>F ~AO_PanelFans_CTRL @! 
-90 LINE.NUM 10 I>F  FDELAY 
-91 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-92 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-93 LINE.NUM ELSE 
-93 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-94 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-95 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+88 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+89 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+90 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+91 LINE.NUM ELSE 
+91 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+92 LINE.NUM 10 I>F ~AO_PanelFans_CTRL @! 
+93 LINE.NUM 10 I>F  FDELAY 
+94 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+95 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
 96 LINE.NUM ELSE 
-96 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+96 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
 97 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-98 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+98 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
 99 LINE.NUM ELSE 
-99 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-100 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+99 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+100 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
 101 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-102 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-103 LINE.NUM THEN THEN THEN THEN 
-104 LINE.NUM THEN THEN THEN THEN 
-108 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
-109 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-110 LINE.NUM ELSE 
-110 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-111 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-112 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
+102 LINE.NUM ELSE 
+102 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+103 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+104 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+105 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+106 LINE.NUM THEN THEN THEN THEN 
+107 LINE.NUM THEN THEN THEN THEN 
+111 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
+112 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
 113 LINE.NUM ELSE 
-113 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
+113 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
 114 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-115 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
+115 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
 116 LINE.NUM ELSE 
-116 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-117 LINE.NUM 10 I>F ~AO_TentStirFan_Ctrl @! 
-118 LINE.NUM 10 I>F  FDELAY 
-119 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
-120 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
-121 LINE.NUM ELSE 
-121 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-122 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
-123 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
+116 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
+117 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
+118 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
+119 LINE.NUM ELSE 
+119 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
+120 LINE.NUM 10 I>F ~AO_TentStirFan_Ctrl @! 
+121 LINE.NUM 10 I>F  FDELAY 
+122 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
+123 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
 124 LINE.NUM ELSE 
-124 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
+124 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
 125 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
-126 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
+126 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
 127 LINE.NUM ELSE 
-127 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-128 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
+127 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
+128 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
 129 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
-130 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-131 LINE.NUM THEN THEN THEN THEN 
-132 LINE.NUM THEN THEN THEN THEN 
+130 LINE.NUM ELSE 
+130 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
+131 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
+132 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
+133 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
+134 LINE.NUM THEN THEN THEN THEN 
+135 LINE.NUM THEN THEN THEN THEN 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 

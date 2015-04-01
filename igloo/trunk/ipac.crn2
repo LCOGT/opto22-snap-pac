@@ -6,6 +6,7 @@
 0 TASK &Powerup
 0 IVAR ^AirCon_CR_ErrorFlag
 0 IVAR ^AirConOffFlag
+0 FVAR ^CalcFanSpd
 0 IVAR ^Cryotig_CR_ErrorFlag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^done
@@ -15,12 +16,15 @@
 0 IVAR ^DTcommStatus
 0 IVAR ^DTdataErrorPosition
 0 IVAR ^DTerrorFlag
+0 TVAR ^dtFanMonitor
 0 TVAR ^dtGooglePost
 0 TVAR ^dtHeartbeat
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
 0 TVAR ^dtSocket
 0 IVAR ^Fan10V_TestFlag
+0 IVAR ^FanCtrl
+0 FVAR ^FanSpd
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
@@ -33,6 +37,13 @@
 0 FVAR ^fRTD8_R0
 0 FVAR ^fSystemUpTime
 0 IVAR ^GoogleCommStatus
+0 IVAR ^IglooOverTemp
+0 IVAR ^IglooStirFanM282_ErrorFlag
+0 IVAR ^IglooStirFanM284_ErrorFlag
+0 IVAR ^IglooStirFanM292_ErrorFlag
+0 IVAR ^IglooStirFanM294_ErrorFlag
+0 FVAR ^IglooTemp
+0 IVAR ^IglooTempOK
 0 IVAR ^Length1
 0 IVAR ^nCharCount
 0 IVAR ^nCounter1
@@ -50,17 +61,31 @@
 0 IVAR ^nReceiveStatus
 0 IVAR ^NRES_CR_ErrorFlag
 0 IVAR ^nStirFansSpd
+0 FVAR ^Old_AO_PanelFans_CTRL
+0 FVAR ^Old_AO_StirFansCTRL
+0 FVAR ^Old_AO_TentServoFan_Ctrl
+0 FVAR ^Old_AO_TentStirFan_Ctrl
+0 IVAR ^OldDTcommHandle
 0 IVAR ^OldPosition
+0 FVAR ^P119Temp
+0 IVAR ^P119TempOK
 0 IVAR ^PanelFanM184_ErrorFlag
 0 IVAR ^PanelFanM186_ErrorFlag
 0 FVAR ^PanelFanMaxCtrl
 0 FVAR ^PanelTemp
+0 FVAR ^PidSetpoint
 0 IVAR ^Position
 0 IVAR ^RedLink_CR_ErrorFlag
 0 IVAR ^SubStringLength
+0 IVAR ^TentExhaustFanM306_ErrorFlag
+0 IVAR ^TentExhaustFanM314_ErrorFlag
+0 IVAR ^TentIntakeFanM304_ErrorFlag
+0 IVAR ^TentIntakeFanM312_ErrorFlag
 0 IVAR ^TentStirFanM323_ErrorFlag
 0 IVAR ^TentStirFanM325_ErrorFlag
 0 FVAR ^TentStirFanMaxCtrl
+0 FVAR ^TentTemp
+0 IVAR ^TentTempOK
 0 IVAR ^Thermostat_CR_ErrorFlag
 0 IVAR ^Utility_Volt_WatchdogFlag
 0 IVAR ^WriteToLogFailedFlag
@@ -70,6 +95,7 @@
 10 0 $VAR *LF 
 32 0 $VAR *sCmd 
 10 0 $VAR *sCounter2 
+10 0 $VAR *sCryoTigThermalTimer 
 10 0 $VAR *sCurrent 
 20 0 $VAR *sCurrentDate 
 50 0 $VAR *sCurrentLogCommHandle 
