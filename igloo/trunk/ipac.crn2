@@ -1,5 +1,6 @@
 0 TASK  &_INIT_IO
 0 TASK &DatatakerComm
+0 TASK &Ecb_Comm
 0 TASK &GoogleComm
 0 TASK &Housekeeper
 0 TASK &MasterComm
@@ -7,9 +8,11 @@
 0 IVAR ^AirCon_CR_ErrorFlag
 0 IVAR ^AirConOffFlag
 0 FVAR ^CalcFanSpd
+0 IVAR ^Count
 0 IVAR ^Cryotig_CR_ErrorFlag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^done
+0 TVAR ^dt24h
 0 TVAR ^dtAirCon_CR
 0 TVAR ^dtAwaitingDT
 0 IVAR ^DTcharCount
@@ -22,6 +25,7 @@
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
 0 TVAR ^dtSocket
+0 IVAR ^EcbCmd
 0 IVAR ^Fan10V_TestFlag
 0 IVAR ^FanCtrl
 0 FVAR ^FanSpd
@@ -61,6 +65,8 @@
 0 IVAR ^nReceiveStatus
 0 IVAR ^NRES_CR_ErrorFlag
 0 IVAR ^nStirFansSpd
+0 IVAR ^nStringLength
+0 IVAR ^nStringPosition
 0 FVAR ^Old_AO_PanelFans_CTRL
 0 FVAR ^Old_AO_StirFansCTRL
 0 FVAR ^Old_AO_TentServoFan_Ctrl
@@ -87,8 +93,11 @@
 0 FVAR ^TentTemp
 0 IVAR ^TentTempOK
 0 IVAR ^Thermostat_CR_ErrorFlag
+0 TVAR ^Timer
 0 IVAR ^Utility_Volt_WatchdogFlag
 0 IVAR ^WriteToLogFailedFlag
+0 IVAR ^x
+0 IVAR ^y
 10 0 $VAR *CRLF 
 1024 0 $VAR *DTdata 
 1024 0 $VAR *DTmessageReceived 
@@ -104,6 +113,7 @@
 20 0 $VAR *sDate 
 20 0 $VAR *sDatestamp 
 10 0 $VAR *sDay 
+10 0 $VAR *sDay1 
 1024 0 $VAR *sDT_IP 
 10 0 $VAR *sDTerror 
 1024 0 $VAR *sDTrequest 
@@ -120,6 +130,7 @@
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
 10 0 $VAR *sMonth 
+10 0 $VAR *sMonth1 
 50 0 $VAR *sNewLogCommHandle 
 20 0 $VAR *sNewLogFile 
 10 0 $VAR *sOctet1 
@@ -142,6 +153,7 @@
 10 0 $VAR *sSWversion 
 1024 0 $VAR *Status 
 10 0 $VAR *sTentFansSpd 
+10 0 $VAR *sTime 
 50 0 $VAR *sTimestamp 
 50 0 $VAR *sTimestamp1 
 50 0 $VAR *sTimestamp2 
@@ -155,6 +167,8 @@
 1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
 1024 0 COMVAR *LogCommHandle 
+16 0 ITABLE }EcbData
+8 0 ITABLE }EcbStatus
 30 30 0 $TABLE {stDTdata 
 30 30 0 $TABLE {stHeader 
 
@@ -179,11 +193,11 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT 17  0 %local_io 0 POINT.TNG ~DI_SmokeAlarm
 32  1 SPOINT 0.0     INPUT 18  0 %local_io 0 POINT.TNG ~DI_HeatAlarm
  4  1 SPOINT 0.0     INPUT  0  1 %local_io 0 POINT.TNG ~DI_NRES_Deadman
- 4  1 SPOINT 0.0     INPUT  1  1 %local_io 0 POINT.TNG ~DI_ECB_Comm
+ 4  1 SPOINT 0.0     INPUT  1  1 %local_io 0 POINT.TNG ~DI_ECB_Rx
  4  1 SPOINT 0.0    OUTPUT  0  2 %local_io 0 POINT.TNG ~DO_AirCon_CR
  4  1 SPOINT 0.0    OUTPUT  1  2 %local_io 0 POINT.TNG ~DO_NRES_CR
  4  1 SPOINT 0.0    OUTPUT  2  2 %local_io 0 POINT.TNG ~DO_CryoTig_CR
- 4  1 SPOINT 0.0    OUTPUT  3  2 %local_io 0 POINT.TNG ~DO_ECB_Comm
+ 4  1 SPOINT 0.0    OUTPUT  3  2 %local_io 0 POINT.TNG ~DO_ECB_Tx
  2  1 APOINT    0.0000 70  0  3 %local_io 0 POINT.TNG ~AI_CryoTig_Volt
  2  1 APOINT    0.0000 70  1  3 %local_io 0 POINT.TNG ~AI_Utility_Volt
  4  1 APOINT  -20.0000 64  0  4 %local_io 0 POINT.TNG ~AI_CryoTig_Current

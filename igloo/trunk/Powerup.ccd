@@ -19,105 +19,41 @@
 31 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 32 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 33 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
-35 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
-36 LINE.NUM " CtrOfTent" 1 {stHeader $TABLE@  $MOVE 
-37 LINE.NUM " RTD2" 2 {stHeader $TABLE@  $MOVE 
-38 LINE.NUM " TentExhaust" 3 {stHeader $TABLE@  $MOVE 
-39 LINE.NUM " RTD4" 4 {stHeader $TABLE@  $MOVE 
-40 LINE.NUM " RTD5" 5 {stHeader $TABLE@  $MOVE 
-41 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
-42 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
-43 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
-44 LINE.NUM " TentIntake" 9 {stHeader $TABLE@  $MOVE 
-45 LINE.NUM " ACoutput" 10 {stHeader $TABLE@  $MOVE 
-46 LINE.NUM " PanelRTD" 11 {stHeader $TABLE@  $MOVE 
-47 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
-48 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
-49 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
-50 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
-51 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
-52 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
-53 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
-54 LINE.NUM " PID_Derivative" 
+34 LINE.NUM 32 ^EcbCmd @! 
+36 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
+37 LINE.NUM " CtrOfTent" 1 {stHeader $TABLE@  $MOVE 
+38 LINE.NUM " RTD2" 2 {stHeader $TABLE@  $MOVE 
+39 LINE.NUM " TentExhaust" 3 {stHeader $TABLE@  $MOVE 
+40 LINE.NUM " RTD4" 4 {stHeader $TABLE@  $MOVE 
+41 LINE.NUM " RTD5" 5 {stHeader $TABLE@  $MOVE 
+42 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
+43 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
+44 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
+45 LINE.NUM " TentIntake" 9 {stHeader $TABLE@  $MOVE 
+46 LINE.NUM " ACoutput" 10 {stHeader $TABLE@  $MOVE 
+47 LINE.NUM " PanelRTD" 11 {stHeader $TABLE@  $MOVE 
+48 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
+49 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
+50 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
+51 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
+52 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
+53 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
+54 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
+55 LINE.NUM " PID_Derivative" 
 19 {stHeader $TABLE@  $MOVE 
-55 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
-57 LINE.NUM " 0.1" *sICDversion  $MOVE 
-58 LINE.NUM *sFWversion  Rev>$ 
-59 LINE.NUM " 0.1" *sSWversion  $MOVE 
-61 LINE.NUM 300 I>F ^dtFanMonitor @! 
-62 LINE.NUM ^dtFanMonitor  StartTimer 
-65 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
-66 LINE.NUM 1 ~DO_CryoTig_CR @! 
-67 LINE.NUM ELSE 
-68 LINE.NUM 0 ~DO_CryoTig_CR @! 
-69 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-70 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-71 LINE.NUM THEN 
-77 LINE.NUM 5 I>F ~AO_PanelFans_CTRL @! 
-78 LINE.NUM 5 I>F ~AO_TentStirFan_Ctrl @! 
-80 LINE.NUM 10 I>F  FDELAY 
-83 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-84 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-85 LINE.NUM ELSE 
-85 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-86 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-87 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
-88 LINE.NUM ELSE 
-88 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-89 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-90 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-91 LINE.NUM ELSE 
-91 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-92 LINE.NUM 10 I>F ~AO_PanelFans_CTRL @! 
-93 LINE.NUM 10 I>F  FDELAY 
-94 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-95 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-96 LINE.NUM ELSE 
-96 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-97 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-98 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
-99 LINE.NUM ELSE 
-99 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-100 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-101 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-102 LINE.NUM ELSE 
-102 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-103 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
-104 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-105 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-106 LINE.NUM THEN THEN THEN THEN 
-107 LINE.NUM THEN THEN THEN THEN 
-111 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
-112 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-113 LINE.NUM ELSE 
-113 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-114 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-115 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
-116 LINE.NUM ELSE 
-116 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
-117 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-118 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
-119 LINE.NUM ELSE 
-119 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-120 LINE.NUM 10 I>F ~AO_TentStirFan_Ctrl @! 
-121 LINE.NUM 10 I>F  FDELAY 
-122 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
-123 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
-124 LINE.NUM ELSE 
-124 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F>= ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-125 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
-126 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
-127 LINE.NUM ELSE 
-127 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F>= LAND  IF 
-128 LINE.NUM 10 I>F ^TentStirFanMaxCtrl @! 
-129 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
-130 LINE.NUM ELSE 
-130 LINE.NUM ~AI_TentStirFanM323_Tach @@ 99 I>F F< ~AI_TentStirFanM325_Tach @@ 99 I>F F< LAND  IF 
-131 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
-132 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
-133 LINE.NUM 5 I>F ^TentStirFanMaxCtrl @! 
-134 LINE.NUM THEN THEN THEN THEN 
-135 LINE.NUM THEN THEN THEN THEN 
+56 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
+58 LINE.NUM " 0.1" *sICDversion  $MOVE 
+59 LINE.NUM *sFWversion  Rev>$ 
+60 LINE.NUM " 0.1" *sSWversion  $MOVE 
+62 LINE.NUM 300 I>F ^dtFanMonitor @! 
+63 LINE.NUM ^dtFanMonitor  StartTimer 
+66 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
+67 LINE.NUM 1 ~DO_CryoTig_CR @! 
+68 LINE.NUM ELSE 
+69 LINE.NUM 0 ~DO_CryoTig_CR @! 
+70 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
+71 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+72 LINE.NUM THEN 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -142,12 +78,15 @@
 31 LINE.NUM *_HSV_SEMA Acquire1String *sOctet1  *_HSV_TEMP $MOVE *sOctet2  *_HSV_TEMP $CAT *sOctet3  *_HSV_TEMP $CAT 48  *_HSV_TEMP $APPEND 51  *_HSV_TEMP $APPEND *_HSV_TEMP *sIP_hex $MOVE Release1String 
 33 LINE.NUM *sIP_hex  HEX$>I ^nIP_int @! 
 34 LINE.NUM ^nIP_int @@ *sDT_IP  I>IP$ 
-35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sDT_IP  *_HSV_TEMP $CAT " :8"  *_HSV_TEMP $CAT *_HSV_TEMP *sDT_IP $MOVE Release1String 
-36 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
+36 LINE.NUM " tcp:172.16.5.52:8" *sDT_IP  $MOVE 
+37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
 0 JUMP ;
 : 0_7
-1 LINE.NUM &DatatakerComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
+4 LINE.NUM &Ecb_Comm  START.T DROP  
+5 LINE.NUM &MasterComm  START.T DROP  
+6 LINE.NUM 2 I>F  FDELAY 
+7 LINE.NUM &DatatakerComm  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY

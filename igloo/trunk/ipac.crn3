@@ -1,5 +1,6 @@
 CREATE T.ARRAY
 &DatatakerComm ,
+&Ecb_Comm ,
 &GoogleComm ,
 &Housekeeper ,
 &MasterComm ,
@@ -9,6 +10,7 @@ CREATE V.ARRAY
 ^AirCon_CR_ErrorFlag ,
 ^AirConOffFlag ,
 ^CalcFanSpd ,
+^Count ,
 ^Cryotig_CR_ErrorFlag ,
 ^done ,
 ^DTcharCount ,
@@ -16,6 +18,7 @@ CREATE V.ARRAY
 ^DTdataErrorPosition ,
 ^DTerrorFlag ,
 ^DTlogFlag ,
+^EcbCmd ,
 ^Fan10V_TestFlag ,
 ^FanCtrl ,
 ^FanSpd ,
@@ -55,6 +58,8 @@ CREATE V.ARRAY
 ^nReceiveStatus ,
 ^NRES_CR_ErrorFlag ,
 ^nStirFansSpd ,
+^nStringLength ,
+^nStringPosition ,
 ^Old_AO_PanelFans_CTRL ,
 ^Old_AO_StirFansCTRL ,
 ^Old_AO_TentServoFan_Ctrl ,
@@ -83,6 +88,8 @@ CREATE V.ARRAY
 ^Thermostat_CR_ErrorFlag ,
 ^Utility_Volt_WatchdogFlag ,
 ^WriteToLogFailedFlag ,
+^x ,
+^y ,
 *CRLF ,
 *DTdata ,
 *DTmessageReceived ,
@@ -98,6 +105,7 @@ CREATE V.ARRAY
 *sDate ,
 *sDatestamp ,
 *sDay ,
+*sDay1 ,
 *sDT_IP ,
 *sDTerror ,
 *sDTrequest ,
@@ -114,6 +122,7 @@ CREATE V.ARRAY
 *sIP_hex ,
 *sIP_PAC ,
 *sMonth ,
+*sMonth1 ,
 *sNewLogCommHandle ,
 *sNewLogFile ,
 *sOctet1 ,
@@ -136,6 +145,7 @@ CREATE V.ARRAY
 *sSWversion ,
 *Status ,
 *sTentFansSpd ,
+*sTime ,
 *sTimestamp ,
 *sTimestamp1 ,
 *sTimestamp2 ,
@@ -154,6 +164,7 @@ CREATE V.ARRAY
  0 ,
 CREATE TI.ARRAY
 ^CryoTigThermalTimer ,
+^dt24h ,
 ^dtAirCon_CR ,
 ^dtAwaitingDT ,
 ^dtFanMonitor ,
@@ -161,10 +172,13 @@ CREATE TI.ARRAY
 ^dtHeartbeat ,
 ^dtRequestTimer ,
 ^dtSocket ,
+^Timer ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
+}EcbData ,
+}EcbStatus ,
 {stDTdata ,
 {stHeader ,
  0 ,
@@ -177,8 +191,8 @@ CREATE P.ARRAY
 ~DI_AirCon_CR_NC ,
 ~DI_AirConPWR_OK ,
 ~DI_CryoTig_CR_NC ,
-~DI_ECB_Comm ,
 ~DI_ECB_OK ,
+~DI_ECB_Rx ,
 ~DI_EntryDoor ,
 ~DI_HeatAlarm ,
 ~DI_LightSW ,
@@ -198,7 +212,7 @@ CREATE P.ARRAY
 ~DO_AirCon_CR ,
 ~DO_CryoTig_CR ,
 ~DO_DTreset ,
-~DO_ECB_Comm ,
+~DO_ECB_Tx ,
 ~DO_NRES_CR ,
 ~DO_RedLink_CR ,
 ~DO_Thermostat_CR ,
@@ -243,9 +257,11 @@ CONFIG_PORTS
 0 ^AirCon_CR_ErrorFlag @!
 0 ^AirConOffFlag @!
 0.00000000 ^CalcFanSpd @!
+0 ^Count @!
 0 ^Cryotig_CR_ErrorFlag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^done @!
+0.0 ^dt24h @!
 0.0 ^dtAirCon_CR @!
 0.0 ^dtAwaitingDT @!
 0 ^DTcharCount @!
@@ -258,6 +274,7 @@ CONFIG_PORTS
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
 0.0 ^dtSocket @!
+0 ^EcbCmd @!
 0 ^Fan10V_TestFlag @!
 0 ^FanCtrl @!
 0.00000000 ^FanSpd @!
@@ -297,6 +314,8 @@ CONFIG_PORTS
 0 ^nReceiveStatus @!
 0 ^NRES_CR_ErrorFlag @!
 0 ^nStirFansSpd @!
+0 ^nStringLength @!
+0 ^nStringPosition @!
 0.00000000 ^Old_AO_PanelFans_CTRL @!
 0.00000000 ^Old_AO_StirFansCTRL @!
 0.00000000 ^Old_AO_TentServoFan_Ctrl @!
@@ -323,8 +342,13 @@ CONFIG_PORTS
 0.00000000 ^TentTemp @!
 0 ^TentTempOK @!
 0 ^Thermostat_CR_ErrorFlag @!
+0.0 ^Timer @!
 0 ^Utility_Volt_WatchdogFlag @!
 0 ^WriteToLogFailedFlag @!
+0 ^x @!
+0 ^y @!
+0 0 -1 }EcbData InitTable
+0 0 -1 }EcbStatus InitTable
 " "
  *CRLF $MOVE
 " "
@@ -355,6 +379,8 @@ CONFIG_PORTS
  *sDatestamp $MOVE
 " "
  *sDay $MOVE
+" "
+ *sDay1 $MOVE
 " "
  *sDT_IP $MOVE
 " "
@@ -387,6 +413,8 @@ CONFIG_PORTS
  *sIP_PAC $MOVE
 " "
  *sMonth $MOVE
+" "
+ *sMonth1 $MOVE
 " "
  *sNewLogCommHandle $MOVE
 " "
@@ -431,6 +459,8 @@ CONFIG_PORTS
  *Status $MOVE
 " "
  *sTentFansSpd $MOVE
+" "
+ *sTime $MOVE
 " "
  *sTimestamp $MOVE
 " "
