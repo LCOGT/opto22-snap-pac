@@ -1,6 +1,5 @@
 CREATE T.ARRAY
 &DatatakerComm ,
-&Ecb_Comm ,
 &GoogleComm ,
 &Housekeeper ,
 &MasterComm ,
@@ -74,6 +73,7 @@ CREATE V.ARRAY
 ^PanelTemp ,
 ^PidSetpoint ,
 ^Position ,
+^Preset ,
 ^RedLink_CR_ErrorFlag ,
 ^SubStringLength ,
 ^TentExhaustFanM306_ErrorFlag ,
@@ -330,6 +330,7 @@ CONFIG_PORTS
 0.00000000 ^PanelTemp @!
 0.00000000 ^PidSetpoint @!
 0 ^Position @!
+0.00000000 ^Preset @!
 0 ^RedLink_CR_ErrorFlag @!
 0 ^SubStringLength @!
 0 ^TentExhaustFanM306_ErrorFlag @!

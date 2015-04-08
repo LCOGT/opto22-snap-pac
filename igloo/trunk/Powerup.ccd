@@ -82,11 +82,9 @@
 37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
 0 JUMP ;
 : 0_7
+1 LINE.NUM &DatatakerComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
-4 LINE.NUM &Ecb_Comm  START.T DROP  
-5 LINE.NUM &MasterComm  START.T DROP  
-6 LINE.NUM 2 I>F  FDELAY 
-7 LINE.NUM &DatatakerComm  START.T DROP  
+4 LINE.NUM &MasterComm  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY

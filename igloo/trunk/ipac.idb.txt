@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.1a
-# TIME/DATE :    23:14:55 4/7/2015
+# TIME/DATE :    22:23:28 4/8/2015
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -93,7 +93,6 @@
 # TAG1,NAME,ID,BITMASK_0,BITMASK_1,BITMASK_2,BITMASK_3,TABLE_LENGTH,STRING_WIDTH
 
 TAG1,DatatakerComm                                     ,1    ,00000000,00000100,00000000,00000000,0    ,0   
-TAG1,Ecb_Comm                                          ,5    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,GoogleComm                                        ,3    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Housekeeper                                       ,2    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,MasterComm                                        ,4    ,00000000,00000100,00000000,00000000,0    ,0   
@@ -224,6 +223,7 @@ TAG1,PanelFanMaxCtrl                                   ,54   ,00000000,00000000,
 TAG1,PanelTemp                                         ,53   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,PidSetpoint                                       ,68   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,Position                                          ,26   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Preset                                            ,97   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,RedLink_CR_ErrorFlag                              ,62   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,SubStringLength                                   ,25   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,TentExhaustFanM306_ErrorFlag                      ,82   ,00000000,00000000,00000000,00000008,0    ,0   

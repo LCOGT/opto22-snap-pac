@@ -51,7 +51,6 @@ DUMMY
 ENDCODE
 0 TASK  &_INIT_IO
 0 TASK &DatatakerComm
-0 TASK &Ecb_Comm
 0 TASK &GoogleComm
 0 TASK &Housekeeper
 0 TASK &MasterComm
@@ -132,6 +131,7 @@ ENDCODE
 0 FVAR ^PanelTemp
 0 FVAR ^PidSetpoint
 0 IVAR ^Position
+0 FVAR ^Preset
 0 IVAR ^RedLink_CR_ErrorFlag
 0 IVAR ^SubStringLength
 0 IVAR ^TentExhaustFanM306_ErrorFlag
@@ -518,89 +518,6 @@ DUMMY
 1_49
 T;
 &DatatakerComm ' T1 SETTASK
-: 5_0
-0 JUMP ;
-: 5_1
-8 LINE.NUM 15 ^Count @! 
-9 LINE.NUM 1 ^x @! 
-11 LINE.NUM 1 ~DO_ECB_Tx @! 
-12 LINE.NUM 8.300000e-002 ^Timer @! 
-13 LINE.NUM BEGIN ^x @@ WHILE 
-14 LINE.NUM ^Timer  T0= IF 
-15 LINE.NUM 0 ~DO_ECB_Tx @! 
-16 LINE.NUM 8.300000e-002 ^Timer @! 
-17 LINE.NUM 0 ^x @! 
-18 LINE.NUM THEN 
-19 LINE.NUM REPEAT 
-20 LINE.NUM 1 ^x @! 
-21 LINE.NUM BEGIN ^x @@ WHILE 
-22 LINE.NUM ^Timer  T0= IF 
-23 LINE.NUM 0 ^x @! 
-24 LINE.NUM THEN 
-25 LINE.NUM REPEAT 
-26 LINE.NUM 1 ^x @! 
-28 LINE.NUM BEGIN ^Count @@ -1 > WHILE 
-29 LINE.NUM ^EcbCmd @@ ^Count @@  BitTest IF 
-31 LINE.NUM 0 ~DO_ECB_Tx @! 
-32 LINE.NUM 8.300000e-002 ^Timer @! 
-33 LINE.NUM BEGIN ^x @@ WHILE 
-34 LINE.NUM ^Timer  T0= IF 
-35 LINE.NUM 1 ~DO_ECB_Tx @! 
-36 LINE.NUM 8.300000e-002 ^Timer @! 
-37 LINE.NUM 0 ^x @! 
-38 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbData TABLE! 
-39 LINE.NUM THEN 
-40 LINE.NUM REPEAT 
-41 LINE.NUM 1 ^x @! 
-42 LINE.NUM BEGIN ^x @@ WHILE 
-43 LINE.NUM ^Timer  T0= IF 
-44 LINE.NUM 0 ^x @! 
-45 LINE.NUM THEN 
-46 LINE.NUM REPEAT 
-47 LINE.NUM 1 ^x @! 
-48 LINE.NUM ELSE 
-50 LINE.NUM 1 ~DO_ECB_Tx @! 
-51 LINE.NUM 8.300000e-002 ^Timer @! 
-52 LINE.NUM BEGIN ^x @@ WHILE 
-53 LINE.NUM ^Timer  T0= IF 
-54 LINE.NUM 0 ~DO_ECB_Tx @! 
-55 LINE.NUM 8.300000e-002 ^Timer @! 
-56 LINE.NUM 0 ^x @! 
-57 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbData TABLE! 
-58 LINE.NUM THEN 
-59 LINE.NUM REPEAT 
-60 LINE.NUM 1 ^x @! 
-61 LINE.NUM BEGIN ^x @@ WHILE 
-62 LINE.NUM ^Timer  T0= IF 
-63 LINE.NUM 0 ^x @! 
-64 LINE.NUM THEN 
-65 LINE.NUM REPEAT 
-66 LINE.NUM 1 ^x @! 
-67 LINE.NUM THEN 
-68 LINE.NUM ^Count @@ 1 -  ^Count @! 
-69 LINE.NUM REPEAT 
-71 LINE.NUM 0 ~DO_ECB_Tx @! 
-92 LINE.NUM 15 ^Count @! 
-93 LINE.NUM BEGIN ^Count @@ 7 > WHILE 
-94 LINE.NUM ^Count @@ }EcbData TABLE@ IF 
-95 LINE.NUM 2 ^Count @@ 8 -  }EcbStatus TABLE! 
-96 LINE.NUM ELSE 
-96 LINE.NUM ^Count @@ }EcbData TABLE@ 0 = ^Count @@ 8 -  }EcbData TABLE@ 0 = LAND  IF 
-97 LINE.NUM 0 ^Count @@ 8 -  }EcbStatus TABLE! 
-98 LINE.NUM ELSE 
-98 LINE.NUM ^Count @@ }EcbData TABLE@ 0 = ^Count @@ 8 -  }EcbData TABLE@ 1 = LAND  IF 
-99 LINE.NUM 1 ^Count @@ 8 -  }EcbStatus TABLE! 
-100 LINE.NUM THEN THEN THEN 
-101 LINE.NUM ^Count @@ 1 -  ^Count @! 
-102 LINE.NUM REPEAT 
-106 LINE.NUM 500  DELAY 
--1 JUMP ;
-T: T5
-DUMMY
-5_0
-5_1
-T;
-&Ecb_Comm ' T5 SETTASK
 : 3_0
 1 JUMP ;
 : 3_5
@@ -797,7 +714,7 @@ T;
 77 LINE.NUM THEN 
 1 JUMP ;
 : 2_2
-1 LINE.NUM 1000  DELAY 
+1 LINE.NUM 500  DELAY 
 -2 JUMP ;
 : 2_6
 5 LINE.NUM *sTimestamp3 &Timestamp CALL.SUB DROP  
@@ -1173,7 +1090,7 @@ T;
 114 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
 115 LINE.NUM THEN 
 116 LINE.NUM THEN 
-6 JUMP ;
+7 JUMP ;
 : 2_15
 1 LINE.NUM 1 {stDTdata $TABLE@  $>F ^fPidInput @! 
 2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
@@ -1336,7 +1253,82 @@ T;
 173 LINE.NUM ~AO_TentStirFan_Ctrl @@ ^Old_AO_TentStirFan_Ctrl @! 
 175 LINE.NUM THEN 
 177 LINE.NUM THEN 
--9 JUMP ;
+0 JUMP ;
+: 2_35
+8 LINE.NUM 15 ^Count @! 
+9 LINE.NUM 1 ^x @! 
+11 LINE.NUM 1 ~DO_ECB_Tx @! 
+12 LINE.NUM 3.500000e-002 ^Preset @! 
+13 LINE.NUM ^Preset @@ ^Timer @! 
+14 LINE.NUM BEGIN ^x @@ WHILE 
+15 LINE.NUM ^Timer  T0= IF 
+16 LINE.NUM 0 ~DO_ECB_Tx @! 
+17 LINE.NUM ^Preset @@ ^Timer @! 
+18 LINE.NUM 0 ^x @! 
+19 LINE.NUM THEN 
+20 LINE.NUM REPEAT 
+21 LINE.NUM 1 ^x @! 
+22 LINE.NUM BEGIN ^x @@ WHILE 
+23 LINE.NUM ^Timer  T0= IF 
+24 LINE.NUM 0 ^x @! 
+25 LINE.NUM THEN 
+26 LINE.NUM REPEAT 
+27 LINE.NUM 1 ^x @! 
+29 LINE.NUM BEGIN ^Count @@ -1 > WHILE 
+30 LINE.NUM ^EcbCmd @@ ^Count @@  BitTest IF 
+32 LINE.NUM 0 ~DO_ECB_Tx @! 
+33 LINE.NUM ^Preset @@ ^Timer @! 
+34 LINE.NUM BEGIN ^x @@ WHILE 
+35 LINE.NUM ^Timer  T0= IF 
+36 LINE.NUM 1 ~DO_ECB_Tx @! 
+37 LINE.NUM ^Preset @@ ^Timer @! 
+38 LINE.NUM 0 ^x @! 
+39 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbData TABLE! 
+40 LINE.NUM THEN 
+41 LINE.NUM REPEAT 
+42 LINE.NUM 1 ^x @! 
+43 LINE.NUM BEGIN ^x @@ WHILE 
+44 LINE.NUM ^Timer  T0= IF 
+45 LINE.NUM 0 ^x @! 
+46 LINE.NUM THEN 
+47 LINE.NUM REPEAT 
+48 LINE.NUM 1 ^x @! 
+49 LINE.NUM ELSE 
+51 LINE.NUM 1 ~DO_ECB_Tx @! 
+52 LINE.NUM ^Preset @@ ^Timer @! 
+53 LINE.NUM BEGIN ^x @@ WHILE 
+54 LINE.NUM ^Timer  T0= IF 
+55 LINE.NUM 0 ~DO_ECB_Tx @! 
+56 LINE.NUM ^Preset @@ ^Timer @! 
+57 LINE.NUM 0 ^x @! 
+58 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbData TABLE! 
+59 LINE.NUM THEN 
+60 LINE.NUM REPEAT 
+61 LINE.NUM 1 ^x @! 
+62 LINE.NUM BEGIN ^x @@ WHILE 
+63 LINE.NUM ^Timer  T0= IF 
+64 LINE.NUM 0 ^x @! 
+65 LINE.NUM THEN 
+66 LINE.NUM REPEAT 
+67 LINE.NUM 1 ^x @! 
+68 LINE.NUM THEN 
+69 LINE.NUM ^Count @@ 1 -  ^Count @! 
+70 LINE.NUM REPEAT 
+72 LINE.NUM 0 ~DO_ECB_Tx @! 
+93 LINE.NUM 15 ^Count @! 
+94 LINE.NUM BEGIN ^Count @@ 7 > WHILE 
+95 LINE.NUM ^Count @@ }EcbData TABLE@ IF 
+96 LINE.NUM 2 ^Count @@ 8 -  }EcbStatus TABLE! 
+97 LINE.NUM ELSE 
+97 LINE.NUM ^Count @@ }EcbData TABLE@ 0 = ^Count @@ 8 -  }EcbData TABLE@ 0 = LAND  IF 
+98 LINE.NUM 0 ^Count @@ 8 -  }EcbStatus TABLE! 
+99 LINE.NUM ELSE 
+99 LINE.NUM ^Count @@ }EcbData TABLE@ 0 = ^Count @@ 8 -  }EcbData TABLE@ 1 = LAND  IF 
+100 LINE.NUM 1 ^Count @@ 8 -  }EcbStatus TABLE! 
+101 LINE.NUM THEN THEN THEN 
+102 LINE.NUM ^Count @@ 1 -  ^Count @! 
+103 LINE.NUM REPEAT 
+-10 JUMP ;
 T: T2
 DUMMY
 2_0
@@ -1350,6 +1342,7 @@ DUMMY
 2_24
 2_27
 2_30
+2_35
 T;
 &Housekeeper ' T2 SETTASK
 : 4_0
@@ -2217,11 +2210,9 @@ T;
 37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
 0 JUMP ;
 : 0_7
+1 LINE.NUM &DatatakerComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
-4 LINE.NUM &Ecb_Comm  START.T DROP  
-5 LINE.NUM &MasterComm  START.T DROP  
-6 LINE.NUM 2 I>F  FDELAY 
-7 LINE.NUM &DatatakerComm  START.T DROP  
+4 LINE.NUM &MasterComm  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY
@@ -2234,7 +2225,6 @@ T;
 &Powerup ' T0 SETTASK
 CREATE T.ARRAY
 &DatatakerComm ,
-&Ecb_Comm ,
 &GoogleComm ,
 &Housekeeper ,
 &MasterComm ,
@@ -2308,6 +2298,7 @@ CREATE V.ARRAY
 ^PanelTemp ,
 ^PidSetpoint ,
 ^Position ,
+^Preset ,
 ^RedLink_CR_ErrorFlag ,
 ^SubStringLength ,
 ^TentExhaustFanM306_ErrorFlag ,
@@ -2564,6 +2555,7 @@ CONFIG_PORTS
 0.00000000 ^PanelTemp @!
 0.00000000 ^PidSetpoint @!
 0 ^Position @!
+0.00000000 ^Preset @!
 0 ^RedLink_CR_ErrorFlag @!
 0 ^SubStringLength @!
 0 ^TentExhaustFanM306_ErrorFlag @!
@@ -2736,9 +2728,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/07/15 " ;
-: TIMESTAMP ." 23:14:55 " ;
-: CRCSTAMP  ." 2AECA6B782201395344D5897E4240F11 " ;
+: DATESTAMP ." 04/08/15 " ;
+: TIMESTAMP ." 22:23:28 " ;
+: CRCSTAMP  ." 7E0EFE13AB2FFB8B453056E5B9806AF7 " ;
 MAKECHECK
 CLEAR.BREAKS
 
