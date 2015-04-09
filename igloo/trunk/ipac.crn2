@@ -6,8 +6,10 @@
 0 TASK &Powerup
 0 IVAR ^AirCon_CR_ErrorFlag
 0 IVAR ^AirConOffFlag
+0 IVAR ^Bitmask
 0 FVAR ^CalcFanSpd
 0 IVAR ^Count
+0 IVAR ^Count1
 0 IVAR ^Cryotig_CR_ErrorFlag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^done
@@ -24,7 +26,10 @@
 0 IVAR ^DTlogFlag
 0 TVAR ^dtRequestTimer
 0 TVAR ^dtSocket
+0 IVAR ^EcbBit
 0 IVAR ^EcbCmd
+0 IVAR ^EcbMsg
+0 IVAR ^EcbResetFlag
 0 IVAR ^Fan10V_TestFlag
 0 IVAR ^FanCtrl
 0 FVAR ^FanSpd
@@ -48,6 +53,8 @@
 0 FVAR ^IglooTemp
 0 IVAR ^IglooTempOK
 0 IVAR ^Length1
+0 IVAR ^MasterEcbCmd
+0 IVAR ^MasterEcbFlag
 0 IVAR ^nCharCount
 0 IVAR ^nCounter1
 0 IVAR ^nCounter2
@@ -167,8 +174,9 @@
 1024 0 COMVAR *FTPcommHandle 
 1024 0 COMVAR *GoogleCommHandle 
 1024 0 COMVAR *LogCommHandle 
-16 0 ITABLE }EcbData
+16 0 ITABLE }EcbBitData
 8 0 ITABLE }EcbStatus
+16 0 ITABLE }ntEcbCmd
 30 30 0 $TABLE {stDTdata 
 30 30 0 $TABLE {stHeader 
 

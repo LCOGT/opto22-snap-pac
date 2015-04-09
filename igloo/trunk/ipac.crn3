@@ -8,8 +8,10 @@ CREATE T.ARRAY
 CREATE V.ARRAY
 ^AirCon_CR_ErrorFlag ,
 ^AirConOffFlag ,
+^Bitmask ,
 ^CalcFanSpd ,
 ^Count ,
+^Count1 ,
 ^Cryotig_CR_ErrorFlag ,
 ^done ,
 ^DTcharCount ,
@@ -17,7 +19,10 @@ CREATE V.ARRAY
 ^DTdataErrorPosition ,
 ^DTerrorFlag ,
 ^DTlogFlag ,
+^EcbBit ,
 ^EcbCmd ,
+^EcbMsg ,
+^EcbResetFlag ,
 ^Fan10V_TestFlag ,
 ^FanCtrl ,
 ^FanSpd ,
@@ -41,6 +46,8 @@ CREATE V.ARRAY
 ^IglooTemp ,
 ^IglooTempOK ,
 ^Length1 ,
+^MasterEcbCmd ,
+^MasterEcbFlag ,
 ^nCharCount ,
 ^nCounter1 ,
 ^nCounter2 ,
@@ -177,8 +184,9 @@ CREATE TI.ARRAY
 CREATE PTR.ARRAY
  0 ,
 CREATE TA.ARRAY 
-}EcbData ,
+}EcbBitData ,
 }EcbStatus ,
+}ntEcbCmd ,
 {stDTdata ,
 {stHeader ,
  0 ,
@@ -256,8 +264,10 @@ CONFIG_PORTS
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^AirCon_CR_ErrorFlag @!
 0 ^AirConOffFlag @!
+0 ^Bitmask @!
 0.00000000 ^CalcFanSpd @!
 0 ^Count @!
+0 ^Count1 @!
 0 ^Cryotig_CR_ErrorFlag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^done @!
@@ -274,7 +284,10 @@ CONFIG_PORTS
 0 ^DTlogFlag @!
 0.0 ^dtRequestTimer @!
 0.0 ^dtSocket @!
+0 ^EcbBit @!
 0 ^EcbCmd @!
+0 ^EcbMsg @!
+0 ^EcbResetFlag @!
 0 ^Fan10V_TestFlag @!
 0 ^FanCtrl @!
 0.00000000 ^FanSpd @!
@@ -298,6 +311,8 @@ CONFIG_PORTS
 0.00000000 ^IglooTemp @!
 0 ^IglooTempOK @!
 0 ^Length1 @!
+0 ^MasterEcbCmd @!
+0 ^MasterEcbFlag @!
 0 ^nCharCount @!
 0 ^nCounter1 @!
 0 ^nCounter2 @!
@@ -348,8 +363,9 @@ CONFIG_PORTS
 0 ^WriteToLogFailedFlag @!
 0 ^x @!
 0 ^y @!
-0 0 -1 }EcbData InitTable
+0 0 -1 }EcbBitData InitTable
 0 0 -1 }EcbStatus InitTable
+0 0 -1 }ntEcbCmd InitTable
 " "
  *CRLF $MOVE
 " "
