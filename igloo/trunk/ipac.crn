@@ -1646,389 +1646,521 @@ T;
 247 LINE.NUM 1 ^EcbResetFlag @! 
 248 LINE.NUM " Success=TRUE" *Status  $MOVE 
 249 LINE.NUM THEN 
-252 LINE.NUM " MCB_DATATAKER_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-253 LINE.NUM ^nFindCmd @@ -1 > IF 
-254 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
-255 LINE.NUM 1 10 }ntEcbCmd TABLE! 
-256 LINE.NUM 1 7 }ntEcbCmd TABLE! 
-257 LINE.NUM 0 ^MasterEcbCmd @! 
-258 LINE.NUM 15 ^Count1 @! 
-259 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
-260 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
-261 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
-262 LINE.NUM THEN 
-263 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
-264 LINE.NUM REPEAT 
-265 LINE.NUM 1 ^MasterEcbFlag @! 
-266 LINE.NUM " Success=TRUE" *Status  $MOVE 
-267 LINE.NUM THEN 
-270 LINE.NUM " MCB_DATATAKER_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-271 LINE.NUM ^nFindCmd @@ -1 > IF 
-273 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-274 LINE.NUM THEN 
-277 LINE.NUM " MCB_STIRFANS1_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-278 LINE.NUM ^nFindCmd @@ -1 > IF 
-280 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-281 LINE.NUM THEN 
-284 LINE.NUM " MCB_STIRFANS1_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-285 LINE.NUM ^nFindCmd @@ -1 > IF 
-287 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-288 LINE.NUM THEN 
-291 LINE.NUM " MCB_STIRFANS2_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-292 LINE.NUM ^nFindCmd @@ -1 > IF 
-294 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-295 LINE.NUM THEN 
-298 LINE.NUM " MCB_STIRFANS2_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-299 LINE.NUM ^nFindCmd @@ -1 > IF 
-301 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-302 LINE.NUM THEN 
-305 LINE.NUM " MCB_SERVOFANS1_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-306 LINE.NUM ^nFindCmd @@ -1 > IF 
-308 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-309 LINE.NUM THEN 
-312 LINE.NUM " MCB_SERVOFANS1_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-313 LINE.NUM ^nFindCmd @@ -1 > IF 
-315 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-316 LINE.NUM THEN 
-319 LINE.NUM " MCB_SERVOFANS2_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-320 LINE.NUM ^nFindCmd @@ -1 > IF 
-322 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-323 LINE.NUM THEN 
-326 LINE.NUM " MCB_SERVOFANS2_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-327 LINE.NUM ^nFindCmd @@ -1 > IF 
-329 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-330 LINE.NUM THEN 
-333 LINE.NUM " MCB_TENTSTIRFANS_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-334 LINE.NUM ^nFindCmd @@ -1 > IF 
-336 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
-337 LINE.NUM THEN 
-340 LINE.NUM " MCB_TENTSTIRFANS_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-341 LINE.NUM ^nFindCmd @@ -1 > IF 
-343 LINE.NUM " Success=FALSE, funtion not enabled" *Status  $MOVE 
+271 LINE.NUM " MCB_DATATAKER_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
+272 LINE.NUM ^nFindCmd @@ -1 > IF 
+273 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+274 LINE.NUM 1 10 }ntEcbCmd TABLE! 
+275 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+276 LINE.NUM 0 ^MasterEcbCmd @! 
+277 LINE.NUM 15 ^Count1 @! 
+279 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+280 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+281 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+282 LINE.NUM THEN 
+283 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+284 LINE.NUM REPEAT 
+285 LINE.NUM 1 ^MasterEcbFlag @! 
+286 LINE.NUM " Success=TRUE" *Status  $MOVE 
+287 LINE.NUM THEN 
+290 LINE.NUM " MCB_DATATAKER_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
+291 LINE.NUM ^nFindCmd @@ -1 > IF 
+292 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+293 LINE.NUM 0 10 }ntEcbCmd TABLE! 
+294 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+295 LINE.NUM 0 ^MasterEcbCmd @! 
+296 LINE.NUM 15 ^Count1 @! 
+298 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+299 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+300 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+301 LINE.NUM THEN 
+302 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+303 LINE.NUM REPEAT 
+304 LINE.NUM 1 ^MasterEcbFlag @! 
+305 LINE.NUM " Success=TRUE" *Status  $MOVE 
+306 LINE.NUM THEN 
+309 LINE.NUM " MCB_STIRFANS1_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
+310 LINE.NUM ^nFindCmd @@ -1 > IF 
+311 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+312 LINE.NUM 1 11 }ntEcbCmd TABLE! 
+313 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+314 LINE.NUM 0 ^MasterEcbCmd @! 
+315 LINE.NUM 15 ^Count1 @! 
+317 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+318 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+319 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+320 LINE.NUM THEN 
+321 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+322 LINE.NUM REPEAT 
+323 LINE.NUM 1 ^MasterEcbFlag @! 
+324 LINE.NUM " Success=TRUE" *Status  $MOVE 
+325 LINE.NUM THEN 
+328 LINE.NUM " MCB_STIRFANS1_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
+329 LINE.NUM ^nFindCmd @@ -1 > IF 
+330 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+331 LINE.NUM 0 11 }ntEcbCmd TABLE! 
+332 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+333 LINE.NUM 0 ^MasterEcbCmd @! 
+334 LINE.NUM 15 ^Count1 @! 
+336 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+337 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+338 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+339 LINE.NUM THEN 
+340 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+341 LINE.NUM REPEAT 
+342 LINE.NUM 1 ^MasterEcbFlag @! 
+343 LINE.NUM " Success=TRUE" *Status  $MOVE 
 344 LINE.NUM THEN 
-347 LINE.NUM " STATUS" 0 *sCmd  FindSubString ^nFindCmd @! 
+347 LINE.NUM " MCB_STIRFANS2_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
 348 LINE.NUM ^nFindCmd @@ -1 > IF 
-349 LINE.NUM " Success=True" *Status  $MOVE 
-351 LINE.NUM " , ICDversion=" *Status $CAT 
-
-352 LINE.NUM *sICDversion *Status $CAT 
-
-354 LINE.NUM " , FWversion=" *Status $CAT 
-
-355 LINE.NUM *sFWversion *Status $CAT 
-
-357 LINE.NUM " , SWversion=" *Status $CAT 
-
-358 LINE.NUM *sSWversion *Status $CAT 
-
-360 LINE.NUM " , SystemUpTime=" *Status $CAT 
-
-361 LINE.NUM  GetSystemTime 86400 / I>F ^fSystemUpTime @! 
-362 LINE.NUM ^fSystemUpTime @@ 8 2 *sPACuptime  FF.R$ 
-363 LINE.NUM *sPACuptime *Status $CAT 
-
-365 LINE.NUM " , HeartbeatDownTimer=" *Status $CAT 
-
-366 LINE.NUM ^dtHeartbeat @@F *sHeartbeat  F>$ 
-367 LINE.NUM *sHeartbeat *Status $CAT 
-
-369 LINE.NUM *sFaultList  $LEN IF 
-370 LINE.NUM " , Fault=TRUE" *Status $CAT 
-
-371 LINE.NUM ELSE 
-372 LINE.NUM " , Fault=FALSE" *Status $CAT 
-
-373 LINE.NUM THEN 
-375 LINE.NUM *sErrorList  $LEN IF 
-376 LINE.NUM " , Error=TRUE" *Status $CAT 
-
-377 LINE.NUM ELSE 
-378 LINE.NUM " , Error=FALSE" *Status $CAT 
-
-379 LINE.NUM THEN 
-384 LINE.NUM ~AI_IglooStirFanM282_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-385 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-386 LINE.NUM " , IglooStirFanM28.2Tach=" *Status $CAT 
-
-387 LINE.NUM *sFanSpd *Status $CAT 
-
-389 LINE.NUM ~AI_IglooStirFanM284_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-390 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-391 LINE.NUM " , IglooStirFanM28.4Tach=" *Status $CAT 
-
-392 LINE.NUM *sFanSpd *Status $CAT 
-
-394 LINE.NUM ~AI_IglooStirFanM292_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-395 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-396 LINE.NUM " , IglooStirFanM29.2Tach=" *Status $CAT 
-
-397 LINE.NUM *sFanSpd *Status $CAT 
-
-399 LINE.NUM ~AI_IglooStirFanM294_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-400 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-401 LINE.NUM " , IglooStirFanM29.4Tach=" *Status $CAT 
-
-402 LINE.NUM *sFanSpd *Status $CAT 
-
-404 LINE.NUM ~AI_TentIntakeFanM304_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-405 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-406 LINE.NUM " , TentIntakeFanM30.4Tach=" *Status $CAT 
-
-407 LINE.NUM *sFanSpd *Status $CAT 
-
-409 LINE.NUM ~AI_TentExhaustFanM306_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-410 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-411 LINE.NUM " , TentExhaustFanM30.6Tach=" *Status $CAT 
-
-412 LINE.NUM *sFanSpd *Status $CAT 
-
-414 LINE.NUM ~AI_TentIntakeFanM312_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-415 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-416 LINE.NUM " , TentIntakeFanM31.2Tach=" *Status $CAT 
-
-417 LINE.NUM *sFanSpd *Status $CAT 
-
-419 LINE.NUM ~AI_TentExhaustFanM314_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
-420 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-421 LINE.NUM " , TentExhaustFanM31.4Tach=" *Status $CAT 
-
-422 LINE.NUM *sFanSpd *Status $CAT 
-
-424 LINE.NUM ~AI_TentStirFanM323_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
-425 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-426 LINE.NUM " , TentStirFanM32.3Tach=" *Status $CAT 
-
-427 LINE.NUM *sFanSpd *Status $CAT 
-
-429 LINE.NUM ~AI_TentStirFanM325_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
-430 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-431 LINE.NUM " , TentStirFanM32.5Tach=" *Status $CAT 
-
-432 LINE.NUM *sFanSpd *Status $CAT 
-
-434 LINE.NUM ~AI_PanelFanM184_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
-435 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-436 LINE.NUM " , PanelFanM18.4Tach=" *Status $CAT 
-
-437 LINE.NUM *sFanSpd *Status $CAT 
-
-439 LINE.NUM ~AI_PanelFanM186_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
-440 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-441 LINE.NUM " , PanelFanM18.6Tach=" *Status $CAT 
-
-442 LINE.NUM *sFanSpd *Status $CAT 
-
-444 LINE.NUM ~AI_Utility_Volt @@ *sVoltage  F>$ 
-445 LINE.NUM " , UtilityVoltage=" *Status $CAT 
-
-446 LINE.NUM *sVoltage *Status $CAT 
-
-448 LINE.NUM ~AI_CryoTig_Volt @@ *sVoltage  F>$ 
-449 LINE.NUM " , CryotigerVoltage=" *Status $CAT 
-
-450 LINE.NUM *sVoltage *Status $CAT 
-
-452 LINE.NUM " , PanelTemperature=" *Status $CAT 
-
-453 LINE.NUM 11 {stDTdata $TABLE@ *Status $CAT 
-
-455 LINE.NUM ~AI_CryoTig_Current @@ 5 2 *sCurrent  FF.R$ 
-456 LINE.NUM " , CryotigerCurrent=" *Status $CAT 
-
-457 LINE.NUM *sCurrent *Status $CAT 
-
-459 LINE.NUM ~AI_CryoTig_OutputPressure @@ 5 2 *sPressure  FF.R$ 
-460 LINE.NUM " , CryotigerOutputPressure=" *Status $CAT 
-
-461 LINE.NUM *sPressure *Status $CAT 
-
-463 LINE.NUM ~AI_CryoTig_ReturnPressure @@ 5 2 *sPressure  FF.R$ 
-464 LINE.NUM " , CryotigerReturnPressure=" *Status $CAT 
-
-465 LINE.NUM *sPressure *Status $CAT 
-
-467 LINE.NUM ~DI_LightSW @@I IF 
-468 LINE.NUM " , LightsOn=True" *Status $CAT 
-
-469 LINE.NUM ELSE 
-470 LINE.NUM " , LightsOn=False" *Status $CAT 
-
-471 LINE.NUM THEN 
-473 LINE.NUM ~DI_EntryDoor @@I IF 
-474 LINE.NUM " , EntryDoor=CLOSED" *Status $CAT 
-
-475 LINE.NUM ELSE 
-476 LINE.NUM " , EntryDoor=OPEN" *Status $CAT 
-
+349 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+350 LINE.NUM 1 12 }ntEcbCmd TABLE! 
+351 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+352 LINE.NUM 0 ^MasterEcbCmd @! 
+353 LINE.NUM 15 ^Count1 @! 
+355 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+356 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+357 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+358 LINE.NUM THEN 
+359 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+360 LINE.NUM REPEAT 
+361 LINE.NUM 1 ^MasterEcbFlag @! 
+362 LINE.NUM " Success=TRUE" *Status  $MOVE 
+363 LINE.NUM THEN 
+366 LINE.NUM " MCB_STIRFANS2_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
+367 LINE.NUM ^nFindCmd @@ -1 > IF 
+368 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+369 LINE.NUM 0 12 }ntEcbCmd TABLE! 
+370 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+371 LINE.NUM 0 ^MasterEcbCmd @! 
+372 LINE.NUM 15 ^Count1 @! 
+374 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+375 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+376 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+377 LINE.NUM THEN 
+378 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+379 LINE.NUM REPEAT 
+380 LINE.NUM 1 ^MasterEcbFlag @! 
+381 LINE.NUM " Success=TRUE" *Status  $MOVE 
+382 LINE.NUM THEN 
+385 LINE.NUM " MCB_SERVOFANS1_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
+386 LINE.NUM ^nFindCmd @@ -1 > IF 
+387 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+388 LINE.NUM 1 13 }ntEcbCmd TABLE! 
+389 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+390 LINE.NUM 0 ^MasterEcbCmd @! 
+391 LINE.NUM 15 ^Count1 @! 
+393 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+394 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+395 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+396 LINE.NUM THEN 
+397 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+398 LINE.NUM REPEAT 
+399 LINE.NUM 1 ^MasterEcbFlag @! 
+400 LINE.NUM " Success=TRUE" *Status  $MOVE 
+401 LINE.NUM THEN 
+404 LINE.NUM " MCB_SERVOFANS1_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
+405 LINE.NUM ^nFindCmd @@ -1 > IF 
+406 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+407 LINE.NUM 0 13 }ntEcbCmd TABLE! 
+408 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+409 LINE.NUM 0 ^MasterEcbCmd @! 
+410 LINE.NUM 15 ^Count1 @! 
+412 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+413 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+414 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+415 LINE.NUM THEN 
+416 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+417 LINE.NUM REPEAT 
+418 LINE.NUM 1 ^MasterEcbFlag @! 
+419 LINE.NUM " Success=TRUE" *Status  $MOVE 
+420 LINE.NUM THEN 
+423 LINE.NUM " MCB_SERVOFANS2_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
+424 LINE.NUM ^nFindCmd @@ -1 > IF 
+425 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+426 LINE.NUM 1 15 }ntEcbCmd TABLE! 
+427 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+428 LINE.NUM 0 ^MasterEcbCmd @! 
+429 LINE.NUM 15 ^Count1 @! 
+431 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+432 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+433 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+434 LINE.NUM THEN 
+435 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+436 LINE.NUM REPEAT 
+437 LINE.NUM 1 ^MasterEcbFlag @! 
+438 LINE.NUM " Success=TRUE" *Status  $MOVE 
+439 LINE.NUM THEN 
+442 LINE.NUM " MCB_SERVOFANS2_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
+443 LINE.NUM ^nFindCmd @@ -1 > IF 
+444 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+445 LINE.NUM 0 15 }ntEcbCmd TABLE! 
+446 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+447 LINE.NUM 0 ^MasterEcbCmd @! 
+448 LINE.NUM 15 ^Count1 @! 
+450 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+451 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+452 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+453 LINE.NUM THEN 
+454 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+455 LINE.NUM REPEAT 
+456 LINE.NUM 1 ^MasterEcbFlag @! 
+457 LINE.NUM " Success=TRUE" *Status  $MOVE 
+458 LINE.NUM THEN 
+461 LINE.NUM " MCB_TENTSTIRFANS_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
+462 LINE.NUM ^nFindCmd @@ -1 > IF 
+463 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+464 LINE.NUM 1 14 }ntEcbCmd TABLE! 
+465 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+466 LINE.NUM 0 ^MasterEcbCmd @! 
+467 LINE.NUM 15 ^Count1 @! 
+469 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+470 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+471 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+472 LINE.NUM THEN 
+473 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+474 LINE.NUM REPEAT 
+475 LINE.NUM 1 ^MasterEcbFlag @! 
+476 LINE.NUM " Success=TRUE" *Status  $MOVE 
 477 LINE.NUM THEN 
-479 LINE.NUM ~DI_PanelDoor @@I IF 
-480 LINE.NUM " , PanelDoor=CLOSED" *Status $CAT 
+480 LINE.NUM " MCB_TENTSTIRFANS_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
+481 LINE.NUM ^nFindCmd @@ -1 > IF 
+482 LINE.NUM }EcbBitData 0 }ntEcbCmd 0 16  CopyTable  
+483 LINE.NUM 0 14 }ntEcbCmd TABLE! 
+484 LINE.NUM 1 7 }ntEcbCmd TABLE! 
+485 LINE.NUM 0 ^MasterEcbCmd @! 
+486 LINE.NUM 15 ^Count1 @! 
+488 LINE.NUM BEGIN ^Count1 @@ -1 > WHILE 
+489 LINE.NUM ^Count1 @@ }ntEcbCmd TABLE@ 1 = IF 
+490 LINE.NUM ^MasterEcbCmd @@F 2 I>F ^Count1 @@F  F^ F+ ^MasterEcbCmd F@! 
+491 LINE.NUM THEN 
+492 LINE.NUM ^Count1 @@ 1 -  ^Count1 @! 
+493 LINE.NUM REPEAT 
+494 LINE.NUM 1 ^MasterEcbFlag @! 
+495 LINE.NUM " Success=TRUE" *Status  $MOVE 
+496 LINE.NUM THEN 
+499 LINE.NUM " STATUS" 0 *sCmd  FindSubString ^nFindCmd @! 
+500 LINE.NUM ^nFindCmd @@ -1 > IF 
+501 LINE.NUM " Success=True" *Status  $MOVE 
+503 LINE.NUM " , ICDversion=" *Status $CAT 
 
-481 LINE.NUM ELSE 
-482 LINE.NUM " , PanelDoor=OPEN" *Status $CAT 
+504 LINE.NUM *sICDversion *Status $CAT 
 
-483 LINE.NUM THEN 
-485 LINE.NUM 1 ^nCounter2 @! 
-486 LINE.NUM BEGIN 
-487 LINE.NUM " , RTD" *Status $CAT 
+506 LINE.NUM " , FWversion=" *Status $CAT 
 
-488 LINE.NUM ^nCounter2 @@ *sCounter2  I>$ 
-489 LINE.NUM *sCounter2 *Status $CAT 
+507 LINE.NUM *sFWversion *Status $CAT 
 
-490 LINE.NUM " =" *Status $CAT 
+509 LINE.NUM " , SWversion=" *Status $CAT 
 
-491 LINE.NUM ^nCounter2 @@ {stDTdata $TABLE@ *Status $CAT 
+510 LINE.NUM *sSWversion *Status $CAT 
 
-492 LINE.NUM ^nCounter2 @@ 1 +  ^nCounter2 @! 
-493 LINE.NUM ^nCounter2 @@ 10 > UNTIL 
-496 LINE.NUM |pidTentFans  $20000.. ROT PID@ 0 = IF 
-497 LINE.NUM " , TentServoFans_OpMode=AUTO" *Status $CAT 
+512 LINE.NUM " , SystemUpTime=" *Status $CAT 
 
-498 LINE.NUM ELSE 
-498 LINE.NUM |pidTentFans  $20000.. ROT PID@ 1 = IF 
-499 LINE.NUM " , TentServoFans_OpMode=MANUAL" *Status $CAT 
+513 LINE.NUM  GetSystemTime 86400 / I>F ^fSystemUpTime @! 
+514 LINE.NUM ^fSystemUpTime @@ 8 2 *sPACuptime  FF.R$ 
+515 LINE.NUM *sPACuptime *Status $CAT 
 
-500 LINE.NUM THEN THEN 
-502 LINE.NUM |pidTentFans  $0002.. ROT PID@ 4 1 *sPID  FF.R$ 
-503 LINE.NUM " , TentServoFans_Setpoint=" *Status $CAT 
+517 LINE.NUM " , HeartbeatDownTimer=" *Status $CAT 
 
-504 LINE.NUM *sPID *Status $CAT 
+518 LINE.NUM ^dtHeartbeat @@F *sHeartbeat  F>$ 
+519 LINE.NUM *sHeartbeat *Status $CAT 
 
-506 LINE.NUM |pidTentFans  $0001.. ROT PID@ 4 1 *sPID  FF.R$ 
-507 LINE.NUM " , TentServoFans_Input=" *Status $CAT 
+521 LINE.NUM *sFaultList  $LEN IF 
+522 LINE.NUM " , Fault=TRUE" *Status $CAT 
 
-508 LINE.NUM *sPID *Status $CAT 
+523 LINE.NUM ELSE 
+524 LINE.NUM " , Fault=FALSE" *Status $CAT 
 
-510 LINE.NUM |pidTentFans  $0008.. ROT PID@ 4 1 *sPID  FF.R$ 
-511 LINE.NUM " , TentServoFans_Output=" *Status $CAT 
+525 LINE.NUM THEN 
+527 LINE.NUM *sErrorList  $LEN IF 
+528 LINE.NUM " , Error=TRUE" *Status $CAT 
 
-512 LINE.NUM *sPID *Status $CAT 
+529 LINE.NUM ELSE 
+530 LINE.NUM " , Error=FALSE" *Status $CAT 
 
-514 LINE.NUM |pidTentFans  $0010.. ROT PID@ 7 3 *sPID  FF.R$ 
-515 LINE.NUM " , TentServoFans_Gain=" *Status $CAT 
+531 LINE.NUM THEN 
+536 LINE.NUM ~AI_IglooStirFanM282_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+537 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+538 LINE.NUM " , IglooStirFanM28.2Tach=" *Status $CAT 
 
-516 LINE.NUM *sPID *Status $CAT 
+539 LINE.NUM *sFanSpd *Status $CAT 
 
-518 LINE.NUM |pidTentFans  $0020.. ROT PID@ 7 3 *sPID  FF.R$ 
-519 LINE.NUM " , TentServoFans_Integral=" *Status $CAT 
+541 LINE.NUM ~AI_IglooStirFanM284_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+542 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+543 LINE.NUM " , IglooStirFanM28.4Tach=" *Status $CAT 
 
-520 LINE.NUM *sPID *Status $CAT 
+544 LINE.NUM *sFanSpd *Status $CAT 
 
-522 LINE.NUM |pidTentFans  $0040.. ROT PID@ 7 3 *sPID  FF.R$ 
-523 LINE.NUM " , TentServoFans_Derivative=" *Status $CAT 
+546 LINE.NUM ~AI_IglooStirFanM292_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+547 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+548 LINE.NUM " , IglooStirFanM29.2Tach=" *Status $CAT 
 
-524 LINE.NUM *sPID *Status $CAT 
+549 LINE.NUM *sFanSpd *Status $CAT 
 
-526 LINE.NUM |pidTentFans  $4000.. ROT PID@ 7 3 *sPID  FF.R$ 
-527 LINE.NUM " , TentServoFans_Scantime=" *Status $CAT 
+551 LINE.NUM ~AI_IglooStirFanM294_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+552 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+553 LINE.NUM " , IglooStirFanM29.4Tach=" *Status $CAT 
 
-528 LINE.NUM *sPID *Status $CAT 
+554 LINE.NUM *sFanSpd *Status $CAT 
 
-529 LINE.NUM THEN 
-532 LINE.NUM " GET_ERRORS" 0 *sCmd  FindSubString ^nFindCmd @! 
-533 LINE.NUM ^nFindCmd @@ -1 > IF 
-534 LINE.NUM *sErrorList  $LEN IF 
-535 LINE.NUM " Success=TRUE" *Status  $MOVE 
-536 LINE.NUM *sErrorList *Status $CAT 
+556 LINE.NUM ~AI_TentIntakeFanM304_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+557 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+558 LINE.NUM " , TentIntakeFanM30.4Tach=" *Status $CAT 
 
-537 LINE.NUM ELSE 
-538 LINE.NUM " Success=FALSE" *Status  $MOVE 
-539 LINE.NUM THEN 
-540 LINE.NUM THEN 
-543 LINE.NUM " GET_FAULTS" 0 *sCmd  FindSubString ^nFindCmd @! 
-544 LINE.NUM ^nFindCmd @@ -1 > IF 
-545 LINE.NUM *sFaultList  $LEN IF 
-546 LINE.NUM " Success=TRUE" *Status  $MOVE 
-547 LINE.NUM *sFaultList *Status $CAT 
+559 LINE.NUM *sFanSpd *Status $CAT 
 
-548 LINE.NUM ELSE 
-549 LINE.NUM " Success=FALSE" *Status  $MOVE 
-550 LINE.NUM THEN 
-551 LINE.NUM THEN 
-554 LINE.NUM " CLEAR_ERRORS" 0 *sCmd  FindSubString ^nFindCmd @! 
-555 LINE.NUM ^nFindCmd @@ -1 > IF 
-556 LINE.NUM " " *sErrorList  $MOVE 
-557 LINE.NUM 500  DELAY 
-558 LINE.NUM *sErrorList  $LEN IF 
-559 LINE.NUM " Success=FALSE, " *Status  $MOVE 
-560 LINE.NUM *sErrorList *Status $CAT 
+561 LINE.NUM ~AI_TentExhaustFanM306_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+562 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+563 LINE.NUM " , TentExhaustFanM30.6Tach=" *Status $CAT 
 
-561 LINE.NUM ELSE 
-562 LINE.NUM " Success=TRUE" *Status  $MOVE 
-563 LINE.NUM THEN 
-564 LINE.NUM THEN 
-567 LINE.NUM " CLEAR_FAULTS" 0 *sCmd  FindSubString ^nFindCmd @! 
-568 LINE.NUM ^nFindCmd @@ -1 > IF 
-569 LINE.NUM " " *sFaultList  $MOVE 
-570 LINE.NUM 500  DELAY 
-571 LINE.NUM *sFaultList  $LEN IF 
-572 LINE.NUM " Success=FALSE, " *Status  $MOVE 
-573 LINE.NUM *sFaultList *Status $CAT 
+564 LINE.NUM *sFanSpd *Status $CAT 
 
-574 LINE.NUM ELSE 
-575 LINE.NUM " Success=TRUE" *Status  $MOVE 
-576 LINE.NUM THEN 
-577 LINE.NUM THEN 
-580 LINE.NUM " HEARTBEAT" 0 *sCmd  FindSubString ^nFindCmd @! 
-581 LINE.NUM ^nFindCmd @@ -1 > IF 
-582 LINE.NUM ^dtHeartbeat @@F *sHeartbeat  F>$ 
-583 LINE.NUM 60 I>F ^dtHeartbeat @! 
-584 LINE.NUM ^dtHeartbeat  StartTimer 
-585 LINE.NUM " Success=TRUE" *Status  $MOVE 
-586 LINE.NUM " , HeartbeatDownTimer=" *Status $CAT 
+566 LINE.NUM ~AI_TentIntakeFanM312_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+567 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+568 LINE.NUM " , TentIntakeFanM31.2Tach=" *Status $CAT 
 
-587 LINE.NUM *sHeartbeat *Status $CAT 
+569 LINE.NUM *sFanSpd *Status $CAT 
 
-593 LINE.NUM ^dt24h @@F 1 I>F F< IF 
-594 LINE.NUM *sCmd  $LEN ^nStringLength @! 
-595 LINE.NUM ^nStringLength @@ 28 > IF 
-596 LINE.NUM " ," 0 *sCmd  FindSubString ^nStringPosition @! 
-597 LINE.NUM ^nStringPosition  1+@! 
-598 LINE.NUM " ," ^nStringPosition @@ *sCmd  FindSubString ^nStringPosition @! 
-599 LINE.NUM ^nStringPosition  1+@! 
-600 LINE.NUM *sCmd ^nStringPosition @@ 4 *sYear  $SUB 
-601 LINE.NUM *sYear  $>I  I!YRS 
-602 LINE.NUM ^nStringPosition @@ 4 +  ^nStringPosition @! 
-603 LINE.NUM *sCmd ^nStringPosition @@ 2 *sMonth1  $SUB 
-604 LINE.NUM *sMonth  $>I  I!MTH 
-605 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-606 LINE.NUM *sCmd ^nStringPosition @@ 2 *sDay1  $SUB 
-607 LINE.NUM *sDay  $>I  I!DAY 
-608 LINE.NUM ^nStringPosition @@ 3 +  ^nStringPosition @! 
-609 LINE.NUM *sCmd ^nStringPosition @@ 2 *sTime  $SUB 
-610 LINE.NUM *sTime  $>I  I!HRS 
-611 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-612 LINE.NUM *sCmd ^nStringPosition @@ 2 *sTime  $SUB 
-613 LINE.NUM *sTime  $>I  I!MTS 
-614 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-615 LINE.NUM *sCmd ^nStringPosition @@ 2 *sTime  $SUB 
-616 LINE.NUM *sTime  $>I  I!SEC 
-617 LINE.NUM 86400 I>F ^dt24h @! 
-618 LINE.NUM ^dt24h  StartTimer 
-619 LINE.NUM THEN 
-620 LINE.NUM THEN 
-622 LINE.NUM THEN 
-625 LINE.NUM " RESET" 0 *sCmd  FindSubString ^nFindCmd @! 
-626 LINE.NUM ^nFindCmd @@ -1 > IF 
-627 LINE.NUM &DatatakerComm  STOP.T 
-628 LINE.NUM &Housekeeper  STOP.T 
-629 LINE.NUM &Powerup  START.T DROP  
-630 LINE.NUM &MasterComm  STOP.T 
-631 LINE.NUM THEN 
-634 LINE.NUM *Status  $LEN IF 
-635 LINE.NUM "  " *Status $CAT 
+571 LINE.NUM ~AI_TentExhaustFanM314_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
+572 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+573 LINE.NUM " , TentExhaustFanM31.4Tach=" *Status $CAT 
 
-636 LINE.NUM ELSE 
-638 LINE.NUM " Success=FALSE, Unknown command " *Status  $MOVE 
-639 LINE.NUM *sTimestamp4 &Timestamp CALL.SUB DROP  
-640 LINE.NUM *sTimestamp4 *Status $CAT 
+574 LINE.NUM *sFanSpd *Status $CAT 
 
-641 LINE.NUM THEN 
-644 LINE.NUM *sTimestamp4 &Timestamp CALL.SUB DROP  
-645 LINE.NUM *sTimestamp4 *Status $CAT 
+576 LINE.NUM ~AI_TentStirFanM323_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
+577 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+578 LINE.NUM " , TentStirFanM32.3Tach=" *Status $CAT 
 
-646 LINE.NUM *Status *cPort  PRT$ DROP  
-647 LINE.NUM " " *Status  $MOVE 
+579 LINE.NUM *sFanSpd *Status $CAT 
+
+581 LINE.NUM ~AI_TentStirFanM325_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
+582 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+583 LINE.NUM " , TentStirFanM32.5Tach=" *Status $CAT 
+
+584 LINE.NUM *sFanSpd *Status $CAT 
+
+586 LINE.NUM ~AI_PanelFanM184_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
+587 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+588 LINE.NUM " , PanelFanM18.4Tach=" *Status $CAT 
+
+589 LINE.NUM *sFanSpd *Status $CAT 
+
+591 LINE.NUM ~AI_PanelFanM186_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
+592 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
+593 LINE.NUM " , PanelFanM18.6Tach=" *Status $CAT 
+
+594 LINE.NUM *sFanSpd *Status $CAT 
+
+596 LINE.NUM ~AI_Utility_Volt @@ *sVoltage  F>$ 
+597 LINE.NUM " , UtilityVoltage=" *Status $CAT 
+
+598 LINE.NUM *sVoltage *Status $CAT 
+
+600 LINE.NUM ~AI_CryoTig_Volt @@ *sVoltage  F>$ 
+601 LINE.NUM " , CryotigerVoltage=" *Status $CAT 
+
+602 LINE.NUM *sVoltage *Status $CAT 
+
+604 LINE.NUM " , PanelTemperature=" *Status $CAT 
+
+605 LINE.NUM 11 {stDTdata $TABLE@ *Status $CAT 
+
+607 LINE.NUM ~AI_CryoTig_Current @@ 5 2 *sCurrent  FF.R$ 
+608 LINE.NUM " , CryotigerCurrent=" *Status $CAT 
+
+609 LINE.NUM *sCurrent *Status $CAT 
+
+611 LINE.NUM ~AI_CryoTig_OutputPressure @@ 5 2 *sPressure  FF.R$ 
+612 LINE.NUM " , CryotigerOutputPressure=" *Status $CAT 
+
+613 LINE.NUM *sPressure *Status $CAT 
+
+615 LINE.NUM ~AI_CryoTig_ReturnPressure @@ 5 2 *sPressure  FF.R$ 
+616 LINE.NUM " , CryotigerReturnPressure=" *Status $CAT 
+
+617 LINE.NUM *sPressure *Status $CAT 
+
+619 LINE.NUM ~DI_LightSW @@I IF 
+620 LINE.NUM " , LightsOn=True" *Status $CAT 
+
+621 LINE.NUM ELSE 
+622 LINE.NUM " , LightsOn=False" *Status $CAT 
+
+623 LINE.NUM THEN 
+625 LINE.NUM ~DI_EntryDoor @@I IF 
+626 LINE.NUM " , EntryDoor=CLOSED" *Status $CAT 
+
+627 LINE.NUM ELSE 
+628 LINE.NUM " , EntryDoor=OPEN" *Status $CAT 
+
+629 LINE.NUM THEN 
+631 LINE.NUM ~DI_PanelDoor @@I IF 
+632 LINE.NUM " , PanelDoor=CLOSED" *Status $CAT 
+
+633 LINE.NUM ELSE 
+634 LINE.NUM " , PanelDoor=OPEN" *Status $CAT 
+
+635 LINE.NUM THEN 
+637 LINE.NUM 1 ^nCounter2 @! 
+638 LINE.NUM BEGIN 
+639 LINE.NUM " , RTD" *Status $CAT 
+
+640 LINE.NUM ^nCounter2 @@ *sCounter2  I>$ 
+641 LINE.NUM *sCounter2 *Status $CAT 
+
+642 LINE.NUM " =" *Status $CAT 
+
+643 LINE.NUM ^nCounter2 @@ {stDTdata $TABLE@ *Status $CAT 
+
+644 LINE.NUM ^nCounter2 @@ 1 +  ^nCounter2 @! 
+645 LINE.NUM ^nCounter2 @@ 10 > UNTIL 
+648 LINE.NUM |pidTentFans  $20000.. ROT PID@ 0 = IF 
+649 LINE.NUM " , TentServoFans_OpMode=AUTO" *Status $CAT 
+
+650 LINE.NUM ELSE 
+650 LINE.NUM |pidTentFans  $20000.. ROT PID@ 1 = IF 
+651 LINE.NUM " , TentServoFans_OpMode=MANUAL" *Status $CAT 
+
+652 LINE.NUM THEN THEN 
+654 LINE.NUM |pidTentFans  $0002.. ROT PID@ 4 1 *sPID  FF.R$ 
+655 LINE.NUM " , TentServoFans_Setpoint=" *Status $CAT 
+
+656 LINE.NUM *sPID *Status $CAT 
+
+658 LINE.NUM |pidTentFans  $0001.. ROT PID@ 4 1 *sPID  FF.R$ 
+659 LINE.NUM " , TentServoFans_Input=" *Status $CAT 
+
+660 LINE.NUM *sPID *Status $CAT 
+
+662 LINE.NUM |pidTentFans  $0008.. ROT PID@ 4 1 *sPID  FF.R$ 
+663 LINE.NUM " , TentServoFans_Output=" *Status $CAT 
+
+664 LINE.NUM *sPID *Status $CAT 
+
+666 LINE.NUM |pidTentFans  $0010.. ROT PID@ 7 3 *sPID  FF.R$ 
+667 LINE.NUM " , TentServoFans_Gain=" *Status $CAT 
+
+668 LINE.NUM *sPID *Status $CAT 
+
+670 LINE.NUM |pidTentFans  $0020.. ROT PID@ 7 3 *sPID  FF.R$ 
+671 LINE.NUM " , TentServoFans_Integral=" *Status $CAT 
+
+672 LINE.NUM *sPID *Status $CAT 
+
+674 LINE.NUM |pidTentFans  $0040.. ROT PID@ 7 3 *sPID  FF.R$ 
+675 LINE.NUM " , TentServoFans_Derivative=" *Status $CAT 
+
+676 LINE.NUM *sPID *Status $CAT 
+
+678 LINE.NUM |pidTentFans  $4000.. ROT PID@ 7 3 *sPID  FF.R$ 
+679 LINE.NUM " , TentServoFans_Scantime=" *Status $CAT 
+
+680 LINE.NUM *sPID *Status $CAT 
+
+681 LINE.NUM THEN 
+684 LINE.NUM " GET_ERRORS" 0 *sCmd  FindSubString ^nFindCmd @! 
+685 LINE.NUM ^nFindCmd @@ -1 > IF 
+686 LINE.NUM *sErrorList  $LEN IF 
+687 LINE.NUM " Success=TRUE" *Status  $MOVE 
+688 LINE.NUM *sErrorList *Status $CAT 
+
+689 LINE.NUM ELSE 
+690 LINE.NUM " Success=FALSE" *Status  $MOVE 
+691 LINE.NUM THEN 
+692 LINE.NUM THEN 
+695 LINE.NUM " GET_FAULTS" 0 *sCmd  FindSubString ^nFindCmd @! 
+696 LINE.NUM ^nFindCmd @@ -1 > IF 
+697 LINE.NUM *sFaultList  $LEN IF 
+698 LINE.NUM " Success=TRUE" *Status  $MOVE 
+699 LINE.NUM *sFaultList *Status $CAT 
+
+700 LINE.NUM ELSE 
+701 LINE.NUM " Success=FALSE" *Status  $MOVE 
+702 LINE.NUM THEN 
+703 LINE.NUM THEN 
+706 LINE.NUM " CLEAR_ERRORS" 0 *sCmd  FindSubString ^nFindCmd @! 
+707 LINE.NUM ^nFindCmd @@ -1 > IF 
+708 LINE.NUM " " *sErrorList  $MOVE 
+709 LINE.NUM 500  DELAY 
+710 LINE.NUM *sErrorList  $LEN IF 
+711 LINE.NUM " Success=FALSE, " *Status  $MOVE 
+712 LINE.NUM *sErrorList *Status $CAT 
+
+713 LINE.NUM ELSE 
+714 LINE.NUM " Success=TRUE" *Status  $MOVE 
+715 LINE.NUM THEN 
+716 LINE.NUM THEN 
+719 LINE.NUM " CLEAR_FAULTS" 0 *sCmd  FindSubString ^nFindCmd @! 
+720 LINE.NUM ^nFindCmd @@ -1 > IF 
+721 LINE.NUM " " *sFaultList  $MOVE 
+722 LINE.NUM 500  DELAY 
+723 LINE.NUM *sFaultList  $LEN IF 
+724 LINE.NUM " Success=FALSE, " *Status  $MOVE 
+725 LINE.NUM *sFaultList *Status $CAT 
+
+726 LINE.NUM ELSE 
+727 LINE.NUM " Success=TRUE" *Status  $MOVE 
+728 LINE.NUM THEN 
+729 LINE.NUM THEN 
+732 LINE.NUM " HEARTBEAT" 0 *sCmd  FindSubString ^nFindCmd @! 
+733 LINE.NUM ^nFindCmd @@ -1 > IF 
+734 LINE.NUM ^dtHeartbeat @@F *sHeartbeat  F>$ 
+735 LINE.NUM 60 I>F ^dtHeartbeat @! 
+736 LINE.NUM ^dtHeartbeat  StartTimer 
+737 LINE.NUM " Success=TRUE" *Status  $MOVE 
+738 LINE.NUM " , HeartbeatDownTimer=" *Status $CAT 
+
+739 LINE.NUM *sHeartbeat *Status $CAT 
+
+745 LINE.NUM ^dt24h @@F 1 I>F F< IF 
+746 LINE.NUM *sCmd  $LEN ^nStringLength @! 
+747 LINE.NUM ^nStringLength @@ 28 > IF 
+748 LINE.NUM " ," 0 *sCmd  FindSubString ^nStringPosition @! 
+749 LINE.NUM ^nStringPosition  1+@! 
+750 LINE.NUM " ," ^nStringPosition @@ *sCmd  FindSubString ^nStringPosition @! 
+751 LINE.NUM ^nStringPosition  1+@! 
+752 LINE.NUM *sCmd ^nStringPosition @@ 4 *sYear  $SUB 
+753 LINE.NUM *sYear  $>I  I!YRS 
+754 LINE.NUM ^nStringPosition @@ 4 +  ^nStringPosition @! 
+755 LINE.NUM *sCmd ^nStringPosition @@ 2 *sMonth1  $SUB 
+756 LINE.NUM *sMonth  $>I  I!MTH 
+757 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+758 LINE.NUM *sCmd ^nStringPosition @@ 2 *sDay1  $SUB 
+759 LINE.NUM *sDay  $>I  I!DAY 
+760 LINE.NUM ^nStringPosition @@ 3 +  ^nStringPosition @! 
+761 LINE.NUM *sCmd ^nStringPosition @@ 2 *sTime  $SUB 
+762 LINE.NUM *sTime  $>I  I!HRS 
+763 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+764 LINE.NUM *sCmd ^nStringPosition @@ 2 *sTime  $SUB 
+765 LINE.NUM *sTime  $>I  I!MTS 
+766 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+767 LINE.NUM *sCmd ^nStringPosition @@ 2 *sTime  $SUB 
+768 LINE.NUM *sTime  $>I  I!SEC 
+769 LINE.NUM 86400 I>F ^dt24h @! 
+770 LINE.NUM ^dt24h  StartTimer 
+771 LINE.NUM THEN 
+772 LINE.NUM THEN 
+774 LINE.NUM THEN 
+777 LINE.NUM " RESET" 0 *sCmd  FindSubString ^nFindCmd @! 
+778 LINE.NUM ^nFindCmd @@ -1 > IF 
+779 LINE.NUM &DatatakerComm  STOP.T 
+780 LINE.NUM &Housekeeper  STOP.T 
+781 LINE.NUM &Powerup  START.T DROP  
+782 LINE.NUM &MasterComm  STOP.T 
+783 LINE.NUM THEN 
+786 LINE.NUM *Status  $LEN IF 
+787 LINE.NUM "  " *Status $CAT 
+
+788 LINE.NUM ELSE 
+790 LINE.NUM " Success=FALSE, Unknown command " *Status  $MOVE 
+791 LINE.NUM *sTimestamp4 &Timestamp CALL.SUB DROP  
+792 LINE.NUM *sTimestamp4 *Status $CAT 
+
+793 LINE.NUM THEN 
+796 LINE.NUM *sTimestamp4 &Timestamp CALL.SUB DROP  
+797 LINE.NUM *sTimestamp4 *Status $CAT 
+
+798 LINE.NUM *Status *cPort  PRT$ DROP  
+799 LINE.NUM " " *Status  $MOVE 
 0 JUMP ;
 : 4_70
 -9 JUMP ;
@@ -2772,8 +2904,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/09/15 " ;
-: TIMESTAMP ." 23:04:38 " ;
+: DATESTAMP ." 04/10/15 " ;
+: TIMESTAMP ." 03:52:16 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
