@@ -911,7 +911,7 @@
 68 LINE.NUM THEN 
 70 LINE.NUM " , UtilityVac=" *StatusString $CAT 
 
-71 LINE.NUM ~HVAC_24VAC @@ 8.830000e+000 F* 5 1 *EnviroTemp  FF.R$ 
+71 LINE.NUM ~Utility_VAC @@ 5 1 *EnviroTemp  FF.R$ 
 72 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 74 LINE.NUM " , Bard24Vac=" *StatusString $CAT 

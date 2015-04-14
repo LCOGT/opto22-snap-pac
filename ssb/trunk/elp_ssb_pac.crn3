@@ -216,6 +216,7 @@ CREATE P.ARRAY
 ~SSB_Outgoing_Temp ,
 ~SSB_Panel_Temp ,
 ~Utility_Current ,
+~Utility_VAC ,
  0 ,
 CREATE PID.ARRAY
  0 ,
