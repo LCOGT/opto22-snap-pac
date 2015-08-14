@@ -17,7 +17,7 @@
 16 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
 17 LINE.NUM &Pole_Close  START.T DROP  
 18 LINE.NUM ELSE 
-18 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 = LAND  IF 
+18 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 >= LAND  IF 
 20 LINE.NUM THEN THEN THEN THEN 
 25 LINE.NUM ELSE 
 25 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 

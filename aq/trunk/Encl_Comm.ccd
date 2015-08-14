@@ -75,41 +75,42 @@
 6 LINE.NUM ^dtHeartbeat @@F ^nOldHeartbeat F@! 
 7 LINE.NUM 60 I>F ^dtHeartbeat @! 
 8 LINE.NUM ^dtHeartbeat  StartTimer 
-10 LINE.NUM ^nOldHeartbeat @@ *sOldHeartbeat  I>$ 
-11 LINE.NUM " , HeartbeatTimer=" *sEnclStatus $CAT 
+10 LINE.NUM 0 ^HeartbeatExpired @! 
+12 LINE.NUM ^nOldHeartbeat @@ *sOldHeartbeat  I>$ 
+13 LINE.NUM " , HeartbeatTimer=" *sEnclStatus $CAT 
 
-12 LINE.NUM *sOldHeartbeat *sEnclStatus $CAT 
+14 LINE.NUM *sOldHeartbeat *sEnclStatus $CAT 
 
-14 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-15 LINE.NUM " " *sEnclStatus  $MOVE 
-21 LINE.NUM ^dt24h @@F 1 I>F F< IF 
-22 LINE.NUM *sEnclCmd  $LEN ^nStringLength @! 
-23 LINE.NUM ^nStringLength @@ 28 > IF 
-24 LINE.NUM " ," 0 *sEnclCmd  FindSubString ^nStringPosition @! 
-25 LINE.NUM ^nStringPosition  1+@! 
-26 LINE.NUM " ," ^nStringPosition @@ *sEnclCmd  FindSubString ^nStringPosition @! 
+16 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+17 LINE.NUM " " *sEnclStatus  $MOVE 
+23 LINE.NUM ^dt24h @@F 1 I>F F< IF 
+24 LINE.NUM *sEnclCmd  $LEN ^nStringLength @! 
+25 LINE.NUM ^nStringLength @@ 28 > IF 
+26 LINE.NUM " ," 0 *sEnclCmd  FindSubString ^nStringPosition @! 
 27 LINE.NUM ^nStringPosition  1+@! 
-28 LINE.NUM *sEnclCmd ^nStringPosition @@ 4 *sYear  $SUB 
-29 LINE.NUM *sYear  $>I  I!YRS 
-30 LINE.NUM ^nStringPosition @@ 4 +  ^nStringPosition @! 
-31 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sMonth  $SUB 
-32 LINE.NUM *sMonth  $>I  I!MTH 
-33 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-34 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sDay  $SUB 
-35 LINE.NUM *sDay  $>I  I!DAY 
-36 LINE.NUM ^nStringPosition @@ 3 +  ^nStringPosition @! 
-37 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
-38 LINE.NUM *sTime  $>I  I!HRS 
-39 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-40 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
-41 LINE.NUM *sTime  $>I  I!MTS 
-42 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-43 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
-44 LINE.NUM *sTime  $>I  I!SEC 
-45 LINE.NUM 86400 I>F ^dt24h @! 
-46 LINE.NUM ^dt24h  StartTimer 
-47 LINE.NUM THEN 
-48 LINE.NUM THEN 
+28 LINE.NUM " ," ^nStringPosition @@ *sEnclCmd  FindSubString ^nStringPosition @! 
+29 LINE.NUM ^nStringPosition  1+@! 
+30 LINE.NUM *sEnclCmd ^nStringPosition @@ 4 *sYear  $SUB 
+31 LINE.NUM *sYear  $>I  I!YRS 
+32 LINE.NUM ^nStringPosition @@ 4 +  ^nStringPosition @! 
+33 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sMonth  $SUB 
+34 LINE.NUM *sMonth  $>I  I!MTH 
+35 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+36 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sDay  $SUB 
+37 LINE.NUM *sDay  $>I  I!DAY 
+38 LINE.NUM ^nStringPosition @@ 3 +  ^nStringPosition @! 
+39 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
+40 LINE.NUM *sTime  $>I  I!HRS 
+41 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+42 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
+43 LINE.NUM *sTime  $>I  I!MTS 
+44 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+45 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
+46 LINE.NUM *sTime  $>I  I!SEC 
+47 LINE.NUM 86400 I>F ^dt24h @! 
+48 LINE.NUM ^dt24h  StartTimer 
+49 LINE.NUM THEN 
+50 LINE.NUM THEN 
 0 JUMP ;
 : 21_70
 -10 JUMP ;

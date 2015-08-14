@@ -3,8 +3,8 @@
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\aqPAC\trunk\aqPAC.idb
-# VERSION :      R9.1a
-# TIME/DATE :    16:23:27 2/26/2015
+# VERSION :      R9.4a
+# TIME/DATE :    20:12:40 8/14/2015
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -238,6 +238,7 @@ TAG1,f120                                              ,97   ,00000000,00000000,
 TAG1,f24hrsInSec                                       ,98   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,FastMode                                          ,66   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,flag_status                                       ,22   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,HeartbeatExpired                                  ,132  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ListeningForMaster                                ,23   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Master_CommClosed                                 ,24   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Master_Handle_CharNumWaiting                      ,25   ,00000000,00000000,00000000,00000008,0    ,0   
