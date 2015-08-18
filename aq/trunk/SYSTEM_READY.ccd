@@ -248,21 +248,13 @@
 27 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 28 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-29 LINE.NUM ELSE 
-29 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= LAND  ^HeartbeatExpired @@ 0 = LAND  IF 
-30 LINE.NUM 1 ^HeartbeatExpired @! 
-31 LINE.NUM " , HeartbeatExpired " *sFaultList $CAT 
-
-32 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-33 LINE.NUM *sTimestamp *sFaultList $CAT 
-
-34 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
-36 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
-37 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
-38 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
-39 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
-40 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
-41 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
+29 LINE.NUM THEN THEN THEN THEN THEN THEN 
+31 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
+32 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
+33 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
+34 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
+35 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
+36 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
 0 JUMP ;
 : 17_46
 1 LINE.NUM 100  DELAY 
