@@ -284,7 +284,7 @@ $b0000000 0 %local_io 0 PID |pidTentFans
   ^DTcommStatus @! 
 10 JUMP ;
 : 1_5
-1 LINE.NUM 10  DELAY 
+1 LINE.NUM 1000  DELAY 
 -2 JUMP ;
 : 1_21
 1 LINE.NUM *DTcommHandle  CLOSE DROP  
@@ -986,7 +986,7 @@ T;
 
 272 LINE.NUM THEN 
 273 LINE.NUM THEN 
-1 JUMP ;
+0 JUMP ;
 : 2_8
 4 LINE.NUM ^DTlogFlag @@ 1 = IF 
 5 LINE.NUM |pidTentFans  $0002.. ROT PID@ 4 1 *sVar  FF.R$ 
@@ -1088,7 +1088,7 @@ T;
 114 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
 115 LINE.NUM THEN 
 116 LINE.NUM THEN 
-7 JUMP ;
+0 JUMP ;
 : 2_15
 1 LINE.NUM 1 {stDTdata $TABLE@  $>F ^fPidInput @! 
 2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
@@ -1880,73 +1880,73 @@ T;
 531 LINE.NUM THEN 
 536 LINE.NUM ~AI_IglooStirFanM282_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 537 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-538 LINE.NUM " , IglooStirFanM28.2Tach=" *Status $CAT 
+538 LINE.NUM " , IglooStirFan1Tach=" *Status $CAT 
 
 539 LINE.NUM *sFanSpd *Status $CAT 
 
 541 LINE.NUM ~AI_IglooStirFanM284_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 542 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-543 LINE.NUM " , IglooStirFanM28.4Tach=" *Status $CAT 
+543 LINE.NUM " , IglooStirFan2Tach=" *Status $CAT 
 
 544 LINE.NUM *sFanSpd *Status $CAT 
 
 546 LINE.NUM ~AI_IglooStirFanM292_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 547 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-548 LINE.NUM " , IglooStirFanM29.2Tach=" *Status $CAT 
+548 LINE.NUM " , IglooStirFan3Tach=" *Status $CAT 
 
 549 LINE.NUM *sFanSpd *Status $CAT 
 
 551 LINE.NUM ~AI_IglooStirFanM294_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 552 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-553 LINE.NUM " , IglooStirFanM29.4Tach=" *Status $CAT 
+553 LINE.NUM " , IglooStirFan4Tach=" *Status $CAT 
 
 554 LINE.NUM *sFanSpd *Status $CAT 
 
 556 LINE.NUM ~AI_TentIntakeFanM304_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 557 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-558 LINE.NUM " , TentIntakeFanM30.4Tach=" *Status $CAT 
+558 LINE.NUM " , TentIntakeFan1Tach=" *Status $CAT 
 
 559 LINE.NUM *sFanSpd *Status $CAT 
 
 561 LINE.NUM ~AI_TentExhaustFanM306_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 562 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-563 LINE.NUM " , TentExhaustFanM30.6Tach=" *Status $CAT 
+563 LINE.NUM " , TentExhaustFan1Tach=" *Status $CAT 
 
 564 LINE.NUM *sFanSpd *Status $CAT 
 
 566 LINE.NUM ~AI_TentIntakeFanM312_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 567 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-568 LINE.NUM " , TentIntakeFanM31.2Tach=" *Status $CAT 
+568 LINE.NUM " , TentIntakeFan2Tach=" *Status $CAT 
 
 569 LINE.NUM *sFanSpd *Status $CAT 
 
 571 LINE.NUM ~AI_TentExhaustFanM314_Tach @@ 100 I>F F* 148 I>F F/ ^nFanSpd F@! 
 572 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-573 LINE.NUM " , TentExhaustFanM31.4Tach=" *Status $CAT 
+573 LINE.NUM " , TentExhaustFan2Tach=" *Status $CAT 
 
 574 LINE.NUM *sFanSpd *Status $CAT 
 
 576 LINE.NUM ~AI_TentStirFanM323_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
 577 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-578 LINE.NUM " , TentStirFanM32.3Tach=" *Status $CAT 
+578 LINE.NUM " , TentStirFan1Tach=" *Status $CAT 
 
 579 LINE.NUM *sFanSpd *Status $CAT 
 
 581 LINE.NUM ~AI_TentStirFanM325_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
 582 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-583 LINE.NUM " , TentStirFanM32.5Tach=" *Status $CAT 
+583 LINE.NUM " , TentStirFan2Tach=" *Status $CAT 
 
 584 LINE.NUM *sFanSpd *Status $CAT 
 
 586 LINE.NUM ~AI_PanelFanM184_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
 587 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-588 LINE.NUM " , PanelFanM18.4Tach=" *Status $CAT 
+588 LINE.NUM " , PanelIntakeFan1Tach=" *Status $CAT 
 
 589 LINE.NUM *sFanSpd *Status $CAT 
 
 591 LINE.NUM ~AI_PanelFanM186_Tach @@ 100 I>F F* 110 I>F F/ ^nFanSpd F@! 
 592 LINE.NUM ^nFanSpd @@ *sFanSpd  I>$ 
-593 LINE.NUM " , PanelFanM18.6Tach=" *Status $CAT 
+593 LINE.NUM " , PanelIntakeFan2Tach=" *Status $CAT 
 
 594 LINE.NUM *sFanSpd *Status $CAT 
 
@@ -2189,7 +2189,7 @@ LOR
   ^nPortStatus @@ 
   -47    =
 LOR
-IF -12 ELSE -13 THEN JUMP ;
+IF -12 ELSE 8 THEN JUMP ;
 : 4_22
 TRUE
 
@@ -2257,6 +2257,14 @@ TRUE
   -39    =
 LAND
 IF -13 ELSE -17 THEN JUMP ;
+: 4_121
+TRUE
+
+1 LINE.NUM
+  ^nPortStatus @@ 
+  -442    =
+LAND
+IF -22 ELSE -18 THEN JUMP ;
 T: T4
 DUMMY
 4_0
@@ -2284,6 +2292,7 @@ DUMMY
 4_45
 4_51
 4_57
+4_121
 T;
 &MasterComm ' T4 SETTASK
 : 0_0
@@ -2366,7 +2375,7 @@ T;
 31 LINE.NUM *_HSV_SEMA Acquire1String *sOctet1  *_HSV_TEMP $MOVE *sOctet2  *_HSV_TEMP $CAT *sOctet3  *_HSV_TEMP $CAT 48  *_HSV_TEMP $APPEND 51  *_HSV_TEMP $APPEND *_HSV_TEMP *sIP_hex $MOVE Release1String 
 33 LINE.NUM *sIP_hex  HEX$>I ^nIP_int @! 
 34 LINE.NUM ^nIP_int @@ *sDT_IP  I>IP$ 
-36 LINE.NUM " tcp:172.16.5.52:8" *sDT_IP  $MOVE 
+35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sDT_IP  *_HSV_TEMP $CAT " :8"  *_HSV_TEMP $CAT *_HSV_TEMP *sDT_IP $MOVE Release1String 
 37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
 0 JUMP ;
 : 0_7
@@ -2904,8 +2913,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/13/15 " ;
-: TIMESTAMP ." 16:46:45 " ;
+: DATESTAMP ." 08/21/15 " ;
+: TIMESTAMP ." 18:06:40 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

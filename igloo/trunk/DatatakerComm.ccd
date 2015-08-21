@@ -7,7 +7,7 @@
   ^DTcommStatus @! 
 10 JUMP ;
 : 1_5
-1 LINE.NUM 10  DELAY 
+1 LINE.NUM 1000  DELAY 
 -2 JUMP ;
 : 1_21
 1 LINE.NUM *DTcommHandle  CLOSE DROP  
