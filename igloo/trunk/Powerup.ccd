@@ -22,9 +22,9 @@
 34 LINE.NUM 32 ^EcbCmd @! 
 36 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
 37 LINE.NUM " CtrOfTent" 1 {stHeader $TABLE@  $MOVE 
-38 LINE.NUM " RTD2" 2 {stHeader $TABLE@  $MOVE 
+38 LINE.NUM " Instrument" 2 {stHeader $TABLE@  $MOVE 
 39 LINE.NUM " TentExhaust" 3 {stHeader $TABLE@  $MOVE 
-40 LINE.NUM " RTD4" 4 {stHeader $TABLE@  $MOVE 
+40 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
 41 LINE.NUM " RTD5" 5 {stHeader $TABLE@  $MOVE 
 42 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
 43 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
@@ -39,8 +39,8 @@
 52 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
 53 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
 54 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
-55 LINE.NUM " PID_Derivative" 
-19 {stHeader $TABLE@  $MOVE 
+55 LINE.NUM 
+" PID_Derivative" 19 {stHeader $TABLE@  $MOVE 
 56 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
 58 LINE.NUM " 0.1" *sICDversion  $MOVE 
 59 LINE.NUM *sFWversion  Rev>$ 
