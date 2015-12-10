@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Documents and Settings\eng\Desktop\opto22\fpac\trunk\1mFPAC.idb
-# VERSION :      R9.1a
-# TIME/DATE :    18:15:25 10/16/2012
+# NAME :         C:\Users\jdevera\Desktop\PAC Programs\fpac\trunk\1mFPAC.idb
+# VERSION :      R9.4a
+# TIME/DATE :    16:7:12 12/10/2015
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
