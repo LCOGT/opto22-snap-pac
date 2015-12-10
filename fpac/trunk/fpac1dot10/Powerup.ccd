@@ -1,0 +1,58 @@
+: 0_0
+0 JUMP ;
+: 0_1
+
+1 LINE.NUM
+  &LED_control   START.T
+  ^AQ_Go_Fast_Ok @! 
+
+2 LINE.NUM
+  &Test_HVAC   START.T
+  ^Test_HVAC_Status @! 
+
+3 LINE.NUM
+  &Master_Comm   START.T
+  ^MasterCommEstablished @! 
+
+4 LINE.NUM
+  &Test_Front_Panel   START.T
+  ^Test_Front_Panel_Status @! 
+
+5 LINE.NUM
+  &WhiteLights   START.T
+  ^WhiteLights_Chart @! 
+1 JUMP ;
+: 0_10
+
+1 LINE.NUM
+  90.0  
+  ^Heartbeat_Timer   SetTimer
+
+2 LINE.NUM
+  ^Heartbeat_Timer   StartTimer
+1 JUMP ;
+: 0_22
+
+1 LINE.NUM
+  10.0  
+  ^TempPanelSpeed F@!   
+
+2 LINE.NUM
+  0.0  
+  ^TempFanSpeed F@!   
+
+3 LINE.NUM
+  10.0  
+  ~CABINET_FAN_CTRL @!   
+-2 JUMP ;
+: 0_26
+0 JUMP ;
+T: T0
+DUMMY
+0_0
+0_1
+0_10
+0_22
+0_26
+T;
+&Powerup ' T0 SETTASK
