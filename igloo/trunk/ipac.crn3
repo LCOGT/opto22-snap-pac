@@ -498,7 +498,7 @@ CONFIG_PORTS
  *cPort $MOVE
 " "
  *DTcommHandle $MOVE
-" ftp:207.71.206.55:21,eng,sbatoo1"
+" ftp:docknode05.lco.gtn:21,eng,sbatoo1"
  *FTPcommHandle $MOVE
 " tcp:74.125.224.135:80"
  *GoogleCommHandle $MOVE

@@ -1047,7 +1047,7 @@ T;
 65 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
 67 LINE.NUM *sDate *sCurrentDate  $MOVE 
-69 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+69 LINE.NUM *FTPcommHandle " cd:/iglooData"  SWAP COM.CMD DROP  
 70 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
 71 LINE.NUM *FTPcommHandle  CLOSE DROP  
 74 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
@@ -1079,7 +1079,7 @@ T;
 
 104 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-107 LINE.NUM *FTPcommHandle " cd:/var/ftp/download/igloo-pac-data"  SWAP COM.CMD DROP  
+107 LINE.NUM *FTPcommHandle " cd:/iglooData"  SWAP COM.CMD DROP  
 108 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
 109 LINE.NUM *FTPcommHandle  CLOSE DROP  
 111 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
@@ -2893,7 +2893,7 @@ CONFIG_PORTS
  *cPort $MOVE
 " "
  *DTcommHandle $MOVE
-" ftp:207.71.206.55:21,eng,sbatoo1"
+" ftp:docknode05.lco.gtn:21,eng,sbatoo1"
  *FTPcommHandle $MOVE
 " tcp:74.125.224.135:80"
  *GoogleCommHandle $MOVE
@@ -2914,8 +2914,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/13/15 " ;
-: TIMESTAMP ." 18:21:28 " ;
+: DATESTAMP ." 02/26/16 " ;
+: TIMESTAMP ." 20:29:12 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
