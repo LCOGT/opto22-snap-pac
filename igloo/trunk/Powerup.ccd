@@ -16,44 +16,46 @@
 
 29 LINE.NUM *sDate *sCurrentDate  $MOVE 
 30 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
-31 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
-32 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
-33 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
-34 LINE.NUM 32 ^EcbCmd @! 
-36 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
-37 LINE.NUM " CtrOfTent" 1 {stHeader $TABLE@  $MOVE 
-38 LINE.NUM " Instrument" 2 {stHeader $TABLE@  $MOVE 
-39 LINE.NUM " TentExhaust" 3 {stHeader $TABLE@  $MOVE 
-40 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
-41 LINE.NUM " RTD5" 5 {stHeader $TABLE@  $MOVE 
-42 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
-43 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
-44 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
-45 LINE.NUM " TentIntake" 9 {stHeader $TABLE@  $MOVE 
-46 LINE.NUM " ACoutput" 10 {stHeader $TABLE@  $MOVE 
-47 LINE.NUM " PanelRTD" 11 {stHeader $TABLE@  $MOVE 
-48 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
-49 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
-50 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
-51 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
-52 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
-53 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
-54 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
-55 LINE.NUM 
-" PID_Derivative" 19 {stHeader $TABLE@  $MOVE 
-56 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
-58 LINE.NUM " 0.1" *sICDversion  $MOVE 
-59 LINE.NUM *sFWversion  Rev>$ 
-60 LINE.NUM " 0.1" *sSWversion  $MOVE 
-62 LINE.NUM 300 I>F ^dtFanMonitor @! 
-63 LINE.NUM ^dtFanMonitor  StartTimer 
-66 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
-67 LINE.NUM 1 ~DO_CryoTig_CR @! 
-68 LINE.NUM ELSE 
-69 LINE.NUM 0 ~DO_CryoTig_CR @! 
-70 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-71 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-72 LINE.NUM THEN 
+31 LINE.NUM " tcp:172.16.5.39:502" *chModbusMaster  $MOVE 
+32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
+33 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
+34 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
+35 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
+36 LINE.NUM 32 ^EcbCmd @! 
+63 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
+64 LINE.NUM " TentAir" 1 {stHeader $TABLE@  $MOVE 
+65 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 
+66 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
+67 LINE.NUM " ACoutput" 4 {stHeader $TABLE@  $MOVE 
+68 LINE.NUM " OutsideAir" 5 {stHeader $TABLE@  $MOVE 
+69 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
+70 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
+71 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
+72 LINE.NUM " NA" 9 {stHeader $TABLE@  $MOVE 
+73 LINE.NUM " NA" 10 {stHeader $TABLE@  $MOVE 
+74 LINE.NUM " NA" 11 {stHeader $TABLE@  $MOVE 
+75 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
+76 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
+77 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
+78 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
+79 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
+80 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
+81 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
+82 LINE.NUM " PID_Derivative" 19 
+{stHeader $TABLE@  $MOVE 
+83 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
+85 LINE.NUM " 0.1" *sICDversion  $MOVE 
+86 LINE.NUM *sFWversion  Rev>$ 
+87 LINE.NUM " 0.1" *sSWversion  $MOVE 
+89 LINE.NUM 300 I>F ^dtFanMonitor @! 
+90 LINE.NUM ^dtFanMonitor  StartTimer 
+93 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
+94 LINE.NUM 1 ~DO_CryoTig_CR @! 
+95 LINE.NUM ELSE 
+96 LINE.NUM 0 ~DO_CryoTig_CR @! 
+97 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
+98 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+99 LINE.NUM THEN 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -82,9 +84,9 @@
 37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
 0 JUMP ;
 : 0_7
-1 LINE.NUM &DatatakerComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
 4 LINE.NUM &MasterComm  START.T DROP  
+5 LINE.NUM &Modbus_Master  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY

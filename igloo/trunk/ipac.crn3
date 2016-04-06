@@ -3,6 +3,7 @@ CREATE T.ARRAY
 &GoogleComm ,
 &Housekeeper ,
 &MasterComm ,
+&Modbus_Master ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
@@ -12,6 +13,7 @@ CREATE V.ARRAY
 ^CalcFanSpd ,
 ^Count ,
 ^Count1 ,
+^Count2 ,
 ^Cryotig_CR_ErrorFlag ,
 ^done ,
 ^DTcharCount ,
@@ -48,6 +50,8 @@ CREATE V.ARRAY
 ^Length1 ,
 ^MasterEcbCmd ,
 ^MasterEcbFlag ,
+^n03AsIntStatus ,
+^n03AsIntSubStatus ,
 ^nCharCount ,
 ^nCounter1 ,
 ^nCounter2 ,
@@ -59,6 +63,7 @@ CREATE V.ARRAY
 ^nIndex ,
 ^nIP_int ,
 ^nLength ,
+^nModbusMasterReadDelay ,
 ^nOctet3 ,
 ^nPortStatus ,
 ^nReceiveStatus ,
@@ -163,6 +168,7 @@ CREATE V.ARRAY
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*chModbusMaster ,
 *cPort ,
 *DTcommHandle ,
 *FTPcommHandle ,
@@ -186,7 +192,11 @@ CREATE PTR.ARRAY
 CREATE TA.ARRAY 
 }EcbBitData ,
 }EcbStatus ,
+}nt03AsIntParameters ,
+}nt03HoldingRegAsIntReturnValues ,
 }ntEcbCmd ,
+}ntRTDdata ,
+}ntRTDtempData ,
 {stDTdata ,
 {stHeader ,
  0 ,
@@ -268,6 +278,7 @@ CONFIG_PORTS
 0.00000000 ^CalcFanSpd @!
 0 ^Count @!
 0 ^Count1 @!
+0 ^Count2 @!
 0 ^Cryotig_CR_ErrorFlag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^done @!
@@ -313,6 +324,8 @@ CONFIG_PORTS
 0 ^Length1 @!
 0 ^MasterEcbCmd @!
 0 ^MasterEcbFlag @!
+0 ^n03AsIntStatus @!
+0 ^n03AsIntSubStatus @!
 0 ^nCharCount @!
 0 ^nCounter1 @!
 0 ^nCounter2 @!
@@ -324,6 +337,7 @@ CONFIG_PORTS
 0 ^nIndex @!
 0 ^nIP_int @!
 0 ^nLength @!
+0 ^nModbusMasterReadDelay @!
 0 ^nOctet3 @!
 0 ^nPortStatus @!
 0 ^nReceiveStatus @!
@@ -365,7 +379,11 @@ CONFIG_PORTS
 0 ^y @!
 0 0 -1 }EcbBitData InitTable
 0 0 -1 }EcbStatus InitTable
+0 0 -1 }nt03AsIntParameters InitTable
+0 0 -1 }nt03HoldingRegAsIntReturnValues InitTable
 0 0 -1 }ntEcbCmd InitTable
+0 0 -1 }ntRTDdata InitTable
+0.00000000 0 -1 }ntRTDtempData InitTable
 " "
  *CRLF $MOVE
 " "
@@ -494,6 +512,8 @@ CONFIG_PORTS
  *sVoltage $MOVE
 " "
  *sYear $MOVE
+" "
+ *chModbusMaster $MOVE
 " tcp:22004"
  *cPort $MOVE
 " "

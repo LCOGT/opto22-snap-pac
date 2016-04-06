@@ -5,6 +5,402 @@ _END NEW $$$.RUN
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
 
+\   ++++++++++ SUB name="O22Modbus03ReadHoldingRegistersAsInt" ++++++++++
+
+0 SUBR &O22Modbus03ReadHoldingRegistersAsInt
+SUB.CODE nullIVAR nullILiteral nullITABLE nullILiteral nullILiteral nullITABLE nullCOMVAR &O22Modbus03ReadHoldingRegistersAsInt
+0 TVAR ^dtWait_Timer
+0 FVAR ^fWaitTime
+0 IVAR ^nIndex
+0 IVAR ^nIntegerType
+0 IVAR ^nNumReturnValues
+0 IVAR ^nReceive_Index
+0 IVAR ^nStart_Index
+0 IVAR ^nStartRegisterNumber
+0 IVAR ^nTemp1
+0 IVAR ^nTemp2
+512 0 $VAR *sTempString1 
+512 0 $VAR *sTempString2 
+4 0 $VAR *sTempString3 
+1024 0 COMVAR *chCommHandle 
+261 0 ITABLE }ntReceive_Table
+
+: &O22Modbus03ReadHoldingRegistersAsInt.0
+0 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.3
+1 LINE.NUM 6 PARAM  ?STREAM.KEY 0 < IF 
+2 LINE.NUM 6 PARAM  OPEN 0 PARAM @! 
+3 LINE.NUM ELSE 
+4 LINE.NUM 0 0 PARAM @! 
+5 LINE.NUM THEN 
+10 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.10
+16 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.22
+1 LINE.NUM 5 5 PARAM TABLE@ 65535 MOD  5 5 PARAM TABLE! 
+2 LINE.NUM 5 5 PARAM TABLE@ 1 +  5 5 PARAM TABLE! 
+5 LINE.NUM 5 5 PARAM TABLE@ 65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+6 LINE.NUM " " *sTempString1 $MOVE ^nTemp1 @@ *sTempString1  $APPEND 
+7 LINE.NUM 5 5 PARAM TABLE@ 255 AND  ^nTemp1 @! 
+8 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+11 LINE.NUM 0 *sTempString1 $APPEND 
+
+12 LINE.NUM 0 *sTempString1 $APPEND 
+
+15 LINE.NUM 0 *sTempString1 $APPEND 
+
+16 LINE.NUM 6 *sTempString1 $APPEND 
+
+19 LINE.NUM 1 5 PARAM TABLE@ ^nTemp1 @! 
+20 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+23 LINE.NUM 3 *sTempString1 $APPEND 
+
+26 LINE.NUM ^nStartRegisterNumber @@ 1 -  65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+27 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+28 LINE.NUM ^nStartRegisterNumber @@ 1 -  255 AND  ^nTemp1 @! 
+29 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+32 LINE.NUM ^nIntegerType @@ 4 = IF 
+33 LINE.NUM ^nNumReturnValues @@ 2 *  65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+34 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+35 LINE.NUM ^nNumReturnValues @@ 2 *  255 AND  ^nTemp1 @! 
+36 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+37 LINE.NUM ELSE 
+38 LINE.NUM ^nNumReturnValues @@ 65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+39 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+40 LINE.NUM ^nNumReturnValues @@ 255 AND  ^nTemp1 @! 
+41 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+42 LINE.NUM THEN 
+0 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.24
+1 LINE.NUM *sTempString1 6 PARAM  PRT$ 0 PARAM @! 
+2 LINE.NUM 2 5 PARAM TABLE@F ^fWaitTime @! 
+3 LINE.NUM ^fWaitTime @@ 1000 I>F F/ ^dtWait_Timer @! 
+1 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.28
+1 LINE.NUM -216 0 PARAM @! 
+13 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.36
+
+1 LINE.NUM
+  6 PARAM   ?STREAM.KEY
+  ^nTemp1 @! 
+10 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.41
+1 LINE.NUM 0 5 PARAM TABLE@ CASE 
+2 LINE.NUM 0 OF 
+3 LINE.NUM *sTempString2 3 6 PARAM  GETN$ DROP  
+5 LINE.NUM 3 *sTempString2 1  $INDEX <> IF 
+6 LINE.NUM *sTempString2 2  $INDEX 0 PARAM @! 
+7 LINE.NUM 6 PARAM  STREAM.CLEAR.BUF 
+8 LINE.NUM ELSE 
+9 LINE.NUM *sTempString1 *sTempString2 2  $INDEX 6 PARAM  GETN$ DROP  
+10 LINE.NUM *sTempString1 *sTempString2 $CAT 
+
+11 LINE.NUM -1 *sTempString2  CalcCRCR ^nTemp2 @! 
+12 LINE.NUM *sTempString1 2 6 PARAM  GETN$ DROP  
+13 LINE.NUM ^nTemp2 @@ *sTempString1 1  $INDEX 8 SHIFT  *sTempString1 0  $INDEX +  <> IF 
+14 LINE.NUM -211 0 PARAM @! 
+15 LINE.NUM THEN 
+16 LINE.NUM THEN 
+17 LINE.NUM ENDOF 
+18 LINE.NUM 2 OF 
+19 LINE.NUM *sTempString1 6 6 PARAM  GETN$ DROP  
+20 LINE.NUM *sTempString2 *sTempString1 4  $INDEX 8 SHIFT  *sTempString1 5  $INDEX +  6 PARAM  GETN$ DROP  
+22 LINE.NUM 3 *sTempString2 1  $INDEX <> IF 
+23 LINE.NUM *sTempString2 2  $INDEX 0 PARAM @! 
+24 LINE.NUM 6 PARAM  STREAM.CLEAR.BUF 
+25 LINE.NUM THEN 
+26 LINE.NUM ENDOF 
+28 LINE.NUM ^nTemp2  FALSE@! 
+29 LINE.NUM *sTempString2 6 PARAM  GET$ 0 PARAM @! 
+30 LINE.NUM 0 PARAM @@ 0 = IF 
+31 LINE.NUM *sTempString2 1 2 *sTempString3  $SUB 
+32 LINE.NUM *sTempString3  HEX$>I ^nTemp1 @! 
+33 LINE.NUM ^nTemp2 @@ ^nTemp1 @@ +  ^nTemp2 @! 
+35 LINE.NUM *sTempString2 3 2 *sTempString3  $SUB 
+36 LINE.NUM *sTempString3  HEX$>I ^nTemp1 @! 
+37 LINE.NUM ^nTemp2 @@ ^nTemp1 @@ +  ^nTemp2 @! 
+39 LINE.NUM 3 ^nTemp1 @@ <> IF 
+40 LINE.NUM *sTempString2 5 2 *sTempString3  $SUB 
+41 LINE.NUM *sTempString3  HEX$>I 0 PARAM @! 
+42 LINE.NUM 6 PARAM  STREAM.CLEAR.BUF 
+43 LINE.NUM ELSE 
+45 LINE.NUM *sTempString2 5 2 *sTempString3  $SUB 
+46 LINE.NUM *sTempString3  HEX$>I ^nTemp1 @! 
+47 LINE.NUM ^nTemp2 @@ ^nTemp1 @@ +  ^nTemp2 @! 
+48 LINE.NUM 2 ^nReceive_Index @! 
+49 LINE.NUM ^nTemp1 @@ ^nReceive_Index @@ }ntReceive_Table TABLE! 
+50 LINE.NUM ^nReceive_Index  1+@! 
+2 51 LINE.NUM ^nTemp1 @@ 2 *  5 +  1 + 7 DO? I ^nIndex @! 
+52 LINE.NUM *sTempString2 ^nIndex @@ 2 *sTempString3  $SUB 
+53 LINE.NUM *sTempString3  HEX$>I ^nTemp1 @! 
+54 LINE.NUM ^nTemp2 @@ ^nTemp1 @@ +  ^nTemp2 @! 
+55 LINE.NUM ^nTemp1 @@ ^nReceive_Index @@ }ntReceive_Table TABLE! 
+56 LINE.NUM ^nReceive_Index  1+@! 
+57 LINE.NUM 2 +LOOP 
+58 LINE.NUM BEGIN ^nTemp2 @@ 255 > WHILE 
+59 LINE.NUM ^nTemp2 @@ 256 -  ^nTemp2 @! 
+60 LINE.NUM REPEAT 
+61 LINE.NUM ^nTemp2 @@ 0 = IF 
+62 LINE.NUM 0 ^nTemp1 @! 
+63 LINE.NUM ELSE 
+64 LINE.NUM 255 ^nTemp2 @@ -  1 +  ^nTemp1 @! 
+65 LINE.NUM THEN 
+66 LINE.NUM ^nTemp1 @@ 2 *sTempString1  I>HEX$.R 
+67 LINE.NUM *sTempString2 ^nIndex @@ 2 +  2 *sTempString3  $SUB 
+68 LINE.NUM *sTempString1 *sTempString3 $= LNOT  IF 
+69 LINE.NUM -213 0 PARAM @! 
+70 LINE.NUM THEN 
+71 LINE.NUM THEN 
+72 LINE.NUM THEN 
+74 LINE.NUM ENDCASE 
+10 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.45
+10 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.47
+1 LINE.NUM 0 5 PARAM TABLE@ 1 = IF 
+3 LINE.NUM 2 }ntReceive_Table TABLE@ 2 +  ^nTemp1 @! 
+4 LINE.NUM ^nIntegerType @@ CASE 
+5 LINE.NUM 0 OF 
+2 6 LINE.NUM ^nTemp1 @@ 1 + 3 DO? I ^nIndex @! 
+7 LINE.NUM ^nIndex @@ }ntReceive_Table TABLE@ 8 SHIFT  ^nIndex @@ 1 +  }ntReceive_Table TABLE@ +  ^nStart_Index @@ 2 PARAM TABLE! 
+8 LINE.NUM ^nStart_Index  1+@! 
+9 LINE.NUM 2 +LOOP 
+10 LINE.NUM ENDOF 
+11 LINE.NUM 1 OF 
+2 12 LINE.NUM ^nTemp1 @@ 1 + 3 DO? I ^nIndex @! 
+13 LINE.NUM ^nIndex @@ }ntReceive_Table TABLE@ 8 SHIFT  ^nIndex @@ 1 +  }ntReceive_Table TABLE@ +  ^nTemp2 @! 
+14 LINE.NUM ^nTemp2 @@ 32767 > IF 
+15 LINE.NUM ^nTemp2 @@ 65536 -  ^nStart_Index @@ 2 PARAM TABLE! 
+16 LINE.NUM ELSE 
+17 LINE.NUM ^nTemp2 @@ ^nStart_Index @@ 2 PARAM TABLE! 
+18 LINE.NUM THEN 
+19 LINE.NUM ^nStart_Index  1+@! 
+20 LINE.NUM 2 +LOOP 
+21 LINE.NUM ENDOF 
+23 LINE.NUM 3 5 PARAM TABLE@ IF 
+4 24 LINE.NUM ^nTemp1 @@ 1 + 3 DO? I ^nIndex @! 
+25 LINE.NUM ^nIndex @@ }ntReceive_Table TABLE@ 24 SHIFT  ^nIndex @@ 1 +  }ntReceive_Table TABLE@ 16 SHIFT  +  ^nIndex @@ 2 +  }ntReceive_Table TABLE@ 8 SHIFT  +  ^nIndex @@ 3 +  }ntReceive_Table TABLE@ +  ^nStart_Index @@ 2 PARAM TABLE! 
+27 LINE.NUM ^nStart_Index  1+@! 
+28 LINE.NUM 4 +LOOP 
+29 LINE.NUM ELSE 
+4 30 LINE.NUM ^nTemp1 @@ 1 + 3 DO? I ^nIndex @! 
+31 LINE.NUM ^nIndex @@ 2 +  }ntReceive_Table TABLE@ 24 SHIFT  ^nIndex @@ 3 +  }ntReceive_Table TABLE@ 16 SHIFT  +  ^nIndex @@ }ntReceive_Table TABLE@ 8 SHIFT  +  ^nIndex @@ 1 +  }ntReceive_Table TABLE@ +  ^nStart_Index @@ 2 PARAM TABLE! 
+33 LINE.NUM ^nStart_Index  1+@! 
+34 LINE.NUM 4 +LOOP 
+35 LINE.NUM THEN 
+37 LINE.NUM ENDCASE 
+38 LINE.NUM ELSE 
+40 LINE.NUM *sTempString2 2  $INDEX ^nTemp1 @! 
+41 LINE.NUM ^nIntegerType @@ CASE 
+42 LINE.NUM 0 OF 
+2 43 LINE.NUM ^nTemp1 @@ 2 +  1 + 3 DO? I ^nIndex @! 
+44 LINE.NUM *sTempString2 ^nIndex @@  $INDEX 8 SHIFT  *sTempString2 ^nIndex @@ 1 +   $INDEX OR  ^nStart_Index @@ 2 PARAM TABLE! 
+45 LINE.NUM ^nStart_Index  1+@! 
+46 LINE.NUM 2 +LOOP 
+47 LINE.NUM ENDOF 
+48 LINE.NUM 1 OF 
+2 49 LINE.NUM ^nTemp1 @@ 2 +  1 + 3 DO? I ^nIndex @! 
+50 LINE.NUM *sTempString2 ^nIndex @@  $INDEX 8 SHIFT  *sTempString2 ^nIndex @@ 1 +   $INDEX OR  ^nTemp2 @! 
+51 LINE.NUM ^nTemp2 @@ 32767 > IF 
+52 LINE.NUM ^nTemp2 @@ 65536 -  ^nStart_Index @@ 2 PARAM TABLE! 
+53 LINE.NUM ELSE 
+54 LINE.NUM ^nTemp2 @@ ^nStart_Index @@ 2 PARAM TABLE! 
+55 LINE.NUM THEN 
+56 LINE.NUM ^nStart_Index  1+@! 
+57 LINE.NUM 2 +LOOP 
+58 LINE.NUM ENDOF 
+60 LINE.NUM 3 5 PARAM TABLE@ IF 
+4 61 LINE.NUM ^nTemp1 @@ 1 + 3 DO? I ^nIndex @! 
+62 LINE.NUM *sTempString2 ^nIndex @@  $INDEX 24 SHIFT  *sTempString2 ^nIndex @@ 1 +   $INDEX 16 SHIFT  OR  *sTempString2 ^nIndex @@ 2 +   $INDEX 8 SHIFT  OR  *sTempString2 ^nIndex @@ 3 +   $INDEX OR  ^nStart_Index @@ 2 PARAM TABLE! 
+65 LINE.NUM ^nStart_Index  1+@! 
+66 LINE.NUM 4 +LOOP 
+67 LINE.NUM ELSE 
+4 68 LINE.NUM ^nTemp1 @@ 1 + 3 DO? I ^nIndex @! 
+69 LINE.NUM *sTempString2 ^nIndex @@ 2 +   $INDEX 24 SHIFT  *sTempString2 ^nIndex @@ 3 +   $INDEX 16 SHIFT  OR  *sTempString2 ^nIndex @@  $INDEX 8 SHIFT  OR  *sTempString2 ^nIndex @@ 1 +   $INDEX OR  ^nStart_Index @@ 2 PARAM TABLE! 
+73 LINE.NUM ^nStart_Index  1+@! 
+74 LINE.NUM 4 +LOOP 
+75 LINE.NUM THEN 
+77 LINE.NUM ENDCASE 
+78 LINE.NUM THEN 
+9 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.49
+2 LINE.NUM 1 5 PARAM TABLE@ ^nTemp1 @! 
+3 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+6 LINE.NUM 3 *sTempString1 $APPEND 
+
+9 LINE.NUM ^nStartRegisterNumber @@ 1 -  65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+10 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+11 LINE.NUM ^nStartRegisterNumber @@ 1 -  255 AND  ^nTemp1 @! 
+12 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+15 LINE.NUM ^nIntegerType @@ 4 = IF 
+16 LINE.NUM ^nNumReturnValues @@ 2 *  65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+17 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+18 LINE.NUM ^nNumReturnValues @@ 2 *  255 AND  ^nTemp1 @! 
+19 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+20 LINE.NUM ELSE 
+21 LINE.NUM ^nNumReturnValues @@ 65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+22 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+23 LINE.NUM ^nNumReturnValues @@ 255 AND  ^nTemp1 @! 
+24 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+25 LINE.NUM THEN 
+28 LINE.NUM -1 *sTempString1  CalcCRCR ^nTemp2 @! 
+30 LINE.NUM ^nTemp2 @@ 255 AND  ^nTemp1 @! 
+31 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+32 LINE.NUM ^nTemp2 @@ 65280 AND  8 -1 *  SHIFT  ^nTemp1 @! 
+33 LINE.NUM ^nTemp1 @@ *sTempString1 $APPEND 
+
+-7 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.54
+2 LINE.NUM " :" *sTempString1  $MOVE 
+5 LINE.NUM 1 5 PARAM TABLE@ 2 *sTempString3  I>HEX$.R 
+6 LINE.NUM *sTempString3 *sTempString1 $CAT 
+
+7 LINE.NUM ^nTemp1 @@ 1 5 PARAM TABLE@ +  ^nTemp1 @! 
+10 LINE.NUM " 03" *sTempString1 $CAT 
+
+11 LINE.NUM ^nTemp1 @@ 3 +  ^nTemp1 @! 
+14 LINE.NUM ^nStartRegisterNumber @@ 1 -  4 *sTempString3  I>HEX$.R 
+15 LINE.NUM *sTempString3 *sTempString1 $CAT 
+
+16 LINE.NUM ^nTemp1 @@ ^nStartRegisterNumber @@ 1 -  65280 AND  8 -1 *  SHIFT  +  ^nTemp1 @! 
+17 LINE.NUM ^nTemp1 @@ ^nStartRegisterNumber @@ 1 -  255 AND  +  ^nTemp1 @! 
+20 LINE.NUM ^nIntegerType @@ 4 = IF 
+21 LINE.NUM ^nNumReturnValues @@ 2 *  4 *sTempString3  I>HEX$.R 
+22 LINE.NUM *sTempString3 *sTempString1 $CAT 
+
+23 LINE.NUM ^nTemp1 @@ ^nNumReturnValues @@ 2 *  65280 AND  8 -1 *  SHIFT  +  ^nTemp1 @! 
+24 LINE.NUM ^nTemp1 @@ ^nNumReturnValues @@ 2 *  255 AND  +  ^nTemp1 @! 
+25 LINE.NUM ELSE 
+26 LINE.NUM ^nNumReturnValues @@ 4 *sTempString3  I>HEX$.R 
+27 LINE.NUM *sTempString3 *sTempString1 $CAT 
+
+28 LINE.NUM ^nTemp1 @@ ^nNumReturnValues @@ 65280 AND  8 -1 *  SHIFT  +  ^nTemp1 @! 
+29 LINE.NUM ^nTemp1 @@ ^nNumReturnValues @@ 255 AND  +  ^nTemp1 @! 
+30 LINE.NUM THEN 
+35 LINE.NUM BEGIN ^nTemp1 @@ 255 > WHILE 
+36 LINE.NUM ^nTemp1 @@ 256 -  ^nTemp1 @! 
+37 LINE.NUM REPEAT 
+38 LINE.NUM ^nTemp1 @@ 0 = IF 
+39 LINE.NUM 0 ^nTemp2 @! 
+40 LINE.NUM ELSE 
+41 LINE.NUM 255 ^nTemp1 @@ -  1 +  ^nTemp2 @! 
+42 LINE.NUM THEN 
+44 LINE.NUM ^nTemp2 @@ 2 *sTempString3  I>HEX$.R 
+45 LINE.NUM *sTempString3 *sTempString1 $CAT 
+
+48 LINE.NUM 13 *sTempString1 $APPEND 
+
+49 LINE.NUM 10 *sTempString1 $APPEND 
+
+53 LINE.NUM 6 PARAM 10  S.!EOL 
+-8 JUMP ;
+: &O22Modbus03ReadHoldingRegistersAsInt.4
+FALSE
+
+1 LINE.NUM
+  0 PARAM @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  0 PARAM @@ 
+  -47    =
+LOR
+IF 1 JUMP ELSE -11 JUMP THEN ;
+: &O22Modbus03ReadHoldingRegistersAsInt.17
+TRUE
+
+1 LINE.NUM
+  0  
+  0  
+  5 PARAM TABLE@   =
+LAND
+IF -4 JUMP ELSE -3 JUMP THEN ;
+: &O22Modbus03ReadHoldingRegistersAsInt.18
+TRUE
+
+1 LINE.NUM
+  2  
+  0  
+  5 PARAM TABLE@   =
+LAND
+IF -12 JUMP ELSE -2 JUMP THEN ;
+: &O22Modbus03ReadHoldingRegistersAsInt.33
+TRUE
+
+1 LINE.NUM
+  ^nTemp1 @@ 
+  0    <
+LAND
+IF -11 JUMP ELSE -10 JUMP THEN ;
+: &O22Modbus03ReadHoldingRegistersAsInt.34
+TRUE
+
+1 LINE.NUM
+  ^dtWait_Timer   T0=
+LAND
+IF -12 JUMP ELSE -2 JUMP THEN ;
+: &O22Modbus03ReadHoldingRegistersAsInt.35
+TRUE
+
+1 LINE.NUM
+  ^nTemp1 @@ 
+  5    >=
+LAND
+IF -11 JUMP ELSE -2 JUMP THEN ;
+: &O22Modbus03ReadHoldingRegistersAsInt.43
+TRUE
+
+1 LINE.NUM
+  0 PARAM @@ 
+  0    =
+LAND
+IF -10 JUMP ELSE -11 JUMP THEN ;
+
+CODE
+4 PARAM @@ ^nIntegerType @! 
+3 PARAM @@ ^nStartRegisterNumber @! 
+1 PARAM @@ ^nNumReturnValues @! 
+
+DUMMY
+&O22Modbus03ReadHoldingRegistersAsInt.0
+&O22Modbus03ReadHoldingRegistersAsInt.3
+&O22Modbus03ReadHoldingRegistersAsInt.10
+&O22Modbus03ReadHoldingRegistersAsInt.22
+&O22Modbus03ReadHoldingRegistersAsInt.24
+&O22Modbus03ReadHoldingRegistersAsInt.28
+&O22Modbus03ReadHoldingRegistersAsInt.36
+&O22Modbus03ReadHoldingRegistersAsInt.41
+&O22Modbus03ReadHoldingRegistersAsInt.45
+&O22Modbus03ReadHoldingRegistersAsInt.47
+&O22Modbus03ReadHoldingRegistersAsInt.49
+&O22Modbus03ReadHoldingRegistersAsInt.54
+&O22Modbus03ReadHoldingRegistersAsInt.4
+&O22Modbus03ReadHoldingRegistersAsInt.17
+&O22Modbus03ReadHoldingRegistersAsInt.18
+&O22Modbus03ReadHoldingRegistersAsInt.33
+&O22Modbus03ReadHoldingRegistersAsInt.34
+&O22Modbus03ReadHoldingRegistersAsInt.35
+&O22Modbus03ReadHoldingRegistersAsInt.43
+ENDCODE
+
 \   ++++++++++ SUB name="Timestamp" ++++++++++
 
 0 SUBR &Timestamp
@@ -44,6 +440,7 @@ ENDCODE
 0 TASK &GoogleComm
 0 TASK &Housekeeper
 0 TASK &MasterComm
+0 TASK &Modbus_Master
 0 TASK &Powerup
 0 IVAR ^AirCon_CR_ErrorFlag
 0 IVAR ^AirConOffFlag
@@ -51,6 +448,7 @@ ENDCODE
 0 FVAR ^CalcFanSpd
 0 IVAR ^Count
 0 IVAR ^Count1
+0 IVAR ^Count2
 0 IVAR ^Cryotig_CR_ErrorFlag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^done
@@ -96,6 +494,8 @@ ENDCODE
 0 IVAR ^Length1
 0 IVAR ^MasterEcbCmd
 0 IVAR ^MasterEcbFlag
+0 IVAR ^n03AsIntStatus
+0 IVAR ^n03AsIntSubStatus
 0 IVAR ^nCharCount
 0 IVAR ^nCounter1
 0 IVAR ^nCounter2
@@ -107,6 +507,7 @@ ENDCODE
 0 IVAR ^nIndex
 0 IVAR ^nIP_int
 0 IVAR ^nLength
+0 IVAR ^nModbusMasterReadDelay
 0 IVAR ^nOctet3
 0 IVAR ^nPortStatus
 0 IVAR ^nReceiveStatus
@@ -210,6 +611,7 @@ ENDCODE
 10 0 $VAR *sVar 
 10 0 $VAR *sVoltage 
 10 0 $VAR *sYear 
+1024 0 COMVAR *chModbusMaster 
 1024 0 COMVAR *cPort 
 1024 0 COMVAR *DTcommHandle 
 1024 0 COMVAR *FTPcommHandle 
@@ -217,7 +619,11 @@ ENDCODE
 1024 0 COMVAR *LogCommHandle 
 16 0 ITABLE }EcbBitData
 8 0 ITABLE }EcbStatus
+10 0 ITABLE }nt03AsIntParameters
+126 0 ITABLE }nt03HoldingRegAsIntReturnValues
 16 0 ITABLE }ntEcbCmd
+10 0 ITABLE }ntRTDdata
+10 0 FTABLE }ntRTDtempData
 30 30 0 $TABLE {stDTdata 
 30 30 0 $TABLE {stHeader 
 
@@ -2296,6 +2702,49 @@ DUMMY
 4_121
 T;
 &MasterComm ' T4 SETTASK
+: 5_0
+0 JUMP ;
+: 5_9
+65 LINE.NUM 2 0 }nt03AsIntParameters TABLE! 
+66 LINE.NUM 1 1 }nt03AsIntParameters TABLE! 
+67 LINE.NUM 1000 2 }nt03AsIntParameters TABLE! 
+68 LINE.NUM 0 3 }nt03AsIntParameters TABLE! 
+69 LINE.NUM 0 4 }nt03AsIntParameters TABLE! 
+0 JUMP ;
+: 5_10
+1 LINE.NUM ^nModbusMasterReadDelay @@  DELAY 
+3 LINE.NUM *sTimestamp1 &Timestamp CALL.SUB DROP  
+4 LINE.NUM *sTimestamp1 0 {stDTdata $TABLE@  $MOVE 
+9 LINE.NUM *chModbusMaster }nt03AsIntParameters 0 1 }nt03HoldingRegAsIntReturnValues 16 ^n03AsIntStatus &O22Modbus03ReadHoldingRegistersAsInt CALL.SUB ^n03AsIntSubStatus @! 
+15 LINE.NUM 0 ^Count2 @! 
+16 LINE.NUM BEGIN ^Count2 @@ 15 < WHILE 
+17 LINE.NUM ^Count2 @@ 2 *  }nt03HoldingRegAsIntReturnValues TABLE@ 65536 *  ^Count2 @@ 2 *  1 +  }nt03HoldingRegAsIntReturnValues TABLE@ +  ^Count2 @@ }ntRTDdata TABLE! 
+18 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+19 LINE.NUM REPEAT 
+23 LINE.NUM 0 ^Count2 @! 
+24 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+25 LINE.NUM ^Count2 @@ }ntRTDdata TABLE@F ^Count2 @@ }ntRTDtempData TABLE! 
+26 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+27 LINE.NUM REPEAT 
+32 LINE.NUM 0 ^Count2 @! 
+33 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+34 LINE.NUM ^Count2 @@ }ntRTDtempData TABLE@ 100000 I>F F/ 1 I>F F- 3.850000e-003 F/ ^Count2 @@ }ntRTDtempData TABLE! 
+35 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+36 LINE.NUM REPEAT 
+40 LINE.NUM 1 ^Count2 @! 
+41 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+42 LINE.NUM ^Count2 @@ 1 -  }ntRTDtempData TABLE@ 6 3 ^Count2 @@ {stDTdata $TABLE@  FF.R$ 
+43 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+44 LINE.NUM REPEAT 
+47 LINE.NUM 1 ^DTlogFlag @! 
+-1 JUMP ;
+T: T5
+DUMMY
+5_0
+5_9
+5_10
+T;
+&Modbus_Master ' T5 SETTASK
 : 0_0
 0 JUMP ;
 : 0_1
@@ -2314,44 +2763,46 @@ T;
 
 29 LINE.NUM *sDate *sCurrentDate  $MOVE 
 30 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
-31 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
-32 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
-33 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
-34 LINE.NUM 32 ^EcbCmd @! 
-36 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
-37 LINE.NUM " CtrOfTent" 1 {stHeader $TABLE@  $MOVE 
-38 LINE.NUM " Instrument" 2 {stHeader $TABLE@  $MOVE 
-39 LINE.NUM " TentExhaust" 3 {stHeader $TABLE@  $MOVE 
-40 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
-41 LINE.NUM " RTD5" 5 {stHeader $TABLE@  $MOVE 
-42 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
-43 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
-44 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
-45 LINE.NUM " TentIntake" 9 {stHeader $TABLE@  $MOVE 
-46 LINE.NUM " ACoutput" 10 {stHeader $TABLE@  $MOVE 
-47 LINE.NUM " PanelRTD" 11 {stHeader $TABLE@  $MOVE 
-48 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
-49 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
-50 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
-51 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
-52 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
-53 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
-54 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
-55 LINE.NUM 
-" PID_Derivative" 19 {stHeader $TABLE@  $MOVE 
-56 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
-58 LINE.NUM " 0.1" *sICDversion  $MOVE 
-59 LINE.NUM *sFWversion  Rev>$ 
-60 LINE.NUM " 0.1" *sSWversion  $MOVE 
-62 LINE.NUM 300 I>F ^dtFanMonitor @! 
-63 LINE.NUM ^dtFanMonitor  StartTimer 
-66 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
-67 LINE.NUM 1 ~DO_CryoTig_CR @! 
-68 LINE.NUM ELSE 
-69 LINE.NUM 0 ~DO_CryoTig_CR @! 
-70 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-71 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-72 LINE.NUM THEN 
+31 LINE.NUM " tcp:172.16.5.39:502" *chModbusMaster  $MOVE 
+32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
+33 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
+34 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
+35 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
+36 LINE.NUM 32 ^EcbCmd @! 
+63 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
+64 LINE.NUM " TentAir" 1 {stHeader $TABLE@  $MOVE 
+65 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 
+66 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
+67 LINE.NUM " ACoutput" 4 {stHeader $TABLE@  $MOVE 
+68 LINE.NUM " OutsideAir" 5 {stHeader $TABLE@  $MOVE 
+69 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
+70 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
+71 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
+72 LINE.NUM " NA" 9 {stHeader $TABLE@  $MOVE 
+73 LINE.NUM " NA" 10 {stHeader $TABLE@  $MOVE 
+74 LINE.NUM " NA" 11 {stHeader $TABLE@  $MOVE 
+75 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
+76 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
+77 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
+78 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
+79 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
+80 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
+81 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
+82 LINE.NUM " PID_Derivative" 19 
+{stHeader $TABLE@  $MOVE 
+83 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
+85 LINE.NUM " 0.1" *sICDversion  $MOVE 
+86 LINE.NUM *sFWversion  Rev>$ 
+87 LINE.NUM " 0.1" *sSWversion  $MOVE 
+89 LINE.NUM 300 I>F ^dtFanMonitor @! 
+90 LINE.NUM ^dtFanMonitor  StartTimer 
+93 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
+94 LINE.NUM 1 ~DO_CryoTig_CR @! 
+95 LINE.NUM ELSE 
+96 LINE.NUM 0 ~DO_CryoTig_CR @! 
+97 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
+98 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+99 LINE.NUM THEN 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -2380,9 +2831,9 @@ T;
 37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
 0 JUMP ;
 : 0_7
-1 LINE.NUM &DatatakerComm  START.T DROP  
 3 LINE.NUM &Housekeeper  START.T DROP  
 4 LINE.NUM &MasterComm  START.T DROP  
+5 LINE.NUM &Modbus_Master  START.T DROP  
 0 JUMP ;
 T: T0
 DUMMY
@@ -2398,6 +2849,7 @@ CREATE T.ARRAY
 &GoogleComm ,
 &Housekeeper ,
 &MasterComm ,
+&Modbus_Master ,
 &Powerup ,
  0 ,
 CREATE V.ARRAY
@@ -2407,6 +2859,7 @@ CREATE V.ARRAY
 ^CalcFanSpd ,
 ^Count ,
 ^Count1 ,
+^Count2 ,
 ^Cryotig_CR_ErrorFlag ,
 ^done ,
 ^DTcharCount ,
@@ -2443,6 +2896,8 @@ CREATE V.ARRAY
 ^Length1 ,
 ^MasterEcbCmd ,
 ^MasterEcbFlag ,
+^n03AsIntStatus ,
+^n03AsIntSubStatus ,
 ^nCharCount ,
 ^nCounter1 ,
 ^nCounter2 ,
@@ -2454,6 +2909,7 @@ CREATE V.ARRAY
 ^nIndex ,
 ^nIP_int ,
 ^nLength ,
+^nModbusMasterReadDelay ,
 ^nOctet3 ,
 ^nPortStatus ,
 ^nReceiveStatus ,
@@ -2558,6 +3014,7 @@ CREATE V.ARRAY
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*chModbusMaster ,
 *cPort ,
 *DTcommHandle ,
 *FTPcommHandle ,
@@ -2581,7 +3038,11 @@ CREATE PTR.ARRAY
 CREATE TA.ARRAY 
 }EcbBitData ,
 }EcbStatus ,
+}nt03AsIntParameters ,
+}nt03HoldingRegAsIntReturnValues ,
 }ntEcbCmd ,
+}ntRTDdata ,
+}ntRTDtempData ,
 {stDTdata ,
 {stHeader ,
  0 ,
@@ -2663,6 +3124,7 @@ CONFIG_PORTS
 0.00000000 ^CalcFanSpd @!
 0 ^Count @!
 0 ^Count1 @!
+0 ^Count2 @!
 0 ^Cryotig_CR_ErrorFlag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^done @!
@@ -2708,6 +3170,8 @@ CONFIG_PORTS
 0 ^Length1 @!
 0 ^MasterEcbCmd @!
 0 ^MasterEcbFlag @!
+0 ^n03AsIntStatus @!
+0 ^n03AsIntSubStatus @!
 0 ^nCharCount @!
 0 ^nCounter1 @!
 0 ^nCounter2 @!
@@ -2719,6 +3183,7 @@ CONFIG_PORTS
 0 ^nIndex @!
 0 ^nIP_int @!
 0 ^nLength @!
+0 ^nModbusMasterReadDelay @!
 0 ^nOctet3 @!
 0 ^nPortStatus @!
 0 ^nReceiveStatus @!
@@ -2760,7 +3225,11 @@ CONFIG_PORTS
 0 ^y @!
 0 0 -1 }EcbBitData InitTable
 0 0 -1 }EcbStatus InitTable
+0 0 -1 }nt03AsIntParameters InitTable
+0 0 -1 }nt03HoldingRegAsIntReturnValues InitTable
 0 0 -1 }ntEcbCmd InitTable
+0 0 -1 }ntRTDdata InitTable
+0.00000000 0 -1 }ntRTDtempData InitTable
 " "
  *CRLF $MOVE
 " "
@@ -2889,6 +3358,8 @@ CONFIG_PORTS
  *sVoltage $MOVE
 " "
  *sYear $MOVE
+" "
+ *chModbusMaster $MOVE
 " tcp:22004"
  *cPort $MOVE
 " "
@@ -2914,8 +3385,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 02/26/16 " ;
-: TIMESTAMP ." 20:29:12 " ;
+: DATESTAMP ." 04/06/16 " ;
+: TIMESTAMP ." 21:17:58 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
