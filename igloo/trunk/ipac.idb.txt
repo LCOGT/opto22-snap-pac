@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.4a
-# TIME/DATE :    21:17:58 4/6/2016
+# TIME/DATE :    19:20:55 10/17/2016
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -118,23 +118,22 @@ TAG1,DI_SmokePWR_OK                                    ,17   ,40000000,00000000,
 TAG1,DI_Thermostat_CR_NC                               ,9    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_Thermostat_CR_NO                               ,14   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_ThermostatMCB                                  ,12   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_TVS                                            ,5    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_UPS_TVS                                        ,7    ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,DI_Utility_TVS                                    ,5    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_AirCon_CR                                      ,0    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_CryoTig_CR                                     ,23   ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,DO_DTreset                                        ,27   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_ECB_Tx                                         ,24   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_NRES_CR                                        ,22   ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,DO_RedLink_CR                                     ,26   ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,DO_Thermostat_CR                                  ,25   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_Current                                ,2    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_OutputPressure                         ,3    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_ReturnPressure                         ,4    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_Volt                                   ,0    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,AI_HVAC_Current                                   ,21   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM282_Tach                          ,12   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM284_Tach                          ,13   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM292_Tach                          ,14   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM294_Tach                          ,15   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,AI_P119_Temp                                      ,22   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_PanelFanM184_Tach                              ,7    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_PanelFanM186_Tach                              ,8    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_TentExhaustFanM306_Tach                        ,10   ,00000000,00000001,00000000,00000000,0    ,0   
@@ -237,6 +236,7 @@ TAG1,PidSetpoint                                       ,68   ,00000000,00000000,
 TAG1,Position                                          ,26   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Preset                                            ,97   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,RedLink_CR_ErrorFlag                              ,62   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,SendData                                          ,112  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,SubStringLength                                   ,25   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,TentExhaustFanM306_ErrorFlag                      ,82   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,TentExhaustFanM314_ErrorFlag                      ,84   ,00000000,00000000,00000000,00000008,0    ,0   

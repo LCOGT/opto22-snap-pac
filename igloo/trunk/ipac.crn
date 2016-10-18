@@ -422,7 +422,7 @@ SUB.CODE null$VAR &Timestamp
 8 LINE.NUM *sDate 0 5 *sDate  $SUB 
 9 LINE.NUM *sDate 0 PARAM $CAT 
 
-10 LINE.NUM " ," 0 PARAM $CAT 
+10 LINE.NUM " T" 0 PARAM $CAT 
 
 11 LINE.NUM *sTimeString  TIME>$ 
 12 LINE.NUM *sTimeString 0 PARAM $CAT 
@@ -531,6 +531,7 @@ ENDCODE
 0 IVAR ^Position
 0 FVAR ^Preset
 0 IVAR ^RedLink_CR_ErrorFlag
+0 IVAR ^SendData
 0 IVAR ^SubStringLength
 0 IVAR ^TentExhaustFanM306_ErrorFlag
 0 IVAR ^TentExhaustFanM314_ErrorFlag
@@ -632,7 +633,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  1  0 %local_io 0 POINT.TNG ~DI_NRES_CR_NC
 32  1 SPOINT 0.0     INPUT  2  0 %local_io 0 POINT.TNG ~DI_CryoTig_CR_NC
 32  1 SPOINT 0.0     INPUT  3  0 %local_io 0 POINT.TNG ~DI_LightSW
-32  1 SPOINT 0.0     INPUT  4  0 %local_io 0 POINT.TNG ~DI_Utility_TVS
+32  1 SPOINT 0.0     INPUT  4  0 %local_io 0 POINT.TNG ~DI_TVS
 32  1 SPOINT 0.0     INPUT  5  0 %local_io 0 POINT.TNG ~DI_EntryDoor
 32  1 SPOINT 0.0     INPUT  6  0 %local_io 0 POINT.TNG ~DI_UPS_TVS
 32  1 SPOINT 0.0     INPUT  7  0 %local_io 0 POINT.TNG ~DI_PanelDoor
@@ -654,16 +655,18 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  3  2 %local_io 0 POINT.TNG ~DO_ECB_Tx
  2  1 APOINT    0.0000 70  0  3 %local_io 0 POINT.TNG ~AI_CryoTig_Volt
  2  1 APOINT    0.0000 70  1  3 %local_io 0 POINT.TNG ~AI_Utility_Volt
- 4  1 APOINT  -20.0000 64  0  4 %local_io 0 POINT.TNG ~AI_CryoTig_Current
+ 4  1 APOINT  -15.0000 64  0  4 %local_io 0 POINT.TNG ~AI_CryoTig_Current
+  10.0000  -15.0000 ~AI_CryoTig_Current SET.SCALE
+ 4  1 APOINT  -37.5000 64  1  4 %local_io 0 POINT.TNG ~AI_HVAC_Current
+  25.0000  -37.5000 ~AI_HVAC_Current SET.SCALE
+ 4  1 APOINT -206.6665 64  2  4 %local_io 0 POINT.TNG ~AI_P119_Temp
+  71.1110 -206.6665 ~AI_P119_Temp SET.SCALE
  4  1 APOINT  -10.0000 12  0  5 %local_io 0 POINT.TNG ~AI_CryoTig_OutputPressure
  4  1 APOINT  -10.0000 12  1  5 %local_io 0 POINT.TNG ~AI_CryoTig_ReturnPressure
  2  1 APOINT    0.0000 165  0  6 %local_io 0 POINT.TNG ~AO_PanelFans_CTRL
  2  1 APOINT    0.0000 165  1  6 %local_io 0 POINT.TNG ~AO_StirFans_CTRL
  2  1 APOINT    0.0000 69  0  7 %local_io 0 POINT.TNG ~AI_PanelFanM184_Tach
  2  1 APOINT    0.0000 69  1  7 %local_io 0 POINT.TNG ~AI_PanelFanM186_Tach
- 4  1 SPOINT 0.0    OUTPUT  0  8 %local_io 0 POINT.TNG ~DO_Thermostat_CR
- 4  1 SPOINT 0.0    OUTPUT  1  8 %local_io 0 POINT.TNG ~DO_RedLink_CR
- 4  1 SPOINT 0.0    OUTPUT  3  8 %local_io 0 POINT.TNG ~DO_DTreset
  2  1 APOINT    0.0000 69  0  9 %local_io 0 POINT.TNG ~AI_IglooStirFanM282_Tach
  2  1 APOINT    0.0000 69  1  9 %local_io 0 POINT.TNG ~AI_IglooStirFanM284_Tach
  2  1 APOINT    0.0000 69  0 10 %local_io 0 POINT.TNG ~AI_IglooStirFanM292_Tach
@@ -677,8 +680,8 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2  1 APOINT    0.0000 69  0 14 %local_io 0 POINT.TNG ~AI_TentIntakeFanM312_Tach
  2  1 APOINT    0.0000 69  1 14 %local_io 0 POINT.TNG ~AI_TentExhaustFanM314_Tach
  4  1 SPOINT 0.0     INPUT  0 15 %local_io 0 POINT.TNG ~DI_ECB_Rx
-1    0.0000    0.0000    0.0000    0.0000    0.2000    5.0000    0.0000   50.0000
-   0.0010    0.0000    0.0000   20.0000    1.5000    0.0000
+1    0.0000    0.0000    0.0000    0.0000    0.8500   10.0000    0.0000   50.0000
+   1.0000    0.0000    0.0000   25.0000    0.0500    0.3000
    0.0000    0.0000 ~AO_TentServoFan_Ctrl
 $b0000000 0 %local_io 0 PID |pidTentFans
 : 1_0
@@ -1180,320 +1183,317 @@ T;
 
 60 LINE.NUM 0 ^Cryotig_CR_ErrorFlag @! 
 61 LINE.NUM THEN 
-64 LINE.NUM ~DI_Utility_TVS  CLR.-LATCH@I IF 
-65 LINE.NUM " , Utility_TVS " *sErrorList $CAT 
+64 LINE.NUM ~DI_TVS  CLR.-LATCH@I IF 
+65 LINE.NUM " , Surge_Protection " *sErrorList $CAT 
 
 66 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
 67 LINE.NUM THEN 
-70 LINE.NUM ~DI_UPS_TVS  CLR.-LATCH@I IF 
-71 LINE.NUM " , UPS_TVS " *sErrorList $CAT 
+70 LINE.NUM ^Thermostat_CR_ErrorFlag @@ 1 = IF 
+71 LINE.NUM " , Thermostat_Relay " *sErrorList $CAT 
 
 72 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-73 LINE.NUM THEN 
-76 LINE.NUM ^Thermostat_CR_ErrorFlag @@ 1 = IF 
-77 LINE.NUM " , Thermostat_Relay " *sErrorList $CAT 
+73 LINE.NUM 0 ^Thermostat_CR_ErrorFlag @! 
+74 LINE.NUM THEN 
+77 LINE.NUM ^RedLink_CR_ErrorFlag @@ 1 = IF 
+78 LINE.NUM " , RedLink_Relay " *sErrorList $CAT 
 
-78 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+79 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-79 LINE.NUM 0 ^Thermostat_CR_ErrorFlag @! 
-80 LINE.NUM THEN 
-83 LINE.NUM ^RedLink_CR_ErrorFlag @@ 1 = IF 
-84 LINE.NUM " , RedLink_Relay " *sErrorList $CAT 
+80 LINE.NUM 0 ^RedLink_CR_ErrorFlag @! 
+81 LINE.NUM THEN 
+84 LINE.NUM ~DI_SmokePWR_OK  CLR.-LATCH@I IF 
+85 LINE.NUM " , SmokeAlarm_PowerOff " *sErrorList $CAT 
 
-85 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+86 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-86 LINE.NUM 0 ^RedLink_CR_ErrorFlag @! 
 87 LINE.NUM THEN 
-90 LINE.NUM ~DI_SmokePWR_OK  CLR.-LATCH@I IF 
-91 LINE.NUM " , SmokeAlarm_PowerOff " *sErrorList $CAT 
+90 LINE.NUM ^IglooStirFanM282_ErrorFlag @@ 1 = IF 
+91 LINE.NUM " IglooStirFanM28.2_Speed" 0 *sErrorList  FindSubString ^y @! 
+92 LINE.NUM ^y @@ 0 < IF 
+93 LINE.NUM " , IglooStirFanM28.2_Speed " *sErrorList $CAT 
 
-92 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+94 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-93 LINE.NUM THEN 
-96 LINE.NUM ^IglooStirFanM282_ErrorFlag @@ 1 = IF 
-97 LINE.NUM " IglooStirFanM28.2_Speed" 0 *sErrorList  FindSubString ^y @! 
-98 LINE.NUM ^y @@ 0 < IF 
-99 LINE.NUM " , IglooStirFanM28.2_Speed " *sErrorList $CAT 
+95 LINE.NUM 0 ^IglooStirFanM282_ErrorFlag @! 
+96 LINE.NUM THEN 
+97 LINE.NUM THEN 
+100 LINE.NUM ^IglooStirFanM284_ErrorFlag @@ 1 = IF 
+101 LINE.NUM " IglooStirFanM28.4_Speed" 0 *sErrorList  FindSubString ^y @! 
+102 LINE.NUM ^y @@ 0 < IF 
+103 LINE.NUM " , IglooStirFanM28.4_Speed " *sErrorList $CAT 
 
-100 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+104 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-101 LINE.NUM 0 ^IglooStirFanM282_ErrorFlag @! 
-102 LINE.NUM THEN 
-103 LINE.NUM THEN 
-106 LINE.NUM ^IglooStirFanM284_ErrorFlag @@ 1 = IF 
-107 LINE.NUM " IglooStirFanM28.4_Speed" 0 *sErrorList  FindSubString ^y @! 
-108 LINE.NUM ^y @@ 0 < IF 
-109 LINE.NUM " , IglooStirFanM28.4_Speed " *sErrorList $CAT 
+105 LINE.NUM 0 ^IglooStirFanM284_ErrorFlag @! 
+106 LINE.NUM THEN 
+107 LINE.NUM THEN 
+110 LINE.NUM ^IglooStirFanM292_ErrorFlag @@ 1 = IF 
+111 LINE.NUM " IglooStirFanM29.2_Speed" 0 *sErrorList  FindSubString ^y @! 
+112 LINE.NUM ^y @@ 0 < IF 
+113 LINE.NUM " , IglooStirFanM29.2_Speed " *sErrorList $CAT 
 
-110 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+114 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-111 LINE.NUM 0 ^IglooStirFanM284_ErrorFlag @! 
-112 LINE.NUM THEN 
-113 LINE.NUM THEN 
-116 LINE.NUM ^IglooStirFanM292_ErrorFlag @@ 1 = IF 
-117 LINE.NUM " IglooStirFanM29.2_Speed" 0 *sErrorList  FindSubString ^y @! 
-118 LINE.NUM ^y @@ 0 < IF 
-119 LINE.NUM " , IglooStirFanM29.2_Speed " *sErrorList $CAT 
+115 LINE.NUM 0 ^IglooStirFanM292_ErrorFlag @! 
+116 LINE.NUM THEN 
+117 LINE.NUM THEN 
+120 LINE.NUM ^IglooStirFanM294_ErrorFlag @@ 1 = IF 
+121 LINE.NUM " IglooStirFanM29.4_Speed" 0 *sErrorList  FindSubString ^y @! 
+122 LINE.NUM ^y @@ 0 < IF 
+123 LINE.NUM " , IglooStirFanM29.4_Speed " *sErrorList $CAT 
 
-120 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+124 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-121 LINE.NUM 0 ^IglooStirFanM292_ErrorFlag @! 
-122 LINE.NUM THEN 
-123 LINE.NUM THEN 
-126 LINE.NUM ^IglooStirFanM294_ErrorFlag @@ 1 = IF 
-127 LINE.NUM " IglooStirFanM29.4_Speed" 0 *sErrorList  FindSubString ^y @! 
-128 LINE.NUM ^y @@ 0 < IF 
-129 LINE.NUM " , IglooStirFanM29.4_Speed " *sErrorList $CAT 
+125 LINE.NUM 0 ^IglooStirFanM294_ErrorFlag @! 
+126 LINE.NUM THEN 
+127 LINE.NUM THEN 
+130 LINE.NUM ^TentIntakeFanM304_ErrorFlag @@ 1 = IF 
+131 LINE.NUM " TentIntakeFanM30.4_Speed" 0 *sErrorList  FindSubString ^y @! 
+132 LINE.NUM ^y @@ 0 < IF 
+133 LINE.NUM " , TentIntakeFanM30.4_Speed " *sErrorList $CAT 
 
-130 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+134 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-131 LINE.NUM 0 ^IglooStirFanM294_ErrorFlag @! 
-132 LINE.NUM THEN 
-133 LINE.NUM THEN 
-136 LINE.NUM ^TentIntakeFanM304_ErrorFlag @@ 1 = IF 
-137 LINE.NUM " TentIntakeFanM30.4_Speed" 0 *sErrorList  FindSubString ^y @! 
-138 LINE.NUM ^y @@ 0 < IF 
-139 LINE.NUM " , TentIntakeFanM30.4_Speed " *sErrorList $CAT 
+135 LINE.NUM 0 ^TentIntakeFanM304_ErrorFlag @! 
+136 LINE.NUM THEN 
+137 LINE.NUM THEN 
+140 LINE.NUM ^TentExhaustFanM306_ErrorFlag @@ 1 = IF 
+141 LINE.NUM " TentExhaustFanM30.6_Speed" 0 *sErrorList  FindSubString DROP  
+142 LINE.NUM ^y @@ 0 < IF 
+143 LINE.NUM " , TentExhaustFanM30.6_Speed " *sErrorList $CAT 
 
-140 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+144 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-141 LINE.NUM 0 ^TentIntakeFanM304_ErrorFlag @! 
-142 LINE.NUM THEN 
-143 LINE.NUM THEN 
-146 LINE.NUM ^TentExhaustFanM306_ErrorFlag @@ 1 = IF 
-147 LINE.NUM " TentExhaustFanM30.6_Speed" 0 *sErrorList  FindSubString DROP  
-148 LINE.NUM ^y @@ 0 < IF 
-149 LINE.NUM " , TentExhaustFanM30.6_Speed " *sErrorList $CAT 
+145 LINE.NUM 0 ^TentExhaustFanM306_ErrorFlag @! 
+146 LINE.NUM THEN 
+147 LINE.NUM THEN 
+150 LINE.NUM ^TentIntakeFanM312_ErrorFlag @@ 1 = IF 
+151 LINE.NUM " TentIntakeFanM31.2_Speed" 0 *sErrorList  FindSubString ^y @! 
+152 LINE.NUM ^y @@ 0 < IF 
+153 LINE.NUM " , TentIntakeFanM31.2_Speed " *sErrorList $CAT 
 
-150 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+154 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-151 LINE.NUM 0 ^TentExhaustFanM306_ErrorFlag @! 
-152 LINE.NUM THEN 
-153 LINE.NUM THEN 
-156 LINE.NUM ^TentIntakeFanM312_ErrorFlag @@ 1 = IF 
-157 LINE.NUM " TentIntakeFanM31.2_Speed" 0 *sErrorList  FindSubString ^y @! 
-158 LINE.NUM ^y @@ 0 < IF 
-159 LINE.NUM " , TentIntakeFanM31.2_Speed " *sErrorList $CAT 
+155 LINE.NUM 0 ^TentIntakeFanM312_ErrorFlag @! 
+156 LINE.NUM THEN 
+157 LINE.NUM THEN 
+160 LINE.NUM ^TentExhaustFanM314_ErrorFlag @@ 1 = IF 
+161 LINE.NUM " TentExhaustFanM31.4_Speed" 0 *sErrorList  FindSubString ^y @! 
+162 LINE.NUM ^y @@ 0 < IF 
+163 LINE.NUM " , TentExhaustFanM31.4_Speed " *sErrorList $CAT 
 
-160 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+164 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-161 LINE.NUM 0 ^TentIntakeFanM312_ErrorFlag @! 
-162 LINE.NUM THEN 
-163 LINE.NUM THEN 
-166 LINE.NUM ^TentExhaustFanM314_ErrorFlag @@ 1 = IF 
-167 LINE.NUM " TentExhaustFanM31.4_Speed" 0 *sErrorList  FindSubString ^y @! 
-168 LINE.NUM ^y @@ 0 < IF 
-169 LINE.NUM " , TentExhaustFanM31.4_Speed " *sErrorList $CAT 
+165 LINE.NUM 0 ^TentExhaustFanM314_ErrorFlag @! 
+166 LINE.NUM THEN 
+167 LINE.NUM THEN 
+170 LINE.NUM ^PanelFanM184_ErrorFlag @@ 1 = IF 
+171 LINE.NUM " PanelFanM18.4_Speed" 0 *sErrorList  FindSubString ^y @! 
+172 LINE.NUM ^y @@ 0 < IF 
+173 LINE.NUM " , PanelFanM18.4_Speed " *sErrorList $CAT 
 
-170 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+174 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-171 LINE.NUM 0 ^TentExhaustFanM314_ErrorFlag @! 
-172 LINE.NUM THEN 
-173 LINE.NUM THEN 
-176 LINE.NUM ^PanelFanM184_ErrorFlag @@ 1 = IF 
-177 LINE.NUM " PanelFanM18.4_Speed" 0 *sErrorList  FindSubString ^y @! 
-178 LINE.NUM ^y @@ 0 < IF 
-179 LINE.NUM " , PanelFanM18.4_Speed " *sErrorList $CAT 
+175 LINE.NUM 0 ^PanelFanM184_ErrorFlag @! 
+176 LINE.NUM THEN 
+177 LINE.NUM THEN 
+180 LINE.NUM ^PanelFanM186_ErrorFlag @@ 1 = IF 
+181 LINE.NUM " PanelFanM18.6_Speed" 0 *sErrorList  FindSubString ^y @! 
+182 LINE.NUM ^y @@ 0 < IF 
+183 LINE.NUM " , PanelFanM18.6_Speed " *sErrorList $CAT 
 
-180 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+184 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-181 LINE.NUM 0 ^PanelFanM184_ErrorFlag @! 
-182 LINE.NUM THEN 
-183 LINE.NUM THEN 
-186 LINE.NUM ^PanelFanM186_ErrorFlag @@ 1 = IF 
-187 LINE.NUM " PanelFanM18.6_Speed" 0 *sErrorList  FindSubString ^y @! 
-188 LINE.NUM ^y @@ 0 < IF 
-189 LINE.NUM " , PanelFanM18.6_Speed " *sErrorList $CAT 
+185 LINE.NUM 0 ^PanelFanM186_ErrorFlag @! 
+186 LINE.NUM THEN 
+187 LINE.NUM THEN 
+190 LINE.NUM ^TentStirFanM323_ErrorFlag @@ 1 = IF 
+191 LINE.NUM " TentStirFanM32.3_Speed" 0 *sErrorList  FindSubString ^y @! 
+192 LINE.NUM ^y @@ 0 < IF 
+193 LINE.NUM " , TentStirFanM32.3_Speed " *sErrorList $CAT 
 
-190 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+194 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-191 LINE.NUM 0 ^PanelFanM186_ErrorFlag @! 
-192 LINE.NUM THEN 
-193 LINE.NUM THEN 
-196 LINE.NUM ^TentStirFanM323_ErrorFlag @@ 1 = IF 
-197 LINE.NUM " TentStirFanM32.3_Speed" 0 *sErrorList  FindSubString ^y @! 
-198 LINE.NUM ^y @@ 0 < IF 
-199 LINE.NUM " , TentStirFanM32.3_Speed " *sErrorList $CAT 
+195 LINE.NUM 0 ^TentStirFanM323_ErrorFlag @! 
+196 LINE.NUM THEN 
+197 LINE.NUM THEN 
+200 LINE.NUM ^TentStirFanM325_ErrorFlag @@ 1 = IF 
+201 LINE.NUM " TentStirFanM32.5_Speed" 0 *sErrorList  FindSubString ^y @! 
+202 LINE.NUM ^y @@ 0 < IF 
+203 LINE.NUM " , TentStirFanM32.5_Speed " *sErrorList $CAT 
 
-200 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+204 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-201 LINE.NUM 0 ^TentStirFanM323_ErrorFlag @! 
-202 LINE.NUM THEN 
-203 LINE.NUM THEN 
-206 LINE.NUM ^TentStirFanM325_ErrorFlag @@ 1 = IF 
-207 LINE.NUM " TentStirFanM32.5_Speed" 0 *sErrorList  FindSubString ^y @! 
-208 LINE.NUM ^y @@ 0 < IF 
-209 LINE.NUM " , TentStirFanM32.5_Speed " *sErrorList $CAT 
+205 LINE.NUM 0 ^TentStirFanM325_ErrorFlag @! 
+206 LINE.NUM THEN 
+207 LINE.NUM THEN 
+210 LINE.NUM ~DI_ECB_OK  CLR.-LATCH@I IF 
+211 LINE.NUM " , DC_MCB " *sErrorList $CAT 
 
-210 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+212 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-211 LINE.NUM 0 ^TentStirFanM325_ErrorFlag @! 
-212 LINE.NUM THEN 
 213 LINE.NUM THEN 
-216 LINE.NUM ~DI_ECB_OK  CLR.-LATCH@I IF 
-217 LINE.NUM " , DC_MCB " *sErrorList $CAT 
+216 LINE.NUM 2 }EcbStatus TABLE@ 2 < IF 
+217 LINE.NUM " Datataker_MCB" 0 *sErrorList  FindSubString ^y @! 
+218 LINE.NUM ^y @@ 0 < IF 
+219 LINE.NUM " , Datataker_MCB " *sErrorList $CAT 
 
-218 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+220 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-219 LINE.NUM THEN 
-222 LINE.NUM 2 }EcbStatus TABLE@ 2 < IF 
-223 LINE.NUM " Datataker_MCB" 0 *sErrorList  FindSubString ^y @! 
-224 LINE.NUM ^y @@ 0 < IF 
-225 LINE.NUM " , Datataker_MCB " *sErrorList $CAT 
+221 LINE.NUM THEN 
+222 LINE.NUM THEN 
+225 LINE.NUM 3 }EcbStatus TABLE@ 2 < IF 
+226 LINE.NUM " StirFans_M28.2_M28.4_MCB" 0 *sErrorList  FindSubString ^y @! 
+227 LINE.NUM ^y @@ 0 < IF 
+228 LINE.NUM " , StirFans_M28.2_M28.4_MCB " *sErrorList $CAT 
 
-226 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+229 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-227 LINE.NUM THEN 
-228 LINE.NUM THEN 
-231 LINE.NUM 3 }EcbStatus TABLE@ 2 < IF 
-232 LINE.NUM " StirFans_M28.2_M28.4_MCB" 0 *sErrorList  FindSubString ^y @! 
-233 LINE.NUM ^y @@ 0 < IF 
-234 LINE.NUM " , StirFans_M28.2_M28.4_MCB " *sErrorList $CAT 
+230 LINE.NUM THEN 
+231 LINE.NUM THEN 
+234 LINE.NUM 4 }EcbStatus TABLE@ 2 < IF 
+235 LINE.NUM " StirFans_M29.2_M29.4_MCB" 0 *sErrorList  FindSubString ^y @! 
+236 LINE.NUM ^y @@ 0 < IF 
+237 LINE.NUM " , StirFans_M29.2_M29.4_MCB " *sErrorList $CAT 
 
-235 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+238 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-236 LINE.NUM THEN 
-237 LINE.NUM THEN 
-240 LINE.NUM 4 }EcbStatus TABLE@ 2 < IF 
-241 LINE.NUM " StirFans_M29.2_M29.4_MCB" 0 *sErrorList  FindSubString ^y @! 
-242 LINE.NUM ^y @@ 0 < IF 
-243 LINE.NUM " , StirFans_M29.2_M29.4_MCB " *sErrorList $CAT 
+239 LINE.NUM THEN 
+240 LINE.NUM THEN 
+243 LINE.NUM 5 }EcbStatus TABLE@ 2 < IF 
+244 LINE.NUM " TentFans_M30.4_M30.6_MCB" 0 *sErrorList  FindSubString ^y @! 
+245 LINE.NUM ^y @@ 0 < IF 
+246 LINE.NUM " , TentFans_M30.4_M30.6_MCB " *sErrorList $CAT 
 
-244 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+247 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-245 LINE.NUM THEN 
-246 LINE.NUM THEN 
-249 LINE.NUM 5 }EcbStatus TABLE@ 2 < IF 
-250 LINE.NUM " TentFans_M30.4_M30.6_MCB" 0 *sErrorList  FindSubString ^y @! 
-251 LINE.NUM ^y @@ 0 < IF 
-252 LINE.NUM " , TentFans_M30.4_M30.6_MCB " *sErrorList $CAT 
+248 LINE.NUM THEN 
+249 LINE.NUM THEN 
+252 LINE.NUM 7 }EcbStatus TABLE@ 2 < IF 
+253 LINE.NUM " TentFans_M31.2_M31.4_MCB" 0 *sErrorList  FindSubString ^y @! 
+254 LINE.NUM ^y @@ 0 < IF 
+255 LINE.NUM " , TentFans_M31.2_M31.4_MCB " *sErrorList $CAT 
 
-253 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+256 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-254 LINE.NUM THEN 
-255 LINE.NUM THEN 
-258 LINE.NUM 7 }EcbStatus TABLE@ 2 < IF 
-259 LINE.NUM " TentFans_M31.2_M31.4_MCB" 0 *sErrorList  FindSubString ^y @! 
-260 LINE.NUM ^y @@ 0 < IF 
-261 LINE.NUM " , TentFans_M31.2_M31.4_MCB " *sErrorList $CAT 
+257 LINE.NUM THEN 
+258 LINE.NUM THEN 
+261 LINE.NUM 6 }EcbStatus TABLE@ 2 < IF 
+262 LINE.NUM " TentStirFans_MCB" 0 *sErrorList  FindSubString ^y @! 
+263 LINE.NUM ^y @@ 0 < IF 
+264 LINE.NUM " , TentStirFans_MCB " *sErrorList $CAT 
 
-262 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+265 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-263 LINE.NUM THEN 
-264 LINE.NUM THEN 
-267 LINE.NUM 6 }EcbStatus TABLE@ 2 < IF 
-268 LINE.NUM " TentStirFans_MCB" 0 *sErrorList  FindSubString ^y @! 
-269 LINE.NUM ^y @@ 0 < IF 
-270 LINE.NUM " , TentStirFans_MCB " *sErrorList $CAT 
-
-271 LINE.NUM *sTimestamp3 *sErrorList $CAT 
-
-272 LINE.NUM THEN 
-273 LINE.NUM THEN 
+266 LINE.NUM THEN 
+267 LINE.NUM THEN 
 0 JUMP ;
 : 2_8
 4 LINE.NUM ^DTlogFlag @@ 1 = IF 
 5 LINE.NUM |pidTentFans  $0002.. ROT PID@ 4 1 *sVar  FF.R$ 
-6 LINE.NUM *sVar 12 {stDTdata $TABLE@  $MOVE 
+6 LINE.NUM *sVar 9 {stDTdata $TABLE@  $MOVE 
 7 LINE.NUM |pidTentFans  $0001.. ROT PID@ 4 1 *sVar  FF.R$ 
-8 LINE.NUM *sVar 13 {stDTdata $TABLE@  $MOVE 
+8 LINE.NUM *sVar 10 {stDTdata $TABLE@  $MOVE 
 9 LINE.NUM |pidTentFans  $0008.. ROT PID@ 4 1 *sVar  FF.R$ 
-10 LINE.NUM *sVar 14 {stDTdata $TABLE@  $MOVE 
-12 LINE.NUM ~AI_TentIntakeFanM304_Tach @@ 100 I>F F* 710 I>F F/ ^fFanSpd @! 
-13 LINE.NUM ^fFanSpd @@ 3 0 *sVar  FF.R$ 
-14 LINE.NUM *sVar 15 {stDTdata $TABLE@  $MOVE 
-15 LINE.NUM ~AI_TentExhaustFanM306_Tach @@ 100 I>F F* 710 I>F F/ ^fFanSpd @! 
-16 LINE.NUM ^fFanSpd @@ 3 0 *sVar  FF.R$ 
-17 LINE.NUM *sVar 16 {stDTdata $TABLE@  $MOVE 
-19 LINE.NUM |pidTentFans  $0010.. ROT PID@ 4 1 *sVar  FF.R$ 
-20 LINE.NUM *sVar 17 {stDTdata $TABLE@  $MOVE 
-21 LINE.NUM |pidTentFans  $0020.. ROT PID@ 4 1 *sVar  FF.R$ 
-22 LINE.NUM *sVar 18 {stDTdata $TABLE@  $MOVE 
-23 LINE.NUM |pidTentFans  $0040.. ROT PID@ 4 1 *sVar  FF.R$ 
-24 LINE.NUM *sVar 19 {stDTdata $TABLE@  $MOVE 
-25 LINE.NUM |pidTentFans  $4000.. ROT PID@ 5 3 *sVar  FF.R$ 
-26 LINE.NUM *sVar 20 {stDTdata $TABLE@  $MOVE 
-28 LINE.NUM *LogCommHandle  OPEN DROP  
-29 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
-30 LINE.NUM *LogCommHandle 32  S.!EOL 
-31 LINE.NUM 21 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
-32 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
-33 LINE.NUM *LogCommHandle  CLOSE DROP  
-34 LINE.NUM ELSE 
-35 LINE.NUM 1 ^WriteToLogFailedFlag @! 
-36 LINE.NUM THEN 
-37 LINE.NUM 0 ^DTlogFlag @! 
+10 LINE.NUM *sVar 11 {stDTdata $TABLE@  $MOVE 
+12 LINE.NUM ~AI_TentIntakeFanM304_Tach @@ 60 I>F F* 3 I>F F/ ^fFanSpd @! 
+13 LINE.NUM ^fFanSpd @@ 2950 I>F F/ 100 I>F F* ^fFanSpd @! 
+14 LINE.NUM ^fFanSpd @@ 3 0 *sVar  FF.R$ 
+15 LINE.NUM *sVar 12 {stDTdata $TABLE@  $MOVE 
+16 LINE.NUM ~AI_TentIntakeFanM312_Tach @@ 60 I>F F* 3 I>F F/ ^fFanSpd @! 
+17 LINE.NUM ^fFanSpd @@ 2950 I>F F/ 100 I>F F* ^fFanSpd @! 
+18 LINE.NUM ^fFanSpd @@ 3 0 *sVar  FF.R$ 
+19 LINE.NUM *sVar 13 {stDTdata $TABLE@  $MOVE 
+21 LINE.NUM |pidTentFans  $0010.. ROT PID@ 4 1 *sVar  FF.R$ 
+22 LINE.NUM *sVar 14 {stDTdata $TABLE@  $MOVE 
+23 LINE.NUM |pidTentFans  $0020.. ROT PID@ 4 1 *sVar  FF.R$ 
+24 LINE.NUM *sVar 15 {stDTdata $TABLE@  $MOVE 
+25 LINE.NUM |pidTentFans  $0040.. ROT PID@ 4 1 *sVar  FF.R$ 
+26 LINE.NUM *sVar 16 {stDTdata $TABLE@  $MOVE 
+27 LINE.NUM |pidTentFans  $4000.. ROT PID@ 5 3 *sVar  FF.R$ 
+28 LINE.NUM *sVar 17 {stDTdata $TABLE@  $MOVE 
+30 LINE.NUM *LogCommHandle  OPEN DROP  
+31 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+32 LINE.NUM *LogCommHandle 32  S.!EOL 
+33 LINE.NUM 21 0 {stDTdata *LogCommHandle  S.PUT#TABLE DROP  
+34 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+35 LINE.NUM *LogCommHandle  CLOSE DROP  
+36 LINE.NUM ELSE 
+37 LINE.NUM 1 ^WriteToLogFailedFlag @! 
 38 LINE.NUM THEN 
-44 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
-45 LINE.NUM *sTimestamp2 0 4 *sDate  $SUB 
-46 LINE.NUM " -" *sDate $CAT 
+39 LINE.NUM 0 ^DTlogFlag @! 
+40 LINE.NUM THEN 
+46 LINE.NUM *sTimestamp2 &Timestamp CALL.SUB DROP  
+47 LINE.NUM *sTimestamp2 0 4 *sDate  $SUB 
+48 LINE.NUM " -" *sDate $CAT 
 
-47 LINE.NUM *sTimestamp2 5 2 *sMonth  $SUB 
-48 LINE.NUM *sMonth *sDate $CAT 
+49 LINE.NUM *sTimestamp2 5 2 *sMonth  $SUB 
+50 LINE.NUM *sMonth *sDate $CAT 
 
-49 LINE.NUM " -" *sDate $CAT 
+51 LINE.NUM " -" *sDate $CAT 
 
-50 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
-51 LINE.NUM *sDay *sDate $CAT 
+52 LINE.NUM *sTimestamp2 8 2 *sDay  $SUB 
+53 LINE.NUM *sDay *sDate $CAT 
 
-57 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> IF 
-58 LINE.NUM *FTPcommHandle  OPEN DROP  
-59 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-60 LINE.NUM " " *sFTPcmd  $MOVE 
-61 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
+59 LINE.NUM *sCurrentDate *sDate  $CMP 0 <> ^SendData @@ 1 = LOR  IF 
+60 LINE.NUM *FTPcommHandle  OPEN DROP  
+61 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+62 LINE.NUM " " *sFTPcmd  $MOVE 
+63 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
 
-62 LINE.NUM " ," *sFTPcmd $CAT 
+64 LINE.NUM " ," *sFTPcmd $CAT 
 
-63 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
+65 LINE.NUM *sCurrentDate *sFTPcmd $CAT 
 
-64 LINE.NUM " _" *sFTPcmd $CAT 
+66 LINE.NUM " _" *sFTPcmd $CAT 
 
-65 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+67 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-67 LINE.NUM *sDate *sCurrentDate  $MOVE 
-69 LINE.NUM *FTPcommHandle " cd:/iglooData"  SWAP COM.CMD DROP  
-70 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-71 LINE.NUM *FTPcommHandle  CLOSE DROP  
-74 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-75 LINE.NUM *LogCommHandle  OPEN DROP  
-76 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
-77 LINE.NUM *LogCommHandle 32  S.!EOL 
-78 LINE.NUM 21 0 {stHeader *LogCommHandle  S.PUT#TABLE DROP  
-79 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
-80 LINE.NUM *LogCommHandle  CLOSE DROP  
-81 LINE.NUM ELSE 
-82 LINE.NUM 1 ^WriteToLogFailedFlag @! 
-83 LINE.NUM THEN 
-86 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-87 LINE.NUM THEN 
-88 LINE.NUM THEN 
-94 LINE.NUM *sCurrentTime  TIME>$ 
-95 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
-96 LINE.NUM *sCurrentTime " 12:00"  $CMP 0 = IF 
-97 LINE.NUM *FTPcommHandle  OPEN DROP  
-98 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
-99 LINE.NUM " " *sFTPcmd  $MOVE 
-100 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
+69 LINE.NUM *sDate *sCurrentDate  $MOVE 
+71 LINE.NUM *FTPcommHandle " cd:/iglooData"  SWAP COM.CMD DROP  
+72 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+73 LINE.NUM *FTPcommHandle  CLOSE DROP  
+76 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+77 LINE.NUM *LogCommHandle  OPEN DROP  
+78 LINE.NUM *LogCommHandle  ?OPEN 0> IF 
+79 LINE.NUM *LogCommHandle 32  S.!EOL 
+80 LINE.NUM 21 0 {stHeader *LogCommHandle  S.PUT#TABLE DROP  
+81 LINE.NUM *CRLF *LogCommHandle  PRT$ DROP  
+82 LINE.NUM *LogCommHandle  CLOSE DROP  
+83 LINE.NUM ELSE 
+84 LINE.NUM 1 ^WriteToLogFailedFlag @! 
+85 LINE.NUM THEN 
+88 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+89 LINE.NUM 0 ^SendData @! 
+90 LINE.NUM THEN 
+91 LINE.NUM THEN 
+97 LINE.NUM *sCurrentTime  TIME>$ 
+98 LINE.NUM *sCurrentTime 0 5 *sCurrentTime  $SUB 
+99 LINE.NUM *sCurrentTime " 12:00"  $CMP 0 = IF 
+100 LINE.NUM *FTPcommHandle  OPEN DROP  
+101 LINE.NUM *FTPcommHandle  ?OPEN 0> IF 
+102 LINE.NUM " " *sFTPcmd  $MOVE 
+103 LINE.NUM " appe:IglooData.txt" *sFTPcmd $CAT 
 
-101 LINE.NUM " ," *sFTPcmd $CAT 
+104 LINE.NUM " ," *sFTPcmd $CAT 
 
-102 LINE.NUM *sDate *sFTPcmd $CAT 
+105 LINE.NUM *sDate *sFTPcmd $CAT 
 
-103 LINE.NUM " _" *sFTPcmd $CAT 
+106 LINE.NUM " _" *sFTPcmd $CAT 
 
-104 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
+107 LINE.NUM " IglooData.txt" *sFTPcmd $CAT 
 
-107 LINE.NUM *FTPcommHandle " cd:/iglooData"  SWAP COM.CMD DROP  
-108 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
-109 LINE.NUM *FTPcommHandle  CLOSE DROP  
-111 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
-112 LINE.NUM *LogCommHandle  OPEN DROP  
-113 LINE.NUM *LogCommHandle  CLOSE DROP  
-114 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
-115 LINE.NUM THEN 
-116 LINE.NUM THEN 
+110 LINE.NUM *FTPcommHandle " cd:/iglooData"  SWAP COM.CMD DROP  
+111 LINE.NUM *FTPcommHandle *sFTPcmd  SWAP COM.CMD DROP  
+112 LINE.NUM *FTPcommHandle  CLOSE DROP  
+114 LINE.NUM " file:w,IglooData.txt" *LogCommHandle  $MOVE 
+115 LINE.NUM *LogCommHandle  OPEN DROP  
+116 LINE.NUM *LogCommHandle  CLOSE DROP  
+117 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
+118 LINE.NUM THEN 
+119 LINE.NUM THEN 
 0 JUMP ;
 : 2_15
 1 LINE.NUM 1 {stDTdata $TABLE@  $>F ^fPidInput @! 
@@ -1523,7 +1523,7 @@ T;
 9 LINE.NUM THEN 
 0 JUMP ;
 : 2_24
-1 LINE.NUM 11 {stDTdata $TABLE@  $>F ^PanelTemp @! 
+1 LINE.NUM ~AI_P119_Temp @@ ^PanelTemp @! 
 12 LINE.NUM ^PanelTemp @@ 20 I>F F>= ^PanelTemp @@ 30 I>F F<= LAND  IF 
 13 LINE.NUM ^PanelFanMaxCtrl @@ 5 I>F F= IF 
 14 LINE.NUM ^PanelFanMaxCtrl @@ 7.000000e-001 F- 10 I>F F/ ^PanelTemp @@ F* 7.900000e+000 F- ~AO_PanelFans_CTRL @! 
@@ -2010,44 +2010,6 @@ T;
 195 LINE.NUM 1 ^NRES_CR_ErrorFlag @! 
 196 LINE.NUM THEN 
 197 LINE.NUM THEN 
-200 LINE.NUM " THERMOSTAT_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-201 LINE.NUM ^nFindCmd @@ -1 > IF 
-202 LINE.NUM 0 ~DO_Thermostat_CR @! 
-203 LINE.NUM 200  DELAY 
-204 LINE.NUM ~DI_Thermostat_CR_NC @@I 1 = IF 
-205 LINE.NUM " Success=TRUE" *Status  $MOVE 
-206 LINE.NUM ELSE 
-207 LINE.NUM " Success=FALSE" *Status  $MOVE 
-208 LINE.NUM 1 ^Thermostat_CR_ErrorFlag @! 
-209 LINE.NUM THEN 
-210 LINE.NUM THEN 
-213 LINE.NUM " THERMOSTAT_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-214 LINE.NUM ^nFindCmd @@ -1 > IF 
-215 LINE.NUM 1 ~DO_Thermostat_CR @! 
-216 LINE.NUM 200  DELAY 
-217 LINE.NUM ~DI_Thermostat_CR_NO @@I 1 = IF 
-218 LINE.NUM " Success=TRUE" *Status  $MOVE 
-219 LINE.NUM ELSE 
-220 LINE.NUM " Success=FALSE" *Status  $MOVE 
-221 LINE.NUM 1 ^Thermostat_CR_ErrorFlag @! 
-222 LINE.NUM THEN 
-223 LINE.NUM THEN 
-226 LINE.NUM " REDLINK_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
-227 LINE.NUM ^nFindCmd @@ -1 > IF 
-228 LINE.NUM 0 ~DO_RedLink_CR @! 
-229 LINE.NUM 200  DELAY 
-230 LINE.NUM ~DI_RedLink_CR_NC @@I 1 = IF 
-231 LINE.NUM " Success=TRUE" *Status  $MOVE 
-232 LINE.NUM ELSE 
-233 LINE.NUM " Success=FALSE" *Status  $MOVE 
-234 LINE.NUM 1 ^RedLink_CR_ErrorFlag @! 
-235 LINE.NUM THEN 
-236 LINE.NUM THEN 
-239 LINE.NUM " REDLINK_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
-240 LINE.NUM ^nFindCmd @@ -1 > IF 
-241 LINE.NUM 1 ~DO_RedLink_CR @! 
-242 LINE.NUM " Success=TRUE" *Status  $MOVE 
-243 LINE.NUM THEN 
 246 LINE.NUM " MCB_24V_RESET" 0 *sCmd  FindSubString ^nFindCmd @! 
 247 LINE.NUM ^nFindCmd @@ -1 > IF 
 248 LINE.NUM 1 ^EcbResetFlag @! 
@@ -2357,12 +2319,12 @@ T;
 
 595 LINE.NUM *sFanSpd *Status $CAT 
 
-597 LINE.NUM ~AI_Utility_Volt @@ *sVoltage  F>$ 
+597 LINE.NUM ~AI_Utility_Volt @@ 5 1 *sVoltage  FF.R$ 
 598 LINE.NUM " , UtilityVoltage=" *Status $CAT 
 
 599 LINE.NUM *sVoltage *Status $CAT 
 
-601 LINE.NUM ~AI_CryoTig_Volt @@ *sVoltage  F>$ 
+601 LINE.NUM ~AI_CryoTig_Volt @@ 5 1 *sVoltage  FF.R$ 
 602 LINE.NUM " , CryotigerVoltage=" *Status $CAT 
 
 603 LINE.NUM *sVoltage *Status $CAT 
@@ -2717,7 +2679,7 @@ T;
 4 LINE.NUM *sTimestamp1 0 {stDTdata $TABLE@  $MOVE 
 9 LINE.NUM *chModbusMaster }nt03AsIntParameters 0 1 }nt03HoldingRegAsIntReturnValues 16 ^n03AsIntStatus &O22Modbus03ReadHoldingRegistersAsInt CALL.SUB ^n03AsIntSubStatus @! 
 15 LINE.NUM 0 ^Count2 @! 
-16 LINE.NUM BEGIN ^Count2 @@ 15 < WHILE 
+16 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
 17 LINE.NUM ^Count2 @@ 2 *  }nt03HoldingRegAsIntReturnValues TABLE@ 65536 *  ^Count2 @@ 2 *  1 +  }nt03HoldingRegAsIntReturnValues TABLE@ +  ^Count2 @@ }ntRTDdata TABLE! 
 18 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
 19 LINE.NUM REPEAT 
@@ -2733,7 +2695,7 @@ T;
 36 LINE.NUM REPEAT 
 40 LINE.NUM 1 ^Count2 @! 
 41 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
-42 LINE.NUM ^Count2 @@ 1 -  }ntRTDtempData TABLE@ 6 3 ^Count2 @@ {stDTdata $TABLE@  FF.R$ 
+42 LINE.NUM ^Count2 @@ 1 -  }ntRTDtempData TABLE@ 11 3 ^Count2 @@ {stDTdata $TABLE@  FF.R$ 
 43 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
 44 LINE.NUM REPEAT 
 47 LINE.NUM 1 ^DTlogFlag @! 
@@ -2763,7 +2725,7 @@ T;
 
 29 LINE.NUM *sDate *sCurrentDate  $MOVE 
 30 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
-31 LINE.NUM " tcp:172.16.5.39:502" *chModbusMaster  $MOVE 
+31 LINE.NUM " tcp:10.7.23.3:502" *chModbusMaster  $MOVE 
 32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
 33 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 34 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
@@ -2773,36 +2735,66 @@ T;
 64 LINE.NUM " TentAir" 1 {stHeader $TABLE@  $MOVE 
 65 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 
 66 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
-67 LINE.NUM " ACoutput" 4 {stHeader $TABLE@  $MOVE 
-68 LINE.NUM " OutsideAir" 5 {stHeader $TABLE@  $MOVE 
+67 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
+68 LINE.NUM " ACoutput" 5 {stHeader $TABLE@  $MOVE 
 69 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
 70 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
 71 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
-72 LINE.NUM " NA" 9 {stHeader $TABLE@  $MOVE 
-73 LINE.NUM " NA" 10 {stHeader $TABLE@  $MOVE 
-74 LINE.NUM " NA" 11 {stHeader $TABLE@  $MOVE 
-75 LINE.NUM " PID_Setpoint" 12 {stHeader $TABLE@  $MOVE 
-76 LINE.NUM " PID_Input" 13 {stHeader $TABLE@  $MOVE 
-77 LINE.NUM " PID_Output" 14 {stHeader $TABLE@  $MOVE 
-78 LINE.NUM " IntakeFanSpd" 15 {stHeader $TABLE@  $MOVE 
-79 LINE.NUM " ExhaustFanSpd" 16 {stHeader $TABLE@  $MOVE 
-80 LINE.NUM " PID_Gain" 17 {stHeader $TABLE@  $MOVE 
-81 LINE.NUM " PID_Integral" 18 {stHeader $TABLE@  $MOVE 
-82 LINE.NUM " PID_Derivative" 19 
-{stHeader $TABLE@  $MOVE 
-83 LINE.NUM " PID_Scanrate" 20 {stHeader $TABLE@  $MOVE 
-85 LINE.NUM " 0.1" *sICDversion  $MOVE 
-86 LINE.NUM *sFWversion  Rev>$ 
-87 LINE.NUM " 0.1" *sSWversion  $MOVE 
-89 LINE.NUM 300 I>F ^dtFanMonitor @! 
-90 LINE.NUM ^dtFanMonitor  StartTimer 
-93 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
-94 LINE.NUM 1 ~DO_CryoTig_CR @! 
-95 LINE.NUM ELSE 
-96 LINE.NUM 0 ~DO_CryoTig_CR @! 
-97 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-98 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-99 LINE.NUM THEN 
+72 LINE.NUM " PID_Setpoint" 9 {stHeader $TABLE@  $MOVE 
+73 LINE.NUM " PID_Input" 10 {stHeader $TABLE@  $MOVE 
+74 LINE.NUM " PID_Output" 11 {stHeader $TABLE@  $MOVE 
+75 LINE.NUM " IntakeFanSpd1" 12 {stHeader $TABLE@  $MOVE 
+76 LINE.NUM " IntakeFanSpd2" 13 {stHeader $TABLE@  $MOVE 
+77 LINE.NUM " PID_Gain" 14 {stHeader $TABLE@  $MOVE 
+78 LINE.NUM " PID_Integral" 15 {stHeader $TABLE@  $MOVE 
+79 LINE.NUM " PID_Derivative" 16 {stHeader $TABLE@  $MOVE 
+80 LINE.NUM " PID_Scanrate" 17 {stHeader $TABLE@  $MOVE 
+82 LINE.NUM " 0.1" *sICDversion  $MOVE 
+83 LINE.NUM 
+*sFWversion  Rev>$ 
+84 LINE.NUM " 0.1" *sSWversion  $MOVE 
+86 LINE.NUM 300 I>F ^dtFanMonitor @! 
+87 LINE.NUM ^dtFanMonitor  StartTimer 
+90 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
+91 LINE.NUM 1 ~DO_CryoTig_CR @! 
+92 LINE.NUM ELSE 
+93 LINE.NUM 0 ~DO_CryoTig_CR @! 
+94 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
+95 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+96 LINE.NUM THEN 
+103 LINE.NUM 5 I>F ~AO_PanelFans_CTRL @! 
+106 LINE.NUM 10 I>F  FDELAY 
+109 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+110 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+111 LINE.NUM ELSE 
+111 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+112 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+113 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+114 LINE.NUM ELSE 
+114 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+115 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+116 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+117 LINE.NUM ELSE 
+117 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+118 LINE.NUM 10 I>F ~AO_PanelFans_CTRL @! 
+119 LINE.NUM 10 I>F  FDELAY 
+120 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+121 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
+122 LINE.NUM ELSE 
+122 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+123 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
+124 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+125 LINE.NUM ELSE 
+125 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+126 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
+127 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+128 LINE.NUM ELSE 
+128 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+129 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+130 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+131 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+132 LINE.NUM THEN THEN THEN THEN 
+133 LINE.NUM THEN THEN THEN THEN 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -2933,6 +2925,7 @@ CREATE V.ARRAY
 ^Position ,
 ^Preset ,
 ^RedLink_CR_ErrorFlag ,
+^SendData ,
 ^SubStringLength ,
 ^TentExhaustFanM306_ErrorFlag ,
 ^TentExhaustFanM314_ErrorFlag ,
@@ -3071,23 +3064,22 @@ CREATE P.ARRAY
 ~DI_Thermostat_CR_NC ,
 ~DI_Thermostat_CR_NO ,
 ~DI_ThermostatMCB ,
+~DI_TVS ,
 ~DI_UPS_TVS ,
-~DI_Utility_TVS ,
 ~DO_AirCon_CR ,
 ~DO_CryoTig_CR ,
-~DO_DTreset ,
 ~DO_ECB_Tx ,
 ~DO_NRES_CR ,
-~DO_RedLink_CR ,
-~DO_Thermostat_CR ,
 ~AI_CryoTig_Current ,
 ~AI_CryoTig_OutputPressure ,
 ~AI_CryoTig_ReturnPressure ,
 ~AI_CryoTig_Volt ,
+~AI_HVAC_Current ,
 ~AI_IglooStirFanM282_Tach ,
 ~AI_IglooStirFanM284_Tach ,
 ~AI_IglooStirFanM292_Tach ,
 ~AI_IglooStirFanM294_Tach ,
+~AI_P119_Temp ,
 ~AI_PanelFanM184_Tach ,
 ~AI_PanelFanM186_Tach ,
 ~AI_TentExhaustFanM306_Tach ,
@@ -3207,6 +3199,7 @@ CONFIG_PORTS
 0 ^Position @!
 0.00000000 ^Preset @!
 0 ^RedLink_CR_ErrorFlag @!
+0 ^SendData @!
 0 ^SubStringLength @!
 0 ^TentExhaustFanM306_ErrorFlag @!
 0 ^TentExhaustFanM314_ErrorFlag @!
@@ -3385,8 +3378,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/06/16 " ;
-: TIMESTAMP ." 21:17:58 " ;
+: DATESTAMP ." 10/17/16 " ;
+: TIMESTAMP ." 19:20:55 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

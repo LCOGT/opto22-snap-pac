@@ -87,6 +87,7 @@ CREATE V.ARRAY
 ^Position ,
 ^Preset ,
 ^RedLink_CR_ErrorFlag ,
+^SendData ,
 ^SubStringLength ,
 ^TentExhaustFanM306_ErrorFlag ,
 ^TentExhaustFanM314_ErrorFlag ,
@@ -225,23 +226,22 @@ CREATE P.ARRAY
 ~DI_Thermostat_CR_NC ,
 ~DI_Thermostat_CR_NO ,
 ~DI_ThermostatMCB ,
+~DI_TVS ,
 ~DI_UPS_TVS ,
-~DI_Utility_TVS ,
 ~DO_AirCon_CR ,
 ~DO_CryoTig_CR ,
-~DO_DTreset ,
 ~DO_ECB_Tx ,
 ~DO_NRES_CR ,
-~DO_RedLink_CR ,
-~DO_Thermostat_CR ,
 ~AI_CryoTig_Current ,
 ~AI_CryoTig_OutputPressure ,
 ~AI_CryoTig_ReturnPressure ,
 ~AI_CryoTig_Volt ,
+~AI_HVAC_Current ,
 ~AI_IglooStirFanM282_Tach ,
 ~AI_IglooStirFanM284_Tach ,
 ~AI_IglooStirFanM292_Tach ,
 ~AI_IglooStirFanM294_Tach ,
+~AI_P119_Temp ,
 ~AI_PanelFanM184_Tach ,
 ~AI_PanelFanM186_Tach ,
 ~AI_TentExhaustFanM306_Tach ,
@@ -361,6 +361,7 @@ CONFIG_PORTS
 0 ^Position @!
 0.00000000 ^Preset @!
 0 ^RedLink_CR_ErrorFlag @!
+0 ^SendData @!
 0 ^SubStringLength @!
 0 ^TentExhaustFanM306_ErrorFlag @!
 0 ^TentExhaustFanM314_ErrorFlag @!
