@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.4a
-# TIME/DATE :    19:20:55 10/17/2016
+# TIME/DATE :    16:37:16 10/24/2016
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -156,6 +156,7 @@ TAG1,Count1                                            ,102  ,00000000,00000000,
 TAG1,Count2                                            ,111  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Cryotig_CR_ErrorFlag                              ,52   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CryoTigThermalTimer                               ,48   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,DeadmanFlag                                       ,113  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,done                                              ,28   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,dt24h                                             ,89   ,00000000,00000000,00000000,00000020,0    ,0   
 TAG1,dtAirCon_CR                                       ,42   ,00000000,00000000,00000000,00000020,0    ,0   

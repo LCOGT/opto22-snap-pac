@@ -14,6 +14,7 @@
 0 IVAR ^Count2
 0 IVAR ^Cryotig_CR_ErrorFlag
 0 TVAR ^CryoTigThermalTimer
+0 IVAR ^DeadmanFlag
 0 IVAR ^done
 0 TVAR ^dt24h
 0 TVAR ^dtAirCon_CR
