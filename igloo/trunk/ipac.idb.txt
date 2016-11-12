@@ -3,8 +3,8 @@
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
-# VERSION :      R9.4a
-# TIME/DATE :    16:37:16 10/24/2016
+# VERSION :      R9.5a
+# TIME/DATE :    23:54:12 11/11/2016
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -124,11 +124,13 @@ TAG1,DO_AirCon_CR                                      ,0    ,10000000,00000000,
 TAG1,DO_CryoTig_CR                                     ,23   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_ECB_Tx                                         ,24   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_NRES_CR                                        ,22   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,AI_CA_SupplyPressure                              ,24   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_Current                                ,2    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_OutputPressure                         ,3    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_ReturnPressure                         ,4    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_CryoTig_Volt                                   ,0    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_HVAC_Current                                   ,21   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,AI_Igloo_Temp                                     ,23   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM282_Tach                          ,12   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM284_Tach                          ,13   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_IglooStirFanM292_Tach                          ,14   ,00000000,00000001,00000000,00000000,0    ,0   

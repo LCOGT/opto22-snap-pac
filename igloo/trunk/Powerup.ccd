@@ -20,8 +20,9 @@
 32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
 33 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 34 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
-35 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
+35 LINE.NUM |pidTentFans 2.30000000e+001  $0002.. 3 ROLL !PID 
 36 LINE.NUM 32 ^EcbCmd @! 
+37 LINE.NUM 1 ~DO_NRES_CR @! 
 63 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
 64 LINE.NUM " TentAir" 1 {stHeader $TABLE@  $MOVE 
 65 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 

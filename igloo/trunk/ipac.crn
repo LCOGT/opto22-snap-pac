@@ -662,8 +662,12 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
   25.0000  -37.5000 ~AI_HVAC_Current SET.SCALE
  4  1 APOINT -206.6665 64  2  4 %local_io 0 POINT.TNG ~AI_P119_Temp
   71.1110 -206.6665 ~AI_P119_Temp SET.SCALE
+ 4  1 APOINT -206.6665 64  3  4 %local_io 0 POINT.TNG ~AI_Igloo_Temp
+  71.1110 -206.6665 ~AI_Igloo_Temp SET.SCALE
  4  1 APOINT  -10.0000 12  0  5 %local_io 0 POINT.TNG ~AI_CryoTig_OutputPressure
  4  1 APOINT  -10.0000 12  1  5 %local_io 0 POINT.TNG ~AI_CryoTig_ReturnPressure
+ 4  1 APOINT -4000.0000 12  2  5 %local_io 0 POINT.TNG ~AI_CA_SupplyPressure
+4000.0000 -4000.0000 ~AI_CA_SupplyPressure SET.SCALE
  2  1 APOINT    0.0000 165  0  6 %local_io 0 POINT.TNG ~AO_PanelFans_CTRL
  2  1 APOINT    0.0000 165  1  6 %local_io 0 POINT.TNG ~AO_StirFans_CTRL
  2  1 APOINT    0.0000 69  0  7 %local_io 0 POINT.TNG ~AI_PanelFanM184_Tach
@@ -1529,10 +1533,10 @@ T;
 1 LINE.NUM ~AI_P119_Temp @@ ^PanelTemp @! 
 12 LINE.NUM ^PanelTemp @@ 20 I>F F>= ^PanelTemp @@ 30 I>F F<= LAND  IF 
 13 LINE.NUM ^PanelFanMaxCtrl @@ 5 I>F F= IF 
-14 LINE.NUM ^PanelFanMaxCtrl @@ 7.000000e-001 F- 10 I>F F/ ^PanelTemp @@ F* 7.900000e+000 F- ~AO_PanelFans_CTRL @! 
+14 LINE.NUM ^PanelFanMaxCtrl @@ 6.99999988e-001 F- 10 I>F F/ ^PanelTemp @@ F* 7.90000010e+000 F- ~AO_PanelFans_CTRL @! 
 15 LINE.NUM ELSE 
 15 LINE.NUM ^PanelFanMaxCtrl @@ 10 I>F F= IF 
-16 LINE.NUM ^PanelFanMaxCtrl @@ 7.000000e-001 F- 10 I>F F/ ^PanelTemp @@ F* 1.790000e+001 F- ~AO_PanelFans_CTRL @! 
+16 LINE.NUM ^PanelFanMaxCtrl @@ 6.99999988e-001 F- 10 I>F F/ ^PanelTemp @@ F* 1.78999996e+001 F- ~AO_PanelFans_CTRL @! 
 17 LINE.NUM THEN THEN 
 18 LINE.NUM ELSE 
 18 LINE.NUM ^PanelTemp @@ 20 I>F F< IF 
@@ -1560,73 +1564,73 @@ T;
 7 LINE.NUM 10 I>F ^dtFanMonitor @! 
 8 LINE.NUM ^dtFanMonitor  StartTimer 
 10 LINE.NUM ^Old_AO_StirFansCTRL @@ ~AO_StirFans_CTRL @@ F= IF 
-13 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+13 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 14 LINE.NUM ~AI_IglooStirFanM282_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-15 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+15 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 16 LINE.NUM 1 ^IglooStirFanM282_ErrorFlag @! 
 17 LINE.NUM THEN 
-21 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+21 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 22 LINE.NUM ~AI_IglooStirFanM284_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-23 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+23 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 24 LINE.NUM 1 ^IglooStirFanM284_ErrorFlag @! 
 25 LINE.NUM THEN 
-29 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+29 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 30 LINE.NUM ~AI_IglooStirFanM292_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-31 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+31 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 32 LINE.NUM 1 ^IglooStirFanM292_ErrorFlag @! 
 33 LINE.NUM THEN 
-37 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+37 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_StirFans_CTRL @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 38 LINE.NUM ~AI_IglooStirFanM294_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-39 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+39 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 40 LINE.NUM 1 ^IglooStirFanM294_ErrorFlag @! 
 41 LINE.NUM THEN 
 43 LINE.NUM ~AO_StirFans_CTRL @@ ^Old_AO_StirFansCTRL @! 
 45 LINE.NUM THEN 
 48 LINE.NUM ^Old_AO_TentServoFan_Ctrl @@ ~AO_TentServoFan_Ctrl @@ F= IF 
-51 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+51 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 52 LINE.NUM ~AI_TentIntakeFanM304_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-53 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+53 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 54 LINE.NUM 1 ^TentIntakeFanM304_ErrorFlag @! 
 55 LINE.NUM THEN 
-59 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+59 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 60 LINE.NUM ~AI_TentExhaustFanM306_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-61 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+61 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 62 LINE.NUM 1 ^TentExhaustFanM306_ErrorFlag @! 
 63 LINE.NUM THEN 
-67 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+67 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 68 LINE.NUM ~AI_TentIntakeFanM312_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-69 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+69 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 70 LINE.NUM 1 ^TentIntakeFanM312_ErrorFlag @! 
 71 LINE.NUM THEN 
-75 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.833330e+002 F+ ^CalcFanSpd @! 
+75 LINE.NUM 2950 1000 -  10 1 -  / I>F ~AO_TentServoFan_Ctrl @@ F* 7.83333008e+002 F+ ^CalcFanSpd @! 
 76 LINE.NUM ~AI_TentExhaustFanM314_Tach @@ 60 I>F F* 3 I>F F/ ^FanSpd @! 
-77 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+77 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 78 LINE.NUM 1 ^TentExhaustFanM314_ErrorFlag @! 
 79 LINE.NUM THEN 
 81 LINE.NUM ~AO_StirFans_CTRL @@ ^Old_AO_StirFansCTRL @! 
 83 LINE.NUM THEN 
 86 LINE.NUM ^Old_AO_PanelFans_CTRL @@ ~AO_PanelFans_CTRL @@ F= IF 
 88 LINE.NUM ^PanelFanMaxCtrl @@ 5 I>F F= IF 
-91 LINE.NUM 3400 1000 - I>F 5 I>F 7.000000e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 6.093020e+002 F+ ^CalcFanSpd @! 
+91 LINE.NUM 3400 1000 - I>F 5 I>F 6.99999988e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 6.09302002e+002 F+ ^CalcFanSpd @! 
 92 LINE.NUM ~AI_PanelFanM184_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-93 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+93 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 94 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
 95 LINE.NUM THEN 
-99 LINE.NUM 3400 1000 - I>F 5 I>F 7.000000e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 6.093020e+002 F+ ^CalcFanSpd @! 
+99 LINE.NUM 3400 1000 - I>F 5 I>F 6.99999988e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 6.09302002e+002 F+ ^CalcFanSpd @! 
 100 LINE.NUM ~AI_PanelFanM186_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-101 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+101 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 102 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
 103 LINE.NUM THEN 
 105 LINE.NUM THEN 
 108 LINE.NUM ^PanelFanMaxCtrl @@ 10 I>F F= IF 
-111 LINE.NUM 3400 1000 - I>F 10 I>F 7.000000e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 8.193550e+002 F+ ^CalcFanSpd @! 
+111 LINE.NUM 3400 1000 - I>F 10 I>F 6.99999988e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 8.19354980e+002 F+ ^CalcFanSpd @! 
 112 LINE.NUM ~AI_PanelFanM184_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-113 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+113 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 114 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
 115 LINE.NUM THEN 
-119 LINE.NUM 3400 1000 - I>F 10 I>F 7.000000e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 8.193550e+002 F+ ^CalcFanSpd @! 
+119 LINE.NUM 3400 1000 - I>F 10 I>F 6.99999988e-001 F- F/ ~AO_PanelFans_CTRL @@ F* 8.19354980e+002 F+ ^CalcFanSpd @! 
 120 LINE.NUM ~AI_PanelFanM186_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-121 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+121 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 122 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
 123 LINE.NUM THEN 
 125 LINE.NUM THEN 
@@ -1634,26 +1638,26 @@ T;
 129 LINE.NUM THEN 
 132 LINE.NUM ^Old_AO_TentStirFan_Ctrl @@ ~AO_TentStirFan_Ctrl @@ F= IF 
 134 LINE.NUM ^TentStirFanMaxCtrl @@ 5 I>F F= IF 
-137 LINE.NUM 3400 1000 - I>F 5 I>F 7.000000e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 6.093020e+002 F+ ^CalcFanSpd @! 
+137 LINE.NUM 3400 1000 - I>F 5 I>F 6.99999988e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 6.09302002e+002 F+ ^CalcFanSpd @! 
 138 LINE.NUM ~AI_TentStirFanM323_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-139 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+139 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 140 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
 141 LINE.NUM THEN 
-145 LINE.NUM 3400 1000 - I>F 5 I>F 7.000000e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 6.093020e+002 F+ ^CalcFanSpd @! 
+145 LINE.NUM 3400 1000 - I>F 5 I>F 6.99999988e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 6.09302002e+002 F+ ^CalcFanSpd @! 
 146 LINE.NUM ~AI_TentStirFanM325_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-147 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+147 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 148 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
 149 LINE.NUM THEN 
 151 LINE.NUM THEN 
 154 LINE.NUM ^TentStirFanMaxCtrl @@ 10 I>F F= IF 
-157 LINE.NUM 3400 1000 - I>F 10 I>F 7.000000e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 8.193550e+002 F+ ^CalcFanSpd @! 
+157 LINE.NUM 3400 1000 - I>F 10 I>F 6.99999988e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 8.19354980e+002 F+ ^CalcFanSpd @! 
 158 LINE.NUM ~AI_TentStirFanM323_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-159 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+159 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 160 LINE.NUM 1 ^TentStirFanM323_ErrorFlag @! 
 161 LINE.NUM THEN 
-165 LINE.NUM 3400 1000 - I>F 10 I>F 7.000000e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 8.193550e+002 F+ ^CalcFanSpd @! 
+165 LINE.NUM 3400 1000 - I>F 10 I>F 6.99999988e-001 F- F/ ~AO_TentStirFan_Ctrl @@ F* 8.19354980e+002 F+ ^CalcFanSpd @! 
 166 LINE.NUM ~AI_TentStirFanM325_Tach @@ 60 I>F F* 2 I>F F/ ^FanSpd @! 
-167 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.100000e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 9.000000e-001 F* F< LOR  IF 
+167 LINE.NUM ^FanSpd @@ ^CalcFanSpd @@ 1.10000002e+000 F* F> ^FanSpd @@ ^CalcFanSpd @@ 8.99999976e-001 F* F< LOR  IF 
 168 LINE.NUM 1 ^TentStirFanM325_ErrorFlag @! 
 169 LINE.NUM THEN 
 171 LINE.NUM THEN 
@@ -1663,7 +1667,7 @@ T;
 0 JUMP ;
 : 2_35
 5 LINE.NUM ^EcbResetFlag @@ 1 = IF 
-6 LINE.NUM 6.000000e-001 ~DO_ECB_Tx  PULSEON 
+6 LINE.NUM 6.00000024e-001 ~DO_ECB_Tx  PULSEON 
 7 LINE.NUM 0 ^EcbResetFlag @! 
 8 LINE.NUM THEN 
 20 LINE.NUM ^MasterEcbFlag @@ 1 = IF 
@@ -1673,7 +1677,7 @@ T;
 25 LINE.NUM 15 ^Count @! 
 26 LINE.NUM 1 ^x @! 
 29 LINE.NUM 1 ~DO_ECB_Tx @! 
-30 LINE.NUM 3.500000e-002 ^Preset @! 
+30 LINE.NUM 3.50000001e-002 ^Preset @! 
 31 LINE.NUM ^Preset @@ ^Timer @! 
 32 LINE.NUM BEGIN ^x @@ WHILE 
 33 LINE.NUM ^Timer  T0= IF 
@@ -1838,7 +1842,7 @@ T;
 8 LINE.NUM " Success=TRUE" *Status  $MOVE 
 9 LINE.NUM ELSE 
 9 LINE.NUM ^FanCtrl @@ 0 > ^FanCtrl @@ 100 <= LAND  IF 
-11 LINE.NUM 9.090000e-002 ^FanCtrl @@F F* 9.090000e-001 F+ ~AO_StirFans_CTRL @! 
+11 LINE.NUM 9.08999965e-002 ^FanCtrl @@F F* 9.08999979e-001 F+ ~AO_StirFans_CTRL @! 
 12 LINE.NUM " Success=TRUE" *Status  $MOVE 
 13 LINE.NUM ELSE 
 13 LINE.NUM ^FanCtrl @@ 100 > IF 
@@ -1866,7 +1870,7 @@ T;
 41 LINE.NUM ^nFindCmd @@ -1 > IF 
 42 LINE.NUM *sCmd ^nFindCmd @@ 25 +  4 *sPidSetpoint  $SUB 
 43 LINE.NUM *sPidSetpoint  $>F ^PidSetpoint @! 
-44 LINE.NUM ^PidSetpoint @@ 1.000000e+001 F< ^PidSetpoint @@ 3.500000e+001 F> LOR  IF 
+44 LINE.NUM ^PidSetpoint @@ 1.00000000e+001 F< ^PidSetpoint @@ 3.50000000e+001 F> LOR  IF 
 45 LINE.NUM " Success=FALSE, enter a value from 10.0 and 35.0" *Status  $MOVE 
 46 LINE.NUM ELSE 
 47 LINE.NUM |pidTentFans ^PidSetpoint @@  $0002.. 3 ROLL !PID 
@@ -1889,7 +1893,7 @@ T;
 64 LINE.NUM " Success=TRUE" *Status  $MOVE 
 65 LINE.NUM ELSE 
 65 LINE.NUM ^FanCtrl @@ 0 > ^FanCtrl @@ 100 <= LAND  IF 
-67 LINE.NUM 4.091000e-002 ^FanCtrl @@F F* 9.090000e-001 F+ ^FanCtrl F@! 
+67 LINE.NUM 4.09100018e-002 ^FanCtrl @@F F* 9.08999979e-001 F+ ^FanCtrl F@! 
 68 LINE.NUM |pidTentFans ^FanCtrl @@F  $0008.. 3 ROLL !PID 
 69 LINE.NUM " Success=TRUE" *Status  $MOVE 
 70 LINE.NUM ELSE 
@@ -1909,10 +1913,10 @@ T;
 85 LINE.NUM ELSE 
 85 LINE.NUM ^FanCtrl @@ 0 >= ^FanCtrl @@ 100 <= LAND  IF 
 86 LINE.NUM ^TentStirFanMaxCtrl @@ 5 I>F F= IF 
-87 LINE.NUM ^TentStirFanMaxCtrl @@ 7.000000e-001 F- 100 1 - I>F F/ 100 I>F F* 6.570000e-001 F+ ~AO_TentStirFan_Ctrl @! 
+87 LINE.NUM ^TentStirFanMaxCtrl @@ 6.99999988e-001 F- 100 1 - I>F F/ 100 I>F F* 6.57000005e-001 F+ ~AO_TentStirFan_Ctrl @! 
 88 LINE.NUM ELSE 
 88 LINE.NUM ^TentStirFanMaxCtrl @@ 10 I>F F= IF 
-89 LINE.NUM ^TentStirFanMaxCtrl @@ 7.000000e-001 F- 100 1 - I>F F/ 100 I>F F* 6.060000e-001 F+ ~AO_TentStirFan_Ctrl @! 
+89 LINE.NUM ^TentStirFanMaxCtrl @@ 6.99999988e-001 F- 100 1 - I>F F/ 100 I>F F* 6.06000006e-001 F+ ~AO_TentStirFan_Ctrl @! 
 90 LINE.NUM THEN THEN 
 91 LINE.NUM " Success=TRUE" *Status  $MOVE 
 92 LINE.NUM ELSE 
@@ -2693,7 +2697,7 @@ T;
 27 LINE.NUM REPEAT 
 32 LINE.NUM 0 ^Count2 @! 
 33 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
-34 LINE.NUM ^Count2 @@ }ntRTDtempData TABLE@ 100000 I>F F/ 1 I>F F- 3.850000e-003 F/ ^Count2 @@ }ntRTDtempData TABLE! 
+34 LINE.NUM ^Count2 @@ }ntRTDtempData TABLE@ 100000 I>F F/ 1 I>F F- 3.84999998e-003 F/ ^Count2 @@ }ntRTDtempData TABLE! 
 35 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
 36 LINE.NUM REPEAT 
 40 LINE.NUM 1 ^Count2 @! 
@@ -2732,8 +2736,9 @@ T;
 32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
 33 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 34 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
-35 LINE.NUM |pidTentFans 2.300000e+001  $0002.. 3 ROLL !PID 
+35 LINE.NUM |pidTentFans 2.30000000e+001  $0002.. 3 ROLL !PID 
 36 LINE.NUM 32 ^EcbCmd @! 
+37 LINE.NUM 1 ~DO_NRES_CR @! 
 63 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
 64 LINE.NUM " TentAir" 1 {stHeader $TABLE@  $MOVE 
 65 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 
@@ -3074,11 +3079,13 @@ CREATE P.ARRAY
 ~DO_CryoTig_CR ,
 ~DO_ECB_Tx ,
 ~DO_NRES_CR ,
+~AI_CA_SupplyPressure ,
 ~AI_CryoTig_Current ,
 ~AI_CryoTig_OutputPressure ,
 ~AI_CryoTig_ReturnPressure ,
 ~AI_CryoTig_Volt ,
 ~AI_HVAC_Current ,
+~AI_Igloo_Temp ,
 ~AI_IglooStirFanM282_Tach ,
 ~AI_IglooStirFanM284_Tach ,
 ~AI_IglooStirFanM292_Tach ,
@@ -3383,8 +3390,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/24/16 " ;
-: TIMESTAMP ." 16:37:16 " ;
+: DATESTAMP ." 11/11/16 " ;
+: TIMESTAMP ." 23:54:12 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
