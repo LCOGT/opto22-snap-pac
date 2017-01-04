@@ -407,59 +407,59 @@
 55 LINE.NUM THEN 
 56 LINE.NUM " LOWER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 57 LINE.NUM ^Position @@ -1 >= IF 
-58 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-59 LINE.NUM 1 ^Response @! 
-60 LINE.NUM THEN 
-61 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-62 LINE.NUM ^Position @@ -1 >= IF 
-63 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-64 LINE.NUM 1 ^Response @! 
-65 LINE.NUM THEN 
-66 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-67 LINE.NUM ^Position @@ -1 >= IF 
-68 LINE.NUM 1 ~DO_XformerPWR @! 
-69 LINE.NUM 1 ^Response @! 
-70 LINE.NUM THEN 
-71 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-72 LINE.NUM ^Position @@ -1 >= IF 
-73 LINE.NUM 0 ~DO_XformerPWR @! 
-74 LINE.NUM 1 ^Response @! 
-75 LINE.NUM THEN 
-76 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-77 LINE.NUM ^Position @@ -1 >= IF 
-78 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
-79 LINE.NUM 1 ^Response @! 
-80 LINE.NUM THEN 
-81 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-82 LINE.NUM ^Position @@ -1 >= IF 
-83 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
-84 LINE.NUM 1 ^Response @! 
-85 LINE.NUM THEN 
-86 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-87 LINE.NUM ^Position @@ -1 >= IF 
-88 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
-89 LINE.NUM 1 ^Response @! 
-90 LINE.NUM THEN 
-91 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-92 LINE.NUM ^Position @@ -1 >= IF 
-93 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
-94 LINE.NUM 1 ^Response @! 
-95 LINE.NUM THEN 
-96 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-97 LINE.NUM ^Position @@ -1 >= IF 
-98 LINE.NUM 0 ~F4_3_Reset @! 
-99 LINE.NUM 200  DELAY 
-100 LINE.NUM 1 ~F4_3_Reset @! 
-101 LINE.NUM 1 ^Response @! 
-102 LINE.NUM THEN 
-105 LINE.NUM ^Response @@ 1 = IF 
-106 LINE.NUM " Success=TRUE" *SentString  $MOVE 
-108 LINE.NUM ELSE 
-109 LINE.NUM " Success =FALSE" *SentString  $MOVE 
-111 LINE.NUM THEN 
-112 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-113 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-114 LINE.NUM " " *MasterCommand  $MOVE 
+59 LINE.NUM 1 ^CryoTigPWR_Lower_Flag @! 
+60 LINE.NUM 1 ^Response @! 
+61 LINE.NUM THEN 
+62 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+63 LINE.NUM ^Position @@ -1 >= IF 
+65 LINE.NUM 0 ^CryoTigPWR_Lower_Flag @! 
+66 LINE.NUM 1 ^Response @! 
+67 LINE.NUM THEN 
+68 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+69 LINE.NUM ^Position @@ -1 >= IF 
+70 LINE.NUM 1 ~DO_XformerPWR @! 
+71 LINE.NUM 1 ^Response @! 
+72 LINE.NUM THEN 
+73 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+74 LINE.NUM ^Position @@ -1 >= IF 
+75 LINE.NUM 0 ~DO_XformerPWR @! 
+76 LINE.NUM 1 ^Response @! 
+77 LINE.NUM THEN 
+78 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+79 LINE.NUM ^Position @@ -1 >= IF 
+80 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
+81 LINE.NUM 1 ^Response @! 
+82 LINE.NUM THEN 
+83 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+84 LINE.NUM ^Position @@ -1 >= IF 
+85 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
+86 LINE.NUM 1 ^Response @! 
+87 LINE.NUM THEN 
+88 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+89 LINE.NUM ^Position @@ -1 >= IF 
+90 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
+91 LINE.NUM 1 ^Response @! 
+92 LINE.NUM THEN 
+93 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+94 LINE.NUM ^Position @@ -1 >= IF 
+95 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
+96 LINE.NUM 1 ^Response @! 
+97 LINE.NUM THEN 
+98 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+99 LINE.NUM ^Position @@ -1 >= IF 
+100 LINE.NUM 0 ~F4_3_Reset @! 
+101 LINE.NUM 200  DELAY 
+102 LINE.NUM 1 ~F4_3_Reset @! 
+103 LINE.NUM 1 ^Response @! 
+104 LINE.NUM THEN 
+107 LINE.NUM ^Response @@ 1 = IF 
+108 LINE.NUM " Success=TRUE" *SentString  $MOVE 
+110 LINE.NUM ELSE 
+111 LINE.NUM " Success =FALSE" *SentString  $MOVE 
+113 LINE.NUM THEN 
+114 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+115 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+116 LINE.NUM " " *MasterCommand  $MOVE 
 -2 JUMP ;
 : 1_193
 3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 

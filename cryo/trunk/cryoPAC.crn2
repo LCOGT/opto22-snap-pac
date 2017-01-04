@@ -4,6 +4,7 @@
 0 TASK &Powerup
 0 IVAR ^CoolantDemand
 0 IVAR ^CoolantSetpoint
+0 IVAR ^CryoTigPWR_Lower_Flag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^DewpointMinimum
 0 TVAR ^dtGetChar

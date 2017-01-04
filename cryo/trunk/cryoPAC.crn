@@ -10,6 +10,7 @@ _END NEW $$$.RUN
 0 TASK &Powerup
 0 IVAR ^CoolantDemand
 0 IVAR ^CoolantSetpoint
+0 IVAR ^CryoTigPWR_Lower_Flag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^DewpointMinimum
 0 TVAR ^dtGetChar
@@ -654,59 +655,59 @@ T;
 55 LINE.NUM THEN 
 56 LINE.NUM " LOWER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 57 LINE.NUM ^Position @@ -1 >= IF 
-58 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-59 LINE.NUM 1 ^Response @! 
-60 LINE.NUM THEN 
-61 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-62 LINE.NUM ^Position @@ -1 >= IF 
-63 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-64 LINE.NUM 1 ^Response @! 
-65 LINE.NUM THEN 
-66 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-67 LINE.NUM ^Position @@ -1 >= IF 
-68 LINE.NUM 1 ~DO_XformerPWR @! 
-69 LINE.NUM 1 ^Response @! 
-70 LINE.NUM THEN 
-71 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-72 LINE.NUM ^Position @@ -1 >= IF 
-73 LINE.NUM 0 ~DO_XformerPWR @! 
-74 LINE.NUM 1 ^Response @! 
-75 LINE.NUM THEN 
-76 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-77 LINE.NUM ^Position @@ -1 >= IF 
-78 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
-79 LINE.NUM 1 ^Response @! 
-80 LINE.NUM THEN 
-81 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-82 LINE.NUM ^Position @@ -1 >= IF 
-83 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
-84 LINE.NUM 1 ^Response @! 
-85 LINE.NUM THEN 
-86 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-87 LINE.NUM ^Position @@ -1 >= IF 
-88 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
-89 LINE.NUM 1 ^Response @! 
-90 LINE.NUM THEN 
-91 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-92 LINE.NUM ^Position @@ -1 >= IF 
-93 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
-94 LINE.NUM 1 ^Response @! 
-95 LINE.NUM THEN 
-96 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-97 LINE.NUM ^Position @@ -1 >= IF 
-98 LINE.NUM 0 ~F4_3_Reset @! 
-99 LINE.NUM 200  DELAY 
-100 LINE.NUM 1 ~F4_3_Reset @! 
-101 LINE.NUM 1 ^Response @! 
-102 LINE.NUM THEN 
-105 LINE.NUM ^Response @@ 1 = IF 
-106 LINE.NUM " Success=TRUE" *SentString  $MOVE 
-108 LINE.NUM ELSE 
-109 LINE.NUM " Success =FALSE" *SentString  $MOVE 
-111 LINE.NUM THEN 
-112 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-113 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-114 LINE.NUM " " *MasterCommand  $MOVE 
+59 LINE.NUM 1 ^CryoTigPWR_Lower_Flag @! 
+60 LINE.NUM 1 ^Response @! 
+61 LINE.NUM THEN 
+62 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+63 LINE.NUM ^Position @@ -1 >= IF 
+65 LINE.NUM 0 ^CryoTigPWR_Lower_Flag @! 
+66 LINE.NUM 1 ^Response @! 
+67 LINE.NUM THEN 
+68 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+69 LINE.NUM ^Position @@ -1 >= IF 
+70 LINE.NUM 1 ~DO_XformerPWR @! 
+71 LINE.NUM 1 ^Response @! 
+72 LINE.NUM THEN 
+73 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+74 LINE.NUM ^Position @@ -1 >= IF 
+75 LINE.NUM 0 ~DO_XformerPWR @! 
+76 LINE.NUM 1 ^Response @! 
+77 LINE.NUM THEN 
+78 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+79 LINE.NUM ^Position @@ -1 >= IF 
+80 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
+81 LINE.NUM 1 ^Response @! 
+82 LINE.NUM THEN 
+83 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+84 LINE.NUM ^Position @@ -1 >= IF 
+85 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
+86 LINE.NUM 1 ^Response @! 
+87 LINE.NUM THEN 
+88 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+89 LINE.NUM ^Position @@ -1 >= IF 
+90 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
+91 LINE.NUM 1 ^Response @! 
+92 LINE.NUM THEN 
+93 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+94 LINE.NUM ^Position @@ -1 >= IF 
+95 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
+96 LINE.NUM 1 ^Response @! 
+97 LINE.NUM THEN 
+98 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+99 LINE.NUM ^Position @@ -1 >= IF 
+100 LINE.NUM 0 ~F4_3_Reset @! 
+101 LINE.NUM 200  DELAY 
+102 LINE.NUM 1 ~F4_3_Reset @! 
+103 LINE.NUM 1 ^Response @! 
+104 LINE.NUM THEN 
+107 LINE.NUM ^Response @@ 1 = IF 
+108 LINE.NUM " Success=TRUE" *SentString  $MOVE 
+110 LINE.NUM ELSE 
+111 LINE.NUM " Success =FALSE" *SentString  $MOVE 
+113 LINE.NUM THEN 
+114 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+115 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+116 LINE.NUM " " *MasterCommand  $MOVE 
 -2 JUMP ;
 : 1_193
 3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
@@ -1154,13 +1155,14 @@ T;
   1000    DELAY
 -2 JUMP ;
 : 0_16
-1 LINE.NUM ~DeadmanBypass @@I 1 = IF 
-2 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-3 LINE.NUM ELSE 
-4 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-5 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer  SetTimer 
-6 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-7 LINE.NUM THEN 
+1 LINE.NUM 1 ^CryoTigPWR_Lower_Flag @! 
+3 LINE.NUM ~DeadmanBypass @@I 1 = IF 
+4 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+5 LINE.NUM ELSE 
+6 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+7 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer  SetTimer 
+8 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+9 LINE.NUM THEN 
 -2 JUMP ;
 : 0_20
 1 LINE.NUM ~CryoTig_Deadman  CLR.-LATCH@I ~DeadmanBypass @@I 0 = LAND  ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
@@ -1169,14 +1171,17 @@ T;
 7 LINE.NUM ~DeadmanBypass  CLR.-LATCH@I ~CryoTig_Deadman @@I 0 = LAND  ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
 10 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer @! 
 11 LINE.NUM THEN 
-13 LINE.NUM ~CryoTig_Deadman @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
-14 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-15 LINE.NUM ELSE 
-15 LINE.NUM ~DeadmanBypass @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
-16 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-17 LINE.NUM ELSE 
-18 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-19 LINE.NUM THEN THEN 
+13 LINE.NUM ^CryoTigPWR_Lower_Flag @@ 0 = IF 
+14 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer @! 
+15 LINE.NUM THEN 
+17 LINE.NUM ~CryoTig_Deadman @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
+18 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+19 LINE.NUM ELSE 
+19 LINE.NUM ~DeadmanBypass @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
+20 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+21 LINE.NUM ELSE 
+22 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+23 LINE.NUM THEN THEN 
 -3 JUMP ;
 : 0_24
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
@@ -1199,6 +1204,7 @@ CREATE T.ARRAY
 CREATE V.ARRAY
 ^CoolantDemand ,
 ^CoolantSetpoint ,
+^CryoTigPWR_Lower_Flag ,
 ^DewpointMinimum ,
 ^ErrorFlag ,
 ^f120 ,
@@ -1333,6 +1339,7 @@ CONFIG_PORTS
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^CoolantDemand @!
 20 ^CoolantSetpoint @!
+0 ^CryoTigPWR_Lower_Flag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^DewpointMinimum @!
 0.0 ^dtGetChar @!
@@ -1421,7 +1428,7 @@ CONFIG_PORTS
  *sOctet3 $MOVE
 " Status"
  *StatusString $MOVE
-" 7"
+" 8"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
@@ -1446,8 +1453,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 01/14/16 " ;
-: TIMESTAMP ." 00:07:27 " ;
+: DATESTAMP ." 01/04/17 " ;
+: TIMESTAMP ." 20:16:10 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

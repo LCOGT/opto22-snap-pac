@@ -20,6 +20,7 @@ _END NEW $$$.RUN
 0 TASK &Powerup
 0 IVAR ^CoolantDemand
 0 IVAR ^CoolantSetpoint
+0 IVAR ^CryoTigPWR_Lower_Flag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^DewpointMinimum
 0 TVAR ^dtGetChar
@@ -90,83 +91,52 @@ _END NEW $$$.RUN
 1024 0 COMVAR *Master_Handle 
 10 30 0 $TABLE {stAps2 
 
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %Local_IO
-SPOINT 0.0 OUTPUT 4 %Local_IO
-    0 POINT ~CryoTigPWR_Lower_M2_3
-SPOINT 0.0 OUTPUT 5 %Local_IO
-    0 POINT ~DO_XformerPWR
-SPOINT 0.0 OUTPUT 8 %Local_IO
-    0 POINT ~ThermoPWR_Lower_M3_3
-SPOINT 0.0 OUTPUT 9 %Local_IO
-    0 POINT ~ThermoPWR_Upper_M3_7
-SPOINT 0.0 OUTPUT 10 %Local_IO
-    0 POINT ~Honeysucker_CTRL
-SPOINT 0.0 OUTPUT 11 %Local_IO
-    0 POINT ~F4_3_Reset
-APOINT    0.0000 165 12 %Local_IO 0 POINT ~Exhaust_Fan_CTRL
-APOINT    0.0000 165 13 %Local_IO 0 POINT ~Intake_Fan_CTRL
-APOINT    0.0000 69 16 %Local_IO
-    0 POINT ~Exhaust_Fan_SPD
-APOINT    0.0000 69 17 %Local_IO
-    0 POINT ~Intake_Fan_SPD
-APOINT    0.0000 69 20 %Local_IO
-    0 POINT ~Honeysucker_SPD
-APOINT    0.0000 70 24 %Local_IO
-    0 POINT ~CryoTigVolt_Lower_M2_3
-APOINT    0.0000 70 25 %Local_IO
-    0 POINT ~CryoTigVolt_Upper_M2_7
-SPOINT 0.0 INPUT 28 %Local_IO
-    0 POINT ~F4_3_Status
-SPOINT 0.0 INPUT 29 %Local_IO
-    0 POINT ~CryoTig_Deadman
-APOINT -200.0000 10 32 %Local_IO
-    0 POINT ~MasterTemp
-APOINT -200.0000 10 36 %Local_IO
-    0 POINT ~ThermoTemp_Lower_M3_3
-APOINT -200.0000 10 37 %Local_IO
-    0 POINT ~ThermoTemp_Upper_M3_7
-APOINT -150.0000 0 40 %Local_IO
-    0 POINT ~Intake_Fan_Humidity
+nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
+ 4  1 SPOINT 0.0    OUTPUT  0  1 %Local_IO 0 POINT.TNG ~CryoTigPWR_Lower_M2_3
+ 4  1 SPOINT 0.0    OUTPUT  1  1 %Local_IO 0 POINT.TNG ~DO_XformerPWR
+ 4  1 SPOINT 0.0    OUTPUT  0  2 %Local_IO 0 POINT.TNG ~ThermoPWR_Lower_M3_3
+ 4  1 SPOINT 0.0    OUTPUT  1  2 %Local_IO 0 POINT.TNG ~ThermoPWR_Upper_M3_7
+ 4  1 SPOINT 0.0    OUTPUT  2  2 %Local_IO 0 POINT.TNG ~Honeysucker_CTRL
+ 4  1 SPOINT 0.0    OUTPUT  3  2 %Local_IO 0 POINT.TNG ~F4_3_Reset
+ 2  1 APOINT    0.0000 165  0  3 %Local_IO 0 POINT.TNG ~Exhaust_Fan_CTRL
+ 2  1 APOINT    0.0000 165  1  3 %Local_IO 0 POINT.TNG ~Intake_Fan_CTRL
+ 2  1 APOINT    0.0000 69  0  4 %Local_IO 0 POINT.TNG ~Exhaust_Fan_SPD
+ 2  1 APOINT    0.0000 69  1  4 %Local_IO 0 POINT.TNG ~Intake_Fan_SPD
+ 2  1 APOINT    0.0000 69  0  5 %Local_IO 0 POINT.TNG ~Honeysucker_SPD
+ 2  1 APOINT    0.0000 70  0  6 %Local_IO 0 POINT.TNG ~CryoTigVolt_Lower_M2_3
+ 2  1 APOINT    0.0000 70  1  6 %Local_IO 0 POINT.TNG ~CryoTigVolt_Upper_M2_7
+ 4  1 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~F4_3_Status
+ 4  1 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~CryoTig_Deadman
+ 2  1 APOINT -200.0000 10  0  8 %Local_IO 0 POINT.TNG ~MasterTemp
+ 2  1 APOINT -200.0000 10  0  9 %Local_IO 0 POINT.TNG ~ThermoTemp_Lower_M3_3
+ 2  1 APOINT -200.0000 10  1  9 %Local_IO 0 POINT.TNG ~ThermoTemp_Upper_M3_7
+ 4  1 APOINT -150.0000 64  0 10 %Local_IO 0 POINT.TNG ~Intake_Fan_Humidity
  100.0000 -150.0000 ~Intake_Fan_Humidity SET.SCALE
-APOINT -190.0000 0 41 %Local_IO
-    0 POINT ~Intake_Fan_Temp
+ 4  1 APOINT -190.0000 64  1 10 %Local_IO 0 POINT.TNG ~Intake_Fan_Temp
   60.0000 -190.0000 ~Intake_Fan_Temp SET.SCALE
-APOINT -10476.0000 0 42 %Local_IO
-    0 POINT ~ThermoDiffPress_Lower_M3_3
+ 4  1 APOINT -10476.0000 64  2 10 %Local_IO 0 POINT.TNG ~ThermoDiffPress_Lower_M3_3
 6984.0000 -10476.0000 ~ThermoDiffPress_Lower_M3_3 SET.SCALE
-APOINT -10476.0000 0 43 %Local_IO
-    0 POINT ~ThermoDiffPress_Upper_M3_7
+ 4  1 APOINT -10476.0000 64  3 10 %Local_IO 0 POINT.TNG ~ThermoDiffPress_Upper_M3_7
 6984.0000 -10476.0000 ~ThermoDiffPress_Upper_M3_7 SET.SCALE
-APOINT   -5.0000 0 44 %Local_IO
-    0 POINT ~CryoTigCurrent_Lower_M2_3
+ 4  1 APOINT   -5.0000 64  0 11 %Local_IO 0 POINT.TNG ~CryoTigCurrent_Lower_M2_3
    5.0000   -5.0000 ~CryoTigCurrent_Lower_M2_3 SET.SCALE
-APOINT   -5.0000 0 45 %Local_IO
-    0 POINT ~CryoTigCurrent_Upper_M2_7
+ 4  1 APOINT   -5.0000 64  1 11 %Local_IO 0 POINT.TNG ~CryoTigCurrent_Upper_M2_7
    5.0000   -5.0000 ~CryoTigCurrent_Upper_M2_7 SET.SCALE
-APOINT  -15.0000 0 46 %Local_IO
-    0 POINT ~ThermoCurrent_Lower_M3_3
+ 4  1 APOINT  -15.0000 64  2 11 %Local_IO 0 POINT.TNG ~ThermoCurrent_Lower_M3_3
   10.0000  -15.0000 ~ThermoCurrent_Lower_M3_3 SET.SCALE
-APOINT  -15.0000 0 47 %Local_IO
-    0 POINT ~ThermoCurrent_Upper_M3_7
+ 4  1 APOINT  -15.0000 64  3 11 %Local_IO 0 POINT.TNG ~ThermoCurrent_Upper_M3_7
   10.0000  -15.0000 ~ThermoCurrent_Upper_M3_7 SET.SCALE
-APOINT  -20.0000 69 48 %Local_IO
-    0 POINT ~ThermoFlow_Lower_M3_3
-APOINT  -20.0000 69 49 %Local_IO
-    0 POINT ~ThermoFlow_Upper_M3_7
-APOINT -500.0000 0 52 %Local_IO
-    0 POINT ~CryoTigOutputPress_Lower_M2_3
+ 2  1 APOINT  -20.0000 69  0 12 %Local_IO 0 POINT.TNG ~ThermoFlow_Lower_M3_3
+ 2  1 APOINT  -20.0000 69  1 12 %Local_IO 0 POINT.TNG ~ThermoFlow_Upper_M3_7
+ 4  1 APOINT -500.0000 12  0 13 %Local_IO 0 POINT.TNG ~CryoTigOutputPress_Lower_M2_3
  500.0000 -500.0000 ~CryoTigOutputPress_Lower_M2_3 SET.SCALE
-APOINT -329.4000 0 53 %Local_IO
-    0 POINT ~CryoTigReturnPress_Lower_M2_3
+ 4  1 APOINT -329.4000 12  1 13 %Local_IO 0 POINT.TNG ~CryoTigReturnPress_Lower_M2_3
  300.0000 -329.4000 ~CryoTigReturnPress_Lower_M2_3 SET.SCALE
-APOINT -500.0000 0 54 %Local_IO
-    0 POINT ~CryoTigOutputPress_Upper_M2_7
+ 4  1 APOINT -500.0000 12  2 13 %Local_IO 0 POINT.TNG ~CryoTigOutputPress_Upper_M2_7
  500.0000 -500.0000 ~CryoTigOutputPress_Upper_M2_7 SET.SCALE
-APOINT -329.4000 0 55 %Local_IO
-    0 POINT ~CryoTigReturnPress_Upper_M2_7
+ 4  1 APOINT -329.4000 12  3 13 %Local_IO 0 POINT.TNG ~CryoTigReturnPress_Upper_M2_7
  300.0000 -329.4000 ~CryoTigReturnPress_Upper_M2_7 SET.SCALE
-SPOINT 0.0 INPUT 56 %Local_IO
-    0 POINT ~DeadmanBypass
+ 4  1 SPOINT 0.0     INPUT  0 14 %Local_IO 0 POINT.TNG ~DeadmanBypass
 : 2_0
 5 JUMP ;
 : 2_1
@@ -589,7 +559,7 @@ T;
 
 110 LINE.NUM " , LowerCryotigerReturnPressure=" *EnviroString $CAT 
 
-111 LINE.NUM ~CryoTigOutputPress_Upper_M2_7 @@ 5 1 *EnviroTemp  FF.R$ 
+111 LINE.NUM ~CryoTigReturnPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
 112 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 113 LINE.NUM " , UpperCryotigerOutputPressure=0.0" *EnviroString $CAT 
@@ -695,59 +665,59 @@ T;
 55 LINE.NUM THEN 
 56 LINE.NUM " LOWER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 57 LINE.NUM ^Position @@ -1 >= IF 
-58 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-59 LINE.NUM 1 ^Response @! 
-60 LINE.NUM THEN 
-61 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-62 LINE.NUM ^Position @@ -1 >= IF 
-63 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-64 LINE.NUM 1 ^Response @! 
-65 LINE.NUM THEN 
-66 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-67 LINE.NUM ^Position @@ -1 >= IF 
-68 LINE.NUM 1 ~DO_XformerPWR @! 
-69 LINE.NUM 1 ^Response @! 
-70 LINE.NUM THEN 
-71 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-72 LINE.NUM ^Position @@ -1 >= IF 
-73 LINE.NUM 0 ~DO_XformerPWR @! 
-74 LINE.NUM 1 ^Response @! 
-75 LINE.NUM THEN 
-76 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-77 LINE.NUM ^Position @@ -1 >= IF 
-78 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
-79 LINE.NUM 1 ^Response @! 
-80 LINE.NUM THEN 
-81 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-82 LINE.NUM ^Position @@ -1 >= IF 
-83 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
-84 LINE.NUM 1 ^Response @! 
-85 LINE.NUM THEN 
-86 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-87 LINE.NUM ^Position @@ -1 >= IF 
-88 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
-89 LINE.NUM 1 ^Response @! 
-90 LINE.NUM THEN 
-91 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-92 LINE.NUM ^Position @@ -1 >= IF 
-93 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
-94 LINE.NUM 1 ^Response @! 
-95 LINE.NUM THEN 
-96 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-97 LINE.NUM ^Position @@ -1 >= IF 
-98 LINE.NUM 0 ~F4_3_Reset @! 
-99 LINE.NUM 200  DELAY 
-100 LINE.NUM 1 ~F4_3_Reset @! 
-101 LINE.NUM 1 ^Response @! 
-102 LINE.NUM THEN 
-105 LINE.NUM ^Response @@ 1 = IF 
-106 LINE.NUM " Success=TRUE" *SentString  $MOVE 
-108 LINE.NUM ELSE 
-109 LINE.NUM " Success =FALSE" *SentString  $MOVE 
-111 LINE.NUM THEN 
-112 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-113 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-114 LINE.NUM " " *MasterCommand  $MOVE 
+59 LINE.NUM 1 ^CryoTigPWR_Lower_Flag @! 
+60 LINE.NUM 1 ^Response @! 
+61 LINE.NUM THEN 
+62 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+63 LINE.NUM ^Position @@ -1 >= IF 
+65 LINE.NUM 0 ^CryoTigPWR_Lower_Flag @! 
+66 LINE.NUM 1 ^Response @! 
+67 LINE.NUM THEN 
+68 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+69 LINE.NUM ^Position @@ -1 >= IF 
+70 LINE.NUM 1 ~DO_XformerPWR @! 
+71 LINE.NUM 1 ^Response @! 
+72 LINE.NUM THEN 
+73 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+74 LINE.NUM ^Position @@ -1 >= IF 
+75 LINE.NUM 0 ~DO_XformerPWR @! 
+76 LINE.NUM 1 ^Response @! 
+77 LINE.NUM THEN 
+78 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+79 LINE.NUM ^Position @@ -1 >= IF 
+80 LINE.NUM 1 ~ThermoPWR_Lower_M3_3 @! 
+81 LINE.NUM 1 ^Response @! 
+82 LINE.NUM THEN 
+83 LINE.NUM " LOWER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+84 LINE.NUM ^Position @@ -1 >= IF 
+85 LINE.NUM 0 ~ThermoPWR_Lower_M3_3 @! 
+86 LINE.NUM 1 ^Response @! 
+87 LINE.NUM THEN 
+88 LINE.NUM " UPPER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+89 LINE.NUM ^Position @@ -1 >= IF 
+90 LINE.NUM 1 ~ThermoPWR_Upper_M3_7 @! 
+91 LINE.NUM 1 ^Response @! 
+92 LINE.NUM THEN 
+93 LINE.NUM " UPPER_THERMORACK_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+94 LINE.NUM ^Position @@ -1 >= IF 
+95 LINE.NUM 0 ~ThermoPWR_Upper_M3_7 @! 
+96 LINE.NUM 1 ^Response @! 
+97 LINE.NUM THEN 
+98 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+99 LINE.NUM ^Position @@ -1 >= IF 
+100 LINE.NUM 0 ~F4_3_Reset @! 
+101 LINE.NUM 200  DELAY 
+102 LINE.NUM 1 ~F4_3_Reset @! 
+103 LINE.NUM 1 ^Response @! 
+104 LINE.NUM THEN 
+107 LINE.NUM ^Response @@ 1 = IF 
+108 LINE.NUM " Success=TRUE" *SentString  $MOVE 
+110 LINE.NUM ELSE 
+111 LINE.NUM " Success =FALSE" *SentString  $MOVE 
+113 LINE.NUM THEN 
+114 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+115 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+116 LINE.NUM " " *MasterCommand  $MOVE 
 -2 JUMP ;
 : 1_193
 3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
@@ -1195,13 +1165,14 @@ T;
   1000    DELAY
 -2 JUMP ;
 : 0_16
-1 LINE.NUM ~DeadmanBypass @@I 1 = IF 
-2 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-3 LINE.NUM ELSE 
-4 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-5 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer  SetTimer 
-6 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-7 LINE.NUM THEN 
+1 LINE.NUM 1 ^CryoTigPWR_Lower_Flag @! 
+3 LINE.NUM ~DeadmanBypass @@I 1 = IF 
+4 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+5 LINE.NUM ELSE 
+6 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+7 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer  SetTimer 
+8 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+9 LINE.NUM THEN 
 -2 JUMP ;
 : 0_20
 1 LINE.NUM ~CryoTig_Deadman  CLR.-LATCH@I ~DeadmanBypass @@I 0 = LAND  ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
@@ -1210,14 +1181,17 @@ T;
 7 LINE.NUM ~DeadmanBypass  CLR.-LATCH@I ~CryoTig_Deadman @@I 0 = LAND  ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
 10 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer @! 
 11 LINE.NUM THEN 
-13 LINE.NUM ~CryoTig_Deadman @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
-14 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-15 LINE.NUM ELSE 
-15 LINE.NUM ~DeadmanBypass @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
-16 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
-17 LINE.NUM ELSE 
-18 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
-19 LINE.NUM THEN THEN 
+13 LINE.NUM ^CryoTigPWR_Lower_Flag @@ 0 = IF 
+14 LINE.NUM ^FiveMinutes @@ ^CryoTigThermalTimer @! 
+15 LINE.NUM THEN 
+17 LINE.NUM ~CryoTig_Deadman @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
+18 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+19 LINE.NUM ELSE 
+19 LINE.NUM ~DeadmanBypass @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
+20 LINE.NUM 1 ~CryoTigPWR_Lower_M2_3 @! 
+21 LINE.NUM ELSE 
+22 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
+23 LINE.NUM THEN THEN 
 -3 JUMP ;
 : 0_24
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
@@ -1240,6 +1214,7 @@ CREATE T.ARRAY
 CREATE V.ARRAY
 ^CoolantDemand ,
 ^CoolantSetpoint ,
+^CryoTigPWR_Lower_Flag ,
 ^DewpointMinimum ,
 ^ErrorFlag ,
 ^f120 ,
@@ -1368,13 +1343,13 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
-$01F3FF3133133F30.. %Local_IO ENABLES!
 " %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
  0 ~DO_XformerPWR @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^CoolantDemand @!
 20 ^CoolantSetpoint @!
+0 ^CryoTigPWR_Lower_Flag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^DewpointMinimum @!
 0.0 ^dtGetChar @!
@@ -1463,7 +1438,7 @@ $01F3FF3133133F30.. %Local_IO ENABLES!
  *sOctet3 $MOVE
 " Status"
  *StatusString $MOVE
-" 001.04"
+" 7"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
@@ -1488,9 +1463,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 08/08/14 " ;
-: TIMESTAMP ." 10:21:07 " ;
-: CRCSTAMP  ." 706EA1ED60BF067D4B6BC2CBF412854E " ;
+: DATESTAMP ." 01/04/17 " ;
+: TIMESTAMP ." 18:07:40 " ;
+: CRCSTAMP  ." 217ED079E2FD13AFFBAE748422ED0B86 " ;
 MAKECHECK
 CLEAR.BREAKS
 

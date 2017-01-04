@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\cryo\trunk\cryoPAC.idb
 # VERSION :      R9.4a
-# TIME/DATE :    0:7:27 1/14/2016
+# TIME/DATE :    20:16:10 1/4/2017
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -131,6 +131,7 @@ TAG1,ThermoTemp_Lower_M3_3                             ,8    ,00000000,00000001,
 TAG1,ThermoTemp_Upper_M3_7                             ,9    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,CoolantDemand                                     ,25   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CoolantSetpoint                                   ,24   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,CryoTigPWR_Lower_Flag                             ,50   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CryoTigThermalTimer                               ,32   ,00000000,00000000,00000000,00000020,0    ,0   
 TAG1,DewpointMinimum                                   ,26   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,dtGetChar                                         ,40   ,00000000,00000000,00000000,00000020,0    ,0   

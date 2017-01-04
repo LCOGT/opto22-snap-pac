@@ -6,6 +6,7 @@ CREATE T.ARRAY
 CREATE V.ARRAY
 ^CoolantDemand ,
 ^CoolantSetpoint ,
+^CryoTigPWR_Lower_Flag ,
 ^DewpointMinimum ,
 ^ErrorFlag ,
 ^f120 ,
@@ -140,6 +141,7 @@ CONFIG_PORTS
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^CoolantDemand @!
 20 ^CoolantSetpoint @!
+0 ^CryoTigPWR_Lower_Flag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^DewpointMinimum @!
 0.0 ^dtGetChar @!
@@ -228,7 +230,7 @@ CONFIG_PORTS
  *sOctet3 $MOVE
 " Status"
  *StatusString $MOVE
-" 7"
+" 8"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
