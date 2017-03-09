@@ -16,7 +16,6 @@
 
 29 LINE.NUM *sDate *sCurrentDate  $MOVE 
 30 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
-31 LINE.NUM " tcp:10.7.23.3:502" *chModbusMaster  $MOVE 
 32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
 33 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 34 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
@@ -29,9 +28,9 @@
 66 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
 67 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
 68 LINE.NUM " ACoutput" 5 {stHeader $TABLE@  $MOVE 
-69 LINE.NUM " RTD6" 6 {stHeader $TABLE@  $MOVE 
+69 LINE.NUM " ChamberPressSenTemp" 6 {stHeader $TABLE@  $MOVE 
 70 LINE.NUM " RTD7" 7 {stHeader $TABLE@  $MOVE 
-71 LINE.NUM " RTD8" 8 {stHeader $TABLE@  $MOVE 
+71 LINE.NUM " CtrlValveTemp" 8 {stHeader $TABLE@  $MOVE 
 72 LINE.NUM " PID_Setpoint" 9 {stHeader $TABLE@  $MOVE 
 73 LINE.NUM " PID_Input" 10 {stHeader $TABLE@  $MOVE 
 74 LINE.NUM " PID_Output" 11 {stHeader $TABLE@  $MOVE 
@@ -41,9 +40,9 @@
 78 LINE.NUM " PID_Integral" 15 {stHeader $TABLE@  $MOVE 
 79 LINE.NUM " PID_Derivative" 16 {stHeader $TABLE@  $MOVE 
 80 LINE.NUM " PID_Scanrate" 17 {stHeader $TABLE@  $MOVE 
-82 LINE.NUM " 0.1" *sICDversion  $MOVE 
-83 LINE.NUM 
-*sFWversion  Rev>$ 
+82 LINE.NUM " 0.1" *sICDversion 
+ $MOVE 
+83 LINE.NUM *sFWversion  Rev>$ 
 84 LINE.NUM " 0.1" *sSWversion  $MOVE 
 86 LINE.NUM 300 I>F ^dtFanMonitor @! 
 87 LINE.NUM ^dtFanMonitor  StartTimer 
@@ -111,8 +110,8 @@
 31 LINE.NUM *_HSV_SEMA Acquire1String *sOctet1  *_HSV_TEMP $MOVE *sOctet2  *_HSV_TEMP $CAT *sOctet3  *_HSV_TEMP $CAT 48  *_HSV_TEMP $APPEND 51  *_HSV_TEMP $APPEND *_HSV_TEMP *sIP_hex $MOVE Release1String 
 33 LINE.NUM *sIP_hex  HEX$>I ^nIP_int @! 
 34 LINE.NUM ^nIP_int @@ *sDT_IP  I>IP$ 
-35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sDT_IP  *_HSV_TEMP $CAT " :8"  *_HSV_TEMP $CAT *_HSV_TEMP *sDT_IP $MOVE Release1String 
-37 LINE.NUM *sDT_IP *DTcommHandle  $MOVE 
+35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sDT_IP  *_HSV_TEMP $CAT " :502"  *_HSV_TEMP $CAT *_HSV_TEMP *sDT_IP $MOVE Release1String 
+37 LINE.NUM *sDT_IP *chModbusMaster  $MOVE 
 0 JUMP ;
 : 0_7
 3 LINE.NUM &Housekeeper  START.T DROP  

@@ -12,6 +12,7 @@
 0 IVAR ^Count
 0 IVAR ^Count1
 0 IVAR ^Count2
+0 IVAR ^Count3
 0 IVAR ^Cryotig_CR_ErrorFlag
 0 TVAR ^CryoTigThermalTimer
 0 IVAR ^DeadmanFlag
@@ -143,8 +144,10 @@
 10 0 $VAR *sICDversion 
 25 0 $VAR *sIP_hex 
 25 0 $VAR *sIP_PAC 
+1024 0 $VAR *sLog 
 10 0 $VAR *sMonth 
 10 0 $VAR *sMonth1 
+1024 0 $VAR *sNewLog 
 50 0 $VAR *sNewLogCommHandle 
 20 0 $VAR *sNewLogFile 
 10 0 $VAR *sOctet1 
@@ -174,6 +177,7 @@
 30 0 $VAR *sTimestamp3 
 30 0 $VAR *sTimestamp4 
 10 0 $VAR *sVar 
+20 0 $VAR *sVar1 
 10 0 $VAR *sVoltage 
 10 0 $VAR *sYear 
 1024 0 COMVAR *chModbusMaster 
@@ -191,6 +195,7 @@
 10 0 FTABLE }ntRTDtempData
 30 30 0 $TABLE {stDTdata 
 30 30 0 $TABLE {stHeader 
+30 30 0 $TABLE {stModbusData 
 
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_io
 32  1 SPOINT 0.0     INPUT  0  0 %local_io 0 POINT.TNG ~DI_AirCon_CR_NC
@@ -199,15 +204,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32  1 SPOINT 0.0     INPUT  3  0 %local_io 0 POINT.TNG ~DI_LightSW
 32  1 SPOINT 0.0     INPUT  4  0 %local_io 0 POINT.TNG ~DI_TVS
 32  1 SPOINT 0.0     INPUT  5  0 %local_io 0 POINT.TNG ~DI_EntryDoor
-32  1 SPOINT 0.0     INPUT  6  0 %local_io 0 POINT.TNG ~DI_UPS_TVS
 32  1 SPOINT 0.0     INPUT  7  0 %local_io 0 POINT.TNG ~DI_PanelDoor
-32  1 SPOINT 0.0     INPUT  8  0 %local_io 0 POINT.TNG ~DI_Thermostat_CR_NC
-32  1 SPOINT 0.0     INPUT  9  0 %local_io 0 POINT.TNG ~DI_RedLink_CR_NC
+32  1 SPOINT 0.0     INPUT  9  0 %local_io 0 POINT.TNG ~DI_Spare_CR_NC
 32  1 SPOINT 0.0     INPUT 10  0 %local_io 0 POINT.TNG ~DI_AirConPWR_OK
-32  1 SPOINT 0.0     INPUT 11  0 %local_io 0 POINT.TNG ~DI_ThermostatMCB
 32  1 SPOINT 0.0     INPUT 12  0 %local_io 0 POINT.TNG ~DI_NRES_PWR_OK
-32  1 SPOINT 0.0     INPUT 13  0 %local_io 0 POINT.TNG ~DI_Thermostat_CR_NO
-32  1 SPOINT 0.0     INPUT 14  0 %local_io 0 POINT.TNG ~DI_RedLink_CR_NO
 32  1 SPOINT 0.0     INPUT 15  0 %local_io 0 POINT.TNG ~DI_ECB_OK
 32  1 SPOINT 0.0     INPUT 16  0 %local_io 0 POINT.TNG ~DI_SmokePWR_OK
 32  1 SPOINT 0.0     INPUT 17  0 %local_io 0 POINT.TNG ~DI_SmokeAlarm
@@ -227,8 +227,10 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
   71.1110 -206.6665 ~AI_P119_Temp SET.SCALE
  4  1 APOINT -206.6665 64  3  4 %local_io 0 POINT.TNG ~AI_Igloo_Temp
   71.1110 -206.6665 ~AI_Igloo_Temp SET.SCALE
- 4  1 APOINT  -10.0000 12  0  5 %local_io 0 POINT.TNG ~AI_CryoTig_OutputPressure
- 4  1 APOINT  -10.0000 12  1  5 %local_io 0 POINT.TNG ~AI_CryoTig_ReturnPressure
+ 4  1 APOINT -500.0000 12  0  5 %local_io 0 POINT.TNG ~AI_CryoTig_OutputPressure
+ 500.0000 -500.0000 ~AI_CryoTig_OutputPressure SET.SCALE
+ 4  1 APOINT -329.4000 12  1  5 %local_io 0 POINT.TNG ~AI_CryoTig_ReturnPressure
+ 300.0000 -329.4000 ~AI_CryoTig_ReturnPressure SET.SCALE
  4  1 APOINT -4000.0000 12  2  5 %local_io 0 POINT.TNG ~AI_CA_SupplyPressure
 4000.0000 -4000.0000 ~AI_CA_SupplyPressure SET.SCALE
  2  1 APOINT    0.0000 165  0  6 %local_io 0 POINT.TNG ~AO_PanelFans_CTRL

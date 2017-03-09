@@ -14,6 +14,7 @@ CREATE V.ARRAY
 ^Count ,
 ^Count1 ,
 ^Count2 ,
+^Count3 ,
 ^Cryotig_CR_ErrorFlag ,
 ^DeadmanFlag ,
 ^done ,
@@ -135,8 +136,10 @@ CREATE V.ARRAY
 *sICDversion ,
 *sIP_hex ,
 *sIP_PAC ,
+*sLog ,
 *sMonth ,
 *sMonth1 ,
+*sNewLog ,
 *sNewLogCommHandle ,
 *sNewLogFile ,
 *sOctet1 ,
@@ -166,6 +169,7 @@ CREATE V.ARRAY
 *sTimestamp3 ,
 *sTimestamp4 ,
 *sVar ,
+*sVar1 ,
 *sVoltage ,
 *sYear ,
 *_HSV_SEMA ,
@@ -201,6 +205,7 @@ CREATE TA.ARRAY
 }ntRTDtempData ,
 {stDTdata ,
 {stHeader ,
+{stModbusData ,
  0 ,
 CREATE PTRTABLE.ARRAY 
  0 ,
@@ -220,15 +225,10 @@ CREATE P.ARRAY
 ~DI_NRES_Deadman ,
 ~DI_NRES_PWR_OK ,
 ~DI_PanelDoor ,
-~DI_RedLink_CR_NC ,
-~DI_RedLink_CR_NO ,
 ~DI_SmokeAlarm ,
 ~DI_SmokePWR_OK ,
-~DI_Thermostat_CR_NC ,
-~DI_Thermostat_CR_NO ,
-~DI_ThermostatMCB ,
+~DI_Spare_CR_NC ,
 ~DI_TVS ,
-~DI_UPS_TVS ,
 ~DO_AirCon_CR ,
 ~DO_CryoTig_CR ,
 ~DO_ECB_Tx ,
@@ -282,6 +282,7 @@ CONFIG_PORTS
 0 ^Count @!
 0 ^Count1 @!
 0 ^Count2 @!
+0 ^Count3 @!
 0 ^Cryotig_CR_ErrorFlag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^DeadmanFlag @!
@@ -452,9 +453,13 @@ CONFIG_PORTS
 " "
  *sIP_PAC $MOVE
 " "
+ *sLog $MOVE
+" "
  *sMonth $MOVE
 " "
  *sMonth1 $MOVE
+" "
+ *sNewLog $MOVE
 " "
  *sNewLogCommHandle $MOVE
 " "
@@ -514,6 +519,8 @@ CONFIG_PORTS
 " "
  *sVar $MOVE
 " "
+ *sVar1 $MOVE
+" "
  *sVoltage $MOVE
 " "
  *sYear $MOVE
@@ -533,6 +540,8 @@ CONFIG_PORTS
 0 -1 {stDTdata Init$Table
  " "
 0 -1 {stHeader Init$Table
+ " "
+0 -1 {stModbusData Init$Table
  " " *_HSV_INIT_IO $MOVE
 ;
 T: T_INIT_IO
