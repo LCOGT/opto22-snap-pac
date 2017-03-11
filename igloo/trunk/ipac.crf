@@ -484,6 +484,7 @@ ENDCODE
 0 IVAR ^Fan10V_TestFlag
 0 IVAR ^FanCtrl
 0 FVAR ^FanSpd
+0 FVAR ^fCheck
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
@@ -1075,61 +1076,57 @@ T;
 12 LINE.NUM THEN 
 13 LINE.NUM THEN 
 17 LINE.NUM 1 {stDTdata $TABLE@  $>F ^TentTemp @! 
-18 LINE.NUM ^TentTemp @@ 35 I>F F< IF 
+18 LINE.NUM ^TentTemp @@ 35 I>F F< ^TentTemp @@ 500000 I>F F> LOR  IF 
 19 LINE.NUM 1 ^TentTempOK @! 
 20 LINE.NUM ELSE 
-21 LINE.NUM ^TentTempOK @@ 1 = IF 
-22 LINE.NUM " , TentOverTemp " *sFaultList $CAT 
+21 LINE.NUM " , TentOverTemp " *sFaultList $CAT 
 
-23 LINE.NUM *sTimestamp2 *sFaultList $CAT 
+22 LINE.NUM *sTimestamp2 *sFaultList $CAT 
 
-24 LINE.NUM 0 ^TentTempOK @! 
-25 LINE.NUM THEN 
-26 LINE.NUM THEN 
-29 LINE.NUM ~AI_P119_Temp @@ ^IglooTemp @! 
-30 LINE.NUM ^IglooTemp @@ 35 I>F F< IF 
-31 LINE.NUM 1 ^IglooTempOK @! 
-32 LINE.NUM ELSE 
-33 LINE.NUM ^IglooTemp @@ 1 I>F F= IF 
-34 LINE.NUM " , IglooOverTemp " *sFaultList $CAT 
+23 LINE.NUM 0 ^TentTempOK @! 
+24 LINE.NUM THEN 
+27 LINE.NUM ~AI_P119_Temp @@ ^IglooTemp @! 
+28 LINE.NUM ^IglooTemp @@ 35 I>F F< ^IglooTemp @@ 500000 I>F F> LOR  IF 
+29 LINE.NUM 1 ^IglooTempOK @! 
+30 LINE.NUM ELSE 
+31 LINE.NUM " , IglooOverTemp " *sFaultList $CAT 
 
-35 LINE.NUM *sTimestamp2 *sFaultList $CAT 
+32 LINE.NUM *sTimestamp2 *sFaultList $CAT 
 
-36 LINE.NUM 0 ^IglooTempOK @! 
-37 LINE.NUM THEN 
-38 LINE.NUM THEN 
-41 LINE.NUM 11 {stDTdata $TABLE@  $>F ^P119Temp @! 
-42 LINE.NUM ^P119Temp @@ 35 I>F F< IF 
-43 LINE.NUM 1 ^P119TempOK @! 
-44 LINE.NUM ELSE 
-45 LINE.NUM ^P119TempOK @@ 1 = IF 
-46 LINE.NUM " , P119OverTemp " *sFaultList $CAT 
+33 LINE.NUM 0 ^IglooTempOK @! 
+34 LINE.NUM THEN 
+37 LINE.NUM 11 {stDTdata $TABLE@  $>F ^P119Temp @! 
+38 LINE.NUM ^P119Temp @@ 35 I>F F< IF 
+39 LINE.NUM 1 ^P119TempOK @! 
+40 LINE.NUM ELSE 
+41 LINE.NUM ^P119TempOK @@ 1 = IF 
+42 LINE.NUM " , P119OverTemp " *sFaultList $CAT 
 
-47 LINE.NUM *sTimestamp2 *sFaultList $CAT 
+43 LINE.NUM *sTimestamp2 *sFaultList $CAT 
 
-48 LINE.NUM 0 ^P119TempOK @! 
-49 LINE.NUM THEN 
-50 LINE.NUM THEN 
-53 LINE.NUM ~DI_SmokeAlarm  CLR.-LATCH@I IF 
-54 LINE.NUM " , SmokeAlarm " *sFaultList $CAT 
+44 LINE.NUM 0 ^P119TempOK @! 
+45 LINE.NUM THEN 
+46 LINE.NUM THEN 
+49 LINE.NUM ~DI_SmokeAlarm  CLR.-LATCH@I IF 
+50 LINE.NUM " , SmokeAlarm " *sFaultList $CAT 
 
-55 LINE.NUM *sTimestamp2 *sFaultList $CAT 
+51 LINE.NUM *sTimestamp2 *sFaultList $CAT 
 
-56 LINE.NUM THEN 
-59 LINE.NUM ~DI_HeatAlarm  CLR.+LATCH@I IF 
-60 LINE.NUM " , HighHeatAlarm " *sFaultList $CAT 
+52 LINE.NUM THEN 
+55 LINE.NUM ~DI_HeatAlarm  CLR.+LATCH@I IF 
+56 LINE.NUM " , HighHeatAlarm " *sFaultList $CAT 
 
-61 LINE.NUM *sTimestamp2 *sFaultList $CAT 
+57 LINE.NUM *sTimestamp2 *sFaultList $CAT 
 
-62 LINE.NUM THEN 
-65 LINE.NUM ~DI_EntryDoor @@I 1 = IF 
-67 LINE.NUM ~DI_LightSW  CLR.+LATCH@I IF 
-68 LINE.NUM " , Lights_On" *sFaultList $CAT 
+58 LINE.NUM THEN 
+61 LINE.NUM ~DI_EntryDoor @@I 1 = IF 
+63 LINE.NUM ~DI_LightSW  CLR.+LATCH@I IF 
+64 LINE.NUM " , Lights_On" *sFaultList $CAT 
 
-69 LINE.NUM *sTimestamp2 *sFaultList $CAT 
+65 LINE.NUM *sTimestamp2 *sFaultList $CAT 
 
-70 LINE.NUM THEN 
-72 LINE.NUM THEN 
+66 LINE.NUM THEN 
+68 LINE.NUM THEN 
 1 JUMP ;
 : 2_2
 1 LINE.NUM 500  DELAY 
@@ -2260,7 +2257,7 @@ T;
 
 518 LINE.NUM " , HeartbeatDownTimer=" *Status $CAT 
 
-519 LINE.NUM ^dtHeartbeat @@F *sHeartbeat  F>$ 
+519 LINE.NUM ^dtHeartbeat @@F 2 0 *sHeartbeat  FF.R$ 
 520 LINE.NUM *sHeartbeat *Status $CAT 
 
 522 LINE.NUM *sFaultList  $LEN IF 
@@ -2503,7 +2500,7 @@ T;
 731 LINE.NUM THEN 
 734 LINE.NUM " HEARTBEAT" 0 *sCmd  FindSubString ^nFindCmd @! 
 735 LINE.NUM ^nFindCmd @@ -1 > IF 
-736 LINE.NUM ^dtHeartbeat @@F *sHeartbeat  F>$ 
+736 LINE.NUM ^dtHeartbeat @@F 2 0 *sHeartbeat  FF.R$ 
 737 LINE.NUM 60 I>F ^dtHeartbeat @! 
 738 LINE.NUM ^dtHeartbeat  StartTimer 
 739 LINE.NUM " Success=TRUE" *Status  $MOVE 
@@ -2709,37 +2706,52 @@ T;
 3 LINE.NUM *sTimestamp1 &Timestamp CALL.SUB DROP  
 4 LINE.NUM *sTimestamp1 0 {stDTdata $TABLE@  $MOVE 
 9 LINE.NUM *chModbusMaster }nt03AsIntParameters 0 1 }nt03HoldingRegAsIntReturnValues 16 ^n03AsIntStatus &O22Modbus03ReadHoldingRegistersAsInt CALL.SUB ^n03AsIntSubStatus @! 
-15 LINE.NUM 0 ^Count2 @! 
-16 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
-17 LINE.NUM ^Count2 @@ 2 *  }nt03HoldingRegAsIntReturnValues TABLE@ 65536 *  ^Count2 @@ 2 *  1 +  }nt03HoldingRegAsIntReturnValues TABLE@ +  ^Count2 @@ }ntRTDdata TABLE! 
-18 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
-19 LINE.NUM REPEAT 
-23 LINE.NUM 0 ^Count2 @! 
-24 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
-25 LINE.NUM ^Count2 @@ }ntRTDdata TABLE@F ^Count2 @@ }ntRTDtempData TABLE! 
-26 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
-27 LINE.NUM REPEAT 
-32 LINE.NUM 0 ^Count2 @! 
-33 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
-34 LINE.NUM ^Count2 @@ }ntRTDtempData TABLE@ 100000 I>F F/ 1 I>F F- 3.84999998e-003 F/ ^Count2 @@ }ntRTDtempData TABLE! 
-35 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
-36 LINE.NUM REPEAT 
-40 LINE.NUM 1 ^Count2 @! 
-41 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
-42 LINE.NUM ^Count2 @@ 1 -  }ntRTDtempData TABLE@ 11 3 ^Count2 @@ {stDTdata $TABLE@  FF.R$ 
-43 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
-44 LINE.NUM REPEAT 
-48 LINE.NUM 1 ^Count2 @! 
-49 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
-50 LINE.NUM ^Count2 @@ {stDTdata $TABLE@ 3  SWAP $TRIM 
-51 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
-52 LINE.NUM REPEAT 
-56 LINE.NUM 0 ^Count2 @! 
-57 LINE.NUM BEGIN ^Count2 @@ 30 < WHILE 
-58 LINE.NUM ^Count2 @@ {stDTdata $TABLE@ ^Count2 @@ {stModbusData $TABLE@  $MOVE 
-59 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
-60 LINE.NUM REPEAT 
-64 LINE.NUM 1 ^DTlogFlag @! 
+13 LINE.NUM ^n03AsIntStatus @@ 0 = IF 
+16 LINE.NUM 0 ^Count2 @! 
+17 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+18 LINE.NUM ^Count2 @@ 2 *  }nt03HoldingRegAsIntReturnValues TABLE@ 65536 *  ^Count2 @@ 2 *  1 +  }nt03HoldingRegAsIntReturnValues TABLE@ +  ^Count2 @@ }ntRTDdata TABLE! 
+19 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+20 LINE.NUM REPEAT 
+24 LINE.NUM 0 ^Count2 @! 
+25 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+26 LINE.NUM ^Count2 @@ }ntRTDdata TABLE@F ^Count2 @@ }ntRTDtempData TABLE! 
+27 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+28 LINE.NUM REPEAT 
+33 LINE.NUM 0 ^Count2 @! 
+34 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+35 LINE.NUM ^Count2 @@ }ntRTDtempData TABLE@ 100000 I>F F/ 1 I>F F- 3.84999998e-003 F/ ^Count2 @@ }ntRTDtempData TABLE! 
+36 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+37 LINE.NUM REPEAT 
+41 LINE.NUM 1 ^Count2 @! 
+42 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+43 LINE.NUM ^Count2 @@ 1 -  }ntRTDtempData TABLE@ 11 3 ^Count2 @@ {stDTdata $TABLE@  FF.R$ 
+44 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+45 LINE.NUM REPEAT 
+49 LINE.NUM 1 ^Count2 @! 
+50 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+51 LINE.NUM ^Count2 @@ {stDTdata $TABLE@ 3  SWAP $TRIM 
+52 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+53 LINE.NUM REPEAT 
+58 LINE.NUM 1 ^Count2 @! 
+59 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+60 LINE.NUM ^Count2 @@ {stDTdata $TABLE@  $LEN 7 > IF 
+61 LINE.NUM " NaN" ^Count2 @@ {stDTdata $TABLE@  $MOVE 
+62 LINE.NUM THEN 
+63 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+64 LINE.NUM REPEAT 
+68 LINE.NUM 0 ^Count2 @! 
+69 LINE.NUM BEGIN ^Count2 @@ 30 < WHILE 
+70 LINE.NUM ^Count2 @@ {stDTdata $TABLE@ ^Count2 @@ {stModbusData $TABLE@  $MOVE 
+71 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+72 LINE.NUM REPEAT 
+75 LINE.NUM 1 ^DTlogFlag @! 
+77 LINE.NUM ELSE 
+79 LINE.NUM 1 ^Count2 @! 
+80 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+81 LINE.NUM " NaN" ^Count2 @@ {stDTdata $TABLE@  $MOVE 
+82 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+83 LINE.NUM REPEAT 
+85 LINE.NUM THEN 
 -1 JUMP ;
 T: T5
 DUMMY
@@ -2909,6 +2921,7 @@ CREATE V.ARRAY
 ^Fan10V_TestFlag ,
 ^FanCtrl ,
 ^FanSpd ,
+^fCheck ,
 ^fFanSpd ,
 ^fPidInput ,
 ^fRTD1_R0 ,
@@ -3186,6 +3199,7 @@ CONFIG_PORTS
 0 ^Fan10V_TestFlag @!
 0 ^FanCtrl @!
 0.00000000 ^FanSpd @!
+0.00000000 ^fCheck @!
 0.00000000 ^fFanSpd @!
 0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
@@ -3432,9 +3446,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/09/17 " ;
-: TIMESTAMP ." 22:31:01 " ;
-: CRCSTAMP  ." B2AE4B2ED825ED23D09A3350CFDEC6DD " ;
+: DATESTAMP ." 03/10/17 " ;
+: TIMESTAMP ." 14:34:11 " ;
+: CRCSTAMP  ." F8A7A1B32AC59AE3FA51BD09C816640B " ;
 MAKECHECK
 CLEAR.BREAKS
 

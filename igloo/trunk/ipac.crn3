@@ -30,6 +30,7 @@ CREATE V.ARRAY
 ^Fan10V_TestFlag ,
 ^FanCtrl ,
 ^FanSpd ,
+^fCheck ,
 ^fFanSpd ,
 ^fPidInput ,
 ^fRTD1_R0 ,
@@ -307,6 +308,7 @@ CONFIG_PORTS
 0 ^Fan10V_TestFlag @!
 0 ^FanCtrl @!
 0.00000000 ^FanSpd @!
+0.00000000 ^fCheck @!
 0.00000000 ^fFanSpd @!
 0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!

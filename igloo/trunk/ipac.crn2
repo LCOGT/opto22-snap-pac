@@ -37,6 +37,7 @@
 0 IVAR ^Fan10V_TestFlag
 0 IVAR ^FanCtrl
 0 FVAR ^FanSpd
+0 FVAR ^fCheck
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0

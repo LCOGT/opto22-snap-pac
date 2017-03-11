@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.5a
-# TIME/DATE :    22:31:1 3/9/2017
+# TIME/DATE :    14:34:11 3/10/2017
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -176,6 +176,7 @@ TAG1,EcbResetFlag                                      ,98   ,00000000,00000000,
 TAG1,Fan10V_TestFlag                                   ,57   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FanCtrl                                           ,67   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FanSpd                                            ,71   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,fCheck                                            ,115  ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,fFanSpd                                           ,31   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,fPidInput                                         ,30   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,fRTD1_R0                                          ,0    ,00000000,00000000,00000000,00000010,0    ,0   
