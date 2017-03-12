@@ -1,5 +1,4 @@
 CREATE T.ARRAY
-&Get_Time ,
 &Powerup ,
 &StirFan_Control ,
  0 ,
@@ -74,7 +73,6 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
-$0000000001111F7F.. %local_IO ENABLES!
 " %local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %local_IO ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE

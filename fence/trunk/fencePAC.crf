@@ -14,56 +14,7 @@ _END NEW $$$.RUN
 1024 0 $VAR *_HSV_TEMP 
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
-
-\   ++++++++++ SUB name="SetTimeDayMonthYear" ++++++++++
-
-0 SUBR &SetTimeDayMonthYear
-SUB.CODE null$VAR null$VAR null$VAR null$VAR &SetTimeDayMonthYear
-0 IVAR ^nDay
-0 IVAR ^nIndex
-0 IVAR ^nYear
-12 3 0 $TABLE {stMonths
-
-: &SetTimeDayMonthYear.0
-0 JUMP ;
-: &SetTimeDayMonthYear.1
-2 LINE.NUM " JAN" 0 {stMonths $TABLE@  $MOVE 
-3 LINE.NUM " FEB" 1 {stMonths $TABLE@  $MOVE 
-4 LINE.NUM " MAR" 2 {stMonths $TABLE@  $MOVE 
-5 LINE.NUM " APR" 3 {stMonths $TABLE@  $MOVE 
-6 LINE.NUM " MAY" 4 {stMonths $TABLE@  $MOVE 
-7 LINE.NUM " JUN" 5 {stMonths $TABLE@  $MOVE 
-8 LINE.NUM " JUL" 6 {stMonths $TABLE@  $MOVE 
-9 LINE.NUM " AUG" 7 {stMonths $TABLE@  $MOVE 
-10 LINE.NUM " SEP" 8 {stMonths $TABLE@  $MOVE 
-11 LINE.NUM " OCT" 9 {stMonths $TABLE@  $MOVE 
-12 LINE.NUM " NOV" 10 {stMonths $TABLE@  $MOVE 
-13 LINE.NUM " DEC" 11 {stMonths $TABLE@  $MOVE 
-16 LINE.NUM 3 PARAM  SETTIME 
-19 LINE.NUM 2 PARAM  $>I ^nDay @! 
-20 LINE.NUM ^nDay @@  I!DAY 
-23 LINE.NUM 1 PARAM  $>Upper 
-24 LINE.NUM 0 ^nIndex @! 
-25 LINE.NUM BEGIN ^nIndex @@ 12 < WHILE 
-26 LINE.NUM 1 PARAM ^nIndex @@ {stMonths $TABLE@ $= IF 
-27 LINE.NUM ^nIndex @@ 1 +   I!MTH 
-28 LINE.NUM 12 ^nIndex @! 
-29 LINE.NUM ELSE 
-30 LINE.NUM ^nIndex  1+@! 
-31 LINE.NUM THEN 
-32 LINE.NUM REPEAT 
-35 LINE.NUM 0 PARAM  $>I ^nYear @! 
-36 LINE.NUM ^nYear @@  I!YRS 
-0 JUMP ;
-
-CODE
-
-DUMMY
-&SetTimeDayMonthYear.0
-&SetTimeDayMonthYear.1
-ENDCODE
 0 TASK  &_INIT_IO
-0 TASK &Get_Time
 0 TASK &Powerup
 0 TASK &StirFan_Control
 0 TVAR ^dtGetChar
@@ -96,123 +47,27 @@ ENDCODE
 1024 0 COMVAR *cNTPserver 
 5 10 0 $TABLE {stTimeDate 
 
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %local_IO
-SPOINT 0.0 INPUT 0 %local_IO
-    0 POINT ~DI_Lock2
-SPOINT 0.0 INPUT 1 %local_IO
-    0 POINT ~DI_Lock1
-SPOINT 0.0 INPUT 2 %local_IO
-    0 POINT ~DI_SafetyRelayK6_2
-SPOINT 0.0 INPUT 3 %local_IO
-    0 POINT ~DI_SafetyRelayK8_2
-SPOINT 0.0 INPUT 4 %local_IO
-    0 POINT ~DI_SafetyRelayK9_2
-SPOINT 0.0 INPUT 5 %local_IO
-    0 POINT ~DI_DC_MCB_F3_6
-SPOINT 0.0 INPUT 6 %local_IO
-    0 POINT ~DI_aqwC_MCB
-SPOINT 0.0 INPUT 8 %local_IO
-    0 POINT ~DI_aqwA_MCB
-SPOINT 0.0 INPUT 9 %local_IO
-    0 POINT ~DI_aqwB_MCB
-SPOINT 0.0 INPUT 10 %local_IO
-    0 POINT ~DI_FUPS_SPD
-SPOINT 0.0 INPUT 11 %local_IO
-    0 POINT ~DI_Cabinet_Door
-APOINT -200.0000 10 12 %local_IO
-    0 POINT ~AI_CabinetTemp
-SPOINT 0.0 OUTPUT 16 %local_IO
-    0 POINT ~DO_DC_MCB_F3_6
-APOINT    0.0000 165 20 %local_IO 0 POINT ~AO_StirFan
-APOINT    0.0000 69 24 %local_IO
-    0 POINT ~AI_StirFanTach
-: 2_0
-2 JUMP ;
-: 2_1
-4 LINE.NUM 1 ^nIndex2 @! 
-5 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
-6 LINE.NUM BEGIN ^nIndex2 @@ 4 < WHILE 
-7 LINE.NUM *cNTPserver  OPEN ^nNTPstatus @! 
-8 LINE.NUM 1.000000e+000  FDELAY 
-9 LINE.NUM ^nNTPstatus @@ 0 = IF 
-10 LINE.NUM 5 ^nIndex2 @! 
-11 LINE.NUM *cNTPserver 32  S.!EOL 
-12 LINE.NUM ^f120 @@ ^dtGetChar  SetTimer 
-13 LINE.NUM ^dtGetChar  StartTimer 
-14 LINE.NUM ELSE 
-14 LINE.NUM ^nNTPstatus @@ 0 < IF 
-15 LINE.NUM 5.000000e+000 ^nIndex2 @@F F*  FDELAY 
-16 LINE.NUM ELSE 
-16 LINE.NUM ^nIndex2 @@ 4 = IF 
-18 LINE.NUM THEN THEN THEN 
-19 LINE.NUM ^nIndex2  1+@! 
-20 LINE.NUM REPEAT 
-25 LINE.NUM BEGIN ^dtGetChar @@F 0 I>F F> WHILE 
-26 LINE.NUM *cNTPserver  ?STREAM.KEY ^nCharCount @! 
-27 LINE.NUM ^nCharCount @@ 0 < ^nCharCount @@ -37 <> LAND  ^nCharCount @@ -39 <> LAND  IF 
-28 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-29 LINE.NUM 0 I>F ^dtGetChar @! 
-31 LINE.NUM ELSE 
-31 LINE.NUM *cNTPserver  ?OPEN 0> 1 XOR  IF 
-32 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-33 LINE.NUM 0 I>F ^dtGetChar @! 
-35 LINE.NUM ELSE 
-35 LINE.NUM ^nCharCount @@ 0 > IF 
-36 LINE.NUM 0 I>F ^dtGetChar @! 
-37 LINE.NUM 1.000000e-001  FDELAY 
-38 LINE.NUM THEN THEN THEN 
-39 LINE.NUM REPEAT 
-45 LINE.NUM ^nCharCount @@ 26 = IF 
-46 LINE.NUM 4 0 {stTimeDate *cNTPserver  S.GET#TABLE ^nReceiveStatus @! 
-47 LINE.NUM 3 {stTimeDate $TABLE@ *sTime  $MOVE 
-48 LINE.NUM 0 {stTimeDate $TABLE@ *sDay  $MOVE 
-49 LINE.NUM 1 {stTimeDate $TABLE@ *sMonth  $MOVE 
-50 LINE.NUM 2 {stTimeDate $TABLE@ *sYear  $MOVE 
-51 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
-52 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-53 LINE.NUM *sTime *sDay *sMonth *sYear &SetTimeDayMonthYear CALL.SUB ^nSetTimeDateStatus @! 
-56 LINE.NUM ELSE 
-56 LINE.NUM ^nCharCount @@ 30 = IF 
-57 LINE.NUM 5 0 {stTimeDate *cNTPserver  S.GET#TABLE ^nReceiveStatus @! 
-58 LINE.NUM 3 {stTimeDate $TABLE@ *sTime  $MOVE 
-59 LINE.NUM 2 {stTimeDate $TABLE@ *sDay  $MOVE 
-60 LINE.NUM 1 {stTimeDate $TABLE@ *sMonth  $MOVE 
-61 LINE.NUM 4 {stTimeDate $TABLE@ *sYear  $MOVE 
-62 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
-63 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-64 LINE.NUM *sTime *sDay *sMonth *sYear &SetTimeDayMonthYear CALL.SUB ^nSetTimeDateStatus @! 
-66 LINE.NUM ELSE 
-67 LINE.NUM *cNTPserver  STREAM.CLEAR.BUF 
-68 LINE.NUM *cNTPserver  CLOSE ^nNTPstatus @! 
-70 LINE.NUM THEN THEN 
-75 LINE.NUM ^f24hrsInSec @@ ^dtGetTime  SetTimer 
-76 LINE.NUM ^dtGetTime  StartTimer 
-0 JUMP ;
-: 2_5
-
-1 LINE.NUM
-  ^n1 @@   DELAY
-0 JUMP ;
-: 2_4
-TRUE
-
-1 LINE.NUM
-  ^dtGetTime   T0=
-LAND
-IF -3 ELSE -2 THEN JUMP ;
-T: T2
-DUMMY
-2_0
-2_1
-2_5
-2_4
-T;
-&Get_Time ' T2 SETTASK
+nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_IO
+ 4  1 SPOINT 0.0     INPUT  0  0 %local_IO 0 POINT.TNG ~DI_Lock2
+ 4  1 SPOINT 0.0     INPUT  1  0 %local_IO 0 POINT.TNG ~DI_Lock1
+ 4  1 SPOINT 0.0     INPUT  2  0 %local_IO 0 POINT.TNG ~DI_SafetyRelayK6_2
+ 4  1 SPOINT 0.0     INPUT  3  0 %local_IO 0 POINT.TNG ~DI_SafetyRelayK8_2
+ 4  1 SPOINT 0.0     INPUT  0  1 %local_IO 0 POINT.TNG ~DI_SafetyRelayK9_2
+ 4  1 SPOINT 0.0     INPUT  1  1 %local_IO 0 POINT.TNG ~DI_DC_MCB_F3_6
+ 4  1 SPOINT 0.0     INPUT  2  1 %local_IO 0 POINT.TNG ~DI_aqwC_MCB
+ 4  1 SPOINT 0.0     INPUT  0  2 %local_IO 0 POINT.TNG ~DI_aqwA_MCB
+ 4  1 SPOINT 0.0     INPUT  1  2 %local_IO 0 POINT.TNG ~DI_aqwB_MCB
+ 4  1 SPOINT 0.0     INPUT  2  2 %local_IO 0 POINT.TNG ~DI_FUPS_SPD
+ 4  1 SPOINT 0.0     INPUT  3  2 %local_IO 0 POINT.TNG ~DI_Cabinet_Door
+ 2  1 APOINT -200.0000 10  0  3 %local_IO 0 POINT.TNG ~AI_CabinetTemp
+ 4  1 SPOINT 0.0    OUTPUT  0  4 %local_IO 0 POINT.TNG ~DO_DC_MCB_F3_6
+ 2  1 APOINT    0.0000 165  0  5 %local_IO 0 POINT.TNG ~AO_StirFan
+ 2  1 APOINT    0.0000 69  0  6 %local_IO 0 POINT.TNG ~AI_StirFanTach
 : 0_0
 2 JUMP ;
 : 0_2
 1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
-2 LINE.NUM 2.000000e+001  FDELAY 
+2 LINE.NUM 2.00000000e+001  FDELAY 
 3 LINE.NUM ~AI_StirFanTach  MAX@F ^nMaxStirFanTach F@! 
 4 LINE.NUM ^nMaxStirFanTach @@ 100 >= IF 
 5 LINE.NUM 5 ^nFanCtrlMax @! 
@@ -220,11 +75,10 @@ T;
 6 LINE.NUM 10 ^nFanCtrlMax @! 
 7 LINE.NUM THEN 
 8 LINE.NUM 0 I>F 5 I>F ~AO_StirFan  F!RAMP 
-9 LINE.NUM 1.000000e+001  FDELAY 
-2 JUMP ;
+9 LINE.NUM 1.00000000e+001  FDELAY 
+0 JUMP ;
 : 0_4
 1 LINE.NUM &StirFan_Control  START.T ^nStirFanChartStatus @! 
-2 LINE.NUM &Get_Time  START.T ^nGetTimeChartStatus @! 
 3 LINE.NUM &Powerup  STOP.T 
 1 JUMP ;
 : 0_8
@@ -244,7 +98,7 @@ T;
 34 LINE.NUM REPEAT 
 36 LINE.NUM " tcp:10.10.20.11:13" *sIP_NTP  $MOVE 
 37 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
--2 JUMP ;
+-3 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -265,7 +119,7 @@ T;
 9 LINE.NUM ~AI_CabinetTemp @@ 30 I>F F> IF 
 10 LINE.NUM ^nFanCtrlMax @@F ~AO_StirFan @! 
 11 LINE.NUM THEN 
-13 LINE.NUM 1.000000e+000  FDELAY 
+13 LINE.NUM 1.00000000e+000  FDELAY 
 -1 JUMP ;
 T: T1
 DUMMY
@@ -274,7 +128,6 @@ DUMMY
 T;
 &StirFan_Control ' T1 SETTASK
 CREATE T.ARRAY
-&Get_Time ,
 &Powerup ,
 &StirFan_Control ,
  0 ,
@@ -349,7 +202,6 @@ CREATE E/RGROUP.ARRAY
 ;
 : W_INIT_IO
 CONFIG_PORTS
-$0000000001111F7F.. %local_IO ENABLES!
 " %local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %local_IO ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE
@@ -403,9 +255,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/27/14 " ;
-: TIMESTAMP ." 17:46:49 " ;
-: CRCSTAMP  ." 5BFDD6C3B7C37620E8DBF7AC8FFC0667 " ;
+: DATESTAMP ." 03/12/17 " ;
+: TIMESTAMP ." 22:16:48 " ;
+: CRCSTAMP  ." 49A2B2C38FD7C42339A9BFF9546C9B66 " ;
 MAKECHECK
 CLEAR.BREAKS
 

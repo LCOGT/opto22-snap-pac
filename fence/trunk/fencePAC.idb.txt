@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\fence\fencePAC.idb
-# VERSION :      R9.1a
-# TIME/DATE :    17:46:49 3/27/2014
+# NAME :         C:\Users\jdevera\Desktop\PAC Programs\fence\trunk\fencePAC.idb
+# VERSION :      R9.5a
+# TIME/DATE :    22:16:48 3/12/2017
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -92,7 +92,6 @@
 
 # TAG1,NAME,ID,BITMASK_0,BITMASK_1,BITMASK_2,BITMASK_3,TABLE_LENGTH,STRING_WIDTH
 
-TAG1,Get_Time                                          ,2    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,Powerup                                           ,0    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,StirFan_Control                                   ,1    ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,local_IO                                          ,0    ,00000000,00000000,20000000,00000000,0    ,0   
