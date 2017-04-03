@@ -219,7 +219,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  2  2 %local_io 0 POINT.TNG ~DO_CryoTig_CR
  4  1 SPOINT 0.0    OUTPUT  3  2 %local_io 0 POINT.TNG ~DO_ECB_Tx
  2  1 APOINT    0.0000 70  0  3 %local_io 0 POINT.TNG ~AI_CryoTig_Volt
- 2  1 APOINT    0.0000 70  1  3 %local_io 0 POINT.TNG ~AI_Utility_Volt
+ 2  1 APOINT    0.0000 70  1  3 %local_io 0 1000.000000 1 POINT.TNGX ~AI_Utility_Volt
  4  1 APOINT  -15.0000 64  0  4 %local_io 0 POINT.TNG ~AI_CryoTig_Current
   10.0000  -15.0000 ~AI_CryoTig_Current SET.SCALE
  4  1 APOINT  -37.5000 64  1  4 %local_io 0 POINT.TNG ~AI_HVAC_Current
