@@ -1076,7 +1076,7 @@ T;
 12 LINE.NUM THEN 
 13 LINE.NUM THEN 
 17 LINE.NUM 1 {stDTdata $TABLE@  $>F ^TentTemp @! 
-18 LINE.NUM ^TentTemp @@ 35 I>F F< ^TentTemp @@ 500000 I>F F> LOR  IF 
+18 LINE.NUM ^TentTemp @@ 30 I>F F< ^TentTemp @@ 500000 I>F F> LOR  IF 
 19 LINE.NUM 1 ^TentTempOK @! 
 20 LINE.NUM ELSE 
 21 LINE.NUM " , TentOverTemp " *sFaultList $CAT 
@@ -1086,7 +1086,7 @@ T;
 23 LINE.NUM 0 ^TentTempOK @! 
 24 LINE.NUM THEN 
 27 LINE.NUM ~AI_P119_Temp @@ ^IglooTemp @! 
-28 LINE.NUM ^IglooTemp @@ 35 I>F F< ^IglooTemp @@ 500000 I>F F> LOR  IF 
+28 LINE.NUM ^IglooTemp @@ 30 I>F F< ^IglooTemp @@ 500000 I>F F> LOR  IF 
 29 LINE.NUM 1 ^IglooTempOK @! 
 30 LINE.NUM ELSE 
 31 LINE.NUM " , IglooOverTemp " *sFaultList $CAT 
@@ -2371,7 +2371,7 @@ T;
 
 615 LINE.NUM *sPressure *Status $CAT 
 
-617 LINE.NUM ~AI_CryoTig_ReturnPressure @@ 5 2 *sPressure  FF.R$ 
+617 LINE.NUM ~AI_CryoTig_ReturnPressure @@ 6 2 *sPressure  FF.R$ 
 618 LINE.NUM " , CryotigerReturnPressure=" *Status $CAT 
 
 619 LINE.NUM *sPressure *Status $CAT 
@@ -3446,9 +3446,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/12/17 " ;
-: TIMESTAMP ." 23:27:27 " ;
-: CRCSTAMP  ." 6ED0CCBD272987E97E43C91CFA27A49E " ;
+: DATESTAMP ." 05/09/17 " ;
+: TIMESTAMP ." 18:16:00 " ;
+: CRCSTAMP  ." 9195BEF5E0FC18CCA811278B381C27C9 " ;
 MAKECHECK
 CLEAR.BREAKS
 
