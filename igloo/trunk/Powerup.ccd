@@ -28,8 +28,8 @@
 69 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
 70 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
 71 LINE.NUM " ACoutput" 5 {stHeader $TABLE@  $MOVE 
-72 LINE.NUM " TentAirLower" 6 {stHeader $TABLE@  $MOVE 
-73 LINE.NUM " CtrlValveTemp" 7 {stHeader $TABLE@  $MOVE 
+72 LINE.NUM " CtrlValveTemp" 6 {stHeader $TABLE@  $MOVE 
+73 LINE.NUM " TentAirLower" 7 {stHeader $TABLE@  $MOVE 
 74 LINE.NUM " ChamberPressSenTemp" 8 {stHeader $TABLE@  $MOVE 
 75 LINE.NUM " PID_Setpoint" 9 {stHeader $TABLE@  $MOVE 
 76 LINE.NUM " PID_Input" 10 {stHeader $TABLE@  $MOVE 

@@ -1505,7 +1505,7 @@ T;
 119 LINE.NUM THEN 
 8 JUMP ;
 : 2_15
-1 LINE.NUM 6 {stDTdata $TABLE@  $>F ^fPidInput @! 
+1 LINE.NUM 7 {stDTdata $TABLE@  $>F ^fPidInput @! 
 2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
 0 JUMP ;
 : 2_18
@@ -2790,8 +2790,8 @@ T;
 69 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
 70 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
 71 LINE.NUM " ACoutput" 5 {stHeader $TABLE@  $MOVE 
-72 LINE.NUM " TentAirLower" 6 {stHeader $TABLE@  $MOVE 
-73 LINE.NUM " CtrlValveTemp" 7 {stHeader $TABLE@  $MOVE 
+72 LINE.NUM " CtrlValveTemp" 6 {stHeader $TABLE@  $MOVE 
+73 LINE.NUM " TentAirLower" 7 {stHeader $TABLE@  $MOVE 
 74 LINE.NUM " ChamberPressSenTemp" 8 {stHeader $TABLE@  $MOVE 
 75 LINE.NUM " PID_Setpoint" 9 {stHeader $TABLE@  $MOVE 
 76 LINE.NUM " PID_Input" 10 {stHeader $TABLE@  $MOVE 
@@ -3446,9 +3446,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 05/09/17 " ;
-: TIMESTAMP ." 18:16:00 " ;
-: CRCSTAMP  ." 9195BEF5E0FC18CCA811278B381C27C9 " ;
+: DATESTAMP ." 06/15/17 " ;
+: TIMESTAMP ." 22:10:07 " ;
+: CRCSTAMP  ." 619869CBDA54DE9E8D527CB25CE56CE8 " ;
 MAKECHECK
 CLEAR.BREAKS
 
