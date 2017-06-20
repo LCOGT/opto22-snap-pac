@@ -20,53 +20,67 @@
 9 LINE.NUM ^nPauseWallFans @@ 1 = IF 
 11 LINE.NUM ELSE 
 12 LINE.NUM 1 ^nPauseWallFans @! 
-13 LINE.NUM ~AO_Wall_Fans_VDC @@ ^nOldWallFanCtrl F@! 
 14 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
 16 LINE.NUM THEN 
 17 LINE.NUM THEN 
 23 LINE.NUM &Pole_Close  ?STOPPED &Pole_Open  ?STOPPED LAND  &Tail_Close  ?STOPPED LAND  &Tail_Open  ?STOPPED LAND  ^nPauseWallFans @@ 1 = LAND  IF 
 29 LINE.NUM 0 ^nPauseWallFans @! 
-30 LINE.NUM ^nOldWallFanCtrl @@F ~AO_Wall_Fans_VDC @! 
 31 LINE.NUM &TestEnclFans  START.T DROP  
 32 LINE.NUM THEN 
 38 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
-39 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-41 LINE.NUM ELSE 
-42 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
-43 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-44 LINE.NUM THEN 
-45 LINE.NUM ELSE 
-45 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
-46 LINE.NUM ^nPauseWallFans @@ 1 = IF 
-48 LINE.NUM ELSE 
-49 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-50 LINE.NUM THEN 
-51 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
-52 LINE.NUM ELSE 
-52 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
-53 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-54 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
-55 LINE.NUM ELSE 
-55 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
-56 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
-58 LINE.NUM ELSE 
-59 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-60 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
-61 LINE.NUM " , WallFanOpMode " *sErrorList $CAT 
-
-62 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-63 LINE.NUM *sTimestamp *sErrorList $CAT 
-
-64 LINE.NUM THEN 
-65 LINE.NUM THEN THEN THEN THEN 
-73 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
-74 LINE.NUM ~DI_UltimateClosed_LS  CLR.+LATCH@I IF 
-75 LINE.NUM 5 I>F ~AO_Wall_Fans_VDC @! 
+40 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
+42 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+46 LINE.NUM ELSE 
+46 LINE.NUM ~DI_UltimateClosed_LS  CLR.-LATCH@I IF 
+47 LINE.NUM 3 I>F ~AO_Wall_Fans_VDC @! 
+48 LINE.NUM 1 ^WallFans_Initialized @! 
+51 LINE.NUM ELSE 
+51 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
+52 LINE.NUM ^WallFans_Initialized @@ 1 = IF 
+54 LINE.NUM ELSE 
+55 LINE.NUM 3 I>F ~AO_Wall_Fans_VDC @! 
+56 LINE.NUM 1 ^WallFans_Initialized @! 
+57 LINE.NUM THEN 
+60 LINE.NUM ELSE 
+60 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
+61 LINE.NUM 0 ^WallFans_Initialized @! 
+64 LINE.NUM ^OTSmirrorTemp @@ ^DewpointTemp @@ F<= ~AI_OutletAir_RTD @@ 25 I>F F<= LAND  IF 
+65 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+68 LINE.NUM ELSE 
+68 LINE.NUM ~AI_OutletAir_RTD @@ 25 I>F F> IF 
+69 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+72 LINE.NUM ELSE 
+72 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F< IF 
+73 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
 76 LINE.NUM ELSE 
-76 LINE.NUM ~DI_UltimateClosed_LS  CLR.-LATCH@I IF 
-77 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-78 LINE.NUM THEN THEN 
-79 LINE.NUM THEN 
+76 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F>= ~AI_OutletAir_RTD @@ 25 I>F F<= LAND  IF 
+77 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F- ~AO_Wall_Fans_VDC @! 
+79 LINE.NUM THEN THEN THEN THEN 
+81 LINE.NUM THEN THEN THEN THEN 
+104 LINE.NUM ELSE 
+104 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+105 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+107 LINE.NUM ELSE 
+108 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+109 LINE.NUM THEN 
+110 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
+111 LINE.NUM ELSE 
+111 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
+112 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+113 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
+114 LINE.NUM ELSE 
+114 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
+115 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+117 LINE.NUM ELSE 
+118 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+119 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
+120 LINE.NUM " , WallFanOpMode " *sErrorList $CAT 
+
+121 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+122 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+123 LINE.NUM THEN 
+124 LINE.NUM THEN THEN THEN THEN 
 -2 JUMP ;
 : 17_18
 9 LINE.NUM ^dtOneWeek @@F 0 I>F F= IF 
@@ -108,8 +122,8 @@
 28 LINE.NUM THEN THEN THEN THEN 
 36 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
 37 LINE.NUM ~DI_UltimateClosed_LS  CLR.-LATCH@I IF 
-38 LINE.NUM 1.000000e+001 ~AO_OTA_Blower_A @! 
-39 LINE.NUM 1.000000e+001 ~AO_OTA_Blower_B @! 
+38 LINE.NUM 1.00000000e+001 ~AO_OTA_Blower_A @! 
+39 LINE.NUM 1.00000000e+001 ~AO_OTA_Blower_B @! 
 40 LINE.NUM ELSE 
 40 LINE.NUM ~DI_UltimateClosed_LS  CLR.+LATCH@I IF 
 41 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
@@ -133,7 +147,7 @@
 28 LINE.NUM ELSE 
 29 LINE.NUM 1 ~DO_TailGoFast @! 
 30 LINE.NUM THEN 
--4 JUMP ;
+4 JUMP ;
 : 17_31
 1 LINE.NUM ~DI_LeftStormLock_LS @@I 0 = ~DI_RightStormLock_LS @@I 0 = LOR  IF 
 2 LINE.NUM 1 ^nStormlocked @! 
@@ -259,6 +273,11 @@
 : 17_46
 1 LINE.NUM 100  DELAY 
 -6 JUMP ;
+: 17_50
+1 LINE.NUM ~AI_AqHumidity_SEN @@ ^RH @! 
+2 LINE.NUM ~AI_AqTemp_SEN @@ ^T @! 
+6 LINE.NUM 2.43039993e+002 ^RH @@ 100 I>F F/  FLN 1.76250000e+001 ^T @@ F* 2.43039993e+002 ^T @@ F+ F/ F+ F* 1.76250000e+001 ^RH @@ 100 I>F F/  FLN F- 1.76250000e+001 ^T @@ F* 2.43039993e+002 ^T @@ F+ F/ F- F/ ^DewpointTemp @! 
+-9 JUMP ;
 T: T17
 DUMMY
 17_0
@@ -271,5 +290,6 @@ DUMMY
 17_35
 17_36
 17_46
+17_50
 T;
 &SYSTEM_READY ' T17 SETTASK

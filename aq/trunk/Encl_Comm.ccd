@@ -493,7 +493,7 @@
 133 LINE.NUM " , PoleFanExhaustTach=" *sStatus $CAT 
 
 136 LINE.NUM ~AI_PoleFanExhaust_TACH @@ ^TempFloat @! 
-137 LINE.NUM ^TempFloat @@ 1.475000e+002 F/ ^TempFloat @! 
+137 LINE.NUM ^TempFloat @@ 1.47500000e+002 F/ ^TempFloat @! 
 138 LINE.NUM ^TempFloat @@ 100 I>F F* ^TempFloat @! 
 139 LINE.NUM ^TempFloat @@ 3 0 *Tempstring  FF.R$ 
 140 LINE.NUM *Tempstring 3  SWAP $TRIM 
@@ -700,11 +700,11 @@
 64 LINE.NUM ^nFindCmd @@ -1 > IF 
 65 LINE.NUM *sWallFansOpMode " AUTO" $= IF 
 66 LINE.NUM ^nPauseWallFans @@ 0 = IF 
-67 LINE.NUM 1.500000e+000 ~AO_Wall_Fans_VDC @! 
+67 LINE.NUM 1.50000000e+000 ~AO_Wall_Fans_VDC @! 
 68 LINE.NUM &TestEnclFans  START.T DROP  
 69 LINE.NUM ELSE 
 69 LINE.NUM ^nPauseWallFans @@ 1 = IF 
-70 LINE.NUM 1.500000e+000 ^nOldWallFanCtrl F@! 
+70 LINE.NUM 1.50000000e+000 ^nOldWallFanCtrl F@! 
 71 LINE.NUM THEN THEN 
 72 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 73 LINE.NUM ELSE 
@@ -741,7 +741,7 @@
 112 LINE.NUM " OTA_BLOWER_A_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 113 LINE.NUM ^nFindCmd @@ -1 > IF 
 114 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-115 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_A @! 
+115 LINE.NUM 1.50000000e+000 ~AO_OTA_Blower_A @! 
 116 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 117 LINE.NUM ELSE 
 118 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
@@ -777,7 +777,7 @@
 156 LINE.NUM " OTA_BLOWER_B_LOW" 0 *sEnclCmd  FindSubString ^nFindCmd @! 
 157 LINE.NUM ^nFindCmd @@ -1 > IF 
 158 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
-159 LINE.NUM 1.500000e+000 ~AO_OTA_Blower_B @! 
+159 LINE.NUM 1.50000000e+000 ~AO_OTA_Blower_B @! 
 160 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
 161 LINE.NUM ELSE 
 162 LINE.NUM " Success=FALSE, OTA blower not in AUTO" *sEnclStatus  $MOVE 
@@ -857,7 +857,7 @@
 280 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
 281 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 282 LINE.NUM ELSE 
-283 LINE.NUM 1.500000e+000 ~DO_PoleFans_MCB  PULSEON 
+283 LINE.NUM 1.50000000e+000 ~DO_PoleFans_MCB  PULSEON 
 284 LINE.NUM 2000  DELAY 
 285 LINE.NUM ~DI_PoleFans_MCB @@I 1 = IF 
 286 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -871,7 +871,7 @@
 296 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
 297 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 298 LINE.NUM ELSE 
-299 LINE.NUM 1.500000e+000 ~DO_TailFans_MCB  PULSEON 
+299 LINE.NUM 1.50000000e+000 ~DO_TailFans_MCB  PULSEON 
 300 LINE.NUM 2000  DELAY 
 301 LINE.NUM ~DI_TailFans_MCB @@I 1 = IF 
 302 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -885,7 +885,7 @@
 312 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
 313 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 314 LINE.NUM ELSE 
-315 LINE.NUM 1.500000e+000 ~DO_OTAblower_MCB  PULSEON 
+315 LINE.NUM 1.50000000e+000 ~DO_OTAblower_MCB  PULSEON 
 316 LINE.NUM 2000  DELAY 
 317 LINE.NUM ~DI_OTAblower_MCB @@I 1 = IF 
 318 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -899,7 +899,7 @@
 328 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
 329 LINE.NUM " Success=FALSE, MCB already on" *sEnclStatus  $MOVE 
 330 LINE.NUM ELSE 
-331 LINE.NUM 1.500000e+000 ~DO_PanelFans_MCB  PULSEON 
+331 LINE.NUM 1.50000000e+000 ~DO_PanelFans_MCB  PULSEON 
 332 LINE.NUM 2000  DELAY 
 333 LINE.NUM ~DI_PanelFans_MCB @@I 1 = IF 
 334 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -913,7 +913,7 @@
 360 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
 361 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 362 LINE.NUM ELSE 
-363 LINE.NUM 5.000000e-001 ~DO_PoleFans_MCB  PULSEON 
+363 LINE.NUM 5.00000000e-001 ~DO_PoleFans_MCB  PULSEON 
 364 LINE.NUM 1000  DELAY 
 365 LINE.NUM ~DI_PoleFans_MCB @@I 0 = IF 
 366 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -927,7 +927,7 @@
 376 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
 377 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 378 LINE.NUM ELSE 
-379 LINE.NUM 5.000000e-001 ~DO_TailFans_MCB  PULSEON 
+379 LINE.NUM 5.00000000e-001 ~DO_TailFans_MCB  PULSEON 
 380 LINE.NUM 1000  DELAY 
 381 LINE.NUM ~DI_TailFans_MCB @@I 0 = IF 
 382 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -941,7 +941,7 @@
 392 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
 393 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 394 LINE.NUM ELSE 
-395 LINE.NUM 5.000000e-001 ~DO_OTAblower_MCB  PULSEON 
+395 LINE.NUM 5.00000000e-001 ~DO_OTAblower_MCB  PULSEON 
 396 LINE.NUM 1000  DELAY 
 397 LINE.NUM ~DI_OTAblower_MCB @@I 0 = IF 
 398 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
@@ -955,7 +955,7 @@
 408 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
 409 LINE.NUM " Success=FALSE, MCB already off" *sEnclStatus  $MOVE 
 410 LINE.NUM ELSE 
-411 LINE.NUM 5.000000e-001 ~DO_PanelFans_MCB  PULSEON 
+411 LINE.NUM 5.00000000e-001 ~DO_PanelFans_MCB  PULSEON 
 412 LINE.NUM 1000  DELAY 
 413 LINE.NUM ~DI_PanelFans_MCB @@I 0 = IF 
 414 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
