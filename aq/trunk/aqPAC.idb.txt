@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\aqPAC\trunk\aqPAC.idb
 # VERSION :      R9.5a
-# TIME/DATE :    23:44:50 6/21/2017
+# TIME/DATE :    18:41:16 6/26/2017
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -244,7 +244,9 @@ TAG1,flag_status                                       ,22   ,00000000,00000000,
 TAG1,HeartbeatExpired                                  ,132  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ListeningForMaster                                ,23   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,M1temp                                            ,142  ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,M1tempFaulty                                      ,152  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,M2temp                                            ,143  ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,M2tempFaulty                                      ,153  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Master_CommClosed                                 ,24   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Master_Handle_CharNumWaiting                      ,25   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,mastercommandFL                                   ,16   ,00000000,00000000,00000000,00000008,0    ,0   
