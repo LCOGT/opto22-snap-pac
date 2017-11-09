@@ -1,0 +1,167 @@
+: 37_0
+5 JUMP ;
+: 37_3
+6 LINE.NUM 1 ^nIndex3 @! 
+7 LINE.NUM *cOTS  STREAM.CLEAR.BUF 
+8 LINE.NUM BEGIN ^nIndex3 @@ 4 < WHILE 
+9 LINE.NUM *cOTS  OPEN ^nOTS_Status @! 
+11 LINE.NUM ^nOTS_Status @@ 0 = IF 
+12 LINE.NUM 5 ^nIndex3 @! 
+14 LINE.NUM ^f120 @@ ^dtGetChar1  SetTimer 
+15 LINE.NUM ^dtGetChar1  StartTimer 
+16 LINE.NUM ELSE 
+16 LINE.NUM ^nOTS_Status @@ 0 < IF 
+17 LINE.NUM 5.00000000e+000 ^nIndex3 @@F F*  FDELAY 
+18 LINE.NUM THEN THEN 
+20 LINE.NUM ^nIndex3 @@ 3 = IF 
+22 LINE.NUM 100 I>F ^M1temp @! 
+23 LINE.NUM 100 I>F ^M2temp @! 
+24 LINE.NUM THEN 
+26 LINE.NUM ^nIndex3  1+@! 
+27 LINE.NUM REPEAT 
+6 JUMP ;
+: 37_4
+4 LINE.NUM " GET /cgi-bin/status?xml=1 HTTP/1.1" *sGET  $MOVE 
+5 LINE.NUM 13 *sGET $APPEND 
+
+6 LINE.NUM 10 *sGET $APPEND 
+
+7 LINE.NUM 13 *sGET $APPEND 
+
+8 LINE.NUM 10 *sGET $APPEND 
+
+11 LINE.NUM *sGET *cOTS  PRT$ DROP  
+12 LINE.NUM " " *sGET  $MOVE 
+0 JUMP ;
+: 37_5
+4 LINE.NUM BEGIN ^dtGetChar1 @@F 0 I>F F> WHILE 
+5 LINE.NUM *cOTS  ?STREAM.KEY ^nCharCount1 @! 
+7 LINE.NUM ^nCharCount1 @@ 0 < ^nCharCount1 @@ -37 <> LAND  ^nCharCount1 @@ -39 <> LAND  IF 
+8 LINE.NUM *cOTS  CLOSE DROP  
+9 LINE.NUM 0 I>F ^dtGetChar1 @! 
+12 LINE.NUM ELSE 
+12 LINE.NUM *cOTS  ?OPEN 0> 1 XOR  IF 
+13 LINE.NUM *cOTS  CLOSE DROP  
+14 LINE.NUM 0 I>F ^dtGetChar1 @! 
+16 LINE.NUM ELSE 
+16 LINE.NUM ^nCharCount1 @@ 0 > IF 
+17 LINE.NUM 0 I>F ^dtGetChar1 @! 
+18 LINE.NUM 1.00000001e-001  FDELAY 
+19 LINE.NUM THEN THEN THEN 
+20 LINE.NUM REPEAT 
+3 JUMP ;
+: 37_7
+5 LINE.NUM 7 0 {stOTS *cOTS  S.GET#TABLE DROP  
+12 LINE.NUM " M1" 0 5 {stOTS $TABLE@  FindSubString ^nPosition @! 
+13 LINE.NUM 5 {stOTS $TABLE@ ^nPosition @@ 19 +  5 *TempString1  $SUB 
+14 LINE.NUM *TempString1  $>F ^M1temp @! 
+16 LINE.NUM " M2" 0 5 {stOTS $TABLE@  FindSubString ^nPosition @! 
+17 LINE.NUM 5 {stOTS $TABLE@ ^nPosition @@ 19 +  5 *TempString1  $SUB 
+18 LINE.NUM *TempString1  $>F ^M2temp @! 
+21 LINE.NUM ^M1temp @@ 100 I>F F> ^M1temp @@ 0 I>F F< LOR  IF 
+22 LINE.NUM 1 ^M1tempFaulty @! 
+23 LINE.NUM ELSE 
+24 LINE.NUM 0 ^M1tempFaulty @! 
+25 LINE.NUM THEN 
+28 LINE.NUM ^M2temp @@ 100 I>F F> ^M2temp @@ 0 I>F F< LOR  IF 
+29 LINE.NUM 1 ^M2tempFaulty @! 
+30 LINE.NUM ELSE 
+31 LINE.NUM 0 ^M2tempFaulty @! 
+32 LINE.NUM THEN 
+35 LINE.NUM ^M1tempFaulty @@ 1 = ^M2tempFaulty @@ 1 = LAND  IF 
+36 LINE.NUM 30 I>F ^OTSmirrorTemp @! 
+38 LINE.NUM ELSE 
+38 LINE.NUM ^M1tempFaulty @@ 1 = ^M2tempFaulty @@ 0 = LAND  IF 
+39 LINE.NUM ^M2temp @@ ^OTSmirrorTemp @! 
+41 LINE.NUM ELSE 
+41 LINE.NUM ^M1tempFaulty @@ 0 = ^M2tempFaulty @@ 1 = LAND  IF 
+42 LINE.NUM ^M1temp @@ ^OTSmirrorTemp @! 
+44 LINE.NUM ELSE 
+44 LINE.NUM ^M1tempFaulty @@ 0 = ^M2tempFaulty @@ 0 = LAND  IF 
+45 LINE.NUM ^M1temp @@ ^M2temp @@ F< IF 
+46 LINE.NUM ^M1temp @@ ^OTSmirrorTemp @! 
+47 LINE.NUM ELSE 
+48 LINE.NUM ^M2temp @@ ^OTSmirrorTemp @! 
+49 LINE.NUM THEN 
+50 LINE.NUM THEN THEN THEN THEN 
+56 LINE.NUM *cOTS  STREAM.CLEAR.BUF 
+57 LINE.NUM *cOTS  CLOSE DROP  
+58 LINE.NUM " " 0 {stOTS $TABLE@  $MOVE 
+59 LINE.NUM " " 1 {stOTS $TABLE@  $MOVE 
+60 LINE.NUM " " 2 {stOTS $TABLE@  $MOVE 
+61 LINE.NUM " " 3 {stOTS $TABLE@  $MOVE 
+62 LINE.NUM " " 4 {stOTS $TABLE@  $MOVE 
+63 LINE.NUM " " 5 {stOTS $TABLE@  $MOVE 
+64 LINE.NUM " " 6 {stOTS $TABLE@  $MOVE 
+65 LINE.NUM " " 7 {stOTS $TABLE@  $MOVE 
+0 JUMP ;
+: 37_8
+
+1 LINE.NUM
+  1000    DELAY
+-5 JUMP ;
+: 37_17
+39 LINE.NUM 0 ^nIndex0 @! 
+40 LINE.NUM 0 ^nIndex1 @! 
+41 LINE.NUM 0 ^nOctet1 @! 
+42 LINE.NUM 0 ^nOctet2 @! 
+43 LINE.NUM 0 ^nOctet3 @! 
+45 LINE.NUM BEGIN ^nIndex0 @@ 12 < WHILE 
+48 LINE.NUM *sIP_PAC ^nIndex0 @@  $INDEX ^nASCII @! 
+51 LINE.NUM ^nASCII @@ 46 = IF 
+53 LINE.NUM ^nIndex1 @@ 1 +  ^nIndex1 @! 
+56 LINE.NUM ^nIndex1 @@ 1 = IF 
+57 LINE.NUM ^nIndex0 @@ ^nOctet1 @! 
+58 LINE.NUM ELSE 
+58 LINE.NUM ^nIndex1 @@ 2 = IF 
+59 LINE.NUM ^nIndex0 @@ ^nOctet2 @! 
+60 LINE.NUM ELSE 
+60 LINE.NUM ^nIndex1 @@ 3 = IF 
+61 LINE.NUM ^nIndex0 @@ ^nOctet3 @! 
+62 LINE.NUM THEN THEN THEN 
+65 LINE.NUM ^nIndex1 @@ 3 = IF 
+66 LINE.NUM *sIP_PAC ^nOctet2 @@ 1 +  ^nOctet3 @@ ^nOctet2 @@ -  1 -  *sOctet3  $SUB 
+67 LINE.NUM *sOctet3  $>I ^nOctet3 @! 
+68 LINE.NUM ^nOctet3 @@ 1 +  ^nOctet3 @! 
+69 LINE.NUM ^nOctet3 @@ *sOctet3  I>$ 
+72 LINE.NUM *sIP_PAC 0 ^nOctet2 @@ *sIP_OTS  $SUB 
+73 LINE.NUM " ." *sIP_OTS $CAT 
+
+74 LINE.NUM *sOctet3 *sIP_OTS $CAT 
+
+75 LINE.NUM 12 ^nIndex0 @! 
+76 LINE.NUM THEN 
+78 LINE.NUM THEN 
+79 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
+80 LINE.NUM REPEAT 
+82 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sIP_OTS  *_HSV_TEMP $CAT " .52:80"  *_HSV_TEMP $CAT *_HSV_TEMP *sIP_OTS $MOVE Release1String 
+83 LINE.NUM *sIP_OTS *cOTS  $MOVE 
+-6 JUMP ;
+: 37_6
+TRUE
+
+1 LINE.NUM
+  ^nCharCount1 @@ 
+  0    >
+LAND
+IF -4 ELSE -3 THEN JUMP ;
+: 37_20
+TRUE
+
+1 LINE.NUM
+  *cOTS   ?OPEN 0>
+LAND
+IF -7 ELSE -4 THEN JUMP ;
+T: T37
+DUMMY
+37_0
+37_3
+37_4
+37_5
+37_7
+37_8
+37_17
+37_6
+37_20
+T;
+&Get_Mirror_Temps ' T37 SETTASK
