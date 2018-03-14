@@ -50,6 +50,7 @@ CREATE V.ARRAY
 ^FastMode ,
 ^flag_status ,
 ^HeartbeatExpired ,
+^HeartbeatRcvd ,
 ^ListeningForMaster ,
 ^M1temp ,
 ^M1tempFaulty ,
@@ -373,6 +374,7 @@ CONFIG_PORTS
 0 ^FastMode @!
 0 ^flag_status @!
 1 ^HeartbeatExpired @!
+0 ^HeartbeatRcvd @!
 0 ^ListeningForMaster @!
 100.00000 ^M1temp @!
 0 ^M1tempFaulty @!

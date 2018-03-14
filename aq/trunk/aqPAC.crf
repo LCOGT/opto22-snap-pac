@@ -114,6 +114,7 @@ ENDCODE
 0 IVAR ^FastMode
 0 IVAR ^flag_status
 0 IVAR ^HeartbeatExpired
+0 IVAR ^HeartbeatRcvd
 0 IVAR ^ListeningForMaster
 0 FVAR ^M1temp
 0 IVAR ^M1tempFaulty
@@ -474,46 +475,44 @@ T;
 2 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 3 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-5 LINE.NUM ^dtHeartbeat  PauseTimer 
 6 LINE.NUM ^dtHeartbeat @@F ^nOldHeartbeat F@! 
-7 LINE.NUM 60 I>F ^dtHeartbeat @! 
-8 LINE.NUM ^dtHeartbeat  StartTimer 
-10 LINE.NUM 0 ^HeartbeatExpired @! 
-12 LINE.NUM ^nOldHeartbeat @@ *sOldHeartbeat  I>$ 
-13 LINE.NUM " , HeartbeatTimer=" *sEnclStatus $CAT 
+7 LINE.NUM 1 ^HeartbeatRcvd @! 
+17 LINE.NUM 0 ^HeartbeatExpired @! 
+19 LINE.NUM ^nOldHeartbeat @@ *sOldHeartbeat  I>$ 
+20 LINE.NUM " , HeartbeatTimer=" *sEnclStatus $CAT 
 
-14 LINE.NUM *sOldHeartbeat *sEnclStatus $CAT 
+21 LINE.NUM *sOldHeartbeat *sEnclStatus $CAT 
 
-16 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-17 LINE.NUM " " *sEnclStatus  $MOVE 
-23 LINE.NUM ^dt24h @@F 1 I>F F< IF 
-24 LINE.NUM *sEnclCmd  $LEN ^nStringLength @! 
-25 LINE.NUM ^nStringLength @@ 28 > IF 
-26 LINE.NUM " ," 0 *sEnclCmd  FindSubString ^nStringPosition @! 
-27 LINE.NUM ^nStringPosition  1+@! 
-28 LINE.NUM " ," ^nStringPosition @@ *sEnclCmd  FindSubString ^nStringPosition @! 
-29 LINE.NUM ^nStringPosition  1+@! 
-30 LINE.NUM *sEnclCmd ^nStringPosition @@ 4 *sYear  $SUB 
-31 LINE.NUM *sYear  $>I  I!YRS 
-32 LINE.NUM ^nStringPosition @@ 4 +  ^nStringPosition @! 
-33 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sMonth  $SUB 
-34 LINE.NUM *sMonth  $>I  I!MTH 
-35 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-36 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sDay  $SUB 
-37 LINE.NUM *sDay  $>I  I!DAY 
-38 LINE.NUM ^nStringPosition @@ 3 +  ^nStringPosition @! 
-39 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
-40 LINE.NUM *sTime  $>I  I!HRS 
-41 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-42 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
-43 LINE.NUM *sTime  $>I  I!MTS 
-44 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
-45 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
-46 LINE.NUM *sTime  $>I  I!SEC 
-47 LINE.NUM 86400 I>F ^dt24h @! 
-48 LINE.NUM ^dt24h  StartTimer 
-49 LINE.NUM THEN 
-50 LINE.NUM THEN 
+23 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+24 LINE.NUM " " *sEnclStatus  $MOVE 
+30 LINE.NUM ^dt24h @@F 1 I>F F< IF 
+31 LINE.NUM *sEnclCmd  $LEN ^nStringLength @! 
+32 LINE.NUM ^nStringLength @@ 28 > IF 
+33 LINE.NUM " ," 0 *sEnclCmd  FindSubString ^nStringPosition @! 
+34 LINE.NUM ^nStringPosition  1+@! 
+35 LINE.NUM " ," ^nStringPosition @@ *sEnclCmd  FindSubString ^nStringPosition @! 
+36 LINE.NUM ^nStringPosition  1+@! 
+37 LINE.NUM *sEnclCmd ^nStringPosition @@ 4 *sYear  $SUB 
+38 LINE.NUM *sYear  $>I  I!YRS 
+39 LINE.NUM ^nStringPosition @@ 4 +  ^nStringPosition @! 
+40 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sMonth  $SUB 
+41 LINE.NUM *sMonth  $>I  I!MTH 
+42 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+43 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sDay  $SUB 
+44 LINE.NUM *sDay  $>I  I!DAY 
+45 LINE.NUM ^nStringPosition @@ 3 +  ^nStringPosition @! 
+46 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
+47 LINE.NUM *sTime  $>I  I!HRS 
+48 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+49 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
+50 LINE.NUM *sTime  $>I  I!MTS 
+51 LINE.NUM ^nStringPosition @@ 2 +  ^nStringPosition @! 
+52 LINE.NUM *sEnclCmd ^nStringPosition @@ 2 *sTime  $SUB 
+53 LINE.NUM *sTime  $>I  I!SEC 
+54 LINE.NUM 86400 I>F ^dt24h @! 
+55 LINE.NUM ^dt24h  StartTimer 
+56 LINE.NUM THEN 
+57 LINE.NUM THEN 
 0 JUMP ;
 : 21_70
 -10 JUMP ;
@@ -1926,43 +1925,47 @@ T;
   1000    DELAY
 0 JUMP ;
 : 19_15
-7 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  LAND  IF 
-11 LINE.NUM ^dtHeartbeat @@F 0 I>F F= ^HeartbeatExpired @@ 0 = LAND  IF 
-12 LINE.NUM 1 ^HeartbeatExpired @! 
-13 LINE.NUM " , HeartbeatExpired " *sFaultList $CAT 
+9 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  LAND  IF 
+14 LINE.NUM ^HeartbeatRcvd @@ 1 = IF 
+15 LINE.NUM 0 ^HeartbeatRcvd @! 
+16 LINE.NUM ^dtHeartbeat  GET.RESTART.TMR DROP  
+17 LINE.NUM THEN 
+21 LINE.NUM ^dtHeartbeat @@F 0 I>F F= ^HeartbeatExpired @@ 0 = LAND  IF 
+22 LINE.NUM 1 ^HeartbeatExpired @! 
+23 LINE.NUM " , HeartbeatExpired " *sFaultList $CAT 
 
-14 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-15 LINE.NUM *sTimestamp *sFaultList $CAT 
+24 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+25 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-16 LINE.NUM THEN 
-20 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
-21 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-22 LINE.NUM &Close_Sequential  START.T DROP  
-23 LINE.NUM ELSE 
-23 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-24 LINE.NUM &Tail_Close  START.T DROP  
-25 LINE.NUM ELSE 
-25 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-26 LINE.NUM &Pole_Close  START.T DROP  
-27 LINE.NUM ELSE 
-27 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 >= LAND  IF 
-29 LINE.NUM THEN THEN THEN THEN 
-34 LINE.NUM ELSE 
-34 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
-35 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+26 LINE.NUM THEN 
+30 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+31 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+32 LINE.NUM &Close_Sequential  START.T DROP  
+33 LINE.NUM ELSE 
+33 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+34 LINE.NUM &Tail_Close  START.T DROP  
+35 LINE.NUM ELSE 
+35 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+36 LINE.NUM &Pole_Close  START.T DROP  
 37 LINE.NUM ELSE 
-38 LINE.NUM &Pole_Close  START.T DROP  
-39 LINE.NUM THEN 
+37 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 >= LAND  IF 
+39 LINE.NUM THEN THEN THEN THEN 
 44 LINE.NUM ELSE 
-44 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
-45 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+44 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+45 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
 47 LINE.NUM ELSE 
-48 LINE.NUM &Tail_Close  START.T DROP  
+48 LINE.NUM &Pole_Close  START.T DROP  
 49 LINE.NUM THEN 
 54 LINE.NUM ELSE 
-54 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
-56 LINE.NUM THEN THEN THEN THEN 
-57 LINE.NUM THEN 
+54 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+55 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+57 LINE.NUM ELSE 
+58 LINE.NUM &Tail_Close  START.T DROP  
+59 LINE.NUM THEN 
+64 LINE.NUM ELSE 
+64 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+66 LINE.NUM THEN THEN THEN THEN 
+67 LINE.NUM THEN 
 -2 JUMP ;
 T: T19
 DUMMY
@@ -2685,60 +2688,61 @@ T;
 21 LINE.NUM " " *sWallFansOpMode  $MOVE 
 22 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
 23 LINE.NUM " " *sEnclOpMode  $MOVE 
-25 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
-26 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
-27 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
-28 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
-29 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
-30 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
-31 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
-32 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
-34 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
-35 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
-36 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
-37 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
-38 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
-39 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
-40 LINE.NUM " OTA_BLOWER_A_HI" 6 
+24 LINE.NUM 1.20000000e+002 ^dtHeartbeat  SetTimer 
+26 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
+27 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
+28 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
+29 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
+30 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
+31 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
+32 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
+33 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
+35 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
+36 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
+37 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
+38 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
+39 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
+40 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
+41 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
+42 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
+43 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@ 
+ $MOVE 
+44 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
+45 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
+46 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
+47 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
+48 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
+49 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
+50 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
+51 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
+52 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
+53 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
+54 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
+55 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
+56 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
+57 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
+58 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
+59 LINE.NUM " LED_STEADY" 24 
 {stFacilityCmds $TABLE@  $MOVE 
-41 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
-42 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@  $MOVE 
-43 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
-44 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
-45 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
-46 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
-47 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
-48 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
-49 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
-50 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
-51 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
-52 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
-53 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
-54 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
-55 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
-56 LINE.NUM 
-" SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
-57 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
-58 LINE.NUM " LED_STEADY" 24 {stFacilityCmds $TABLE@  $MOVE 
-59 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
-60 LINE.NUM " MCB_RESET_POLE_FANS" 26 {stFacilityCmds $TABLE@  $MOVE 
-61 LINE.NUM " MCB_RESET_TAIL_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
-62 LINE.NUM " MCB_RESET_OTA_BLOWER" 28 {stFacilityCmds $TABLE@  $MOVE 
-63 LINE.NUM " MCB_RESET_PANEL_FANS" 29 {stFacilityCmds $TABLE@  $MOVE 
-64 LINE.NUM " MCB_TRIP_24V_CTRL" 30 {stFacilityCmds $TABLE@  $MOVE 
-65 LINE.NUM " MCB_TRIP_POLE_FANS" 31 {stFacilityCmds $TABLE@  $MOVE 
-66 LINE.NUM " MCB_TRIP_TAIL_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
-67 LINE.NUM " MCB_TRIP_OTA_BLOWER" 33 {stFacilityCmds $TABLE@  $MOVE 
-68 LINE.NUM " MCB_TRIP_PANEL_FANS" 34 {stFacilityCmds $TABLE@  $MOVE 
-70 LINE.NUM &Manual_auto  START.T DROP  
-71 LINE.NUM &Encl_Comm  START.T DROP  
-72 LINE.NUM &Heart_Monitor  START.T DROP  
-73 LINE.NUM &Blink  START.T DROP  
-74 LINE.NUM &Mute_Test_LED  START.T DROP  
-75 LINE.NUM &SYSTEM_READY  START.T DROP  
-76 LINE.NUM &TestErrors  START.T DROP  
-77 LINE.NUM &TestFaults  START.T DROP  
-78 LINE.NUM &Get_Mirror_Temps  START.T DROP  
+60 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
+61 LINE.NUM " MCB_RESET_POLE_FANS" 26 {stFacilityCmds $TABLE@  $MOVE 
+62 LINE.NUM " MCB_RESET_TAIL_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
+63 LINE.NUM " MCB_RESET_OTA_BLOWER" 28 {stFacilityCmds $TABLE@  $MOVE 
+64 LINE.NUM " MCB_RESET_PANEL_FANS" 29 {stFacilityCmds $TABLE@  $MOVE 
+65 LINE.NUM " MCB_TRIP_24V_CTRL" 30 {stFacilityCmds $TABLE@  $MOVE 
+66 LINE.NUM " MCB_TRIP_POLE_FANS" 31 {stFacilityCmds $TABLE@  $MOVE 
+67 LINE.NUM " MCB_TRIP_TAIL_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
+68 LINE.NUM " MCB_TRIP_OTA_BLOWER" 33 {stFacilityCmds $TABLE@  $MOVE 
+69 LINE.NUM " MCB_TRIP_PANEL_FANS" 34 {stFacilityCmds $TABLE@  $MOVE 
+71 LINE.NUM &Manual_auto  START.T DROP  
+72 LINE.NUM &Encl_Comm  START.T DROP  
+73 LINE.NUM &Heart_Monitor  START.T DROP  
+74 LINE.NUM &Blink  START.T DROP  
+75 LINE.NUM &Mute_Test_LED  START.T DROP  
+76 LINE.NUM &SYSTEM_READY  START.T DROP  
+77 LINE.NUM &TestErrors  START.T DROP  
+78 LINE.NUM &TestFaults  START.T DROP  
+79 LINE.NUM &Get_Mirror_Temps  START.T DROP  
 0 JUMP ;
 : 0_19
 1 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
@@ -3565,6 +3569,7 @@ CREATE V.ARRAY
 ^FastMode ,
 ^flag_status ,
 ^HeartbeatExpired ,
+^HeartbeatRcvd ,
 ^ListeningForMaster ,
 ^M1temp ,
 ^M1tempFaulty ,
@@ -3888,6 +3893,7 @@ CONFIG_PORTS
 0 ^FastMode @!
 0 ^flag_status @!
 1 ^HeartbeatExpired @!
+0 ^HeartbeatRcvd @!
 0 ^ListeningForMaster @!
 100.00000 ^M1temp @!
 0 ^M1tempFaulty @!
@@ -4089,9 +4095,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 06/26/17 " ;
-: TIMESTAMP ." 18:41:16 " ;
-: CRCSTAMP  ." F589292E4EDD0254B5D469338804333A " ;
+: DATESTAMP ." 03/14/18 " ;
+: TIMESTAMP ." 22:57:59 " ;
+: CRCSTAMP  ." 3ACE048891EA025ED7CB1BEEFB9B0461 " ;
 MAKECHECK
 CLEAR.BREAKS
 

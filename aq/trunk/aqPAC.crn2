@@ -63,6 +63,7 @@
 0 IVAR ^FastMode
 0 IVAR ^flag_status
 0 IVAR ^HeartbeatExpired
+0 IVAR ^HeartbeatRcvd
 0 IVAR ^ListeningForMaster
 0 FVAR ^M1temp
 0 IVAR ^M1tempFaulty
