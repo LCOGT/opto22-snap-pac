@@ -1915,47 +1915,47 @@ T;
   1000    DELAY
 0 JUMP ;
 : 19_15
-9 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  LAND  IF 
-14 LINE.NUM ^HeartbeatRcvd @@ 1 = IF 
-15 LINE.NUM 0 ^HeartbeatRcvd @! 
-16 LINE.NUM ^dtHeartbeat  GET.RESTART.TMR DROP  
-17 LINE.NUM THEN 
-21 LINE.NUM ^dtHeartbeat @@F 0 I>F F= ^HeartbeatExpired @@ 0 = LAND  IF 
-22 LINE.NUM 1 ^HeartbeatExpired @! 
-23 LINE.NUM " , HeartbeatExpired " *sFaultList $CAT 
+5 LINE.NUM ^HeartbeatRcvd @@ 1 = IF 
+6 LINE.NUM 0 ^HeartbeatRcvd @! 
+7 LINE.NUM ^dtHeartbeat  GET.RESTART.TMR DROP  
+8 LINE.NUM THEN 
+17 LINE.NUM *sEnclOpMode " AUTO" $= ^dtHeartbeat @@F 0 I>F F= ~DI_24vPSU_OK @@I 0 = LOR  LAND  IF 
+22 LINE.NUM ^dtHeartbeat @@F 0 I>F F= ^HeartbeatExpired @@ 0 = LAND  IF 
+23 LINE.NUM 1 ^HeartbeatExpired @! 
+24 LINE.NUM " , HeartbeatExpired " *sFaultList $CAT 
 
-24 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-25 LINE.NUM *sTimestamp *sFaultList $CAT 
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-26 LINE.NUM THEN 
-30 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
-31 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
-32 LINE.NUM &Close_Sequential  START.T DROP  
-33 LINE.NUM ELSE 
-33 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-34 LINE.NUM &Tail_Close  START.T DROP  
-35 LINE.NUM ELSE 
-35 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-36 LINE.NUM &Pole_Close  START.T DROP  
-37 LINE.NUM ELSE 
-37 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 >= LAND  IF 
-39 LINE.NUM THEN THEN THEN THEN 
-44 LINE.NUM ELSE 
-44 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
-45 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
-47 LINE.NUM ELSE 
-48 LINE.NUM &Pole_Close  START.T DROP  
-49 LINE.NUM THEN 
-54 LINE.NUM ELSE 
-54 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
-55 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
-57 LINE.NUM ELSE 
-58 LINE.NUM &Tail_Close  START.T DROP  
-59 LINE.NUM THEN 
-64 LINE.NUM ELSE 
-64 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
-66 LINE.NUM THEN THEN THEN THEN 
-67 LINE.NUM THEN 
+27 LINE.NUM THEN 
+31 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+32 LINE.NUM ^nPoleCloseFault @@ 0 < ^nTailCloseFault @@ 0 < LAND  IF 
+33 LINE.NUM &Close_Sequential  START.T DROP  
+34 LINE.NUM ELSE 
+34 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+35 LINE.NUM &Tail_Close  START.T DROP  
+36 LINE.NUM ELSE 
+36 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+37 LINE.NUM &Pole_Close  START.T DROP  
+38 LINE.NUM ELSE 
+38 LINE.NUM ^nPoleCloseFault @@ 0 >= ^nTailCloseFault @@ 0 >= LAND  IF 
+40 LINE.NUM THEN THEN THEN THEN 
+45 LINE.NUM ELSE 
+45 LINE.NUM ~DI_Pole_Closed_LS @@I 1 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+46 LINE.NUM ^nPoleCloseFault @@ 0 >= IF 
+48 LINE.NUM ELSE 
+49 LINE.NUM &Pole_Close  START.T DROP  
+50 LINE.NUM THEN 
+55 LINE.NUM ELSE 
+55 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 1 = LAND  IF 
+56 LINE.NUM ^nTailCloseFault @@ 0 >= IF 
+58 LINE.NUM ELSE 
+59 LINE.NUM &Tail_Close  START.T DROP  
+60 LINE.NUM THEN 
+65 LINE.NUM ELSE 
+65 LINE.NUM ~DI_Pole_Closed_LS @@I 0 = ~DI_Tail_Closed_LS @@I 0 = LAND  IF 
+67 LINE.NUM THEN THEN THEN THEN 
+68 LINE.NUM THEN 
 -2 JUMP ;
 T: T19
 DUMMY
@@ -4085,8 +4085,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/14/18 " ;
-: TIMESTAMP ." 22:57:59 " ;
+: DATESTAMP ." 03/15/18 " ;
+: TIMESTAMP ." 16:25:09 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
