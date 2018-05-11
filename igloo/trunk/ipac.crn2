@@ -34,10 +34,12 @@
 0 IVAR ^EcbCmd
 0 IVAR ^EcbMsg
 0 IVAR ^EcbResetFlag
+0 IVAR ^EOM_term
 0 IVAR ^Fan10V_TestFlag
 0 IVAR ^FanCtrl
 0 FVAR ^FanSpd
 0 FVAR ^fCheck
+0 FVAR ^fFanCtrl
 0 FVAR ^fFanSpd
 0 FVAR ^fPidInput
 0 FVAR ^fRTD1_R0
@@ -57,6 +59,7 @@
 0 IVAR ^IglooStirFanM294_ErrorFlag
 0 FVAR ^IglooTemp
 0 IVAR ^IglooTempOK
+0 IVAR ^intTest
 0 IVAR ^Length1
 0 IVAR ^MasterEcbCmd
 0 IVAR ^MasterEcbFlag
@@ -93,7 +96,6 @@
 0 IVAR ^PanelFanM186_ErrorFlag
 0 FVAR ^PanelFanMaxCtrl
 0 FVAR ^PanelTemp
-0 FVAR ^PidSetpoint
 0 IVAR ^Position
 0 FVAR ^Preset
 0 IVAR ^RedLink_CR_ErrorFlag
@@ -167,6 +169,7 @@
 20 0 $VAR *sRTD6_R0 
 20 0 $VAR *sRTD7_R0 
 20 0 $VAR *sRTD8_R0 
+200 0 $VAR *sSDcard 
 5 0 $VAR *sStirFansSpd 
 10 0 $VAR *sSWversion 
 1024 0 $VAR *Status 
@@ -181,6 +184,7 @@
 20 0 $VAR *sVar1 
 10 0 $VAR *sVoltage 
 10 0 $VAR *sYear 
+1024 0 COMVAR *ch_SDcard 
 1024 0 COMVAR *chModbusMaster 
 1024 0 COMVAR *cPort 
 1024 0 COMVAR *DTcommHandle 

@@ -27,10 +27,12 @@ CREATE V.ARRAY
 ^EcbCmd ,
 ^EcbMsg ,
 ^EcbResetFlag ,
+^EOM_term ,
 ^Fan10V_TestFlag ,
 ^FanCtrl ,
 ^FanSpd ,
 ^fCheck ,
+^fFanCtrl ,
 ^fFanSpd ,
 ^fPidInput ,
 ^fRTD1_R0 ,
@@ -50,6 +52,7 @@ CREATE V.ARRAY
 ^IglooStirFanM294_ErrorFlag ,
 ^IglooTemp ,
 ^IglooTempOK ,
+^intTest ,
 ^Length1 ,
 ^MasterEcbCmd ,
 ^MasterEcbFlag ,
@@ -159,6 +162,7 @@ CREATE V.ARRAY
 *sRTD6_R0 ,
 *sRTD7_R0 ,
 *sRTD8_R0 ,
+*sSDcard ,
 *sStirFansSpd ,
 *sSWversion ,
 *Status ,
@@ -175,6 +179,7 @@ CREATE V.ARRAY
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
+*ch_SDcard ,
 *chModbusMaster ,
 *cPort ,
 *DTcommHandle ,
@@ -305,10 +310,12 @@ CONFIG_PORTS
 0 ^EcbCmd @!
 0 ^EcbMsg @!
 0 ^EcbResetFlag @!
+0 ^EOM_term @!
 0 ^Fan10V_TestFlag @!
 0 ^FanCtrl @!
 0.00000000 ^FanSpd @!
 0.00000000 ^fCheck @!
+0.00000000 ^fFanCtrl @!
 0.00000000 ^fFanSpd @!
 0.00000000 ^fPidInput @!
 0.00000000 ^fRTD1_R0 @!
@@ -328,6 +335,7 @@ CONFIG_PORTS
 0 ^IglooStirFanM294_ErrorFlag @!
 0.00000000 ^IglooTemp @!
 0 ^IglooTempOK @!
+0 ^intTest @!
 0 ^Length1 @!
 0 ^MasterEcbCmd @!
 0 ^MasterEcbFlag @!
@@ -364,7 +372,6 @@ CONFIG_PORTS
 0 ^PanelFanM186_ErrorFlag @!
 0.00000000 ^PanelFanMaxCtrl @!
 0.00000000 ^PanelTemp @!
-0.00000000 ^PidSetpoint @!
 0 ^Position @!
 0.00000000 ^Preset @!
 0 ^RedLink_CR_ErrorFlag @!
@@ -499,6 +506,8 @@ CONFIG_PORTS
 " "
  *sRTD8_R0 $MOVE
 " "
+ *sSDcard $MOVE
+" "
  *sStirFansSpd $MOVE
 " "
  *sSWversion $MOVE
@@ -526,6 +535,8 @@ CONFIG_PORTS
  *sVoltage $MOVE
 " "
  *sYear $MOVE
+" "
+ *ch_SDcard $MOVE
 " "
  *chModbusMaster $MOVE
 " tcp:22004"

@@ -19,73 +19,104 @@
 32 LINE.NUM 500 ^nModbusMasterReadDelay @! 
 34 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 35 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
-37 LINE.NUM |pidTentFans 2.30000000e+001  $0002.. 3 ROLL !PID 
-39 LINE.NUM 32 ^EcbCmd @! 
-40 LINE.NUM 1 ~DO_NRES_CR @! 
-66 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
-67 LINE.NUM " TentAirUpper" 1 {stHeader $TABLE@  $MOVE 
-68 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 
-69 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
-70 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
-71 LINE.NUM " ACoutput" 5 {stHeader $TABLE@  $MOVE 
-72 LINE.NUM " CtrlValveTemp" 6 {stHeader $TABLE@  $MOVE 
-73 LINE.NUM " TentAirLower" 7 {stHeader $TABLE@  $MOVE 
-74 LINE.NUM " ChamberPressSenTemp" 8 {stHeader $TABLE@  $MOVE 
-75 LINE.NUM " PID_Setpoint" 9 {stHeader $TABLE@  $MOVE 
-76 LINE.NUM " PID_Input" 10 {stHeader $TABLE@  $MOVE 
-77 LINE.NUM " PID_Output" 11 {stHeader $TABLE@  $MOVE 
-78 LINE.NUM " IntakeFanSpd1" 12 {stHeader $TABLE@  $MOVE 
-79 LINE.NUM " IntakeFanSpd2" 13 {stHeader $TABLE@  $MOVE 
-80 LINE.NUM " PID_Gain" 14 {stHeader $TABLE@  $MOVE 
-81 LINE.NUM " PID_Integral" 15 {stHeader $TABLE@  $MOVE 
-82 LINE.NUM " PID_Derivative" 16 {stHeader $TABLE@  $MOVE 
-83 LINE.NUM " PID_Scanrate" 17 {stHeader $TABLE@  $MOVE 
-85 LINE.NUM " 0.1" 
+40 LINE.NUM 32 ^EcbCmd @! 
+41 LINE.NUM 1 ~DO_NRES_CR @! 
+67 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
+68 LINE.NUM " TentAirUpper" 1 {stHeader $TABLE@  $MOVE 
+69 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 
+70 LINE.NUM " TentIntake" 3 {stHeader $TABLE@  $MOVE 
+71 LINE.NUM " OutsideAir" 4 {stHeader $TABLE@  $MOVE 
+72 LINE.NUM " ACoutput" 5 {stHeader $TABLE@  $MOVE 
+73 LINE.NUM " CtrlValveTemp" 6 {stHeader $TABLE@  $MOVE 
+74 LINE.NUM " TentAirLower" 7 {stHeader $TABLE@  $MOVE 
+75 LINE.NUM " ChamberPressSenTemp" 8 {stHeader $TABLE@  $MOVE 
+76 LINE.NUM " PID_Setpoint" 9 {stHeader $TABLE@  $MOVE 
+77 LINE.NUM " PID_Input" 10 {stHeader $TABLE@  $MOVE 
+78 LINE.NUM " PID_Output" 11 {stHeader $TABLE@  $MOVE 
+79 LINE.NUM " IntakeFanSpd1" 12 {stHeader $TABLE@  $MOVE 
+80 LINE.NUM " IntakeFanSpd2" 13 {stHeader $TABLE@  $MOVE 
+81 LINE.NUM " PID_Gain" 14 {stHeader $TABLE@  $MOVE 
+82 LINE.NUM " PID_Integral" 15 {stHeader $TABLE@  $MOVE 
+83 LINE.NUM " PID_Derivative" 16 {stHeader $TABLE@  $MOVE 
+84 LINE.NUM " PID_Scanrate" 17 {stHeader $TABLE@  $MOVE 
+86 LINE.NUM " 0.1" 
 *sICDversion  $MOVE 
-86 LINE.NUM *sFWversion  Rev>$ 
-87 LINE.NUM " 0.1" *sSWversion  $MOVE 
-89 LINE.NUM 300 I>F ^dtFanMonitor @! 
-90 LINE.NUM ^dtFanMonitor  StartTimer 
-93 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
-94 LINE.NUM 1 ~DO_CryoTig_CR @! 
-95 LINE.NUM ELSE 
-96 LINE.NUM 0 ~DO_CryoTig_CR @! 
-97 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-98 LINE.NUM ^CryoTigThermalTimer  StartTimer 
-99 LINE.NUM THEN 
-106 LINE.NUM 5 I>F ~AO_PanelFans_CTRL @! 
-109 LINE.NUM 10 I>F  FDELAY 
-112 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-113 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-114 LINE.NUM ELSE 
-114 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-115 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-116 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
-117 LINE.NUM ELSE 
-117 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-118 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-119 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-120 LINE.NUM ELSE 
-120 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-121 LINE.NUM 10 I>F ~AO_PanelFans_CTRL @! 
-122 LINE.NUM 10 I>F  FDELAY 
-123 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-124 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-125 LINE.NUM ELSE 
-125 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-126 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-127 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
-128 LINE.NUM ELSE 
-128 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
-129 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
-130 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-131 LINE.NUM ELSE 
-131 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
-132 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
-133 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
-134 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
-135 LINE.NUM THEN THEN THEN THEN 
+87 LINE.NUM *sFWversion  Rev>$ 
+88 LINE.NUM " 0.1" *sSWversion  $MOVE 
+90 LINE.NUM 300 I>F ^dtFanMonitor @! 
+91 LINE.NUM ^dtFanMonitor  StartTimer 
+94 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
+95 LINE.NUM 1 ~DO_CryoTig_CR @! 
+96 LINE.NUM ELSE 
+97 LINE.NUM 0 ~DO_CryoTig_CR @! 
+98 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
+99 LINE.NUM ^CryoTigThermalTimer  StartTimer 
+100 LINE.NUM THEN 
+107 LINE.NUM 5 I>F ~AO_PanelFans_CTRL @! 
+110 LINE.NUM 10 I>F  FDELAY 
+113 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+114 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+115 LINE.NUM ELSE 
+115 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+116 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+117 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+118 LINE.NUM ELSE 
+118 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+119 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
+120 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+121 LINE.NUM ELSE 
+121 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+122 LINE.NUM 10 I>F ~AO_PanelFans_CTRL @! 
+123 LINE.NUM 10 I>F  FDELAY 
+124 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+125 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
+126 LINE.NUM ELSE 
+126 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F>= ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+127 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
+128 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+129 LINE.NUM ELSE 
+129 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F>= LAND  IF 
+130 LINE.NUM 10 I>F ^PanelFanMaxCtrl @! 
+131 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+132 LINE.NUM ELSE 
+132 LINE.NUM ~AI_PanelFanM184_Tach @@ 99 I>F F< ~AI_PanelFanM186_Tach @@ 99 I>F F< LAND  IF 
+133 LINE.NUM 1 ^PanelFanM186_ErrorFlag @! 
+134 LINE.NUM 1 ^PanelFanM184_ErrorFlag @! 
+135 LINE.NUM 5 I>F ^PanelFanMaxCtrl @! 
 136 LINE.NUM THEN THEN THEN THEN 
+137 LINE.NUM THEN THEN THEN THEN 
+171 LINE.NUM " file:w,/sdcard0/readme.txt" *ch_SDcard  $MOVE 
+172 LINE.NUM *ch_SDcard  OPEN DROP  
+173 LINE.NUM *ch_SDcard  ?OPEN 0> IF 
+174 LINE.NUM " " *sSDcard  $MOVE 
+175 LINE.NUM *_HSV_SEMA Acquire1String " This disk contains calibration values for the NRES igloo temperature controller."  *_HSV_TEMP $MOVE *CRLF  *_HSV_TEMP $CAT *_HSV_TEMP *sSDcard $MOVE Release1String 
+176 LINE.NUM " Each value is located in a separate text file, with the value followed by a ',' as a delimiter." *sSDcard $CAT 
+
+177 LINE.NUM *CRLF *sSDcard $CAT 
+
+178 LINE.NUM *sSDcard *ch_SDcard  PRT$ DROP  
+179 LINE.NUM *ch_SDcard  CLOSE DROP  
+180 LINE.NUM ELSE 
+182 LINE.NUM THEN 
+189 LINE.NUM " file:r,/sdcard0/setpoint.txt" *ch_SDcard  $MOVE 
+190 LINE.NUM *ch_SDcard  OPEN DROP  
+191 LINE.NUM *ch_SDcard  ?OPEN 0> IF 
+192 LINE.NUM *ch_SDcard 44  S.!EOL 
+193 LINE.NUM *sPidSetpoint *ch_SDcard  GET$ DROP  
+194 LINE.NUM *sPidSetpoint  $>F ^PidSetpoint @! 
+195 LINE.NUM |pidTentFans ^PidSetpoint @@  $0002.. 3 ROLL !PID 
+196 LINE.NUM *ch_SDcard  CLOSE DROP  
+197 LINE.NUM ELSE 
+199 LINE.NUM THEN 
+206 LINE.NUM " file:r,/sdcard0/stirfans.txt" *ch_SDcard  $MOVE 
+207 LINE.NUM *ch_SDcard  OPEN DROP  
+208 LINE.NUM *ch_SDcard  ?OPEN 0> IF 
+209 LINE.NUM *ch_SDcard 44  S.!EOL 
+210 LINE.NUM *sStirFansSpd *ch_SDcard  GET$ DROP  
+211 LINE.NUM *sStirFansSpd  $>F ~AO_StirFans_CTRL @! 
+212 LINE.NUM *ch_SDcard  CLOSE DROP  
+213 LINE.NUM ELSE 
+215 LINE.NUM THEN 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
