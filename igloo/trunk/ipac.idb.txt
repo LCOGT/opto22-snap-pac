@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.5a
-# TIME/DATE :    21:53:26 5/11/2018
+# TIME/DATE :    18:38:27 5/14/2018
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -310,7 +310,7 @@ TAG1,sRTD6_R0                                          ,11   ,00000000,00000000,
 TAG1,sRTD7_R0                                          ,12   ,00000000,00000000,00000000,00000040,0    ,20  
 TAG1,sRTD8_R0                                          ,13   ,00000000,00000000,00000000,00000040,0    ,20  
 TAG1,sSDcard                                           ,70   ,00000000,00000000,00000000,00000040,0    ,200 
-TAG1,sStirFansSpd                                      ,46   ,00000000,00000000,00000000,00000040,0    ,5   
+TAG1,sStirFansSpd                                      ,46   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,sSWversion                                        ,53   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,Status                                            ,47   ,00000000,00000000,00000000,00000040,0    ,1024
 TAG1,sTentFansSpd                                      ,50   ,00000000,00000000,00000000,00000040,0    ,10  
