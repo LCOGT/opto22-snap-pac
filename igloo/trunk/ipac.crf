@@ -1677,87 +1677,88 @@ T;
 5 LINE.NUM ^EcbResetFlag @@ 1 = IF 
 6 LINE.NUM 6.00000024e-001 ~DO_ECB_Tx  PULSEON 
 7 LINE.NUM 0 ^EcbResetFlag @! 
-8 LINE.NUM THEN 
-20 LINE.NUM ^MasterEcbFlag @@ 1 = IF 
-21 LINE.NUM ^MasterEcbCmd @@ ^EcbCmd @! 
-22 LINE.NUM 0 ^MasterEcbFlag @! 
-23 LINE.NUM THEN 
-25 LINE.NUM 15 ^Count @! 
-26 LINE.NUM 1 ^x @! 
-29 LINE.NUM 1 ~DO_ECB_Tx @! 
-30 LINE.NUM 3.50000001e-002 ^Preset @! 
-31 LINE.NUM ^Preset @@ ^Timer @! 
-32 LINE.NUM BEGIN ^x @@ WHILE 
-33 LINE.NUM ^Timer  T0= IF 
-34 LINE.NUM 0 ~DO_ECB_Tx @! 
-35 LINE.NUM ^Preset @@ ^Timer @! 
-36 LINE.NUM 0 ^x @! 
-37 LINE.NUM THEN 
-38 LINE.NUM REPEAT 
-39 LINE.NUM 1 ^x @! 
-40 LINE.NUM BEGIN ^x @@ WHILE 
-41 LINE.NUM ^Timer  T0= IF 
-42 LINE.NUM 0 ^x @! 
-43 LINE.NUM THEN 
-44 LINE.NUM REPEAT 
-45 LINE.NUM 1 ^x @! 
-48 LINE.NUM BEGIN ^Count @@ -1 > WHILE 
-49 LINE.NUM ^EcbCmd @@ ^Count @@  BitTest IF 
-51 LINE.NUM 0 ~DO_ECB_Tx @! 
-52 LINE.NUM ^Preset @@ ^Timer @! 
-53 LINE.NUM BEGIN ^x @@ WHILE 
-54 LINE.NUM ^Timer  T0= IF 
-55 LINE.NUM 1 ~DO_ECB_Tx @! 
-56 LINE.NUM ^Preset @@ ^Timer @! 
-57 LINE.NUM 0 ^x @! 
-59 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbBitData TABLE! 
-60 LINE.NUM THEN 
-61 LINE.NUM REPEAT 
-62 LINE.NUM 1 ^x @! 
-63 LINE.NUM BEGIN ^x @@ WHILE 
-64 LINE.NUM ^Timer  T0= IF 
-65 LINE.NUM 0 ^x @! 
-66 LINE.NUM THEN 
-67 LINE.NUM REPEAT 
-68 LINE.NUM 1 ^x @! 
-69 LINE.NUM ELSE 
-71 LINE.NUM 1 ~DO_ECB_Tx @! 
-72 LINE.NUM ^Preset @@ ^Timer @! 
-73 LINE.NUM BEGIN ^x @@ WHILE 
-74 LINE.NUM ^Timer  T0= IF 
-75 LINE.NUM 0 ~DO_ECB_Tx @! 
-76 LINE.NUM ^Preset @@ ^Timer @! 
-77 LINE.NUM 0 ^x @! 
-79 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbBitData TABLE! 
-80 LINE.NUM THEN 
-81 LINE.NUM REPEAT 
-82 LINE.NUM 1 ^x @! 
-83 LINE.NUM BEGIN ^x @@ WHILE 
-84 LINE.NUM ^Timer  T0= IF 
-85 LINE.NUM 0 ^x @! 
-86 LINE.NUM THEN 
-87 LINE.NUM REPEAT 
-88 LINE.NUM 1 ^x @! 
-89 LINE.NUM THEN 
-90 LINE.NUM ^Count @@ 1 -  ^Count @! 
-92 LINE.NUM REPEAT 
-95 LINE.NUM 0 ~DO_ECB_Tx @! 
-98 LINE.NUM ^EcbCmd @@ 32 <> IF 
-99 LINE.NUM 32 ^EcbCmd @! 
-100 LINE.NUM THEN 
-126 LINE.NUM 15 ^Count @! 
-127 LINE.NUM BEGIN ^Count @@ 7 > WHILE 
-128 LINE.NUM ^Count @@ }EcbBitData TABLE@ IF 
-129 LINE.NUM 2 ^Count @@ 8 -  }EcbStatus TABLE! 
-130 LINE.NUM ELSE 
-130 LINE.NUM ^Count @@ }EcbBitData TABLE@ 0 = ^Count @@ 8 -  }EcbBitData TABLE@ 0 = LAND  IF 
-131 LINE.NUM 0 ^Count @@ 8 -  }EcbStatus TABLE! 
-132 LINE.NUM ELSE 
-132 LINE.NUM ^Count @@ }EcbBitData TABLE@ 0 = ^Count @@ 8 -  }EcbBitData TABLE@ 1 = LAND  IF 
-133 LINE.NUM 1 ^Count @@ 8 -  }EcbStatus TABLE! 
-134 LINE.NUM THEN THEN THEN 
-135 LINE.NUM ^Count @@ 1 -  ^Count @! 
-136 LINE.NUM REPEAT 
+8 LINE.NUM 1000  DELAY 
+9 LINE.NUM THEN 
+21 LINE.NUM ^MasterEcbFlag @@ 1 = IF 
+22 LINE.NUM ^MasterEcbCmd @@ ^EcbCmd @! 
+23 LINE.NUM 0 ^MasterEcbFlag @! 
+24 LINE.NUM THEN 
+26 LINE.NUM 15 ^Count @! 
+27 LINE.NUM 1 ^x @! 
+30 LINE.NUM 1 ~DO_ECB_Tx @! 
+31 LINE.NUM 3.50000001e-002 ^Preset @! 
+32 LINE.NUM ^Preset @@ ^Timer @! 
+33 LINE.NUM BEGIN ^x @@ WHILE 
+34 LINE.NUM ^Timer  T0= IF 
+35 LINE.NUM 0 ~DO_ECB_Tx @! 
+36 LINE.NUM ^Preset @@ ^Timer @! 
+37 LINE.NUM 0 ^x @! 
+38 LINE.NUM THEN 
+39 LINE.NUM REPEAT 
+40 LINE.NUM 1 ^x @! 
+41 LINE.NUM BEGIN ^x @@ WHILE 
+42 LINE.NUM ^Timer  T0= IF 
+43 LINE.NUM 0 ^x @! 
+44 LINE.NUM THEN 
+45 LINE.NUM REPEAT 
+46 LINE.NUM 1 ^x @! 
+49 LINE.NUM BEGIN ^Count @@ -1 > WHILE 
+50 LINE.NUM ^EcbCmd @@ ^Count @@  BitTest IF 
+52 LINE.NUM 0 ~DO_ECB_Tx @! 
+53 LINE.NUM ^Preset @@ ^Timer @! 
+54 LINE.NUM BEGIN ^x @@ WHILE 
+55 LINE.NUM ^Timer  T0= IF 
+56 LINE.NUM 1 ~DO_ECB_Tx @! 
+57 LINE.NUM ^Preset @@ ^Timer @! 
+58 LINE.NUM 0 ^x @! 
+60 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbBitData TABLE! 
+61 LINE.NUM THEN 
+62 LINE.NUM REPEAT 
+63 LINE.NUM 1 ^x @! 
+64 LINE.NUM BEGIN ^x @@ WHILE 
+65 LINE.NUM ^Timer  T0= IF 
+66 LINE.NUM 0 ^x @! 
+67 LINE.NUM THEN 
+68 LINE.NUM REPEAT 
+69 LINE.NUM 1 ^x @! 
+70 LINE.NUM ELSE 
+72 LINE.NUM 1 ~DO_ECB_Tx @! 
+73 LINE.NUM ^Preset @@ ^Timer @! 
+74 LINE.NUM BEGIN ^x @@ WHILE 
+75 LINE.NUM ^Timer  T0= IF 
+76 LINE.NUM 0 ~DO_ECB_Tx @! 
+77 LINE.NUM ^Preset @@ ^Timer @! 
+78 LINE.NUM 0 ^x @! 
+80 LINE.NUM ~DI_ECB_Rx @@I ^Count @@ }EcbBitData TABLE! 
+81 LINE.NUM THEN 
+82 LINE.NUM REPEAT 
+83 LINE.NUM 1 ^x @! 
+84 LINE.NUM BEGIN ^x @@ WHILE 
+85 LINE.NUM ^Timer  T0= IF 
+86 LINE.NUM 0 ^x @! 
+87 LINE.NUM THEN 
+88 LINE.NUM REPEAT 
+89 LINE.NUM 1 ^x @! 
+90 LINE.NUM THEN 
+91 LINE.NUM ^Count @@ 1 -  ^Count @! 
+93 LINE.NUM REPEAT 
+96 LINE.NUM 0 ~DO_ECB_Tx @! 
+99 LINE.NUM ^EcbCmd @@ 32 <> IF 
+100 LINE.NUM 32 ^EcbCmd @! 
+101 LINE.NUM THEN 
+127 LINE.NUM 15 ^Count @! 
+128 LINE.NUM BEGIN ^Count @@ 7 > WHILE 
+129 LINE.NUM ^Count @@ }EcbBitData TABLE@ IF 
+130 LINE.NUM 2 ^Count @@ 8 -  }EcbStatus TABLE! 
+131 LINE.NUM ELSE 
+131 LINE.NUM ^Count @@ }EcbBitData TABLE@ 0 = ^Count @@ 8 -  }EcbBitData TABLE@ 0 = LAND  IF 
+132 LINE.NUM 0 ^Count @@ 8 -  }EcbStatus TABLE! 
+133 LINE.NUM ELSE 
+133 LINE.NUM ^Count @@ }EcbBitData TABLE@ 0 = ^Count @@ 8 -  }EcbBitData TABLE@ 1 = LAND  IF 
+134 LINE.NUM 1 ^Count @@ 8 -  }EcbStatus TABLE! 
+135 LINE.NUM THEN THEN THEN 
+136 LINE.NUM ^Count @@ 1 -  ^Count @! 
+137 LINE.NUM REPEAT 
 -10 JUMP ;
 : 2_40
 24 LINE.NUM 1 ^Count3 @! 
@@ -3525,9 +3526,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 05/14/18 " ;
-: TIMESTAMP ." 18:38:27 " ;
-: CRCSTAMP  ." 17F7FD5A27198DD6CD878687C6ABA961 " ;
+: DATESTAMP ." 05/18/18 " ;
+: TIMESTAMP ." 05:02:11 " ;
+: CRCSTAMP  ." 85A48D85A1754BE2B51381F4E5BAB99B " ;
 MAKECHECK
 CLEAR.BREAKS
 
