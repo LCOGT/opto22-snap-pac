@@ -20,7 +20,7 @@
 34 LINE.NUM *_HSV_SEMA Acquire1String " " *_HSV_TEMP $MOVE 13  *_HSV_TEMP $APPEND 10  *_HSV_TEMP $APPEND *_HSV_TEMP *CRLF $MOVE Release1String 
 35 LINE.NUM " " *LF $MOVE 10 *LF  $APPEND 
 40 LINE.NUM 32 ^EcbCmd @! 
-41 LINE.NUM 1 ~DO_NRES_CR @! 
+41 LINE.NUM 0 ~DO_NRES_CR @! 
 67 LINE.NUM " Timestamp" 0 {stHeader $TABLE@  $MOVE 
 68 LINE.NUM " TentAirUpper" 1 {stHeader $TABLE@  $MOVE 
 69 LINE.NUM " CalResistor" 2 {stHeader $TABLE@  $MOVE 

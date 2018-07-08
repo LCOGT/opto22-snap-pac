@@ -227,7 +227,7 @@ CREATE P.ARRAY
 ~DI_EntryDoor ,
 ~DI_HeatAlarm ,
 ~DI_LightSW ,
-~DI_NRES_CR_NC ,
+~DI_NRES_CR_NO ,
 ~DI_NRES_Deadman ,
 ~DI_NRES_PWR_OK ,
 ~DI_PanelDoor ,

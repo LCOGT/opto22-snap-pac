@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\igloo\trunk\ipac.idb
 # VERSION :      R9.5a
-# TIME/DATE :    5:2:11 5/18/2018
+# TIME/DATE :    10:17:57 7/8/2018
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -107,7 +107,7 @@ TAG1,DI_ECB_Rx                                         ,21   ,40000000,00000000,
 TAG1,DI_EntryDoor                                      ,6    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_HeatAlarm                                      ,19   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_LightSW                                        ,4    ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,DI_NRES_CR_NC                                     ,2    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_NRES_CR_NO                                     ,2    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_NRES_Deadman                                   ,20   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_NRES_PWR_OK                                    ,13   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DI_PanelDoor                                      ,8    ,40000000,00000000,00000000,00000000,0    ,0   

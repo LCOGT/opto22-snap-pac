@@ -263,7 +263,7 @@
 216 LINE.NUM " NRES_ON" 0 *sCmd  FindSubString ^nFindCmd @! 
 217 LINE.NUM ^nFindCmd @@ -1 > IF 
 218 LINE.NUM ^IglooOverTemp @@ 0 = IF 
-219 LINE.NUM 1 ~DO_NRES_CR @! 
+219 LINE.NUM 0 ~DO_NRES_CR @! 
 220 LINE.NUM " Success=TRUE" *Status  $MOVE 
 221 LINE.NUM ELSE 
 222 LINE.NUM " Success=FALSE, IglooOverTemp" *Status  $MOVE 
@@ -271,9 +271,9 @@
 224 LINE.NUM THEN 
 227 LINE.NUM " NRES_OFF" 0 *sCmd  FindSubString ^nFindCmd @! 
 228 LINE.NUM ^nFindCmd @@ -1 > IF 
-229 LINE.NUM 0 ~DO_NRES_CR @! 
+229 LINE.NUM 1 ~DO_NRES_CR @! 
 230 LINE.NUM 200  DELAY 
-231 LINE.NUM ~DI_NRES_CR_NC @@I IF 
+231 LINE.NUM ~DI_NRES_CR_NO @@I IF 
 232 LINE.NUM " Success=TRUE" *Status  $MOVE 
 233 LINE.NUM ELSE 
 234 LINE.NUM " Success=FALSE" *Status  $MOVE 

@@ -491,7 +491,7 @@
 9 LINE.NUM ^TentTempOK @@ 0 = ^IglooTempOK @@ 0 = LOR  IF 
 10 LINE.NUM 1 ^IglooOverTemp @! 
 11 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
-12 LINE.NUM 0 ~DO_NRES_CR @! 
+12 LINE.NUM 1 ~DO_NRES_CR @! 
 13 LINE.NUM |pidTentFans 1  $20000.. 3 ROLL !PID 
 14 LINE.NUM |pidTentFans 0 I>F  $0008.. 3 ROLL !PID 
 15 LINE.NUM 0 I>F ~AO_StirFans_CTRL @! 
