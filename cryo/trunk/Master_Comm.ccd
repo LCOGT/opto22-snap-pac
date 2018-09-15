@@ -210,17 +210,17 @@
 40 LINE.NUM *StatusString *EnviroString  $MOVE 
 42 LINE.NUM " , OutletFanTach=" *EnviroString $CAT 
 
-43 LINE.NUM ~Exhaust_Fan_SPD @@ 1.330000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+43 LINE.NUM ~Exhaust_Fan_SPD @@ 1.33000004e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 44 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 45 LINE.NUM " , InletFanTach=" *EnviroString $CAT 
 
-46 LINE.NUM ~Intake_Fan_SPD @@ 1.420000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+46 LINE.NUM ~Intake_Fan_SPD @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 47 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 48 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
 
-49 LINE.NUM ~Honeysucker_SPD @@ 3.230000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+49 LINE.NUM ~Honeysucker_SPD @@ 3.23000002e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 50 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 51 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
@@ -252,7 +252,7 @@
 
 69 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
 
-70 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
+70 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
 72 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
 73 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
@@ -289,7 +289,7 @@
 
 101 LINE.NUM " , LowerThermorackFlow=" *EnviroString $CAT 
 
-102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.600000e-001 F/ 10 1 *EnviroTemp  FF.R$ 
+102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.60000002e-001 F/ 10 1 *EnviroTemp  FF.R$ 
 103 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 104 LINE.NUM " , UpperThermorackFlow=0.0" *EnviroString $CAT 
@@ -417,12 +417,12 @@
 67 LINE.NUM THEN 
 68 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 69 LINE.NUM ^Position @@ -1 >= IF 
-70 LINE.NUM 1 ~DO_XformerPWR @! 
+70 LINE.NUM 0 ~DO_XformerPWR @! 
 71 LINE.NUM 1 ^Response @! 
 72 LINE.NUM THEN 
 73 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 74 LINE.NUM ^Position @@ -1 >= IF 
-75 LINE.NUM 0 ~DO_XformerPWR @! 
+75 LINE.NUM 1 ~DO_XformerPWR @! 
 76 LINE.NUM 1 ^Response @! 
 77 LINE.NUM THEN 
 78 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -542,7 +542,7 @@
 12 LINE.NUM " , ErrorMiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
 
 13 LINE.NUM THEN 
-15 LINE.NUM ^MergedTemp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
+15 LINE.NUM ^MergedTemp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
 16 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantSetpoint @@ > IF 
 17 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantDemand @! 
 18 LINE.NUM ELSE 

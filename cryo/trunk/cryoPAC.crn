@@ -140,7 +140,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 13 LINE.NUM ^dtGetChar  StartTimer 
 14 LINE.NUM ELSE 
 14 LINE.NUM ^nAps2Status @@ 0 < IF 
-15 LINE.NUM 5.000000e+000 ^nIndex2 @@F F*  FDELAY 
+15 LINE.NUM 5.00000000e+000 ^nIndex2 @@F F*  FDELAY 
 16 LINE.NUM ELSE 
 16 LINE.NUM ^nIndex2 @@ 4 = IF 
 18 LINE.NUM THEN THEN THEN 
@@ -173,7 +173,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 16 LINE.NUM ELSE 
 16 LINE.NUM ^nCharCount @@ 0 > IF 
 17 LINE.NUM 0 I>F ^dtGetChar @! 
-18 LINE.NUM 1.000000e-001  FDELAY 
+18 LINE.NUM 1.00000001e-001  FDELAY 
 19 LINE.NUM THEN THEN THEN 
 20 LINE.NUM REPEAT 
 3 JUMP ;
@@ -181,9 +181,9 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 2 LINE.NUM 8 0 {stAps2 *cAps2  S.GET#TABLE DROP  
 3 LINE.NUM " 3state>1" 0 5 {stAps2 $TABLE@  FindSubString ^nPosition @! 
 4 LINE.NUM ^nPosition @@ -1 > IF 
-5 LINE.NUM 0 ~DO_XformerPWR @! 
+5 LINE.NUM 1 ~DO_XformerPWR @! 
 6 LINE.NUM ELSE 
-7 LINE.NUM 1 ~DO_XformerPWR @! 
+7 LINE.NUM 0 ~DO_XformerPWR @! 
 8 LINE.NUM THEN 
 10 LINE.NUM *cAps2  STREAM.CLEAR.BUF 
 11 LINE.NUM *cAps2  CLOSE DROP  
@@ -458,17 +458,17 @@ T;
 40 LINE.NUM *StatusString *EnviroString  $MOVE 
 42 LINE.NUM " , OutletFanTach=" *EnviroString $CAT 
 
-43 LINE.NUM ~Exhaust_Fan_SPD @@ 1.330000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+43 LINE.NUM ~Exhaust_Fan_SPD @@ 1.33000004e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 44 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 45 LINE.NUM " , InletFanTach=" *EnviroString $CAT 
 
-46 LINE.NUM ~Intake_Fan_SPD @@ 1.420000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+46 LINE.NUM ~Intake_Fan_SPD @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 47 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 48 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
 
-49 LINE.NUM ~Honeysucker_SPD @@ 3.230000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+49 LINE.NUM ~Honeysucker_SPD @@ 3.23000002e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 50 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 51 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
@@ -500,7 +500,7 @@ T;
 
 69 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
 
-70 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
+70 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
 72 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
 73 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
@@ -537,7 +537,7 @@ T;
 
 101 LINE.NUM " , LowerThermorackFlow=" *EnviroString $CAT 
 
-102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.600000e-001 F/ 10 1 *EnviroTemp  FF.R$ 
+102 LINE.NUM ~ThermoFlow_Lower_M3_3 @@ 5.60000002e-001 F/ 10 1 *EnviroTemp  FF.R$ 
 103 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 104 LINE.NUM " , UpperThermorackFlow=0.0" *EnviroString $CAT 
@@ -665,12 +665,12 @@ T;
 67 LINE.NUM THEN 
 68 LINE.NUM " UPPER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 69 LINE.NUM ^Position @@ -1 >= IF 
-70 LINE.NUM 1 ~DO_XformerPWR @! 
+70 LINE.NUM 0 ~DO_XformerPWR @! 
 71 LINE.NUM 1 ^Response @! 
 72 LINE.NUM THEN 
 73 LINE.NUM " UPPER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 74 LINE.NUM ^Position @@ -1 >= IF 
-75 LINE.NUM 0 ~DO_XformerPWR @! 
+75 LINE.NUM 1 ~DO_XformerPWR @! 
 76 LINE.NUM 1 ^Response @! 
 77 LINE.NUM THEN 
 78 LINE.NUM " LOWER_THERMORACK_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -790,7 +790,7 @@ T;
 12 LINE.NUM " , ErrorMiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
 
 13 LINE.NUM THEN 
-15 LINE.NUM ^MergedTemp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.000000e+000 F/ F- ^DewpointMinimum F@! 
+15 LINE.NUM ^MergedTemp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
 16 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantSetpoint @@ > IF 
 17 LINE.NUM ^DewpointMinimum @@ 2 +  ^CoolantDemand @! 
 18 LINE.NUM ELSE 
@@ -1065,7 +1065,7 @@ T;
 : 0_0
 
 1 LINE.NUM
-  ~DO_XformerPWR   ON
+  ~DO_XformerPWR   OFF
 
 2 LINE.NUM
   ^HeartbeatPreset @@ 
@@ -1453,8 +1453,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 01/04/17 " ;
-: TIMESTAMP ." 20:16:10 " ;
+: DATESTAMP ." 09/15/18 " ;
+: TIMESTAMP ." 15:30:53 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

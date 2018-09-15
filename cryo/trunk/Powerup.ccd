@@ -1,7 +1,7 @@
 : 0_0
 
 1 LINE.NUM
-  ~DO_XformerPWR   ON
+  ~DO_XformerPWR   OFF
 
 2 LINE.NUM
   ^HeartbeatPreset @@ 
