@@ -16,6 +16,7 @@ CREATE V.ARRAY
 ^Count2 ,
 ^Count3 ,
 ^Cryotig_CR_ErrorFlag ,
+^CryoTigOffFlag ,
 ^DeadmanFlag ,
 ^done ,
 ^DTcharCount ,
@@ -290,6 +291,7 @@ CONFIG_PORTS
 0 ^Count2 @!
 0 ^Count3 @!
 0 ^Cryotig_CR_ErrorFlag @!
+0 ^CryoTigOffFlag @!
 0.0 ^CryoTigThermalTimer @!
 0 ^DeadmanFlag @!
 0 ^done @!

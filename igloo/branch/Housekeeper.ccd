@@ -464,7 +464,7 @@
 2 LINE.NUM 300 I>F ^CryoTigThermalTimer @! 
 3 LINE.NUM 1 ^DeadmanFlag @! 
 4 LINE.NUM THEN 
-6 LINE.NUM ~DI_NRES_Deadman @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
+6 LINE.NUM ~DI_NRES_Deadman @@I 1 = ^CryoTigThermalTimer @@F 0 I>F F= LAND  ^CryoTigOffFlag @@ 0 = LAND  IF 
 7 LINE.NUM 1 ~DO_CryoTig_CR @! 
 8 LINE.NUM ELSE 
 9 LINE.NUM 0 ~DO_CryoTig_CR @! 
