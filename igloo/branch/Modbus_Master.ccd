@@ -1,0 +1,68 @@
+: 5_0
+0 JUMP ;
+: 5_9
+65 LINE.NUM 2 0 }nt03AsIntParameters TABLE! 
+66 LINE.NUM 1 1 }nt03AsIntParameters TABLE! 
+67 LINE.NUM 1000 2 }nt03AsIntParameters TABLE! 
+68 LINE.NUM 0 3 }nt03AsIntParameters TABLE! 
+69 LINE.NUM 0 4 }nt03AsIntParameters TABLE! 
+0 JUMP ;
+: 5_10
+1 LINE.NUM ^nModbusMasterReadDelay @@  DELAY 
+3 LINE.NUM *sTimestamp1 &Timestamp CALL.SUB DROP  
+4 LINE.NUM *sTimestamp1 0 {stDTdata $TABLE@  $MOVE 
+9 LINE.NUM *chModbusMaster }nt03AsIntParameters 0 1 }nt03HoldingRegAsIntReturnValues 16 ^n03AsIntStatus &O22Modbus03ReadHoldingRegistersAsInt CALL.SUB ^n03AsIntSubStatus @! 
+13 LINE.NUM ^n03AsIntStatus @@ 0 = IF 
+16 LINE.NUM 0 ^Count2 @! 
+17 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+18 LINE.NUM ^Count2 @@ 2 *  }nt03HoldingRegAsIntReturnValues TABLE@ 65536 *  ^Count2 @@ 2 *  1 +  }nt03HoldingRegAsIntReturnValues TABLE@ +  ^Count2 @@ }ntRTDdata TABLE! 
+19 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+20 LINE.NUM REPEAT 
+24 LINE.NUM 0 ^Count2 @! 
+25 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+26 LINE.NUM ^Count2 @@ }ntRTDdata TABLE@F ^Count2 @@ }ntRTDtempData TABLE! 
+27 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+28 LINE.NUM REPEAT 
+33 LINE.NUM 0 ^Count2 @! 
+34 LINE.NUM BEGIN ^Count2 @@ 8 < WHILE 
+35 LINE.NUM ^Count2 @@ }ntRTDtempData TABLE@ 100000 I>F F/ 1 I>F F- 3.84999998e-003 F/ ^Count2 @@ }ntRTDtempData TABLE! 
+36 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+37 LINE.NUM REPEAT 
+41 LINE.NUM 1 ^Count2 @! 
+42 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+43 LINE.NUM ^Count2 @@ 1 -  }ntRTDtempData TABLE@ 11 3 ^Count2 @@ {stDTdata $TABLE@  FF.R$ 
+44 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+45 LINE.NUM REPEAT 
+49 LINE.NUM 1 ^Count2 @! 
+50 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+51 LINE.NUM ^Count2 @@ {stDTdata $TABLE@ 3  SWAP $TRIM 
+52 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+53 LINE.NUM REPEAT 
+58 LINE.NUM 1 ^Count2 @! 
+59 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+60 LINE.NUM ^Count2 @@ {stDTdata $TABLE@  $LEN 7 > IF 
+61 LINE.NUM " NaN" ^Count2 @@ {stDTdata $TABLE@  $MOVE 
+62 LINE.NUM THEN 
+63 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+64 LINE.NUM REPEAT 
+68 LINE.NUM 0 ^Count2 @! 
+69 LINE.NUM BEGIN ^Count2 @@ 30 < WHILE 
+70 LINE.NUM ^Count2 @@ {stDTdata $TABLE@ ^Count2 @@ {stModbusData $TABLE@  $MOVE 
+71 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+72 LINE.NUM REPEAT 
+75 LINE.NUM 1 ^DTlogFlag @! 
+77 LINE.NUM ELSE 
+79 LINE.NUM 1 ^Count2 @! 
+80 LINE.NUM BEGIN ^Count2 @@ 9 < WHILE 
+81 LINE.NUM " NaN" ^Count2 @@ {stDTdata $TABLE@  $MOVE 
+82 LINE.NUM ^Count2 @@ 1 +  ^Count2 @! 
+83 LINE.NUM REPEAT 
+85 LINE.NUM THEN 
+-1 JUMP ;
+T: T5
+DUMMY
+5_0
+5_9
+5_10
+T;
+&Modbus_Master ' T5 SETTASK

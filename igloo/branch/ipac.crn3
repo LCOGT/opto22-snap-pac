@@ -1,0 +1,568 @@
+CREATE T.ARRAY
+&DatatakerComm ,
+&GoogleComm ,
+&Housekeeper ,
+&MasterComm ,
+&Modbus_Master ,
+&Powerup ,
+ 0 ,
+CREATE V.ARRAY
+^AirCon_CR_ErrorFlag ,
+^AirConOffFlag ,
+^Bitmask ,
+^CalcFanSpd ,
+^Count ,
+^Count1 ,
+^Count2 ,
+^Count3 ,
+^Cryotig_CR_ErrorFlag ,
+^DeadmanFlag ,
+^done ,
+^DTcharCount ,
+^DTcommStatus ,
+^DTdataErrorPosition ,
+^DTerrorFlag ,
+^DTlogFlag ,
+^EcbBit ,
+^EcbCmd ,
+^EcbMsg ,
+^EcbResetFlag ,
+^EOM_term ,
+^Fan10V_TestFlag ,
+^FanCtrl ,
+^FanSpd ,
+^fCheck ,
+^fFanCtrl ,
+^fFanSpd ,
+^fPidInput ,
+^fRTD1_R0 ,
+^fRTD2_R0 ,
+^fRTD3_R0 ,
+^fRTD4_R0 ,
+^fRTD5_R0 ,
+^fRTD6_R0 ,
+^fRTD7_R0 ,
+^fRTD8_R0 ,
+^fSystemUpTime ,
+^GoogleCommStatus ,
+^IglooOverTemp ,
+^IglooStirFanM282_ErrorFlag ,
+^IglooStirFanM284_ErrorFlag ,
+^IglooStirFanM292_ErrorFlag ,
+^IglooStirFanM294_ErrorFlag ,
+^IglooTemp ,
+^IglooTempOK ,
+^intTest ,
+^Length1 ,
+^MasterEcbCmd ,
+^MasterEcbFlag ,
+^n03AsIntStatus ,
+^n03AsIntSubStatus ,
+^nCharCount ,
+^nCounter1 ,
+^nCounter2 ,
+^nDTcharacterCount ,
+^nDTreceiveStatus ,
+^nFanSpd ,
+^nFindCmd ,
+^nGooglePostDataLength ,
+^nIndex ,
+^nIP_int ,
+^nLength ,
+^nModbusMasterReadDelay ,
+^nOctet3 ,
+^nPortStatus ,
+^nReceiveStatus ,
+^NRES_CR_ErrorFlag ,
+^nStirFansSpd ,
+^nStringLength ,
+^nStringPosition ,
+^Old_AO_PanelFans_CTRL ,
+^Old_AO_StirFansCTRL ,
+^Old_AO_TentServoFan_Ctrl ,
+^Old_AO_TentStirFan_Ctrl ,
+^OldDTcommHandle ,
+^OldPosition ,
+^P119Temp ,
+^P119TempOK ,
+^PanelFanM184_ErrorFlag ,
+^PanelFanM186_ErrorFlag ,
+^PanelFanMaxCtrl ,
+^PanelTemp ,
+^PidSetpoint ,
+^Position ,
+^Preset ,
+^RedLink_CR_ErrorFlag ,
+^SendData ,
+^SubStringLength ,
+^TentExhaustFanM306_ErrorFlag ,
+^TentExhaustFanM314_ErrorFlag ,
+^TentIntakeFanM304_ErrorFlag ,
+^TentIntakeFanM312_ErrorFlag ,
+^TentStirFanM323_ErrorFlag ,
+^TentStirFanM325_ErrorFlag ,
+^TentStirFanMaxCtrl ,
+^TentTemp ,
+^TentTempOK ,
+^Thermostat_CR_ErrorFlag ,
+^Utility_Volt_WatchdogFlag ,
+^WriteToLogFailedFlag ,
+^x ,
+^y ,
+*CRLF ,
+*DTdata ,
+*DTmessageReceived ,
+*LF ,
+*sCmd ,
+*sCounter2 ,
+*sCryoTigThermalTimer ,
+*sCurrent ,
+*sCurrentDate ,
+*sCurrentLogCommHandle ,
+*sCurrentLogFile ,
+*sCurrentTime ,
+*sDate ,
+*sDatestamp ,
+*sDay ,
+*sDay1 ,
+*sDT_IP ,
+*sDTerror ,
+*sDTrequest ,
+*sErrorList ,
+*sFanSpd ,
+*sFaultList ,
+*sFTPcmd ,
+*sFWversion ,
+*sGooglePostData ,
+*sGooglePostDataLength ,
+*sGooglePostHeader ,
+*sHeartbeat ,
+*sICDversion ,
+*sIP_hex ,
+*sIP_PAC ,
+*sLog ,
+*sMonth ,
+*sMonth1 ,
+*sNewLog ,
+*sNewLogCommHandle ,
+*sNewLogFile ,
+*sOctet1 ,
+*sOctet2 ,
+*sOctet3 ,
+*sOldDTerror ,
+*sPACuptime ,
+*sPID ,
+*sPidSetpoint ,
+*sPressure ,
+*sRTD1_R0 ,
+*sRTD2_R0 ,
+*sRTD3_R0 ,
+*sRTD4_R0 ,
+*sRTD5_R0 ,
+*sRTD6_R0 ,
+*sRTD7_R0 ,
+*sRTD8_R0 ,
+*sSDcard ,
+*sStirFansSpd ,
+*sSWversion ,
+*Status ,
+*sTentFansSpd ,
+*sTime ,
+*sTimestamp ,
+*sTimestamp1 ,
+*sTimestamp2 ,
+*sTimestamp3 ,
+*sTimestamp4 ,
+*sVar ,
+*sVar1 ,
+*sVoltage ,
+*sYear ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*ch_SDcard ,
+*chModbusMaster ,
+*cPort ,
+*DTcommHandle ,
+*FTPcommHandle ,
+*GoogleCommHandle ,
+*LogCommHandle ,
+ 0 ,
+CREATE TI.ARRAY
+^CryoTigThermalTimer ,
+^dt24h ,
+^dtAirCon_CR ,
+^dtAwaitingDT ,
+^dtFanMonitor ,
+^dtGooglePost ,
+^dtHeartbeat ,
+^dtRequestTimer ,
+^dtSocket ,
+^Timer ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+}EcbBitData ,
+}EcbStatus ,
+}nt03AsIntParameters ,
+}nt03HoldingRegAsIntReturnValues ,
+}ntEcbCmd ,
+}ntRTDdata ,
+}ntRTDtempData ,
+{stDTdata ,
+{stHeader ,
+{stModbusData ,
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%local_io ,
+ 0 ,
+CREATE P.ARRAY
+~DI_AirCon_CR_NC ,
+~DI_AirConPWR_OK ,
+~DI_CryoTig_CR_NC ,
+~DI_ECB_OK ,
+~DI_ECB_Rx ,
+~DI_EntryDoor ,
+~DI_HeatAlarm ,
+~DI_LightSW ,
+~DI_NRES_CR_NC ,
+~DI_NRES_Deadman ,
+~DI_NRES_PWR_OK ,
+~DI_PanelDoor ,
+~DI_SmokeAlarm ,
+~DI_SmokePWR_OK ,
+~DI_Spare_CR_NC ,
+~DI_TVS ,
+~DO_AirCon_CR ,
+~DO_CryoTig_CR ,
+~DO_ECB_Tx ,
+~DO_NRES_CR ,
+~AI_CA_SupplyPressure ,
+~AI_CryoTig_Current ,
+~AI_CryoTig_OutputPressure ,
+~AI_CryoTig_ReturnPressure ,
+~AI_CryoTig_Volt ,
+~AI_HVAC_Current ,
+~AI_Igloo_Temp ,
+~AI_IglooStirFanM282_Tach ,
+~AI_IglooStirFanM284_Tach ,
+~AI_IglooStirFanM292_Tach ,
+~AI_IglooStirFanM294_Tach ,
+~AI_P119_Temp ,
+~AI_PanelFanM184_Tach ,
+~AI_PanelFanM186_Tach ,
+~AI_TentExhaustFanM306_Tach ,
+~AI_TentExhaustFanM314_Tach ,
+~AI_TentIntakeFanM304_Tach ,
+~AI_TentIntakeFanM312_Tach ,
+~AI_TentStirFanM323_Tach ,
+~AI_TentStirFanM325_Tach ,
+~AI_Utility_Volt ,
+~AO_PanelFans_CTRL ,
+~AO_StirFans_CTRL ,
+~AO_TentServoFan_Ctrl ,
+~AO_TentStirFan_Ctrl ,
+ 0 ,
+CREATE PID.ARRAY
+ |pidTentFans ,
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+|pidTentFans ENABLE
+" %local_io  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%local_io ENABLE
+ -1 ~DO_AirCon_CR @!
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^AirCon_CR_ErrorFlag @!
+0 ^AirConOffFlag @!
+0 ^Bitmask @!
+0.00000000 ^CalcFanSpd @!
+0 ^Count @!
+0 ^Count1 @!
+0 ^Count2 @!
+0 ^Count3 @!
+0 ^Cryotig_CR_ErrorFlag @!
+0.0 ^CryoTigThermalTimer @!
+0 ^DeadmanFlag @!
+0 ^done @!
+0.0 ^dt24h @!
+0.0 ^dtAirCon_CR @!
+0.0 ^dtAwaitingDT @!
+0 ^DTcharCount @!
+0 ^DTcommStatus @!
+0 ^DTdataErrorPosition @!
+0 ^DTerrorFlag @!
+0.0 ^dtFanMonitor @!
+0.0 ^dtGooglePost @!
+0.0 ^dtHeartbeat @!
+0 ^DTlogFlag @!
+0.0 ^dtRequestTimer @!
+0.0 ^dtSocket @!
+0 ^EcbBit @!
+0 ^EcbCmd @!
+0 ^EcbMsg @!
+0 ^EcbResetFlag @!
+0 ^EOM_term @!
+0 ^Fan10V_TestFlag @!
+0 ^FanCtrl @!
+0.00000000 ^FanSpd @!
+0.00000000 ^fCheck @!
+0.00000000 ^fFanCtrl @!
+0.00000000 ^fFanSpd @!
+0.00000000 ^fPidInput @!
+0.00000000 ^fRTD1_R0 @!
+0.00000000 ^fRTD2_R0 @!
+0.00000000 ^fRTD3_R0 @!
+0.00000000 ^fRTD4_R0 @!
+0.00000000 ^fRTD5_R0 @!
+0.00000000 ^fRTD6_R0 @!
+0.00000000 ^fRTD7_R0 @!
+0.00000000 ^fRTD8_R0 @!
+0.00000000 ^fSystemUpTime @!
+0 ^GoogleCommStatus @!
+0 ^IglooOverTemp @!
+0 ^IglooStirFanM282_ErrorFlag @!
+0 ^IglooStirFanM284_ErrorFlag @!
+0 ^IglooStirFanM292_ErrorFlag @!
+0 ^IglooStirFanM294_ErrorFlag @!
+0.00000000 ^IglooTemp @!
+0 ^IglooTempOK @!
+0 ^intTest @!
+0 ^Length1 @!
+0 ^MasterEcbCmd @!
+0 ^MasterEcbFlag @!
+0 ^n03AsIntStatus @!
+0 ^n03AsIntSubStatus @!
+0 ^nCharCount @!
+0 ^nCounter1 @!
+0 ^nCounter2 @!
+0 ^nDTcharacterCount @!
+0 ^nDTreceiveStatus @!
+0 ^nFanSpd @!
+0 ^nFindCmd @!
+0 ^nGooglePostDataLength @!
+0 ^nIndex @!
+0 ^nIP_int @!
+0 ^nLength @!
+0 ^nModbusMasterReadDelay @!
+0 ^nOctet3 @!
+0 ^nPortStatus @!
+0 ^nReceiveStatus @!
+0 ^NRES_CR_ErrorFlag @!
+0 ^nStirFansSpd @!
+0 ^nStringLength @!
+0 ^nStringPosition @!
+0.00000000 ^Old_AO_PanelFans_CTRL @!
+0.00000000 ^Old_AO_StirFansCTRL @!
+0.00000000 ^Old_AO_TentServoFan_Ctrl @!
+0.00000000 ^Old_AO_TentStirFan_Ctrl @!
+0 ^OldDTcommHandle @!
+0 ^OldPosition @!
+0.00000000 ^P119Temp @!
+0 ^P119TempOK @!
+0 ^PanelFanM184_ErrorFlag @!
+0 ^PanelFanM186_ErrorFlag @!
+0.00000000 ^PanelFanMaxCtrl @!
+0.00000000 ^PanelTemp @!
+0 ^Position @!
+0.00000000 ^Preset @!
+0 ^RedLink_CR_ErrorFlag @!
+0 ^SendData @!
+0 ^SubStringLength @!
+0 ^TentExhaustFanM306_ErrorFlag @!
+0 ^TentExhaustFanM314_ErrorFlag @!
+0 ^TentIntakeFanM304_ErrorFlag @!
+0 ^TentIntakeFanM312_ErrorFlag @!
+0 ^TentStirFanM323_ErrorFlag @!
+0 ^TentStirFanM325_ErrorFlag @!
+0.00000000 ^TentStirFanMaxCtrl @!
+0.00000000 ^TentTemp @!
+0 ^TentTempOK @!
+0 ^Thermostat_CR_ErrorFlag @!
+0.0 ^Timer @!
+0 ^Utility_Volt_WatchdogFlag @!
+0 ^WriteToLogFailedFlag @!
+0 ^x @!
+0 ^y @!
+0 0 -1 }EcbBitData InitTable
+0 0 -1 }EcbStatus InitTable
+0 0 -1 }nt03AsIntParameters InitTable
+0 0 -1 }nt03HoldingRegAsIntReturnValues InitTable
+0 0 -1 }ntEcbCmd InitTable
+0 0 -1 }ntRTDdata InitTable
+0.00000000 0 -1 }ntRTDtempData InitTable
+" "
+ *CRLF $MOVE
+" "
+ *DTdata $MOVE
+" "
+ *DTmessageReceived $MOVE
+" "
+ *LF $MOVE
+" "
+ *sCmd $MOVE
+" "
+ *sCounter2 $MOVE
+" "
+ *sCryoTigThermalTimer $MOVE
+" "
+ *sCurrent $MOVE
+" "
+ *sCurrentDate $MOVE
+" "
+ *sCurrentLogCommHandle $MOVE
+" "
+ *sCurrentLogFile $MOVE
+" "
+ *sCurrentTime $MOVE
+" "
+ *sDate $MOVE
+" "
+ *sDatestamp $MOVE
+" "
+ *sDay $MOVE
+" "
+ *sDay1 $MOVE
+" "
+ *sDT_IP $MOVE
+" "
+ *sDTerror $MOVE
+" "
+ *sDTrequest $MOVE
+" "
+ *sErrorList $MOVE
+" "
+ *sFanSpd $MOVE
+" "
+ *sFaultList $MOVE
+" "
+ *sFTPcmd $MOVE
+" "
+ *sFWversion $MOVE
+" "
+ *sGooglePostData $MOVE
+" "
+ *sGooglePostDataLength $MOVE
+" "
+ *sGooglePostHeader $MOVE
+" "
+ *sHeartbeat $MOVE
+" "
+ *sICDversion $MOVE
+" "
+ *sIP_hex $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sLog $MOVE
+" "
+ *sMonth $MOVE
+" "
+ *sMonth1 $MOVE
+" "
+ *sNewLog $MOVE
+" "
+ *sNewLogCommHandle $MOVE
+" "
+ *sNewLogFile $MOVE
+" "
+ *sOctet1 $MOVE
+" "
+ *sOctet2 $MOVE
+" "
+ *sOctet3 $MOVE
+" "
+ *sOldDTerror $MOVE
+" "
+ *sPACuptime $MOVE
+" "
+ *sPID $MOVE
+" "
+ *sPidSetpoint $MOVE
+" "
+ *sPressure $MOVE
+" "
+ *sRTD1_R0 $MOVE
+" "
+ *sRTD2_R0 $MOVE
+" "
+ *sRTD3_R0 $MOVE
+" "
+ *sRTD4_R0 $MOVE
+" "
+ *sRTD5_R0 $MOVE
+" "
+ *sRTD6_R0 $MOVE
+" "
+ *sRTD7_R0 $MOVE
+" "
+ *sRTD8_R0 $MOVE
+" "
+ *sSDcard $MOVE
+" "
+ *sStirFansSpd $MOVE
+" "
+ *sSWversion $MOVE
+" "
+ *Status $MOVE
+" "
+ *sTentFansSpd $MOVE
+" "
+ *sTime $MOVE
+" "
+ *sTimestamp $MOVE
+" "
+ *sTimestamp1 $MOVE
+" "
+ *sTimestamp2 $MOVE
+" "
+ *sTimestamp3 $MOVE
+" "
+ *sTimestamp4 $MOVE
+" "
+ *sVar $MOVE
+" "
+ *sVar1 $MOVE
+" "
+ *sVoltage $MOVE
+" "
+ *sYear $MOVE
+" "
+ *ch_SDcard $MOVE
+" "
+ *chModbusMaster $MOVE
+" tcp:22004"
+ *cPort $MOVE
+" "
+ *DTcommHandle $MOVE
+" ftp:docknode05.lco.gtn:21,eng,sbatoo1"
+ *FTPcommHandle $MOVE
+" tcp:74.125.224.135:80"
+ *GoogleCommHandle $MOVE
+" file:a,IglooData.txt"
+ *LogCommHandle $MOVE
+ " "
+0 -1 {stDTdata Init$Table
+ " "
+0 -1 {stHeader Init$Table
+ " "
+0 -1 {stModbusData Init$Table
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;
