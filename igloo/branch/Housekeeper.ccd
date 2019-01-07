@@ -447,7 +447,7 @@
 2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
 0 JUMP ;
 : 2_18
-4 LINE.NUM ~AI_Utility_Volt @@ 198 I>F F< ^Utility_Volt_WatchdogFlag @@ 0 = LAND  IF 
+4 LINE.NUM ~AI_Utility_Volt @@ 190 I>F F< ^Utility_Volt_WatchdogFlag @@ 0 = LAND  IF 
 5 LINE.NUM 120 I>F ^dtAirCon_CR @! 
 6 LINE.NUM 1 ^Utility_Volt_WatchdogFlag @! 
 7 LINE.NUM THEN 

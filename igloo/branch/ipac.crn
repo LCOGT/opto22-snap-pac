@@ -1504,7 +1504,7 @@ T;
 2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
 0 JUMP ;
 : 2_18
-4 LINE.NUM ~AI_Utility_Volt @@ 198 I>F F< ^Utility_Volt_WatchdogFlag @@ 0 = LAND  IF 
+4 LINE.NUM ~AI_Utility_Volt @@ 190 I>F F< ^Utility_Volt_WatchdogFlag @@ 0 = LAND  IF 
 5 LINE.NUM 120 I>F ^dtAirCon_CR @! 
 6 LINE.NUM 1 ^Utility_Volt_WatchdogFlag @! 
 7 LINE.NUM THEN 
@@ -3520,8 +3520,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 01/04/19 " ;
-: TIMESTAMP ." 00:14:49 " ;
+: DATESTAMP ." 01/07/19 " ;
+: TIMESTAMP ." 19:42:54 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
