@@ -1,7 +1,0 @@
-: 7_0
-0 JUMP ;
-T: T7
-DUMMY
-7_0
-T;
-&Door_dim ' T7 SETTASK
