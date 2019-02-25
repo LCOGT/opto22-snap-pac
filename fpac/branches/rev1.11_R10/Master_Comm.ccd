@@ -244,7 +244,7 @@
 
 92 LINE.NUM " , PanelFan1Tac=" *EnviroString $CAT 
 
-93 LINE.NUM ~Cabinet_FAN @@ 1.420000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+93 LINE.NUM ~Cabinet_FAN @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 94 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 95 LINE.NUM " , PanelAirTemp=" *EnviroString $CAT 
