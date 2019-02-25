@@ -1,0 +1,32 @@
+: 12_0
+0 JUMP ;
+: 12_1
+3 LINE.NUM ~S31_7 @@I 1 = IF 
+4 LINE.NUM " true" *s_DomeStop  $MOVE 
+5 LINE.NUM ELSE 
+5 LINE.NUM ~S31_7 @@I 0 = IF 
+6 LINE.NUM " false" *s_DomeStop  $MOVE 
+7 LINE.NUM THEN THEN 
+9 LINE.NUM %A_1mFPAC 1 *s_DomeStop  IO.SP.$WRITE DROP  
+13 LINE.NUM ~S31_5 @@I 1 = IF 
+14 LINE.NUM " true" *s_DomeOpen  $MOVE 
+15 LINE.NUM ELSE 
+15 LINE.NUM ~S31_5 @@I 0 = IF 
+16 LINE.NUM " false" *s_DomeOpen  $MOVE 
+17 LINE.NUM THEN THEN 
+19 LINE.NUM %A_1mFPAC 2 *s_DomeOpen  IO.SP.$WRITE DROP  
+23 LINE.NUM ~S31_6 @@I 1 = IF 
+24 LINE.NUM " true" *s_DomeClose  $MOVE 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~S31_6 @@I 0 = IF 
+26 LINE.NUM " false" *s_DomeClose  $MOVE 
+27 LINE.NUM THEN THEN 
+29 LINE.NUM %A_1mFPAC 3 *s_DomeClose  IO.SP.$WRITE DROP  
+35 LINE.NUM 100  DELAY 
+-1 JUMP ;
+T: T12
+DUMMY
+12_0
+12_1
+T;
+&DomeShutter ' T12 SETTASK

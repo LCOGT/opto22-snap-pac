@@ -1,4 +1,5 @@
 CREATE T.ARRAY
+&DomeShutter ,
 &LED_control ,
 &Master_Comm ,
 &Powerup ,
@@ -13,6 +14,7 @@ CREATE V.ARRAY
 ^Dim ,
 ^Dimmer ,
 ^DimResponse ,
+^DomeShutter_Chart_Status ,
 ^DoorDim ,
 ^DoorGrnFlag ,
 ^DoorRedFlag ,
@@ -54,6 +56,10 @@ CREATE V.ARRAY
 *imp_MasterCommand ,
 *LastCommand ,
 *MasterCommand ,
+*s_DomeClose ,
+*s_DomeOpen ,
+*s_DomeStop ,
+*s_LightSW ,
 *SentString ,
 *StateString ,
 *StatusString ,
@@ -201,6 +207,7 @@ CONFIG_PORTS
 0 ^Dim @!
 0 ^Dimmer @!
 0 ^DimResponse @!
+0 ^DomeShutter_Chart_Status @!
 0 ^DoorDim @!
 0 ^DoorGrnFlag @!
 0 ^DoorRedFlag @!
@@ -256,6 +263,14 @@ CONFIG_PORTS
  *LastCommand $MOVE
 " "
  *MasterCommand $MOVE
+" "
+ *s_DomeClose $MOVE
+" "
+ *s_DomeOpen $MOVE
+" "
+ *s_DomeStop $MOVE
+" "
+ *s_LightSW $MOVE
 " Null"
  *SentString $MOVE
 " State"

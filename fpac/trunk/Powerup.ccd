@@ -3,22 +3,26 @@
 : 0_1
 
 1 LINE.NUM
+  &DomeShutter   START.T
+  ^DomeShutter_Chart_Status @! 
+
+2 LINE.NUM
   &LED_control   START.T
   ^AQ_Go_Fast_Ok @! 
 
-2 LINE.NUM
+3 LINE.NUM
   &Test_HVAC   START.T
   ^Test_HVAC_Status @! 
 
-3 LINE.NUM
+4 LINE.NUM
   &Master_Comm   START.T
   ^MasterCommEstablished @! 
 
-4 LINE.NUM
+5 LINE.NUM
   &Test_Front_Panel   START.T
   ^Test_Front_Panel_Status @! 
 
-5 LINE.NUM
+6 LINE.NUM
   &WhiteLights   START.T
   ^WhiteLights_Chart @! 
 1 JUMP ;

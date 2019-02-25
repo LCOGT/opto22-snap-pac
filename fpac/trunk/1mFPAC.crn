@@ -5,6 +5,7 @@ _END NEW $$$.RUN
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
 0 TASK  &_INIT_IO
+0 TASK &DomeShutter
 0 TASK &LED_control
 0 TASK &Master_Comm
 0 TASK &Powerup
@@ -17,6 +18,7 @@ _END NEW $$$.RUN
 0 IVAR ^Dim
 0 IVAR ^Dimmer
 0 IVAR ^DimResponse
+0 IVAR ^DomeShutter_Chart_Status
 0 IVAR ^DoorDim
 0 IVAR ^DoorGrnFlag
 0 IVAR ^DoorRedFlag
@@ -61,6 +63,10 @@ _END NEW $$$.RUN
 3 0 $VAR *imp_MasterCommand 
 1024 0 $VAR *LastCommand 
 32 0 $VAR *MasterCommand 
+10 0 $VAR *s_DomeClose 
+10 0 $VAR *s_DomeOpen 
+10 0 $VAR *s_DomeStop 
+10 0 $VAR *s_LightSW 
 1024 0 $VAR *SentString 
 1024 0 $VAR *StateString 
 1024 0 $VAR *StatusString 
@@ -153,18 +159,15 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4  1 SPOINT 0.0    OUTPUT  1  6 %A_1mFPAC 0 POINT.TNG ~PanelRedLed
  4  1 SPOINT 0.0    OUTPUT  2  6 %A_1mFPAC 0 POINT.TNG ~PanelGrnLED
  4  1 SPOINT 0.0    OUTPUT  3  6 %A_1mFPAC 0 POINT.TNG ~DoorGrnLED
- 4  1 APOINT  -15.0000 0  0  7 %A_1mFPAC 0 POINT.TNG ~ROLL_BRK_PRES
+ 4  1 APOINT  -15.0000 64  0  7 %A_1mFPAC 0 POINT.TNG ~ROLL_BRK_PRES
   10.0000  -15.0000 ~ROLL_BRK_PRES SET.SCALE
- 4  1 APOINT  -15.0000 0  1  7 %A_1mFPAC 0 POINT.TNG ~PITCH_BRK_PRES
+ 4  1 APOINT  -15.0000 64  1  7 %A_1mFPAC 0 POINT.TNG ~PITCH_BRK_PRES
   10.0000  -15.0000 ~PITCH_BRK_PRES SET.SCALE
  2  1 APOINT    0.0000 70  0  8 %A_1mFPAC 0 POINT.TNG ~RED_LT_SEN
  2  1 APOINT    0.0000 70  1  8 %A_1mFPAC 0 POINT.TNG ~UTILITY_SEN
- 2  1 APOINT    0.0000 128  0  9 %A_1mFPAC 0 POINT.TNG ~M6_3_CTRL
-  10.0000    0.0000 ~M6_3_CTRL SET.SCALE
- 2  1 APOINT    0.0000 128  1  9 %A_1mFPAC 0 POINT.TNG ~M6_5_CTRL
-  10.0000    0.0000 ~M6_5_CTRL SET.SCALE
- 2  1 APOINT    0.0000 128  0 10 %A_1mFPAC 0 POINT.TNG ~M6_7_CTRL
-  10.0000    0.0000 ~M6_7_CTRL SET.SCALE
+ 2  1 APOINT    0.0000 165  0  9 %A_1mFPAC 0 POINT.TNG ~M6_3_CTRL
+ 2  1 APOINT    0.0000 165  1  9 %A_1mFPAC 0 POINT.TNG ~M6_5_CTRL
+ 2  1 APOINT    0.0000 165  0 10 %A_1mFPAC 0 POINT.TNG ~M6_7_CTRL
  2  1 APOINT    0.0000 165  1 10 %A_1mFPAC 0 POINT.TNG ~CABINET_FAN_CTRL
  2  1 APOINT    0.0000 70  0 11 %A_1mFPAC 0 POINT.TNG ~UPS_SENSE
  2  1 APOINT    0.0000 70  1 11 %A_1mFPAC 0 POINT.TNG ~DCS_SENSE
@@ -177,6 +180,38 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2  1 APOINT    0.0000 69  0 14 %A_1mFPAC 0 POINT.TNG ~Cabinet_FAN
  2  1 APOINT    0.0000 69  1 14 %A_1mFPAC 0 POINT.TNG ~Fan2
  4  1 SPOINT 0.0     INPUT  0 15 %A_1mFPAC 0 POINT.TNG ~AzAvail
+: 12_0
+0 JUMP ;
+: 12_1
+3 LINE.NUM ~S31_7 @@I 1 = IF 
+4 LINE.NUM " true" *s_DomeStop  $MOVE 
+5 LINE.NUM ELSE 
+5 LINE.NUM ~S31_7 @@I 0 = IF 
+6 LINE.NUM " false" *s_DomeStop  $MOVE 
+7 LINE.NUM THEN THEN 
+9 LINE.NUM %A_1mFPAC 1 *s_DomeStop  IO.SP.$WRITE DROP  
+13 LINE.NUM ~S31_5 @@I 1 = IF 
+14 LINE.NUM " true" *s_DomeOpen  $MOVE 
+15 LINE.NUM ELSE 
+15 LINE.NUM ~S31_5 @@I 0 = IF 
+16 LINE.NUM " false" *s_DomeOpen  $MOVE 
+17 LINE.NUM THEN THEN 
+19 LINE.NUM %A_1mFPAC 2 *s_DomeOpen  IO.SP.$WRITE DROP  
+23 LINE.NUM ~S31_6 @@I 1 = IF 
+24 LINE.NUM " true" *s_DomeClose  $MOVE 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~S31_6 @@I 0 = IF 
+26 LINE.NUM " false" *s_DomeClose  $MOVE 
+27 LINE.NUM THEN THEN 
+29 LINE.NUM %A_1mFPAC 3 *s_DomeClose  IO.SP.$WRITE DROP  
+35 LINE.NUM 100  DELAY 
+-1 JUMP ;
+T: T12
+DUMMY
+12_0
+12_1
+T;
+&DomeShutter ' T12 SETTASK
 : 11_0
 0 JUMP ;
 : 11_1
@@ -513,7 +548,7 @@ T;
 
 92 LINE.NUM " , PanelFan1Tac=" *EnviroString $CAT 
 
-93 LINE.NUM ~Cabinet_FAN @@ 1.420000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+93 LINE.NUM ~Cabinet_FAN @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 94 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 95 LINE.NUM " , PanelAirTemp=" *EnviroString $CAT 
@@ -1196,22 +1231,26 @@ T;
 : 0_1
 
 1 LINE.NUM
+  &DomeShutter   START.T
+  ^DomeShutter_Chart_Status @! 
+
+2 LINE.NUM
   &LED_control   START.T
   ^AQ_Go_Fast_Ok @! 
 
-2 LINE.NUM
+3 LINE.NUM
   &Test_HVAC   START.T
   ^Test_HVAC_Status @! 
 
-3 LINE.NUM
+4 LINE.NUM
   &Master_Comm   START.T
   ^MasterCommEstablished @! 
 
-4 LINE.NUM
+5 LINE.NUM
   &Test_Front_Panel   START.T
   ^Test_Front_Panel_Status @! 
 
-5 LINE.NUM
+6 LINE.NUM
   &WhiteLights   START.T
   ^WhiteLights_Chart @! 
 1 JUMP ;
@@ -1446,7 +1485,7 @@ DUMMY
 T;
 &Test_HVAC ' T2 SETTASK
 : 3_0
-3 JUMP ;
+5 JUMP ;
 : 3_2
 
 1 LINE.NUM
@@ -1454,7 +1493,7 @@ T;
   $00000001 I>D 
   $00000000 I>D   4 PICK $F0D80408 2SWAP IO.MAP.WRITE64 DROP $F0D80400 -ROT IO.MAP.WRITE64 
   ^WT_LT_Status @! 
-1 JUMP ;
+5 JUMP ;
 : 3_3
 
 1 LINE.NUM
@@ -1462,29 +1501,40 @@ T;
   $00000000 I>D 
   $00000001 I>D   4 PICK $F0D80408 2SWAP IO.MAP.WRITE64 DROP $F0D80400 -ROT IO.MAP.WRITE64 
   ^WT_LT_Status @! 
-0 JUMP ;
+4 JUMP ;
 : 3_5
 
 1 LINE.NUM
   200    DELAY
-0 JUMP ;
+2 JUMP ;
+: 3_12
+1 LINE.NUM " true" *s_LightSW  $MOVE 
+2 LINE.NUM %A_1mFPAC 0 *s_LightSW  IO.SP.$WRITE DROP  
+-2 JUMP ;
+: 3_13
+1 LINE.NUM " false" *s_LightSW  $MOVE 
+2 LINE.NUM %A_1mFPAC 0 *s_LightSW  IO.SP.$WRITE DROP  
+-3 JUMP ;
 : 3_1
 TRUE
 
 1 LINE.NUM
   ~S33_1_STATUS   ?ON
 LAND
-IF -4 ELSE -3 THEN JUMP ;
+IF -3 ELSE -2 THEN JUMP ;
 T: T3
 DUMMY
 3_0
 3_2
 3_3
 3_5
+3_12
+3_13
 3_1
 T;
 &WhiteLights ' T3 SETTASK
 CREATE T.ARRAY
+&DomeShutter ,
 &LED_control ,
 &Master_Comm ,
 &Powerup ,
@@ -1499,6 +1549,7 @@ CREATE V.ARRAY
 ^Dim ,
 ^Dimmer ,
 ^DimResponse ,
+^DomeShutter_Chart_Status ,
 ^DoorDim ,
 ^DoorGrnFlag ,
 ^DoorRedFlag ,
@@ -1540,6 +1591,10 @@ CREATE V.ARRAY
 *imp_MasterCommand ,
 *LastCommand ,
 *MasterCommand ,
+*s_DomeClose ,
+*s_DomeOpen ,
+*s_DomeStop ,
+*s_LightSW ,
 *SentString ,
 *StateString ,
 *StatusString ,
@@ -1687,6 +1742,7 @@ CONFIG_PORTS
 0 ^Dim @!
 0 ^Dimmer @!
 0 ^DimResponse @!
+0 ^DomeShutter_Chart_Status @!
 0 ^DoorDim @!
 0 ^DoorGrnFlag @!
 0 ^DoorRedFlag @!
@@ -1742,6 +1798,14 @@ CONFIG_PORTS
  *LastCommand $MOVE
 " "
  *MasterCommand $MOVE
+" "
+ *s_DomeClose $MOVE
+" "
+ *s_DomeOpen $MOVE
+" "
+ *s_DomeStop $MOVE
+" "
+ *s_LightSW $MOVE
 " Null"
  *SentString $MOVE
 " State"
@@ -1769,8 +1833,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/16/12 " ;
-: TIMESTAMP ." 18:15:25 " ;
+: DATESTAMP ." 12/06/18 " ;
+: TIMESTAMP ." 20:47:40 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
