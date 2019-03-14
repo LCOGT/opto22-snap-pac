@@ -359,17 +359,6 @@
 : 3_435
 -52 JUMP ;
 : 3_444
-1 LINE.NUM ~Humidity @@ 80 I>F F>= IF 
-2 LINE.NUM ^Time_defHeartbeatWdog @@ 6.70000017e-001 F* ^Timer_HeartbeatWdog @! 
-3 LINE.NUM ELSE 
-3 LINE.NUM ~Humidity @@ 60 I>F F>= IF 
-4 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 
-5 LINE.NUM ELSE 
-5 LINE.NUM ~Humidity @@ 40 I>F F>= IF 
-6 LINE.NUM ^Time_defHeartbeatWdog @@ 2 I>F F* ^Timer_HeartbeatWdog @! 
-7 LINE.NUM ELSE 
-8 LINE.NUM ^Time_defHeartbeatWdog @@ 3 I>F F* ^Timer_HeartbeatWdog @! 
-9 LINE.NUM THEN THEN THEN 
 35 JUMP ;
 : 3_452
 1 LINE.NUM 0 ^CmdIlluminate_On @! 

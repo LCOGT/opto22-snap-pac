@@ -188,8 +188,6 @@ CREATE P.ARRAY
 ~AI_lowerClosePressure ,
 ~AI_lowerOpenPressure ,
 ~AO_cabinetFanCtrl ,
-~Humidity ,
-~Temperature ,
  0 ,
 CREATE PID.ARRAY
  0 ,
