@@ -1,0 +1,693 @@
+: 3_0
+60 JUMP ;
+: 3_41
+
+1 LINE.NUM
+  ^Time_defHeartbeatWdog @@ 
+  ^Timer_HeartbeatWdog @!   
+
+2 LINE.NUM
+  ^Timer_HeartbeatWdog   StartTimer
+8 JUMP ;
+: 3_121
+
+1 LINE.NUM
+  &Function_UpperOpen   START.T
+  ^Function_UpperOpen_Started @! 
+32 JUMP ;
+: 3_122
+
+1 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+
+3 LINE.NUM
+  ~DO_upperClose   OFF
+
+4 LINE.NUM
+  2000    DELAY
+-2 JUMP ;
+: 3_132
+
+1 LINE.NUM
+  &Function_UpperClose   START.T
+  ^Function_UpperClose_Started @! 
+31 JUMP ;
+: 3_134
+
+1 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+
+3 LINE.NUM
+  ~DO_upperOpen   OFF
+
+4 LINE.NUM
+  2000    DELAY
+-2 JUMP ;
+: 3_144
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+
+3 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+
+4 LINE.NUM
+  ~DO_pumpMotor   OFF
+
+5 LINE.NUM
+  2000    DELAY
+0 JUMP ;
+: 3_146
+
+1 LINE.NUM
+  &Function_LowerOpen   START.T
+  ^Function_LowerOpen_Started @! 
+29 JUMP ;
+: 3_157
+
+1 LINE.NUM
+  &Function_LowerClose   START.T
+  ^Function_LowerClose_Started @! 
+29 JUMP ;
+: 3_159
+
+1 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+
+3 LINE.NUM
+  ~DO_lowerOpenValve   OFF
+
+4 LINE.NUM
+  ~DO_pumpMotor   OFF
+
+5 LINE.NUM
+  2000    DELAY
+-2 JUMP ;
+: 3_194
+-11 JUMP ;
+: 3_230
+-12 JUMP ;
+: 3_231
+
+1 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+2 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+3 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+4 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+
+8 LINE.NUM
+  ~DO_upperOpen   OFF
+
+9 LINE.NUM
+  ~DO_upperClose   OFF
+
+10 LINE.NUM
+  ~DO_pumpMotor   OFF
+
+11 LINE.NUM
+  ~DO_lowerOpenValve   OFF
+
+12 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+0 JUMP ;
+: 3_232
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+0 JUMP ;
+: 3_233
+1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
+2 LINE.NUM 1 ^FLT_K1on @! 
+4 LINE.NUM ELSE 
+4 LINE.NUM ~FB_upperClose @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K2on @! 
+7 LINE.NUM ELSE 
+7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+8 LINE.NUM 1 ^FLT_K5on @! 
+9 LINE.NUM ELSE 
+10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+12 LINE.NUM THEN THEN THEN 
+-4 JUMP ;
+: 3_240
+1 LINE.NUM 0 ^CmdHEARTBEAT @! 
+-15 JUMP ;
+: 3_254
+1 LINE.NUM 0 ^CmdOPEN @! 
+55 JUMP ;
+: 3_273
+-18 JUMP ;
+: 3_279
+
+1 LINE.NUM
+  &Function_Open   START.T
+  ^Function_Open_Started @! 
+-2 JUMP ;
+: 3_284
+
+1 LINE.NUM
+  &Function_Close   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+-2 JUMP ;
+: 3_288
+1 LINE.NUM 0 ^CmdCLOSE @! 
+52 JUMP ;
+: 3_291
+
+1 LINE.NUM
+  &Function_Open   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+0 JUMP ;
+: 3_292
+
+1 LINE.NUM
+  &Function_Close   START.T
+  ^Function_Close_Started @! 
+0 JUMP ;
+: 3_298
+-24 JUMP ;
+: 3_301
+-25 JUMP ;
+: 3_305
+
+1 LINE.NUM
+  &Function_Close   START.T
+  ^Function_Close_Started @! 
+-2 JUMP ;
+: 3_306
+
+1 LINE.NUM
+  &Function_Open   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+-2 JUMP ;
+: 3_318
+1 LINE.NUM 0 ^CmdUPPER_OPEN @! 
+47 JUMP ;
+: 3_319
+1 LINE.NUM 0 ^CmdUPPER_CLOSE @! 
+48 JUMP ;
+: 3_320
+1 LINE.NUM 0 ^CmdLOWER_OPEN @! 
+46 JUMP ;
+: 3_321
+1 LINE.NUM 0 ^CmdLOWER_CLOSE @! 
+47 JUMP ;
+: 3_327
+
+1 LINE.NUM
+  &Function_Close   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+33 JUMP ;
+: 3_330
+
+1 LINE.NUM
+  &Function_Close   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+36 JUMP ;
+: 3_333
+
+1 LINE.NUM
+  &Function_Open   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+33 JUMP ;
+: 3_336
+
+1 LINE.NUM
+  &Function_Open   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+36 JUMP ;
+: 3_341
+-36 JUMP ;
+: 3_342
+-37 JUMP ;
+: 3_343
+-38 JUMP ;
+: 3_344
+-39 JUMP ;
+: 3_345
+-40 JUMP ;
+: 3_387
+
+1 LINE.NUM
+  &Function_Open   STOP.T
+
+2 LINE.NUM
+  100    DELAY
+0 JUMP ;
+: 3_388
+
+1 LINE.NUM
+  &Function_Close   START.T
+  ^Function_Close_Started @! 
+0 JUMP ;
+: 3_392
+-43 JUMP ;
+: 3_409
+1 LINE.NUM 0 ^CmdTOGGLE_LIGHTS @! 
+40 JUMP ;
+: 3_413
+-45 JUMP ;
+: 3_417
+
+1 LINE.NUM
+  ^LightToggle   FALSE@!
+-2 JUMP ;
+: 3_418
+
+1 LINE.NUM
+  ^LightToggle   TRUE@!
+-3 JUMP ;
+: 3_429
+1 LINE.NUM 0 ^CmdSTOP @! 
+2 JUMP ;
+: 3_432
+1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
+2 LINE.NUM 1 ^FLT_K1on @! 
+4 LINE.NUM ELSE 
+4 LINE.NUM ~FB_upperClose @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K2on @! 
+7 LINE.NUM ELSE 
+7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+8 LINE.NUM 1 ^FLT_K5on @! 
+9 LINE.NUM ELSE 
+10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+12 LINE.NUM THEN THEN THEN 
+2 JUMP ;
+: 3_433
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+-2 JUMP ;
+: 3_434
+
+1 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+2 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+3 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+4 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+
+8 LINE.NUM
+  ~DO_upperOpen   OFF
+
+9 LINE.NUM
+  ~DO_upperClose   OFF
+
+10 LINE.NUM
+  ~DO_pumpMotor   OFF
+
+11 LINE.NUM
+  ~DO_lowerOpenValve   OFF
+
+12 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+-2 JUMP ;
+: 3_435
+-52 JUMP ;
+: 3_444
+1 LINE.NUM ~Humidity @@ 80 I>F F>= IF 
+2 LINE.NUM ^Time_defHeartbeatWdog @@ 6.70000017e-001 F* ^Timer_HeartbeatWdog @! 
+3 LINE.NUM ELSE 
+3 LINE.NUM ~Humidity @@ 60 I>F F>= IF 
+4 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 
+5 LINE.NUM ELSE 
+5 LINE.NUM ~Humidity @@ 40 I>F F>= IF 
+6 LINE.NUM ^Time_defHeartbeatWdog @@ 2 I>F F* ^Timer_HeartbeatWdog @! 
+7 LINE.NUM ELSE 
+8 LINE.NUM ^Time_defHeartbeatWdog @@ 3 I>F F* ^Timer_HeartbeatWdog @! 
+9 LINE.NUM THEN THEN THEN 
+35 JUMP ;
+: 3_452
+1 LINE.NUM 0 ^CmdIlluminate_On @! 
+1 JUMP ;
+: 3_456
+1 LINE.NUM 0 ^CmdIlluminate_Off @! 
+1 JUMP ;
+: 3_462
+1 LINE.NUM 1 ~DO_Illuminate @! 
+1 JUMP ;
+: 3_463
+1 LINE.NUM 0 ~DO_Illuminate @! 
+1 JUMP ;
+: 3_466
+-58 JUMP ;
+: 3_467
+-59 JUMP ;
+: 3_38
+TRUE
+
+1 LINE.NUM
+  ^CmdHEARTBEAT @@ 
+  1    =
+LAND
+IF -45 ELSE 0 THEN JUMP ;
+: 3_45
+TRUE
+
+1 LINE.NUM
+  ^Timer_HeartbeatWdog   T0=
+LAND
+IF 18 ELSE 24 THEN JUMP ;
+: 3_58
+TRUE
+
+1 LINE.NUM
+  ~SW_stop   ?OFF
+LAND
+IF -50 ELSE -3 THEN JUMP ;
+: 3_66
+TRUE
+
+1 LINE.NUM
+  ^CmdOPEN @@   0<>
+LAND
+IF -47 ELSE 0 THEN JUMP ;
+: 3_94
+TRUE
+
+1 LINE.NUM
+  ^CmdCLOSE @@   0<>
+LAND
+IF -44 ELSE 0 THEN JUMP ;
+: 3_114
+TRUE
+
+1 LINE.NUM
+  ^CmdUPPER_OPEN @@   0<>
+LAND
+IF -38 ELSE 1 THEN JUMP ;
+: 3_123
+TRUE
+
+1 LINE.NUM
+  &Function_UpperClose   ?RUNNING
+LAND
+IF -63 ELSE -64 THEN JUMP ;
+: 3_127
+TRUE
+
+1 LINE.NUM
+  ^CmdUPPER_CLOSE @@   0<>
+LAND
+IF -39 ELSE 1 THEN JUMP ;
+: 3_135
+TRUE
+
+1 LINE.NUM
+  &Function_UpperOpen   ?RUNNING
+LAND
+IF -63 ELSE -64 THEN JUMP ;
+: 3_140
+TRUE
+
+1 LINE.NUM
+  ^CmdLOWER_OPEN @@   0<>
+LAND
+IF -40 ELSE 1 THEN JUMP ;
+: 3_143
+TRUE
+
+1 LINE.NUM
+  &Function_LowerClose   ?RUNNING
+LAND
+IF -64 ELSE -63 THEN JUMP ;
+: 3_153
+TRUE
+
+1 LINE.NUM
+  ^CmdLOWER_CLOSE @@   0<>
+LAND
+IF -41 ELSE 12 THEN JUMP ;
+: 3_160
+TRUE
+
+1 LINE.NUM
+  &Function_LowerOpen   ?RUNNING
+LAND
+IF -63 ELSE -64 THEN JUMP ;
+: 3_282
+TRUE
+
+1 LINE.NUM
+  &Function_Close   ?RUNNING
+LAND
+IF -54 ELSE -55 THEN JUMP ;
+: 3_290
+TRUE
+
+1 LINE.NUM
+  &Function_Open   ?RUNNING
+LAND
+IF -53 ELSE -52 THEN JUMP ;
+: 3_307
+TRUE
+
+1 LINE.NUM
+  &Function_Open   ?RUNNING
+LAND
+IF -49 ELSE -50 THEN JUMP ;
+: 3_328
+TRUE
+
+1 LINE.NUM
+  &Function_Close   ?RUNNING
+LAND
+IF -45 ELSE -11 THEN JUMP ;
+: 3_331
+TRUE
+
+1 LINE.NUM
+  &Function_Close   ?RUNNING
+LAND
+IF -45 ELSE -8 THEN JUMP ;
+: 3_334
+TRUE
+
+1 LINE.NUM
+  &Function_Open   ?RUNNING
+LAND
+IF -45 ELSE -11 THEN JUMP ;
+: 3_337
+TRUE
+
+1 LINE.NUM
+  &Function_Open   ?RUNNING
+LAND
+IF -45 ELSE -8 THEN JUMP ;
+: 3_365
+TRUE
+
+1 LINE.NUM
+  ~SW_upperCloseLimit   ?OFF
+LAND
+
+2 LINE.NUM
+  ~SW_lowerCloseLimit   ?ON
+LAND
+IF -56 ELSE -6 THEN JUMP ;
+: 3_385
+TRUE
+
+1 LINE.NUM
+  ~SW_lowerCloseLimit   ?ON
+LAND
+
+2 LINE.NUM
+  ~SW_upperCloseLimit   ?OFF
+LAND
+IF -39 ELSE 0 THEN JUMP ;
+: 3_386
+TRUE
+
+1 LINE.NUM
+  &Function_Open   ?RUNNING
+LAND
+IF -42 ELSE -41 THEN JUMP ;
+: 3_394
+TRUE
+
+1 LINE.NUM
+  ^Timer_WxWdog   T0=
+LAND
+IF -3 ELSE 5 THEN JUMP ;
+: 3_406
+TRUE
+
+1 LINE.NUM
+  ^CmdTOGGLE_LIGHTS @@   0<>
+LAND
+IF -41 ELSE 2 THEN JUMP ;
+: 3_415
+TRUE
+
+1 LINE.NUM
+  ^LightToggle @@   0<>
+LAND
+IF -40 ELSE -39 THEN JUMP ;
+: 3_437
+TRUE
+
+1 LINE.NUM
+  ^CmdSTOP @@   0<>
+LAND
+IF -39 ELSE -24 THEN JUMP ;
+: 3_450
+TRUE
+
+1 LINE.NUM
+  ^CmdIlluminate_On @@   0<>
+LAND
+IF -34 ELSE 0 THEN JUMP ;
+: 3_457
+TRUE
+
+1 LINE.NUM
+  ^CmdIlluminate_Off @@   0<>
+LAND
+IF -34 ELSE -49 THEN JUMP ;
+T: T3
+DUMMY
+3_0
+3_41
+3_121
+3_122
+3_132
+3_134
+3_144
+3_146
+3_157
+3_159
+3_194
+3_230
+3_231
+3_232
+3_233
+3_240
+3_254
+3_273
+3_279
+3_284
+3_288
+3_291
+3_292
+3_298
+3_301
+3_305
+3_306
+3_318
+3_319
+3_320
+3_321
+3_327
+3_330
+3_333
+3_336
+3_341
+3_342
+3_343
+3_344
+3_345
+3_387
+3_388
+3_392
+3_409
+3_413
+3_417
+3_418
+3_429
+3_432
+3_433
+3_434
+3_435
+3_444
+3_452
+3_456
+3_462
+3_463
+3_466
+3_467
+3_38
+3_45
+3_58
+3_66
+3_94
+3_114
+3_123
+3_127
+3_135
+3_140
+3_143
+3_153
+3_160
+3_282
+3_290
+3_307
+3_328
+3_331
+3_334
+3_337
+3_365
+3_385
+3_386
+3_394
+3_406
+3_415
+3_437
+3_450
+3_457
+T;
+&Auto_Mode ' T3 SETTASK
