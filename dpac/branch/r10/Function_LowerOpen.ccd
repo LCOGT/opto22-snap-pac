@@ -162,7 +162,7 @@
 : 7_197
 
 1 LINE.NUM
-  3000    DELAY
+  0    DELAY
 -26 JUMP ;
 : 7_203
 1 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 

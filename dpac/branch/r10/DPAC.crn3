@@ -185,8 +185,8 @@ CREATE P.ARRAY
 ~AI_cabinetFanTach ,
 ~AI_cabinetTemp ,
 ~AI_domeAirTemp ,
-~AI_lowerClosePressure ,
 ~AI_lowerOpenPressure ,
+~AI_LowerShutterAngle ,
 ~AO_cabinetFanCtrl ,
  0 ,
 CREATE PID.ARRAY

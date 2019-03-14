@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC Programs\dpac\branch\r10\DPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    18:47:52 3/14/2019
+# TIME/DATE :    22:13:1 3/14/2019
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -163,8 +163,8 @@ TAG1,SW_whiteLights                                    ,20   ,40000000,00000000,
 TAG1,AI_cabinetFanTach                                 ,5    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_cabinetTemp                                    ,2    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_domeAirTemp                                    ,3    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,AI_lowerClosePressure                             ,1    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_lowerOpenPressure                              ,0    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,AI_LowerShutterAngle                              ,1    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AO_cabinetFanCtrl                                 ,4    ,00000000,00000002,00000000,00000000,0    ,0   
 TAG1,AQ_Go_Fast_Ok                                     ,101  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,AutoModeStarted                                   ,1    ,00000000,00000000,00000000,00000008,0    ,0   
