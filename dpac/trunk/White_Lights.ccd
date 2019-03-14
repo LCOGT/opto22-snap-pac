@@ -6,7 +6,7 @@
   %A_1mFPAC 
   ^FPAC_scratchpad   $F0D80000 SWAP IO.MAP.READ64
   ^GetScratchBits @! 
-12 JUMP ;
+20 JUMP ;
 : 16_13
 
 1 LINE.NUM
@@ -34,19 +34,19 @@
 
 1 LINE.NUM
   250    DELAY
-14 JUMP ;
+15 JUMP ;
 : 16_28
 -2 JUMP ;
 : 16_35
 
 1 LINE.NUM
   ^WTlightSwitchState   TRUE@!
-8 JUMP ;
+9 JUMP ;
 : 16_36
 
 1 LINE.NUM
   ^WTlightSwitchState   FALSE@!
-7 JUMP ;
+8 JUMP ;
 : 16_41
 
 1 LINE.NUM
@@ -80,21 +80,26 @@
 1 LINE.NUM
   ~DO_domeLights   ON
 -9 JUMP ;
+: 16_83
+1 LINE.NUM %A_1mFPAC 0 *s_LightSW  IO.SP.$READ DROP  
+0 JUMP ;
 : 16_1
 TRUE
 
 1 LINE.NUM
-  ^FPAC_scratchpad @@ 
-  0..    D>
+  *s_LightSW
+ 
+  " true" 
+   $=
 LAND
-IF -8 ELSE -7 THEN JUMP ;
+IF -9 ELSE -8 THEN JUMP ;
 : 16_23
 TRUE
 
 1 LINE.NUM
   %A_1mFPAC    ENABLE@
 LAND
-IF -15 ELSE -12 THEN JUMP ;
+IF -3 ELSE -13 THEN JUMP ;
 : 16_45
 TRUE
 
@@ -109,7 +114,7 @@ TRUE
 1 LINE.NUM
   ~DO_domeLights   ?ON
 LAND
-IF -16 ELSE -15 THEN JUMP ;
+IF -17 ELSE -16 THEN JUMP ;
 : 16_62
 TRUE
 
@@ -117,21 +122,21 @@ TRUE
   ^LightToggle @@ 
   ^LightToggleOld @@   <>
 LAND
-IF 0 ELSE -9 THEN JUMP ;
+IF 0 ELSE -10 THEN JUMP ;
 : 16_68
 TRUE
 
 1 LINE.NUM
   ~DO_domeLights   ?ON
 LAND
-IF -8 ELSE -9 THEN JUMP ;
+IF -9 ELSE -10 THEN JUMP ;
 : 16_76
 TRUE
 
 1 LINE.NUM
   ~SW_whiteLights   ?OFF
 LAND
-IF -8 ELSE -6 THEN JUMP ;
+IF -9 ELSE -6 THEN JUMP ;
 T: T16
 DUMMY
 16_0
@@ -148,6 +153,7 @@ DUMMY
 16_70
 16_71
 16_75
+16_83
 16_1
 16_23
 16_45

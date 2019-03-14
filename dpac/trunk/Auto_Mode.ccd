@@ -360,7 +360,7 @@
 -52 JUMP ;
 : 3_444
 1 LINE.NUM ~Humidity @@ 80 I>F F>= IF 
-2 LINE.NUM ^Time_defHeartbeatWdog @@ 6.700000e-001 F* ^Timer_HeartbeatWdog @! 
+2 LINE.NUM ^Time_defHeartbeatWdog @@ 6.70000017e-001 F* ^Timer_HeartbeatWdog @! 
 3 LINE.NUM ELSE 
 3 LINE.NUM ~Humidity @@ 60 I>F F>= IF 
 4 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 

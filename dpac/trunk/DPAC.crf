@@ -125,6 +125,11 @@ _END NEW $$$.RUN
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
 3 0 $VAR *MasterCommand 
+10 0 $VAR *s_DomeClose 
+10 0 $VAR *s_DomeOpen 
+10 0 $VAR *s_DomeStop 
+10 0 $VAR *s_LightSW 
+20 0 $VAR *sIP_PAC 
 10 0 $VAR *sStatus_Shutter1 
 10 0 $VAR *sStatus_Shutter2 
 5 0 $VAR *SWversion 
@@ -135,108 +140,60 @@ _END NEW $$$.RUN
 4 0 ITABLE }SLOT08_OFF
 12 20 0 $TABLE {Status 
 
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 M64BOARD %Local_IO
-SPOINT 0.0 INPUT 0 %Local_IO
-    0 POINT ~SW_stop
-SPOINT 0.0 INPUT 1 %Local_IO
-    0 POINT ~SW_upperOpen
-SPOINT 0.0 INPUT 2 %Local_IO
-    0 POINT ~SW_upperClose
-SPOINT 0.0 INPUT 3 %Local_IO
-    0 POINT ~SW_auto
-SPOINT 0.0 INPUT 4 %Local_IO
-    0 POINT ~SW_LowerOpen
-SPOINT 0.0 INPUT 5 %Local_IO
-    0 POINT ~SW_LowerClose
-SPOINT 0.0 INPUT 6 %Local_IO
-    0 POINT ~FLT_wireless
-SPOINT 0.0 INPUT 7 %Local_IO
-    0 POINT ~FLT_lightsCB
-SPOINT 0.0 INPUT 8 %Local_IO
-    0 POINT ~FB_upperClose
-SPOINT 0.0 INPUT 9 %Local_IO
-    0 POINT ~FLT_upperOpenOvrTrvl
-SPOINT 0.0 INPUT 10 %Local_IO
-    0 POINT ~FLT_upperCloseOvrTrvl
-SPOINT 0.0 INPUT 11 %Local_IO
-    0 POINT ~FB_pumpMotor
-SPOINT 0.0 INPUT 12 %Local_IO
-    0 POINT ~FLT_lowerShutterCB
-SPOINT 0.0 INPUT 13 %Local_IO
-    0 POINT ~FLT_upperShutterCB
-SPOINT 0.0 INPUT 14 %Local_IO
-    0 POINT ~FLT_upperMotorOverload
-SPOINT 0.0 INPUT 15 %Local_IO
-    0 POINT ~FLT_lambertCB
-SPOINT 0.0 INPUT 16 %Local_IO
-    0 POINT ~FLT_pumpMotorOverload
-SPOINT 0.0 INPUT 17 %Local_IO
-    0 POINT ~SW_upperShutterClear
-SPOINT 0.0 INPUT 18 %Local_IO
-    0 POINT ~SW_upperOpenLimit
-SPOINT 0.0 INPUT 19 %Local_IO
-    0 POINT ~SW_upperCloseLimit
-SPOINT 0.0 INPUT 20 %Local_IO
-    0 POINT ~FLT_cabinetDoor
-SPOINT 0.0 INPUT 21 %Local_IO
-    0 POINT ~SW_whiteLights
-SPOINT 0.0 INPUT 22 %Local_IO
-    0 POINT ~FLT_smokeDetectorPwr
-SPOINT 0.0 INPUT 23 %Local_IO
-    0 POINT ~SW_standby
-SPOINT 0.0 INPUT 24 %Local_IO
-    0 POINT ~FLT_smoke
-SPOINT 0.0 INPUT 25 %Local_IO
-    0 POINT ~FLT_heat
-SPOINT 0.0 INPUT 26 %Local_IO
-    0 POINT ~FLT_lambertPwr
-SPOINT 0.0 INPUT 27 %Local_IO
-    0 POINT ~FB_upperOpen
-SPOINT 0.0 INPUT 28 %Local_IO
-    0 POINT ~SW_lowerOpenLimit
-SPOINT 0.0 INPUT 29 %Local_IO
-    0 POINT ~SW_lowerCloseLimit
-SPOINT 0.0 INPUT 30 %Local_IO
-    0 POINT ~FB_slot08Fuse
-SPOINT 0.0 INPUT 31 %Local_IO
-    0 POINT ~FB_slot09Fuse
-SPOINT 0.0 OUTPUT 32 %Local_IO
-    0 POINT ~DO_slot08Fuse
-SPOINT 0.0 OUTPUT 33 %Local_IO
-    0 POINT ~DO_upperOpen
-SPOINT 0.0 OUTPUT 34 %Local_IO
-    0 POINT ~DO_upperClose
-SPOINT 0.0 OUTPUT 35 %Local_IO
-    0 POINT ~DO_Illuminate
-SPOINT 0.0 OUTPUT 36 %Local_IO
-    0 POINT ~DO_slot09Fuse
-SPOINT 0.0 OUTPUT 37 %Local_IO
-    0 POINT ~DO_pumpMotor
-SPOINT 0.0 OUTPUT 40 %Local_IO
-    0 POINT ~DO_domeLights
-SPOINT 0.0 OUTPUT 41 %Local_IO
-    0 POINT ~DO_lowerOpenValve
-SPOINT 0.0 OUTPUT 42 %Local_IO
-    0 POINT ~DO_lowerCloseValve
-APOINT -3000.0000 0 44 %Local_IO
-    0 POINT ~AI_lowerOpenPressure
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A090C02 0 M64BOARD %A_1mFPAC
+nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
+ 4  1 SPOINT 0.0     INPUT  0  0 %Local_IO 0 POINT.TNG ~SW_stop
+ 4  1 SPOINT 0.0     INPUT  1  0 %Local_IO 0 POINT.TNG ~SW_upperOpen
+ 4  1 SPOINT 0.0     INPUT  2  0 %Local_IO 0 POINT.TNG ~SW_upperClose
+ 4  1 SPOINT 0.0     INPUT  3  0 %Local_IO 0 POINT.TNG ~SW_auto
+ 4  1 SPOINT 0.0     INPUT  0  1 %Local_IO 0 POINT.TNG ~SW_LowerOpen
+ 4  1 SPOINT 0.0     INPUT  1  1 %Local_IO 0 POINT.TNG ~SW_LowerClose
+ 4  1 SPOINT 0.0     INPUT  2  1 %Local_IO 0 POINT.TNG ~FLT_wireless
+ 4  1 SPOINT 0.0     INPUT  3  1 %Local_IO 0 POINT.TNG ~FLT_lightsCB
+ 4  1 SPOINT 0.0     INPUT  0  2 %Local_IO 0 POINT.TNG ~FB_upperClose
+ 4  1 SPOINT 0.0     INPUT  1  2 %Local_IO 0 POINT.TNG ~FLT_upperOpenOvrTrvl
+ 4  1 SPOINT 0.0     INPUT  2  2 %Local_IO 0 POINT.TNG ~FLT_upperCloseOvrTrvl
+ 4  1 SPOINT 0.0     INPUT  3  2 %Local_IO 0 POINT.TNG ~FB_pumpMotor
+ 4  1 SPOINT 0.0     INPUT  0  3 %Local_IO 0 POINT.TNG ~FLT_lowerShutterCB
+ 4  1 SPOINT 0.0     INPUT  1  3 %Local_IO 0 POINT.TNG ~FLT_upperShutterCB
+ 4  1 SPOINT 0.0     INPUT  2  3 %Local_IO 0 POINT.TNG ~FLT_upperMotorOverload
+ 4  1 SPOINT 0.0     INPUT  3  3 %Local_IO 0 POINT.TNG ~FLT_lambertCB
+ 4  1 SPOINT 0.0     INPUT  0  4 %Local_IO 0 POINT.TNG ~FLT_pumpMotorOverload
+ 4  1 SPOINT 0.0     INPUT  1  4 %Local_IO 0 POINT.TNG ~SW_upperShutterClear
+ 4  1 SPOINT 0.0     INPUT  2  4 %Local_IO 0 POINT.TNG ~SW_upperOpenLimit
+ 4  1 SPOINT 0.0     INPUT  3  4 %Local_IO 0 POINT.TNG ~SW_upperCloseLimit
+ 4  1 SPOINT 0.0     INPUT  0  5 %Local_IO 0 POINT.TNG ~FLT_cabinetDoor
+ 4  1 SPOINT 0.0     INPUT  1  5 %Local_IO 0 POINT.TNG ~SW_whiteLights
+ 4  1 SPOINT 0.0     INPUT  2  5 %Local_IO 0 POINT.TNG ~FLT_smokeDetectorPwr
+ 4  1 SPOINT 0.0     INPUT  3  5 %Local_IO 0 POINT.TNG ~SW_standby
+ 4  1 SPOINT 0.0     INPUT  0  6 %Local_IO 0 POINT.TNG ~FLT_smoke
+ 4  1 SPOINT 0.0     INPUT  1  6 %Local_IO 0 POINT.TNG ~FLT_heat
+ 4  1 SPOINT 0.0     INPUT  2  6 %Local_IO 0 POINT.TNG ~FLT_lambertPwr
+ 4  1 SPOINT 0.0     INPUT  3  6 %Local_IO 0 POINT.TNG ~FB_upperOpen
+ 4  1 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~SW_lowerOpenLimit
+ 4  1 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~SW_lowerCloseLimit
+ 4  1 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~FB_slot08Fuse
+ 4  1 SPOINT 0.0     INPUT  3  7 %Local_IO 0 POINT.TNG ~FB_slot09Fuse
+ 4  1 SPOINT 0.0    OUTPUT  0  8 %Local_IO 0 POINT.TNG ~DO_slot08Fuse
+ 4  1 SPOINT 0.0    OUTPUT  1  8 %Local_IO 0 POINT.TNG ~DO_upperOpen
+ 4  1 SPOINT 0.0    OUTPUT  2  8 %Local_IO 0 POINT.TNG ~DO_upperClose
+ 4  1 SPOINT 0.0    OUTPUT  3  8 %Local_IO 0 POINT.TNG ~DO_Illuminate
+ 4  1 SPOINT 0.0    OUTPUT  0  9 %Local_IO 0 POINT.TNG ~DO_slot09Fuse
+ 4  1 SPOINT 0.0    OUTPUT  1  9 %Local_IO 0 POINT.TNG ~DO_pumpMotor
+ 4  1 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_domeLights
+ 4  1 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_lowerOpenValve
+ 4  1 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_lowerCloseValve
+ 4  1 APOINT -3000.0000 64  0 11 %Local_IO 0 POINT.TNG ~AI_lowerOpenPressure
 2000.0000 -3000.0000 ~AI_lowerOpenPressure SET.SCALE
-APOINT -3000.0000 0 45 %Local_IO
-    0 POINT ~AI_lowerClosePressure
+ 4  1 APOINT -3000.0000 64  1 11 %Local_IO 0 POINT.TNG ~AI_lowerClosePressure
 2000.0000 -3000.0000 ~AI_lowerClosePressure SET.SCALE
-APOINT -200.0000 10 48 %Local_IO
-    0 POINT ~AI_cabinetTemp
-APOINT -200.0000 10 49 %Local_IO
-    0 POINT ~AI_domeAirTemp
-APOINT    0.0000 165 52 %Local_IO 0 POINT ~AO_cabinetFanCtrl
-APOINT    0.0000 69 56 %Local_IO
-    0 POINT ~AI_cabinetFanTach
-APOINT -150.0000 0 60 %Local_IO
-    0 POINT ~Humidity
+ 2  1 APOINT -200.0000 10  0 12 %Local_IO 0 POINT.TNG ~AI_cabinetTemp
+ 2  1 APOINT -200.0000 10  1 12 %Local_IO 0 POINT.TNG ~AI_domeAirTemp
+ 2  1 APOINT    0.0000 165  0 13 %Local_IO 0 POINT.TNG ~AO_cabinetFanCtrl
+ 2  1 APOINT    0.0000 69  0 14 %Local_IO 0 POINT.TNG ~AI_cabinetFanTach
+ 4  1 APOINT -150.0000 64  0 15 %Local_IO 0 POINT.TNG ~Humidity
  100.0000 -150.0000 ~Humidity SET.SCALE
-APOINT -175.2941 0 61 %Local_IO
-    0 POINT ~Temperature
+ 4  1 APOINT -175.2941 64  1 15 %Local_IO 0 POINT.TNG ~Temperature
   60.0000 -175.2941 ~Temperature SET.SCALE
 : 3_0
 60 JUMP ;
@@ -600,7 +557,7 @@ APOINT -175.2941 0 61 %Local_IO
 -52 JUMP ;
 : 3_444
 1 LINE.NUM ~Humidity @@ 80 I>F F>= IF 
-2 LINE.NUM ^Time_defHeartbeatWdog @@ 6.700000e-001 F* ^Timer_HeartbeatWdog @! 
+2 LINE.NUM ^Time_defHeartbeatWdog @@ 6.70000017e-001 F* ^Timer_HeartbeatWdog @! 
 3 LINE.NUM ELSE 
 3 LINE.NUM ~Humidity @@ 60 I>F F>= IF 
 4 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 
@@ -4057,13 +4014,43 @@ T;
 12 LINE.NUM
   ~DO_lowerCloseValve   OFF
 -3 JUMP ;
+: 2_128
+1 LINE.NUM %A_1mFPAC 1 *s_DomeStop  IO.SP.$READ DROP  
+5 LINE.NUM %A_1mFPAC 2 *s_DomeOpen  IO.SP.$READ DROP  
+6 LINE.NUM *s_DomeOpen " true" $= IF 
+7 LINE.NUM &Function_Open  ?RUNNING 1 = IF 
+9 LINE.NUM ELSE 
+9 LINE.NUM &Function_Open  ?RUNNING 0 = IF 
+10 LINE.NUM &Function_Open  START.T DROP  
+11 LINE.NUM THEN THEN 
+12 LINE.NUM ELSE 
+12 LINE.NUM *s_DomeOpen " false" $= IF 
+14 LINE.NUM THEN THEN 
+17 LINE.NUM %A_1mFPAC 3 *s_DomeClose  IO.SP.$READ DROP  
+18 LINE.NUM *s_DomeClose " true" $= IF 
+19 LINE.NUM &Function_Close  ?RUNNING 1 = IF 
+21 LINE.NUM ELSE 
+21 LINE.NUM &Function_Close  ?RUNNING 0 = IF 
+22 LINE.NUM &Function_Close  START.T DROP  
+23 LINE.NUM THEN THEN 
+24 LINE.NUM ELSE 
+24 LINE.NUM *s_DomeClose " false" $= IF 
+26 LINE.NUM THEN THEN 
+0 JUMP ;
 : 2_1
-TRUE
+FALSE
 
 1 LINE.NUM
+  *s_DomeStop
+ 
+  " false" 
+   $=
+LOR
+
+2 LINE.NUM
   ~SW_stop   ?OFF
-LAND
-IF -2 ELSE 0 THEN JUMP ;
+LOR
+IF -3 ELSE 0 THEN JUMP ;
 : 2_10
 TRUE
 
@@ -4092,14 +4079,14 @@ TRUE
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -15 ELSE -14 THEN JUMP ;
+IF -16 ELSE -15 THEN JUMP ;
 : 2_78
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -14 ELSE -13 THEN JUMP ;
+IF -15 ELSE -14 THEN JUMP ;
 : 2_88
 TRUE
 
@@ -4121,21 +4108,21 @@ LAND
 2 LINE.NUM
   &Function_LowerClose   ?STOPPED
 LAND
-IF 1 ELSE -7 THEN JUMP ;
+IF 1 ELSE -8 THEN JUMP ;
 : 2_96
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -14 ELSE -15 THEN JUMP ;
+IF -15 ELSE -16 THEN JUMP ;
 : 2_100
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -14 ELSE -13 THEN JUMP ;
+IF -15 ELSE -14 THEN JUMP ;
 T: T2
 DUMMY
 2_0
@@ -4151,6 +4138,7 @@ DUMMY
 2_111
 2_113
 2_125
+2_128
 2_1
 2_10
 2_23
@@ -4571,7 +4559,7 @@ T;
 
 5 LINE.NUM
   &Powerup   STOP.T
-4 JUMP ;
+5 JUMP ;
 : 0_12
 
 1 LINE.NUM
@@ -4607,8 +4595,10 @@ T;
 23 LINE.NUM THEN THEN THEN THEN THEN 
 -2 JUMP ;
 : 0_42
-1 LINE.NUM " 9" *SWversion  $MOVE 
+1 LINE.NUM " 10" *SWversion  $MOVE 
 -4 JUMP ;
+: 0_45
+0 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -4617,6 +4607,7 @@ DUMMY
 0_33
 0_36
 0_42
+0_45
 T;
 &Powerup ' T0 SETTASK
 : 15_0
@@ -4797,7 +4788,7 @@ T;
   %A_1mFPAC 
   ^FPAC_scratchpad   $F0D80000 SWAP IO.MAP.READ64
   ^GetScratchBits @! 
-12 JUMP ;
+20 JUMP ;
 : 16_13
 
 1 LINE.NUM
@@ -4825,19 +4816,19 @@ T;
 
 1 LINE.NUM
   250    DELAY
-14 JUMP ;
+15 JUMP ;
 : 16_28
 -2 JUMP ;
 : 16_35
 
 1 LINE.NUM
   ^WTlightSwitchState   TRUE@!
-8 JUMP ;
+9 JUMP ;
 : 16_36
 
 1 LINE.NUM
   ^WTlightSwitchState   FALSE@!
-7 JUMP ;
+8 JUMP ;
 : 16_41
 
 1 LINE.NUM
@@ -4871,21 +4862,26 @@ T;
 1 LINE.NUM
   ~DO_domeLights   ON
 -9 JUMP ;
+: 16_83
+1 LINE.NUM %A_1mFPAC 0 *s_LightSW  IO.SP.$READ DROP  
+0 JUMP ;
 : 16_1
 TRUE
 
 1 LINE.NUM
-  ^FPAC_scratchpad @@ 
-  0..    D>
+  *s_LightSW
+ 
+  " true" 
+   $=
 LAND
-IF -8 ELSE -7 THEN JUMP ;
+IF -9 ELSE -8 THEN JUMP ;
 : 16_23
 TRUE
 
 1 LINE.NUM
   %A_1mFPAC    ENABLE@
 LAND
-IF -15 ELSE -12 THEN JUMP ;
+IF -3 ELSE -13 THEN JUMP ;
 : 16_45
 TRUE
 
@@ -4900,7 +4896,7 @@ TRUE
 1 LINE.NUM
   ~DO_domeLights   ?ON
 LAND
-IF -16 ELSE -15 THEN JUMP ;
+IF -17 ELSE -16 THEN JUMP ;
 : 16_62
 TRUE
 
@@ -4908,21 +4904,21 @@ TRUE
   ^LightToggle @@ 
   ^LightToggleOld @@   <>
 LAND
-IF 0 ELSE -9 THEN JUMP ;
+IF 0 ELSE -10 THEN JUMP ;
 : 16_68
 TRUE
 
 1 LINE.NUM
   ~DO_domeLights   ?ON
 LAND
-IF -8 ELSE -9 THEN JUMP ;
+IF -9 ELSE -10 THEN JUMP ;
 : 16_76
 TRUE
 
 1 LINE.NUM
   ~SW_whiteLights   ?OFF
 LAND
-IF -8 ELSE -6 THEN JUMP ;
+IF -9 ELSE -6 THEN JUMP ;
 T: T16
 DUMMY
 16_0
@@ -4939,6 +4935,7 @@ DUMMY
 16_70
 16_71
 16_75
+16_83
 16_1
 16_23
 16_45
@@ -5051,6 +5048,11 @@ CREATE V.ARRAY
 ^WxOKposition ,
 ^WxStarted ,
 *MasterCommand ,
+*s_DomeClose ,
+*s_DomeOpen ,
+*s_DomeStop ,
+*s_LightSW ,
+*sIP_PAC ,
 *sStatus_Shutter1 ,
 *sStatus_Shutter2 ,
 *SWversion ,
@@ -5147,7 +5149,6 @@ CREATE E/RGROUP.ARRAY
 : W_INIT_IO
 CONFIG_PORTS
 $0000000000000000.. %A_1mFPAC ENABLES!
-$3113373FFFFFFFFF.. %Local_IO ENABLES!
 " %A_1mFPAC  (1/2)" *_HSV_INIT_IO $MOVE 1 ^_HNV_INIT_IO @!
 %A_1mFPAC ENABLE
 " %Local_IO  (2/2)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
@@ -5257,6 +5258,16 @@ $3113373FFFFFFFFF.. %Local_IO ENABLES!
 0 0 -1 }SLOT08_OFF InitTable
 " xxx"
  *MasterCommand $MOVE
+" "
+ *s_DomeClose $MOVE
+" "
+ *s_DomeOpen $MOVE
+" "
+ *s_DomeStop $MOVE
+" "
+ *s_LightSW $MOVE
+" "
+ *sIP_PAC $MOVE
 " UNKNOWN"
  *sStatus_Shutter1 $MOVE
 " UNKNOWN"
@@ -5284,9 +5295,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 09/19/14 " ;
-: TIMESTAMP ." 00:01:48 " ;
-: CRCSTAMP  ." 1E88464187E4C4997D4FC0BB5965DB29 " ;
+: DATESTAMP ." 02/21/19 " ;
+: TIMESTAMP ." 00:42:20 " ;
+: CRCSTAMP  ." 3E05E23F1A04E2794D56362940DBECF2 " ;
 MAKECHECK
 CLEAR.BREAKS
 

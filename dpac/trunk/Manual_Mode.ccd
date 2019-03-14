@@ -162,13 +162,43 @@
 12 LINE.NUM
   ~DO_lowerCloseValve   OFF
 -3 JUMP ;
+: 2_128
+1 LINE.NUM %A_1mFPAC 1 *s_DomeStop  IO.SP.$READ DROP  
+5 LINE.NUM %A_1mFPAC 2 *s_DomeOpen  IO.SP.$READ DROP  
+6 LINE.NUM *s_DomeOpen " true" $= IF 
+7 LINE.NUM &Function_Open  ?RUNNING 1 = IF 
+9 LINE.NUM ELSE 
+9 LINE.NUM &Function_Open  ?RUNNING 0 = IF 
+10 LINE.NUM &Function_Open  START.T DROP  
+11 LINE.NUM THEN THEN 
+12 LINE.NUM ELSE 
+12 LINE.NUM *s_DomeOpen " false" $= IF 
+14 LINE.NUM THEN THEN 
+17 LINE.NUM %A_1mFPAC 3 *s_DomeClose  IO.SP.$READ DROP  
+18 LINE.NUM *s_DomeClose " true" $= IF 
+19 LINE.NUM &Function_Close  ?RUNNING 1 = IF 
+21 LINE.NUM ELSE 
+21 LINE.NUM &Function_Close  ?RUNNING 0 = IF 
+22 LINE.NUM &Function_Close  START.T DROP  
+23 LINE.NUM THEN THEN 
+24 LINE.NUM ELSE 
+24 LINE.NUM *s_DomeClose " false" $= IF 
+26 LINE.NUM THEN THEN 
+0 JUMP ;
 : 2_1
-TRUE
+FALSE
 
 1 LINE.NUM
+  *s_DomeStop
+ 
+  " false" 
+   $=
+LOR
+
+2 LINE.NUM
   ~SW_stop   ?OFF
-LAND
-IF -2 ELSE 0 THEN JUMP ;
+LOR
+IF -3 ELSE 0 THEN JUMP ;
 : 2_10
 TRUE
 
@@ -197,14 +227,14 @@ TRUE
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -15 ELSE -14 THEN JUMP ;
+IF -16 ELSE -15 THEN JUMP ;
 : 2_78
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -14 ELSE -13 THEN JUMP ;
+IF -15 ELSE -14 THEN JUMP ;
 : 2_88
 TRUE
 
@@ -226,21 +256,21 @@ LAND
 2 LINE.NUM
   &Function_LowerClose   ?STOPPED
 LAND
-IF 1 ELSE -7 THEN JUMP ;
+IF 1 ELSE -8 THEN JUMP ;
 : 2_96
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -14 ELSE -15 THEN JUMP ;
+IF -15 ELSE -16 THEN JUMP ;
 : 2_100
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -14 ELSE -13 THEN JUMP ;
+IF -15 ELSE -14 THEN JUMP ;
 T: T2
 DUMMY
 2_0
@@ -256,6 +286,7 @@ DUMMY
 2_111
 2_113
 2_125
+2_128
 2_1
 2_10
 2_23

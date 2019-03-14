@@ -20,7 +20,7 @@
 
 5 LINE.NUM
   &Powerup   STOP.T
-4 JUMP ;
+5 JUMP ;
 : 0_12
 
 1 LINE.NUM
@@ -56,8 +56,10 @@
 23 LINE.NUM THEN THEN THEN THEN THEN 
 -2 JUMP ;
 : 0_42
-1 LINE.NUM " 9" *SWversion  $MOVE 
+1 LINE.NUM " 10" *SWversion  $MOVE 
 -4 JUMP ;
+: 0_45
+0 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -66,5 +68,6 @@ DUMMY
 0_33
 0_36
 0_42
+0_45
 T;
 &Powerup ' T0 SETTASK

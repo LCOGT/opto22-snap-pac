@@ -101,6 +101,11 @@ CREATE V.ARRAY
 ^WxOKposition ,
 ^WxStarted ,
 *MasterCommand ,
+*s_DomeClose ,
+*s_DomeOpen ,
+*s_DomeStop ,
+*s_LightSW ,
+*sIP_PAC ,
 *sStatus_Shutter1 ,
 *sStatus_Shutter2 ,
 *SWversion ,
@@ -197,7 +202,6 @@ CREATE E/RGROUP.ARRAY
 : W_INIT_IO
 CONFIG_PORTS
 $0000000000000000.. %A_1mFPAC ENABLES!
-$3113373FFFFFFFFF.. %Local_IO ENABLES!
 " %A_1mFPAC  (1/2)" *_HSV_INIT_IO $MOVE 1 ^_HNV_INIT_IO @!
 %A_1mFPAC ENABLE
 " %Local_IO  (2/2)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
@@ -307,6 +311,16 @@ $3113373FFFFFFFFF.. %Local_IO ENABLES!
 0 0 -1 }SLOT08_OFF InitTable
 " xxx"
  *MasterCommand $MOVE
+" "
+ *s_DomeClose $MOVE
+" "
+ *s_DomeOpen $MOVE
+" "
+ *s_DomeStop $MOVE
+" "
+ *s_LightSW $MOVE
+" "
+ *sIP_PAC $MOVE
 " UNKNOWN"
  *sStatus_Shutter1 $MOVE
 " UNKNOWN"
