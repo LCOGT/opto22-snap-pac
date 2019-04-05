@@ -36,7 +36,7 @@ IF -4 ELSE -5 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~S30_7_NO   ?ON
+  ~AirConOpMode_Auto   ?ON
 LAND
 IF -2 ELSE -3 THEN JUMP ;
 T: T2

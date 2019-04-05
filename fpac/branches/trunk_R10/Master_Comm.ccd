@@ -264,7 +264,7 @@
 105 LINE.NUM " , AzimuthAvailable=FALSE" *EnviroString $CAT 
 
 106 LINE.NUM THEN 
-107 LINE.NUM ~S30_7_NO @@I 1 = IF 
+107 LINE.NUM ~AirConOpMode_Auto @@I 1 = IF 
 108 LINE.NUM " , HVACSwitchState=AUTO" *EnviroString $CAT 
 
 109 LINE.NUM ELSE 

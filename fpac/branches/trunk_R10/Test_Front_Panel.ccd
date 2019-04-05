@@ -99,33 +99,33 @@
 TRUE
 
 1 LINE.NUM
-  ~S30_5_NO   ?OFF
+  ~WallFanOpMode_Auto   ?OFF
 LAND
 
 2 LINE.NUM
-  ~S30_5_NC   ?ON
+  ~WallFanOpMode_Man   ?ON
 LAND
 IF -4 ELSE 0 THEN JUMP ;
 : 1_23
 TRUE
 
 1 LINE.NUM
-  ~S30_5_NO   ?OFF
+  ~WallFanOpMode_Auto   ?OFF
 LAND
 
 2 LINE.NUM
-  ~S30_5_NC   ?OFF
+  ~WallFanOpMode_Man   ?OFF
 LAND
 IF -7 ELSE 0 THEN JUMP ;
 : 1_50
 TRUE
 
 1 LINE.NUM
-  ~S30_5_NC   ?ON
+  ~WallFanOpMode_Man   ?ON
 LAND
 
 2 LINE.NUM
-  ~S30_5_NO   ?ON
+  ~WallFanOpMode_Auto   ?ON
 LAND
 IF -5 ELSE -4 THEN JUMP ;
 T: T1
