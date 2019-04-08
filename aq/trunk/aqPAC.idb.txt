@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\PAC Programs\aqPAC\trunk\aqPAC.idb
+# NAME :         C:\Users\jdevera\Desktop\PAC_programs\aqpac\trunk\aqPAC.idb
 # VERSION :      R9.5a
-# TIME/DATE :    16:25:9 3/15/2018
+# TIME/DATE :    9:54:34 4/8/2019
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 

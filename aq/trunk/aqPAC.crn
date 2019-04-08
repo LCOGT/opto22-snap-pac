@@ -2995,6 +2995,13 @@ T;
 56 LINE.NUM *sTimestamp *sErrorList $CAT 
 
 57 LINE.NUM THEN 
+59 LINE.NUM ~DI_Smoke_SEN  CLR.+LATCH@I IF 
+60 LINE.NUM " , SmokeAlarm " *sErrorList $CAT 
+
+61 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+62 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+63 LINE.NUM THEN 
 0 JUMP ;
 : 17_36
 5 LINE.NUM ~DI_ESTOP_OK  CLR.-LATCH@I IF 
@@ -3017,34 +3024,27 @@ T;
 15 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
 16 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-17 LINE.NUM ELSE 
-17 LINE.NUM ~DI_Smoke_SEN  CLR.+LATCH@I IF 
-18 LINE.NUM " , SmokeAlarm " *sFaultList $CAT 
+23 LINE.NUM ELSE 
+23 LINE.NUM ~DI_SmokeHeat_SEN  CLR.+LATCH@I IF 
+24 LINE.NUM " , SmokeAlarmHeat " *sFaultList $CAT 
 
-19 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-20 LINE.NUM *sTimestamp *sFaultList $CAT 
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-21 LINE.NUM ELSE 
-21 LINE.NUM ~DI_SmokeHeat_SEN  CLR.+LATCH@I IF 
-22 LINE.NUM " , SmokeAlarmHeat " *sFaultList $CAT 
+27 LINE.NUM ELSE 
+27 LINE.NUM ~DI_24vPSU_OK  CLR.-LATCH@I IF 
+28 LINE.NUM " , 24V_Supply " *sFaultList $CAT 
 
-23 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-24 LINE.NUM *sTimestamp *sFaultList $CAT 
+29 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+30 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-25 LINE.NUM ELSE 
-25 LINE.NUM ~DI_24vPSU_OK  CLR.-LATCH@I IF 
-26 LINE.NUM " , 24V_Supply " *sFaultList $CAT 
-
-27 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-28 LINE.NUM *sTimestamp *sFaultList $CAT 
-
-29 LINE.NUM THEN THEN THEN THEN THEN THEN 
-31 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
-32 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
-33 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
-34 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
-35 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
-36 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
+31 LINE.NUM THEN THEN THEN THEN THEN 
+33 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
+34 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
+35 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
+36 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
+37 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
+38 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
 0 JUMP ;
 : 17_46
 1 LINE.NUM 100  DELAY 
@@ -4085,8 +4085,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/15/18 " ;
-: TIMESTAMP ." 16:25:09 " ;
+: DATESTAMP ." 04/08/19 " ;
+: TIMESTAMP ." 09:54:34 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
