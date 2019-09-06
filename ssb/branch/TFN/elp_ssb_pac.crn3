@@ -42,6 +42,7 @@ CREATE V.ARRAY
 ^PriorHeartbeatTime ,
 ^PriorStatusTime ,
 ^Response ,
+^SecondsSinceMidnight ,
 ^ShutdownBlink ,
 ^ShutdownGrnFlag ,
 ^ShutdownRedFlag ,
@@ -49,6 +50,7 @@ CREATE V.ARRAY
 ^SiteGrnFlag ,
 ^SiteRedFlag ,
 ^SiteSetpoint ,
+^SSB_flush_flag ,
 ^SSBBlink ,
 ^SSBGrnFlag ,
 ^SSBRedFlag ,
@@ -104,7 +106,6 @@ CREATE P.ARRAY
 ~di_acp_0901 ,
 ~di_acp_0906 ,
 ~di_acp_0907 ,
-~di_acp_0912 ,
 ~di_acp_0915 ,
 ~di_acp_0919 ,
 ~di_acp_0920 ,
@@ -119,10 +120,6 @@ CREATE P.ARRAY
 ~di_acp_0929 ,
 ~di_acp_0930 ,
 ~di_acp_0931 ,
-~DUPS_BatteryNormal ,
-~DUPS_Line_OK ,
-~DUPS_Normal_OnInverter ,
-~DUPS_ON_OK ,
 ~Enclosure_A_Green_LED ,
 ~Enclosure_A_Red_LED ,
 ~Enclosure_B_Green_LED ,
@@ -136,25 +133,7 @@ CREATE P.ARRAY
 ~EnclosureCKey ,
 ~EnclosureDKey ,
 ~Exhaust_Fan_Fault ,
-~F4_1_ECB_OK ,
-~F4_1_ECB_Set_Reset ,
-~F4_3_ECB_OK ,
-~F4_3_ECB_Set_Reset ,
-~F4_5_ECB_OK ,
-~F4_5_ECB_Set_Reset ,
-~F4_7_ECB_OK ,
-~F4_7_ECB_Set_Reset ,
-~F5_1_ECB_OK ,
-~F5_1_ECB_Set_Reset ,
-~F5_5_ECB_OK ,
-~F5_5_ECB_Set_Reset ,
-~F5_7_ECB_OK ,
-~F5_7_ECB_Set_Reset ,
 ~Fan_Green_LED ,
-~FAN_M2_4_ON ,
-~FAN_M2_7_ON ,
-~FAN_M3_2_ON ,
-~FAN_M3_5_ON ,
 ~Fan_Red_LED ,
 ~Fan_Sw_1 ,
 ~Fan_Sw_2 ,
@@ -162,15 +141,10 @@ CREATE P.ARRAY
 ~Fence_Green_LED ,
 ~Fence_Red_LED ,
 ~FenceKey ,
-~FUPS_BatteryNormal ,
-~FUPS_Line_OK ,
-~FUPS_Normal_OnInverter ,
-~FUPS_ON_OK ,
 ~HeatEnableSW ,
 ~HighTempAlert ,
 ~Keyring_Status_Green_LED ,
 ~Keyring_Status_Red_LED ,
-~Ladder_stowed ,
 ~Mute_Test ,
 ~OK_12VDC ,
 ~OK_24VDC ,
@@ -195,27 +169,14 @@ CREATE P.ARRAY
 ~ACP_Fan_Tach ,
 ~Acp_Panel_Fan_Speed ,
 ~ai_acp_1003 ,
-~Air_DewpointTemp ,
-~Air_Humidity ,
 ~AirCompressor_Current ,
 ~AirPressure ,
-~HVAC_24VAC ,
-~HVAC_Cool_Voltage ,
-~HVAC_Fan_Voltage ,
-~HVAC_Heat_Voltage ,
 ~IT_Rack_Back_Temp ,
 ~Spare_Tach ,
 ~SSB_Exhaust_Fan_Speed ,
-~SSB_Fan_M24_Tach ,
-~SSB_Fan_M27_Tach ,
-~SSB_Fan_M32_Tach ,
-~SSB_Fan_M35_Tach ,
 ~SSB_Incoming_Air_Temp ,
-~SSB_Internal_Humidity ,
-~SSB_Internal_Temp ,
 ~SSB_Outgoing_Temp ,
 ~SSB_Panel_Temp ,
-~Utility_Current ,
 ~Utility_VAC ,
  0 ,
 CREATE PID.ARRAY
@@ -272,6 +233,7 @@ CONFIG_PORTS
 1 ^PriorHeartbeatTime @!
 0 ^PriorStatusTime @!
 0 ^Response @!
+0 ^SecondsSinceMidnight @!
 0 ^ShutdownBlink @!
 0 ^ShutdownGrnFlag @!
 0 ^ShutdownRedFlag @!
@@ -280,6 +242,7 @@ CONFIG_PORTS
 0 ^SiteRedFlag @!
 24.000000 ^SiteSetpoint @!
 0.0 ^Socket_Timer @!
+0 ^SSB_flush_flag @!
 0 ^SSBBlink @!
 0 ^SSBGrnFlag @!
 0 ^SSBRedFlag @!

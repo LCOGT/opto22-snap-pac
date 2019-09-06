@@ -24,10 +24,6 @@
 17 LINE.NUM ~Shutdown_Status_Green_LED  OFF 
 18 LINE.NUM ~SSB_status_Red_LED  OFF 
 19 LINE.NUM ~SSB_status_Green_LED  OFF 
-20 LINE.NUM ~FAN_M2_4_ON  OFF 
-21 LINE.NUM ~FAN_M2_7_ON  OFF 
-22 LINE.NUM ~FAN_M3_2_ON  OFF 
-23 LINE.NUM ~FAN_M3_5_ON  OFF 
 24 LINE.NUM 6 I>F ~Acp_Panel_Fan_Speed @! 
 25 LINE.NUM 0 I>F ~SSB_Exhaust_Fan_Speed @! 
 26 LINE.NUM " UNTRIGGERED" *TempServoState  $MOVE 
@@ -37,7 +33,7 @@
 30 LINE.NUM " " *ErrorString  $MOVE 
 31 LINE.NUM " " *FaultString  $MOVE 
 32 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @! 
-33 LINE.NUM ~SSB_Internal_Temp @@ ~IT_Rack_Back_Temp @@ F+ 2 I>F F/ ^avg_T @! 
+33 LINE.NUM ~IT_Rack_Back_Temp @@ ^avg_T @! 
 2 JUMP ;
 : 0_9
 
