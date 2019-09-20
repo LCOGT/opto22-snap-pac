@@ -1,0 +1,335 @@
+: 8_0
+33 JUMP ;
+: 8_9
+
+1 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+
+2 LINE.NUM
+  ~DO_pumpMotor   OFF
+8 JUMP ;
+: 8_16
+
+1 LINE.NUM
+  ~DO_lowerCloseValve   ON
+
+2 LINE.NUM
+  ~DO_pumpMotor   ON
+34 JUMP ;
+: 8_37
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+43 JUMP ;
+: 8_38
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+42 JUMP ;
+: 8_43
+
+1 LINE.NUM
+  ^Time_defLowerOperate @@ 
+  ^Timer_LowerOperate   SetTimer
+
+2 LINE.NUM
+  ^Time_defContactorOperate @@ 
+  ^Timer_LowerContactor   SetTimer
+
+3 LINE.NUM
+  ^Timer_LowerOperate   StartTimer
+
+4 LINE.NUM
+  ^Timer_LowerContactor   StartTimer
+-4 JUMP ;
+: 8_52
+
+1 LINE.NUM
+  ^FLT_SLOT09fuse   TRUE@!
+2 JUMP ;
+: 8_69
+
+1 LINE.NUM
+  ^FLT_K5off   TRUE@!
+1 JUMP ;
+: 8_78
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+38 JUMP ;
+: 8_80
+
+1 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+
+2 LINE.NUM
+  ~DO_pumpMotor   OFF
+-2 JUMP ;
+: 8_94
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+29 JUMP ;
+: 8_97
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+35 JUMP ;
+: 8_101
+
+1 LINE.NUM
+  ^FLT_K5on   TRUE@!
+-2 JUMP ;
+: 8_114
+
+1 LINE.NUM
+  ^FLT_K5on   TRUE@!
+32 JUMP ;
+: 8_115
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+32 JUMP ;
+: 8_118
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+25 JUMP ;
+: 8_122
+
+1 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+
+2 LINE.NUM
+  ~DO_pumpMotor   OFF
+-2 JUMP ;
+: 8_129
+
+1 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+
+2 LINE.NUM
+  ~DO_pumpMotor   OFF
+1 JUMP ;
+: 8_130
+
+1 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+
+2 LINE.NUM
+  ~DO_pumpMotor   OFF
+1 JUMP ;
+: 8_133
+
+1 LINE.NUM
+  ^FLT_K10overload   TRUE@!
+6 JUMP ;
+: 8_134
+
+1 LINE.NUM
+  ^FLT_LowerCloseTimeout   TRUE@!
+0 JUMP ;
+: 8_138
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+22 JUMP ;
+: 8_140
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+24 JUMP ;
+: 8_141
+
+1 LINE.NUM
+  ^FLT_K5on   TRUE@!
+-2 JUMP ;
+: 8_154
+
+1 LINE.NUM
+  ^FLT_K5on   TRUE@!
+0 JUMP ;
+: 8_155
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+21 JUMP ;
+: 8_157
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+18 JUMP ;
+: 8_181
+
+1 LINE.NUM
+  500    DELAY
+-27 JUMP ;
+: 8_188
+
+1 LINE.NUM
+  4000    DELAY
+0 JUMP ;
+: 8_190
+-30 JUMP ;
+: 8_198
+1 LINE.NUM " CLOSING" *sStatus_Shutter2  $MOVE 
+4 JUMP ;
+: 8_199
+1 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
+-21 JUMP ;
+: 8_13
+TRUE
+
+1 LINE.NUM
+  ~SW_upperShutterClear   ?ON
+LAND
+IF 10 ELSE -17 THEN JUMP ;
+: 8_18
+TRUE
+
+1 LINE.NUM
+  ~SW_upperShutterClear   ?ON
+LAND
+IF -29 ELSE -30 THEN JUMP ;
+: 8_19
+TRUE
+
+1 LINE.NUM
+  ~SW_lowerCloseLimit   ?ON
+LAND
+IF -32 ELSE -2 THEN JUMP ;
+: 8_21
+TRUE
+
+1 LINE.NUM
+  ~SW_lowerCloseLimit   ?ON
+LAND
+IF -9 ELSE -4 THEN JUMP ;
+: 8_51
+TRUE
+
+1 LINE.NUM
+  ~FB_slot09Fuse   ?ON
+LAND
+IF 2 ELSE -31 THEN JUMP ;
+: 8_55
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?OFF
+LAND
+IF -8 ELSE 0 THEN JUMP ;
+: 8_61
+TRUE
+
+1 LINE.NUM
+  ^Timer_LowerContactor   T0=
+LAND
+IF -3 ELSE -2 THEN JUMP ;
+: 8_67
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?ON
+LAND
+IF -33 ELSE -31 THEN JUMP ;
+: 8_102
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?OFF
+LAND
+IF -29 ELSE -10 THEN JUMP ;
+: 8_113
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?OFF
+LAND
+IF -29 ELSE 4 THEN JUMP ;
+: 8_124
+TRUE
+
+1 LINE.NUM
+  ~FLT_pumpMotorOverload   ?OFF
+LAND
+IF -26 ELSE -8 THEN JUMP ;
+: 8_125
+TRUE
+
+1 LINE.NUM
+  ^Timer_LowerOperate   T0=
+LAND
+IF -26 ELSE -2 THEN JUMP ;
+: 8_142
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?OFF
+LAND
+IF -22 ELSE -23 THEN JUMP ;
+: 8_153
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?OFF
+LAND
+IF -22 ELSE -21 THEN JUMP ;
+: 8_184
+FALSE
+
+1 LINE.NUM
+  ^FLT_K5on @@   0<>
+LOR
+IF -33 ELSE -19 THEN JUMP ;
+T: T8
+DUMMY
+8_0
+8_9
+8_16
+8_37
+8_38
+8_43
+8_52
+8_69
+8_78
+8_80
+8_94
+8_97
+8_101
+8_114
+8_115
+8_118
+8_122
+8_129
+8_130
+8_133
+8_134
+8_138
+8_140
+8_141
+8_154
+8_155
+8_157
+8_181
+8_188
+8_190
+8_198
+8_199
+8_13
+8_18
+8_19
+8_21
+8_51
+8_55
+8_61
+8_67
+8_102
+8_113
+8_124
+8_125
+8_142
+8_153
+8_184
+T;
+&Function_LowerClose ' T8 SETTASK
