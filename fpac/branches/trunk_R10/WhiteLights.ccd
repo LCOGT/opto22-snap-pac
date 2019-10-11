@@ -33,7 +33,7 @@
 TRUE
 
 1 LINE.NUM
-  ~S33_1_STATUS   ?ON
+  ~WtLightSwitch   ?ON
 LAND
 IF -3 ELSE -2 THEN JUMP ;
 T: T3

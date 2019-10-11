@@ -181,8 +181,8 @@
 34 LINE.NUM *StatusString *EnviroString  $MOVE 
 36 LINE.NUM " , MainsVoltage=" *EnviroString $CAT 
 
-37 LINE.NUM ~UTILITY_SEN @@ 5 I>F F>= IF 
-38 LINE.NUM ~UTILITY_SEN @@ 4 0 *EnviroTemp  FF.R$ 
+37 LINE.NUM ~UtilityVoltage @@ 5 I>F F>= IF 
+38 LINE.NUM ~UtilityVoltage @@ 4 0 *EnviroTemp  FF.R$ 
 39 LINE.NUM ELSE 
 40 LINE.NUM " NaN" *EnviroTemp  $MOVE 
 41 LINE.NUM THEN 
@@ -190,8 +190,8 @@
 
 43 LINE.NUM " , RedLightVoltage=" *EnviroString $CAT 
 
-44 LINE.NUM ~RED_LT_SEN @@ 5 I>F F>= IF 
-45 LINE.NUM ~RED_LT_SEN @@ 4 0 *EnviroTemp  FF.R$ 
+44 LINE.NUM ~RedLightVoltage @@ 5 I>F F>= IF 
+45 LINE.NUM ~RedLightVoltage @@ 4 0 *EnviroTemp  FF.R$ 
 46 LINE.NUM ELSE 
 47 LINE.NUM " NaN" *EnviroTemp  $MOVE 
 48 LINE.NUM THEN 
@@ -199,8 +199,8 @@
 
 50 LINE.NUM " , UPSVoltage=" *EnviroString $CAT 
 
-51 LINE.NUM ~UPS_SENSE @@ 5 I>F F>= IF 
-52 LINE.NUM ~UPS_SENSE @@ 4 0 *EnviroTemp  FF.R$ 
+51 LINE.NUM ~UPSvoltage @@ 5 I>F F>= IF 
+52 LINE.NUM ~UPSvoltage @@ 4 0 *EnviroTemp  FF.R$ 
 53 LINE.NUM ELSE 
 54 LINE.NUM " NaN" *EnviroTemp  $MOVE 
 55 LINE.NUM THEN 
@@ -208,8 +208,8 @@
 
 57 LINE.NUM " , DCSVoltage=" *EnviroString $CAT 
 
-58 LINE.NUM ~DCS_SENSE @@ 5 I>F F>= IF 
-59 LINE.NUM ~DCS_SENSE @@ 4 0 *EnviroTemp  FF.R$ 
+58 LINE.NUM ~DCSvoltage @@ 5 I>F F>= IF 
+59 LINE.NUM ~DCSvoltage @@ 4 0 *EnviroTemp  FF.R$ 
 60 LINE.NUM ELSE 
 61 LINE.NUM " NaN" *EnviroTemp  $MOVE 
 62 LINE.NUM THEN 
@@ -217,47 +217,47 @@
 
 64 LINE.NUM " , RollBrakePressure=" *EnviroString $CAT 
 
-65 LINE.NUM ~ROLL_BRK_PRES @@ 5 1 *EnviroTemp  FF.R$ 
+65 LINE.NUM ~RollBrakePressure @@ 5 1 *EnviroTemp  FF.R$ 
 66 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 67 LINE.NUM " , PitchBrakePressure=" *EnviroString $CAT 
 
-68 LINE.NUM ~PITCH_BRK_PRES @@ 5 1 *EnviroTemp  FF.R$ 
+68 LINE.NUM ~PitchBrakePressure @@ 5 1 *EnviroTemp  FF.R$ 
 69 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 71 LINE.NUM " , PanelIntake1Tac=0" *EnviroString $CAT 
 
 77 LINE.NUM " , EncFan1Tac=" *EnviroString $CAT 
 
-78 LINE.NUM ~M6_3_CTRL @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
+78 LINE.NUM ~WallFanM73_Ctrl @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
 79 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 80 LINE.NUM " , EncFan2Tac=" *EnviroString $CAT 
 
-81 LINE.NUM ~M6_5_CTRL @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
+81 LINE.NUM ~WallFanM75_Ctrl @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
 82 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 83 LINE.NUM " , EncFan3Tac=" *EnviroString $CAT 
 
-84 LINE.NUM ~M6_7_CTRL @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
+84 LINE.NUM ~WallFanM77_Ctrl @@ 10 I>F F* 4 0 *EnviroTemp  FF.R$ 
 85 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 92 LINE.NUM " , PanelFan1Tac=" *EnviroString $CAT 
 
-93 LINE.NUM ~Cabinet_FAN @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+93 LINE.NUM ~CabinetFanSpeed @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 94 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 95 LINE.NUM " , PanelAirTemp=" *EnviroString $CAT 
 
-96 LINE.NUM ~PanelAir @@ 4 1 *EnviroTemp  FF.R$ 
+96 LINE.NUM ~CabinetTemp @@ 4 1 *EnviroTemp  FF.R$ 
 97 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 98 LINE.NUM " , DomeExitAirTemp=" *EnviroString $CAT 
 
-99 LINE.NUM ~DomeExitAir @@ 4 1 *EnviroTemp  FF.R$ 
+99 LINE.NUM ~WallExitAirTemp @@ 4 1 *EnviroTemp  FF.R$ 
 100 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-102 LINE.NUM ~AzAvail @@I 1 = IF 
+102 LINE.NUM ~AzDriveAvailable @@I 1 = IF 
 103 LINE.NUM " , AzimuthAvailable=TRUE" *EnviroString $CAT 
 
 104 LINE.NUM ELSE 
@@ -271,56 +271,56 @@
 110 LINE.NUM " , HVACSwitchState=STOP" *EnviroString $CAT 
 
 111 LINE.NUM THEN 
-112 LINE.NUM ~HVAC_CTRL @@I 1 = IF 
+112 LINE.NUM ~AirCon_Ctrl @@I 1 = IF 
 113 LINE.NUM " , HVACOn=TRUE" *EnviroString $CAT 
 
 114 LINE.NUM ELSE 
 115 LINE.NUM " , HVACOn=FALSE" *EnviroString $CAT 
 
 116 LINE.NUM THEN 
-118 LINE.NUM ~S26_7 @@I 1 = IF 
+118 LINE.NUM ~GoFastOrEntryLockTrapped @@I 1 = IF 
 119 LINE.NUM " , DoorRedTrapKeySecured=TRUE" *EnviroString $CAT 
 
 120 LINE.NUM ELSE 
 121 LINE.NUM " , DoorRedTrapKeySecured=FALSE" *EnviroString $CAT 
 
 122 LINE.NUM THEN 
-124 LINE.NUM ~S26_4_1 @@I 1 = IF 
+124 LINE.NUM ~GoFast @@I 1 = IF 
 125 LINE.NUM " , GoFastButton=TRUE" *EnviroString $CAT 
 
 126 LINE.NUM ELSE 
 127 LINE.NUM " , GoFastButton=FALSE" *EnviroString $CAT 
 
 128 LINE.NUM THEN 
-130 LINE.NUM ~S26_4 @@I 1 = IF 
+130 LINE.NUM ~EntryDoorOverrideFree @@I 1 = IF 
 131 LINE.NUM " , PanelRedTrapKeySecured=FALSE" *EnviroString $CAT 
 
 132 LINE.NUM ELSE 
 133 LINE.NUM " , PanelRedTrapKeySecured=TRUE" *EnviroString $CAT 
 
 134 LINE.NUM THEN 
-136 LINE.NUM ~S26_4_1 @@I 1 = ~S26_4 @@I 1 <> LOR  ~S26_7 @@I 1 = LOR  IF 
+136 LINE.NUM ~GoFast @@I 1 = ~EntryDoorOverrideFree @@I 1 <> LOR  ~GoFastOrEntryLockTrapped @@I 1 = LOR  IF 
 137 LINE.NUM " , GoFastState=TRUE" *EnviroString $CAT 
 
 138 LINE.NUM ELSE 
 139 LINE.NUM " , GoFastState=FALSE" *EnviroString $CAT 
 
 140 LINE.NUM THEN 
-142 LINE.NUM ~S33_3_NO @@I 1 = IF 
+142 LINE.NUM ~LadderFree @@I 1 = IF 
 143 LINE.NUM " , LadderStowed=FALSE" *EnviroString $CAT 
 
 144 LINE.NUM ELSE 
 145 LINE.NUM " , LadderStowed=TRUE" *EnviroString $CAT 
 
 146 LINE.NUM THEN 
-148 LINE.NUM ~B32_2 @@I 0 = IF 
+148 LINE.NUM ~EntryDoorClosed @@I 0 = IF 
 149 LINE.NUM " , EnclosureDoor1Closed=FALSE, EnclosureDoor2Closed=FALSE" *EnviroString $CAT 
 
 150 LINE.NUM ELSE 
 151 LINE.NUM " , EnclosureDoor1Closed=TRUE, EnclosureDoor2Closed=TRUE" *EnviroString $CAT 
 
 152 LINE.NUM THEN 
-159 LINE.NUM ~RED_LT_SEN @@ 110 I>F F> IF 
+159 LINE.NUM ~RedLightVoltage @@ 110 I>F F> IF 
 160 LINE.NUM " , RedLightSwitchOn=TRUE" *EnviroString $CAT 
 
 161 LINE.NUM " , RedLightState=TRUE" *EnviroString $CAT 
@@ -331,14 +331,14 @@
 164 LINE.NUM " , RedLightState=FALSE" *EnviroString $CAT 
 
 165 LINE.NUM THEN 
-166 LINE.NUM ~S30_7_1 @@I 1 = IF 
+166 LINE.NUM ~CabinetDoorOpen @@I 1 = IF 
 167 LINE.NUM " , PanelDoorClosed=FALSE" *EnviroString $CAT 
 
 168 LINE.NUM ELSE 
 169 LINE.NUM " , PanelDoorClosed=TRUE" *EnviroString $CAT 
 
 170 LINE.NUM THEN 
-171 LINE.NUM ~S33_1_STATUS @@I 1 = IF 
+171 LINE.NUM ~WtLightSwitch @@I 1 = IF 
 172 LINE.NUM " , WhiteLightSwitchOn=TRUE" *EnviroString $CAT 
 
 173 LINE.NUM ELSE 
@@ -382,7 +382,7 @@
 207 LINE.NUM " , DoorLedColor=OFF" *EnviroString $CAT 
 
 208 LINE.NUM THEN THEN THEN 
-210 LINE.NUM ~SONALERT @@I 1 = IF 
+210 LINE.NUM ~Sonalert @@I 1 = IF 
 211 LINE.NUM " , SonalertState=TRUE" *EnviroString $CAT 
 
 212 LINE.NUM ELSE 
@@ -433,41 +433,41 @@
 4 LINE.NUM 0 ^Response @! 
 6 LINE.NUM " ENC_FANS_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 7 LINE.NUM ^Position @@ -1 >= ^FanSwMode @@ 2 = LAND  IF 
-8 LINE.NUM 10 I>F 2 I>F ~M6_3_CTRL  F!RAMP 
-9 LINE.NUM 10 I>F 2 I>F ~M6_5_CTRL  F!RAMP 
-10 LINE.NUM 10 I>F 2 I>F ~M6_7_CTRL  F!RAMP 
+8 LINE.NUM 10 I>F 2 I>F ~WallFanM73_Ctrl  F!RAMP 
+9 LINE.NUM 10 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
+10 LINE.NUM 10 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 11 LINE.NUM 10 ^TempFanSpeed @! 
-12 LINE.NUM 0 ~HVAC_CTRL @! 
+12 LINE.NUM 0 ~AirCon_Ctrl @! 
 13 LINE.NUM 0 ^HvacOn @! 
 14 LINE.NUM 1 ^Response @! 
 15 LINE.NUM THEN 
 16 LINE.NUM " ENC_FANS_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 17 LINE.NUM ^Position @@ -1 >= ^FanSwMode @@ 2 = LAND  IF 
-18 LINE.NUM 7 I>F 2 I>F ~M6_3_CTRL  F!RAMP 
-19 LINE.NUM 7 I>F 2 I>F ~M6_5_CTRL  F!RAMP 
-20 LINE.NUM 7 I>F 2 I>F ~M6_7_CTRL  F!RAMP 
+18 LINE.NUM 7 I>F 2 I>F ~WallFanM73_Ctrl  F!RAMP 
+19 LINE.NUM 7 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
+20 LINE.NUM 7 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 21 LINE.NUM 7 ^TempFanSpeed @! 
-22 LINE.NUM 0 ~HVAC_CTRL @! 
+22 LINE.NUM 0 ~AirCon_Ctrl @! 
 23 LINE.NUM 0 ^HvacOn @! 
 24 LINE.NUM 1 ^Response @! 
 25 LINE.NUM THEN 
 26 LINE.NUM " ENC_FANS_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 27 LINE.NUM ^Position @@ -1 >= ^FanSwMode @@ 2 = LAND  IF 
-28 LINE.NUM 4 I>F 2 I>F ~M6_3_CTRL  F!RAMP 
-29 LINE.NUM 4 I>F 2 I>F ~M6_5_CTRL  F!RAMP 
-30 LINE.NUM 4 I>F 2 I>F ~M6_7_CTRL  F!RAMP 
+28 LINE.NUM 4 I>F 2 I>F ~WallFanM73_Ctrl  F!RAMP 
+29 LINE.NUM 4 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
+30 LINE.NUM 4 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 31 LINE.NUM 4 ^TempFanSpeed @! 
-32 LINE.NUM 0 ~HVAC_CTRL @! 
+32 LINE.NUM 0 ~AirCon_Ctrl @! 
 33 LINE.NUM 0 ^HvacOn @! 
 35 LINE.NUM 1 ^Response @! 
 36 LINE.NUM THEN 
 37 LINE.NUM " ENC_FANS_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 38 LINE.NUM ^Position @@ -1 >= ^FanSwMode @@ 2 = LAND  IF 
-39 LINE.NUM 0 I>F 4 I>F ~M6_3_CTRL  F!RAMP 
-40 LINE.NUM 0 I>F 4 I>F ~M6_5_CTRL  F!RAMP 
-41 LINE.NUM 0 I>F 4 I>F ~M6_7_CTRL  F!RAMP 
+39 LINE.NUM 0 I>F 4 I>F ~WallFanM73_Ctrl  F!RAMP 
+40 LINE.NUM 0 I>F 4 I>F ~WallFanM75_Ctrl  F!RAMP 
+41 LINE.NUM 0 I>F 4 I>F ~WallFanM77_Ctrl  F!RAMP 
 42 LINE.NUM 0 ^TempFanSpeed @! 
-43 LINE.NUM 1 ~HVAC_CTRL @! 
+43 LINE.NUM 1 ~AirCon_Ctrl @! 
 44 LINE.NUM 0 ^HvacOn @! 
 45 LINE.NUM 1 ^Response @! 
 46 LINE.NUM THEN 
@@ -483,39 +483,39 @@
 101 LINE.NUM THEN 
 103 LINE.NUM " PANEL_LIGHT_ENABLE" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 104 LINE.NUM ^Position @@ -1 >= IF 
-105 LINE.NUM 1 ~LAMP_TEST @! 
+105 LINE.NUM 1 ~LampTest @! 
 106 LINE.NUM 1 ^Response @! 
 107 LINE.NUM THEN 
 108 LINE.NUM " PANEL_LIGHT_DISABLE" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 109 LINE.NUM ^Position @@ -1 >= IF 
-110 LINE.NUM 0 ~LAMP_TEST @! 
+110 LINE.NUM 0 ~LampTest @! 
 111 LINE.NUM 1 ^Response @! 
 112 LINE.NUM THEN 
 114 LINE.NUM " PANEL_FANS_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 115 LINE.NUM ^Position @@ -1 >= IF 
-117 LINE.NUM 10 I>F 4 I>F ~CABINET_FAN_CTRL  F!RAMP 
+117 LINE.NUM 10 I>F 4 I>F ~CabinetFanCtrl  F!RAMP 
 118 LINE.NUM 10 ^TempPanelSpeed @! 
 119 LINE.NUM 1 ^Response @! 
 120 LINE.NUM THEN 
 121 LINE.NUM " PANEL_FANS_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 122 LINE.NUM ^Position @@ -1 >= IF 
-124 LINE.NUM 0 I>F 4 I>F ~CABINET_FAN_CTRL  F!RAMP 
+124 LINE.NUM 0 I>F 4 I>F ~CabinetFanCtrl  F!RAMP 
 125 LINE.NUM 0 ^TempPanelSpeed @! 
 126 LINE.NUM 1 ^Response @! 
 127 LINE.NUM THEN 
 129 LINE.NUM " RED_LIGHT_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 130 LINE.NUM ^Position @@ -1 >= IF 
-131 LINE.NUM ~RED_LT_CTRL @@I LNOT  ~RED_LT_CTRL @! 
+131 LINE.NUM ~Red_Lt_Ctrl @@I LNOT  ~Red_Lt_Ctrl @! 
 132 LINE.NUM 1 ^Response @! 
 133 LINE.NUM THEN 
 134 LINE.NUM " RED_LIGHT_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 135 LINE.NUM ^Position @@ -1 >= IF 
-136 LINE.NUM ~RED_LT_CTRL @@I LNOT  ~RED_LT_CTRL @! 
+136 LINE.NUM ~Red_Lt_Ctrl @@I LNOT  ~Red_Lt_Ctrl @! 
 137 LINE.NUM 1 ^Response @! 
 138 LINE.NUM THEN 
 139 LINE.NUM " RED_LIGHT_TOGGLE" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 140 LINE.NUM ^Position @@ -1 >= IF 
-141 LINE.NUM ~RED_LT_CTRL @@I LNOT  ~RED_LT_CTRL @! 
+141 LINE.NUM ~Red_Lt_Ctrl @@I LNOT  ~Red_Lt_Ctrl @! 
 142 LINE.NUM 1 ^Response @! 
 143 LINE.NUM THEN 
 161 LINE.NUM " PANEL_LED_GREEN" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -588,12 +588,12 @@
 232 LINE.NUM THEN 
 235 LINE.NUM " SON_ALERT_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 236 LINE.NUM ^Position @@ -1 >= IF 
-237 LINE.NUM 1 ~SONALERT @! 
+237 LINE.NUM 1 ~Sonalert @! 
 238 LINE.NUM 1 ^Response @! 
 239 LINE.NUM THEN 
 240 LINE.NUM " SON_ALERT_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 241 LINE.NUM ^Position @@ -1 >= IF 
-242 LINE.NUM 0 ~SONALERT @! 
+242 LINE.NUM 0 ~Sonalert @! 
 243 LINE.NUM 1 ^Response @! 
 244 LINE.NUM THEN 
 246 LINE.NUM ^Response @@ 1 = IF 

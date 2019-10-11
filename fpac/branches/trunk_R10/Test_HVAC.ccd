@@ -3,7 +3,7 @@
 : 2_3
 
 1 LINE.NUM
-  ~HVAC_CTRL   OFF
+  ~AirCon_Ctrl   OFF
 
 2 LINE.NUM
   ^HvacOn   FALSE@!
@@ -11,7 +11,7 @@
 : 2_7
 
 1 LINE.NUM
-  ~HVAC_CTRL   ON
+  ~AirCon_Ctrl   ON
 0 JUMP ;
 : 2_10
 

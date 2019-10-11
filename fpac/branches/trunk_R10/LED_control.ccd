@@ -13,30 +13,30 @@
 : 11_2
 
 1 LINE.NUM
-  ~DoorGrnLED   OFF
+  ~EntryDoorGreenLED   OFF
 
 2 LINE.NUM
-  ~DoorRedLED   OFF
+  ~EntryDoorRedLED   OFF
 
 3 LINE.NUM
-  ~PanelGrnLED   OFF
+  ~PanelGreenLED   OFF
 
 4 LINE.NUM
-  ~PanelRedLed   OFF
+  ~PanelRedLED   OFF
 3 JUMP ;
 : 11_12
 
 1 LINE.NUM
-  ~DoorGrnLED   OFF
+  ~EntryDoorGreenLED   OFF
 
 2 LINE.NUM
-  ~DoorRedLED   OFF
+  ~EntryDoorRedLED   OFF
 
 3 LINE.NUM
-  ~PanelGrnLED   OFF
+  ~PanelGreenLED   OFF
 
 4 LINE.NUM
-  ~PanelRedLed   OFF
+  ~PanelRedLED   OFF
 0 JUMP ;
 : 11_13
 
@@ -44,10 +44,10 @@
   9    DELAY
 0 JUMP ;
 : 11_14
-1 LINE.NUM ^DoorGrnFlag @@ ~DoorGrnLED @! 
-2 LINE.NUM ^DoorRedFlag @@ ~DoorRedLED @! 
-3 LINE.NUM ^PanelGrnFlag @@ ~PanelGrnLED @! 
-4 LINE.NUM ^PanelRedFlag @@ ~PanelRedLed @! 
+1 LINE.NUM ^DoorGrnFlag @@ ~EntryDoorGreenLED @! 
+2 LINE.NUM ^DoorRedFlag @@ ~EntryDoorRedLED @! 
+3 LINE.NUM ^PanelGrnFlag @@ ~PanelGreenLED @! 
+4 LINE.NUM ^PanelRedFlag @@ ~PanelRedLED @! 
 0 JUMP ;
 : 11_20
 

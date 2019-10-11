@@ -5,17 +5,17 @@
 1 LINE.NUM
   10.0  
   2.0  
-  ~M6_3_CTRL   F!RAMP
+  ~WallFanM73_Ctrl   F!RAMP
 
 2 LINE.NUM
   10.0  
   2.0  
-  ~M6_5_CTRL   F!RAMP
+  ~WallFanM75_Ctrl   F!RAMP
 
 3 LINE.NUM
   10.0  
   2.0  
-  ~M6_7_CTRL   F!RAMP
+  ~WallFanM77_Ctrl   F!RAMP
 
 4 LINE.NUM
   10.  
@@ -29,17 +29,17 @@
 1 LINE.NUM
   0.0  
   4.0  
-  ~M6_3_CTRL   F!RAMP
+  ~WallFanM73_Ctrl   F!RAMP
 
 2 LINE.NUM
   0.0  
   4.0  
-  ~M6_5_CTRL   F!RAMP
+  ~WallFanM75_Ctrl   F!RAMP
 
 3 LINE.NUM
   0.0  
   4.0  
-  ~M6_7_CTRL   F!RAMP
+  ~WallFanM77_Ctrl   F!RAMP
 
 4 LINE.NUM
   10.  
@@ -72,22 +72,22 @@
 2 LINE.NUM
   ^TempFanSpeed @@F 
   2.0  
-  ~M6_3_CTRL   F!RAMP
+  ~WallFanM73_Ctrl   F!RAMP
 
 3 LINE.NUM
   ^TempFanSpeed @@F 
   2.0  
-  ~M6_5_CTRL   F!RAMP
+  ~WallFanM75_Ctrl   F!RAMP
 
 4 LINE.NUM
   ^TempFanSpeed @@F 
   2.0  
-  ~M6_7_CTRL   F!RAMP
+  ~WallFanM77_Ctrl   F!RAMP
 
 5 LINE.NUM
   ^TempPanelSpeed @@F 
   2.0  
-  ~CABINET_FAN_CTRL   F!RAMP
+  ~CabinetFanCtrl   F!RAMP
 -3 JUMP ;
 : 1_63
 

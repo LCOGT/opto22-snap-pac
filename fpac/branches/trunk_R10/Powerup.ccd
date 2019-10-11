@@ -47,7 +47,7 @@
 
 3 LINE.NUM
   10.0  
-  ~CABINET_FAN_CTRL @!   
+  ~CabinetFanCtrl @!   
 -2 JUMP ;
 : 0_26
 0 JUMP ;
