@@ -1,5 +1,5 @@
 : 2_0
-2 JUMP ;
+3 JUMP ;
 : 2_3
 
 1 LINE.NUM
@@ -17,21 +17,61 @@
 
 1 LINE.NUM
   60    DELAY
-2 JUMP ;
+3 JUMP ;
+: 2_26
+1 LINE.NUM 100  DELAY 
+3 LINE.NUM *sSite " TFN" $= IF 
+4 LINE.NUM ~AirConOpMode_Auto @@I 1 = IF 
+5 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+6 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+7 LINE.NUM ELSE 
+7 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+9 LINE.NUM ELSE 
+9 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+10 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+11 LINE.NUM ELSE 
+11 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+13 LINE.NUM THEN THEN THEN THEN 
+14 LINE.NUM THEN 
+16 LINE.NUM ~AirConOpMode_Auto @@I 0 = IF 
+17 LINE.NUM ~AirCon_ON @@I 1 = IF 
+18 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+19 LINE.NUM THEN 
+20 LINE.NUM THEN 
+21 LINE.NUM ELSE 
+22 LINE.NUM ~AirConOpMode_Auto @@I 1 = IF 
+23 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+24 LINE.NUM 0 ~AirCon_Ctrl @! 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+27 LINE.NUM ELSE 
+27 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+28 LINE.NUM 1 ~AirCon_Ctrl @! 
+29 LINE.NUM ELSE 
+29 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+31 LINE.NUM THEN THEN THEN THEN 
+32 LINE.NUM THEN 
+34 LINE.NUM ~AirConOpMode_Auto @@I 0 = IF 
+35 LINE.NUM ~AirCon_ON @@I 1 = IF 
+36 LINE.NUM 0 ~AirCon_Ctrl @! 
+37 LINE.NUM THEN 
+38 LINE.NUM THEN 
+39 LINE.NUM THEN 
+-1 JUMP ;
 : 2_4
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -4 ELSE -2 THEN JUMP ;
+IF -5 ELSE -3 THEN JUMP ;
 : 2_8
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -4 ELSE -5 THEN JUMP ;
+IF -5 ELSE -6 THEN JUMP ;
 : 2_9
 TRUE
 
@@ -45,6 +85,7 @@ DUMMY
 2_3
 2_7
 2_10
+2_26
 2_4
 2_8
 2_9

@@ -271,7 +271,7 @@
 110 LINE.NUM " , HVACSwitchState=STOP" *EnviroString $CAT 
 
 111 LINE.NUM THEN 
-112 LINE.NUM ~AirCon_Ctrl @@I 1 = IF 
+112 LINE.NUM ~AirCon_ON @@I 1 = IF 
 113 LINE.NUM " , HVACOn=TRUE" *EnviroString $CAT 
 
 114 LINE.NUM ELSE 
@@ -437,7 +437,6 @@
 9 LINE.NUM 10 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
 10 LINE.NUM 10 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 11 LINE.NUM 10 ^TempFanSpeed @! 
-12 LINE.NUM 0 ~AirCon_Ctrl @! 
 13 LINE.NUM 0 ^HvacOn @! 
 14 LINE.NUM 1 ^Response @! 
 15 LINE.NUM THEN 
@@ -447,7 +446,6 @@
 19 LINE.NUM 7 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
 20 LINE.NUM 7 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 21 LINE.NUM 7 ^TempFanSpeed @! 
-22 LINE.NUM 0 ~AirCon_Ctrl @! 
 23 LINE.NUM 0 ^HvacOn @! 
 24 LINE.NUM 1 ^Response @! 
 25 LINE.NUM THEN 
@@ -457,7 +455,6 @@
 29 LINE.NUM 4 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
 30 LINE.NUM 4 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 31 LINE.NUM 4 ^TempFanSpeed @! 
-32 LINE.NUM 0 ~AirCon_Ctrl @! 
 33 LINE.NUM 0 ^HvacOn @! 
 35 LINE.NUM 1 ^Response @! 
 36 LINE.NUM THEN 
@@ -467,7 +464,6 @@
 40 LINE.NUM 0 I>F 4 I>F ~WallFanM75_Ctrl  F!RAMP 
 41 LINE.NUM 0 I>F 4 I>F ~WallFanM77_Ctrl  F!RAMP 
 42 LINE.NUM 0 ^TempFanSpeed @! 
-43 LINE.NUM 1 ~AirCon_Ctrl @! 
 44 LINE.NUM 0 ^HvacOn @! 
 45 LINE.NUM 1 ^Response @! 
 46 LINE.NUM THEN 

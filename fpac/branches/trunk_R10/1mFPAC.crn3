@@ -8,6 +8,7 @@ CREATE T.ARRAY
 &WhiteLights ,
  0 ,
 CREATE V.ARRAY
+^AirConFlag ,
 ^AQ_Go_Fast_Ok ,
 ^Blinker ,
 ^CellFanSpeed ,
@@ -32,6 +33,8 @@ CREATE V.ARRAY
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
 ^MasterXmitStatus ,
+^n2ndOctetLength ,
+^nPeriodPosition ,
 ^PanelDim ,
 ^PanelFanSpeed ,
 ^PanelGrnFlag ,
@@ -56,11 +59,14 @@ CREATE V.ARRAY
 *imp_MasterCommand ,
 *LastCommand ,
 *MasterCommand ,
+*s2ndOctet ,
 *s_DomeClose ,
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
 *SentString ,
+*sIP_PAC ,
+*sSite ,
 *StateString ,
 *StatusString ,
 *SWVersion ,
@@ -188,6 +194,7 @@ CONFIG_PORTS
 " %A_1mFPAC  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %A_1mFPAC ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE
+1 ^AirConFlag @!
 0 ^AQ_Go_Fast_Ok @!
 0 ^Blinker @!
 0.00000000 ^CellFanSpeed @!
@@ -213,6 +220,8 @@ CONFIG_PORTS
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
 0 ^MasterXmitStatus @!
+0 ^n2ndOctetLength @!
+0 ^nPeriodPosition @!
 0 ^PanelDim @!
 0.00000000 ^PanelFanSpeed @!
 0 ^PanelGrnFlag @!
@@ -251,6 +260,8 @@ CONFIG_PORTS
 " "
  *MasterCommand $MOVE
 " "
+ *s2ndOctet $MOVE
+" "
  *s_DomeClose $MOVE
 " "
  *s_DomeOpen $MOVE
@@ -260,6 +271,10 @@ CONFIG_PORTS
  *s_LightSW $MOVE
 " Null"
  *SentString $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sSite $MOVE
 " State"
  *StateString $MOVE
 " Status"

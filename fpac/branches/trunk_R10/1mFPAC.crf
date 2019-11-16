@@ -24,6 +24,7 @@ _END NEW $$$.RUN
 0 TASK &Test_Front_Panel
 0 TASK &Test_HVAC
 0 TASK &WhiteLights
+0 IVAR ^AirConFlag
 0 IVAR ^AQ_Go_Fast_Ok
 0 IVAR ^Blinker
 0 FVAR ^CellFanSpeed
@@ -49,6 +50,8 @@ _END NEW $$$.RUN
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
 0 IVAR ^MasterXmitStatus
+0 IVAR ^n2ndOctetLength
+0 IVAR ^nPeriodPosition
 0 IVAR ^PanelDim
 0 FVAR ^PanelFanSpeed
 0 IVAR ^PanelGrnFlag
@@ -75,11 +78,14 @@ _END NEW $$$.RUN
 3 0 $VAR *imp_MasterCommand 
 1024 0 $VAR *LastCommand 
 32 0 $VAR *MasterCommand 
+10 0 $VAR *s2ndOctet 
 10 0 $VAR *s_DomeClose 
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
 1024 0 $VAR *SentString 
+20 0 $VAR *sIP_PAC 
+10 0 $VAR *sSite 
 1024 0 $VAR *StateString 
 1024 0 $VAR *StatusString 
 6 0 $VAR *SWVersion 
@@ -576,7 +582,7 @@ T;
 110 LINE.NUM " , HVACSwitchState=STOP" *EnviroString $CAT 
 
 111 LINE.NUM THEN 
-112 LINE.NUM ~AirCon_Ctrl @@I 1 = IF 
+112 LINE.NUM ~AirCon_ON @@I 1 = IF 
 113 LINE.NUM " , HVACOn=TRUE" *EnviroString $CAT 
 
 114 LINE.NUM ELSE 
@@ -742,7 +748,6 @@ T;
 9 LINE.NUM 10 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
 10 LINE.NUM 10 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 11 LINE.NUM 10 ^TempFanSpeed @! 
-12 LINE.NUM 0 ~AirCon_Ctrl @! 
 13 LINE.NUM 0 ^HvacOn @! 
 14 LINE.NUM 1 ^Response @! 
 15 LINE.NUM THEN 
@@ -752,7 +757,6 @@ T;
 19 LINE.NUM 7 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
 20 LINE.NUM 7 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 21 LINE.NUM 7 ^TempFanSpeed @! 
-22 LINE.NUM 0 ~AirCon_Ctrl @! 
 23 LINE.NUM 0 ^HvacOn @! 
 24 LINE.NUM 1 ^Response @! 
 25 LINE.NUM THEN 
@@ -762,7 +766,6 @@ T;
 29 LINE.NUM 4 I>F 2 I>F ~WallFanM75_Ctrl  F!RAMP 
 30 LINE.NUM 4 I>F 2 I>F ~WallFanM77_Ctrl  F!RAMP 
 31 LINE.NUM 4 ^TempFanSpeed @! 
-32 LINE.NUM 0 ~AirCon_Ctrl @! 
 33 LINE.NUM 0 ^HvacOn @! 
 35 LINE.NUM 1 ^Response @! 
 36 LINE.NUM THEN 
@@ -772,7 +775,6 @@ T;
 40 LINE.NUM 0 I>F 4 I>F ~WallFanM75_Ctrl  F!RAMP 
 41 LINE.NUM 0 I>F 4 I>F ~WallFanM77_Ctrl  F!RAMP 
 42 LINE.NUM 0 ^TempFanSpeed @! 
-43 LINE.NUM 1 ~AirCon_Ctrl @! 
 44 LINE.NUM 0 ^HvacOn @! 
 45 LINE.NUM 1 ^Response @! 
 46 LINE.NUM THEN 
@@ -1263,7 +1265,7 @@ T;
 
 2 LINE.NUM
   ^Heartbeat_Timer   StartTimer
-1 JUMP ;
+2 JUMP ;
 : 0_22
 
 1 LINE.NUM
@@ -1279,7 +1281,56 @@ T;
   ~CabinetFanCtrl @!   
 -2 JUMP ;
 : 0_26
-0 JUMP ;
+1 JUMP ;
+: 0_28
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+4 LINE.NUM 46 3 *sIP_PAC  FindChar ^nPeriodPosition @! 
+5 LINE.NUM ^nPeriodPosition @@ 4 > IF 
+6 LINE.NUM 2 ^n2ndOctetLength @! 
+7 LINE.NUM ELSE 
+8 LINE.NUM 1 ^n2ndOctetLength @! 
+9 LINE.NUM THEN 
+11 LINE.NUM *sIP_PAC 3 ^n2ndOctetLength @@ *s2ndOctet  $SUB 
+12 LINE.NUM *s2ndOctet " 5" $= IF 
+13 LINE.NUM " LSC" *sSite  $MOVE 
+14 LINE.NUM ELSE 
+14 LINE.NUM *s2ndOctet " 6" $= IF 
+15 LINE.NUM " MFG" *sSite  $MOVE 
+16 LINE.NUM ELSE 
+16 LINE.NUM *s2ndOctet " 7" $= IF 
+17 LINE.NUM " BPL" *sSite  $MOVE 
+18 LINE.NUM ELSE 
+18 LINE.NUM *s2ndOctet " 8" $= IF 
+19 LINE.NUM " CPT" *sSite  $MOVE 
+20 LINE.NUM ELSE 
+20 LINE.NUM *s2ndOctet " 9" $= IF 
+21 LINE.NUM " ELP" *sSite  $MOVE 
+22 LINE.NUM ELSE 
+22 LINE.NUM *s2ndOctet " 10" $= IF 
+23 LINE.NUM " COJ" *sSite  $MOVE 
+24 LINE.NUM ELSE 
+24 LINE.NUM *s2ndOctet " 11" $= IF 
+25 LINE.NUM " TLV" *sSite  $MOVE 
+26 LINE.NUM ELSE 
+26 LINE.NUM *s2ndOctet " 12" $= IF 
+27 LINE.NUM " SQA" *sSite  $MOVE 
+28 LINE.NUM ELSE 
+28 LINE.NUM *s2ndOctet " 13" $= IF 
+29 LINE.NUM " NGQ" *sSite  $MOVE 
+30 LINE.NUM ELSE 
+30 LINE.NUM *s2ndOctet " 14" $= IF 
+31 LINE.NUM " TFN" *sSite  $MOVE 
+32 LINE.NUM ELSE 
+32 LINE.NUM *s2ndOctet " 15" $= IF 
+33 LINE.NUM " PTR" *sSite  $MOVE 
+34 LINE.NUM ELSE 
+34 LINE.NUM *s2ndOctet " 16" $= IF 
+35 LINE.NUM " SPT" *sSite  $MOVE 
+36 LINE.NUM ELSE 
+36 LINE.NUM *s2ndOctet " 17" $= IF 
+37 LINE.NUM " WTF" *sSite  $MOVE 
+38 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -1287,6 +1338,7 @@ DUMMY
 0_10
 0_22
 0_26
+0_28
 T;
 &Powerup ' T0 SETTASK
 : 1_0
@@ -1434,7 +1486,7 @@ DUMMY
 T;
 &Test_Front_Panel ' T1 SETTASK
 : 2_0
-2 JUMP ;
+3 JUMP ;
 : 2_3
 
 1 LINE.NUM
@@ -1452,21 +1504,61 @@ T;
 
 1 LINE.NUM
   60    DELAY
-2 JUMP ;
+3 JUMP ;
+: 2_26
+1 LINE.NUM 100  DELAY 
+3 LINE.NUM *sSite " TFN" $= IF 
+4 LINE.NUM ~AirConOpMode_Auto @@I 1 = IF 
+5 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+6 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+7 LINE.NUM ELSE 
+7 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+9 LINE.NUM ELSE 
+9 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+10 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+11 LINE.NUM ELSE 
+11 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+13 LINE.NUM THEN THEN THEN THEN 
+14 LINE.NUM THEN 
+16 LINE.NUM ~AirConOpMode_Auto @@I 0 = IF 
+17 LINE.NUM ~AirCon_ON @@I 1 = IF 
+18 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+19 LINE.NUM THEN 
+20 LINE.NUM THEN 
+21 LINE.NUM ELSE 
+22 LINE.NUM ~AirConOpMode_Auto @@I 1 = IF 
+23 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+24 LINE.NUM 0 ~AirCon_Ctrl @! 
+25 LINE.NUM ELSE 
+25 LINE.NUM ~AirCon_ON @@I 1 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+27 LINE.NUM ELSE 
+27 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F= LAND  IF 
+28 LINE.NUM 1 ~AirCon_Ctrl @! 
+29 LINE.NUM ELSE 
+29 LINE.NUM ~AirCon_ON @@I 0 = ~WallFanM73_Ctrl @@ 0 I>F F> LAND  IF 
+31 LINE.NUM THEN THEN THEN THEN 
+32 LINE.NUM THEN 
+34 LINE.NUM ~AirConOpMode_Auto @@I 0 = IF 
+35 LINE.NUM ~AirCon_ON @@I 1 = IF 
+36 LINE.NUM 0 ~AirCon_Ctrl @! 
+37 LINE.NUM THEN 
+38 LINE.NUM THEN 
+39 LINE.NUM THEN 
+-1 JUMP ;
 : 2_4
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -4 ELSE -2 THEN JUMP ;
+IF -5 ELSE -3 THEN JUMP ;
 : 2_8
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -4 ELSE -5 THEN JUMP ;
+IF -5 ELSE -6 THEN JUMP ;
 : 2_9
 TRUE
 
@@ -1480,6 +1572,7 @@ DUMMY
 2_3
 2_7
 2_10
+2_26
 2_4
 2_8
 2_9
@@ -1544,6 +1637,7 @@ CREATE T.ARRAY
 &WhiteLights ,
  0 ,
 CREATE V.ARRAY
+^AirConFlag ,
 ^AQ_Go_Fast_Ok ,
 ^Blinker ,
 ^CellFanSpeed ,
@@ -1568,6 +1662,8 @@ CREATE V.ARRAY
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
 ^MasterXmitStatus ,
+^n2ndOctetLength ,
+^nPeriodPosition ,
 ^PanelDim ,
 ^PanelFanSpeed ,
 ^PanelGrnFlag ,
@@ -1592,11 +1688,14 @@ CREATE V.ARRAY
 *imp_MasterCommand ,
 *LastCommand ,
 *MasterCommand ,
+*s2ndOctet ,
 *s_DomeClose ,
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
 *SentString ,
+*sIP_PAC ,
+*sSite ,
 *StateString ,
 *StatusString ,
 *SWVersion ,
@@ -1724,6 +1823,7 @@ CONFIG_PORTS
 " %A_1mFPAC  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %A_1mFPAC ENABLE
  " Initializing variables" *_HSV_INIT_IO $MOVE
+1 ^AirConFlag @!
 0 ^AQ_Go_Fast_Ok @!
 0 ^Blinker @!
 0.00000000 ^CellFanSpeed @!
@@ -1749,6 +1849,8 @@ CONFIG_PORTS
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
 0 ^MasterXmitStatus @!
+0 ^n2ndOctetLength @!
+0 ^nPeriodPosition @!
 0 ^PanelDim @!
 0.00000000 ^PanelFanSpeed @!
 0 ^PanelGrnFlag @!
@@ -1787,6 +1889,8 @@ CONFIG_PORTS
 " "
  *MasterCommand $MOVE
 " "
+ *s2ndOctet $MOVE
+" "
  *s_DomeClose $MOVE
 " "
  *s_DomeOpen $MOVE
@@ -1796,6 +1900,10 @@ CONFIG_PORTS
  *s_LightSW $MOVE
 " Null"
  *SentString $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sSite $MOVE
 " State"
  *StateString $MOVE
 " Status"
@@ -1821,9 +1929,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/11/19 " ;
-: TIMESTAMP ." 00:58:39 " ;
-: CRCSTAMP  ." AEF213063D5421293A283B41F54955F0 " ;
+: DATESTAMP ." 11/16/19 " ;
+: TIMESTAMP ." 14:52:54 " ;
+: CRCSTAMP  ." A2B3D923CA98D8D2B5DEDDAD5AB0D93C " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -6,6 +6,7 @@
 0 TASK &Test_Front_Panel
 0 TASK &Test_HVAC
 0 TASK &WhiteLights
+0 IVAR ^AirConFlag
 0 IVAR ^AQ_Go_Fast_Ok
 0 IVAR ^Blinker
 0 FVAR ^CellFanSpeed
@@ -31,6 +32,8 @@
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
 0 IVAR ^MasterXmitStatus
+0 IVAR ^n2ndOctetLength
+0 IVAR ^nPeriodPosition
 0 IVAR ^PanelDim
 0 FVAR ^PanelFanSpeed
 0 IVAR ^PanelGrnFlag
@@ -57,11 +60,14 @@
 3 0 $VAR *imp_MasterCommand 
 1024 0 $VAR *LastCommand 
 32 0 $VAR *MasterCommand 
+10 0 $VAR *s2ndOctet 
 10 0 $VAR *s_DomeClose 
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
 1024 0 $VAR *SentString 
+20 0 $VAR *sIP_PAC 
+10 0 $VAR *sSite 
 1024 0 $VAR *StateString 
 1024 0 $VAR *StatusString 
 6 0 $VAR *SWVersion 
