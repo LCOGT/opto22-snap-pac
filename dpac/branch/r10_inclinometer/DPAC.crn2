@@ -74,6 +74,9 @@
 0 IVAR ^MasterCommandNum
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
+0 IVAR ^nPeriodPosition1
+0 IVAR ^nPeriodPosition2
+0 IVAR ^nSubstringLength
 0 TVAR ^Socket_Timer
 0 TVAR ^Socket_Timer_2
 0 IVAR ^Status_AutoMode
@@ -85,7 +88,8 @@
 0 FVAR ^Time_defContactorOperate
 0 IVAR ^Time_defContactorRelease
 0 FVAR ^Time_defHeartbeatWdog
-0 FVAR ^Time_defLowerOperate
+0 FVAR ^Time_defLowerClose
+0 FVAR ^Time_defLowerOpen
 0 FVAR ^Time_defOpenClear
 0 FVAR ^Time_defUpperOperate
 0 FVAR ^Time_defWxWdogTimer
@@ -109,11 +113,18 @@
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
 3 0 $VAR *MasterCommand 
+10 0 $VAR *s1stOctet 
+10 0 $VAR *s2ndOctet 
+10 0 $VAR *s3rdOctet 
+10 0 $VAR *s4thOctet 
 10 0 $VAR *s_DomeClose 
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
+10 0 $VAR *sDomeAirTemp 
+10 0 $VAR *sEncl 
 20 0 $VAR *sIP_PAC 
+10 0 $VAR *sSite 
 10 0 $VAR *sStatus_Shutter1 
 10 0 $VAR *sStatus_Shutter2 
 5 0 $VAR *SWversion 
@@ -122,7 +133,7 @@
 1024 0 COMVAR *Master_Handle 
 1024 0 COMVAR *Wx_Handle 
 4 0 ITABLE }SLOT08_OFF
-12 20 0 $TABLE {Status 
+20 20 0 $TABLE {Status 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A090C02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
@@ -169,7 +180,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_lowerCloseValve
  4 $40000001 APOINT -3000.0000 $40  0 11 %Local_IO 0 POINT.TNG ~AI_lowerOpenPressure
 2000.0000 -3000.0000 ~AI_lowerOpenPressure SET.SCALE
- 4 $40000001 APOINT -537.5000 $40  1 11 %Local_IO 0 POINT.TNG ~AI_LowerShutterAngle
+ 4 $40000001 APOINT -537.5000 $40  1 11 %Local_IO 0 100.000000 1 POINT.TNGX ~AI_LowerShutterAngle
  360.0000 -537.5000 ~AI_LowerShutterAngle SET.SCALE
  2 $40000001 APOINT -200.0000 $A  0 12 %Local_IO 0 POINT.TNG ~AI_cabinetTemp
  2 $40000001 APOINT -200.0000 $A  1 12 %Local_IO 0 POINT.TNG ~AI_domeAirTemp

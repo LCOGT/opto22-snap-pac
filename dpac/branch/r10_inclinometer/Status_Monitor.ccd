@@ -123,6 +123,9 @@
 3 LINE.NUM ELSE 
 3 LINE.NUM " LightsOn=0" 7 {Status $TABLE@  $MOVE 
 4 LINE.NUM THEN 
+8 LINE.NUM ~AI_domeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
+9 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
+10 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
 -5 JUMP ;
 : 15_5
 TRUE

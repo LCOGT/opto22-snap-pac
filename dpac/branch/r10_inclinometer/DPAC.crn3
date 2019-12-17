@@ -76,6 +76,9 @@ CREATE V.ARRAY
 ^MasterCommandNum ,
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
+^nPeriodPosition1 ,
+^nPeriodPosition2 ,
+^nSubstringLength ,
 ^Status_AutoMode ,
 ^Status_DisabledMode ,
 ^Status_FaultMode ,
@@ -85,7 +88,8 @@ CREATE V.ARRAY
 ^Time_defContactorOperate ,
 ^Time_defContactorRelease ,
 ^Time_defHeartbeatWdog ,
-^Time_defLowerOperate ,
+^Time_defLowerClose ,
+^Time_defLowerOpen ,
 ^Time_defOpenClear ,
 ^Time_defUpperOperate ,
 ^Time_defWxWdogTimer ,
@@ -101,11 +105,18 @@ CREATE V.ARRAY
 ^WxOKposition ,
 ^WxStarted ,
 *MasterCommand ,
+*s1stOctet ,
+*s2ndOctet ,
+*s3rdOctet ,
+*s4thOctet ,
 *s_DomeClose ,
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
+*sDomeAirTemp ,
+*sEncl ,
 *sIP_PAC ,
+*sSite ,
 *sStatus_Shutter1 ,
 *sStatus_Shutter2 ,
 *SWversion ,
@@ -272,6 +283,9 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^MasterCommandNum @!
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
+0 ^nPeriodPosition1 @!
+0 ^nPeriodPosition2 @!
+0 ^nSubstringLength @!
 0.0 ^Socket_Timer @!
 0.0 ^Socket_Timer_2 @!
 0 ^Status_AutoMode @!
@@ -283,7 +297,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0.50000000 ^Time_defContactorOperate @!
 500 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
-120.00000 ^Time_defLowerOperate @!
+60.000000 ^Time_defLowerClose @!
+50.000000 ^Time_defLowerOpen @!
 30.000000 ^Time_defOpenClear @!
 180.00000 ^Time_defUpperOperate @!
 5.0000000 ^Time_defWxWdogTimer @!
@@ -310,6 +325,14 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " xxx"
  *MasterCommand $MOVE
 " "
+ *s1stOctet $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s3rdOctet $MOVE
+" "
+ *s4thOctet $MOVE
+" "
  *s_DomeClose $MOVE
 " "
  *s_DomeOpen $MOVE
@@ -318,7 +341,13 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " "
  *s_LightSW $MOVE
 " "
+ *sDomeAirTemp $MOVE
+" "
+ *sEncl $MOVE
+" "
  *sIP_PAC $MOVE
+" "
+ *sSite $MOVE
 " UNKNOWN"
  *sStatus_Shutter1 $MOVE
 " UNKNOWN"

@@ -1,5 +1,5 @@
 : 7_0
-29 JUMP ;
+34 JUMP ;
 : 7_7
 
 1 LINE.NUM
@@ -7,7 +7,7 @@
 
 2 LINE.NUM
   ~DO_pumpMotor   ON
-34 JUMP ;
+39 JUMP ;
 : 7_14
 
 1 LINE.NUM
@@ -20,21 +20,21 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-40 JUMP ;
+47 JUMP ;
 : 7_34
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-39 JUMP ;
+46 JUMP ;
 : 7_35
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-38 JUMP ;
+45 JUMP ;
 : 7_39
 
 1 LINE.NUM
-  ^Time_defLowerOperate @@ 
+  ^Time_defLowerOpen @@ 
   ^Timer_LowerOperate   SetTimer
 
 2 LINE.NUM
@@ -69,7 +69,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-33 JUMP ;
+40 JUMP ;
 : 7_79
 
 1 LINE.NUM
@@ -79,12 +79,12 @@
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-25 JUMP ;
+30 JUMP ;
 : 7_95
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-25 JUMP ;
+30 JUMP ;
 : 7_97
 
 1 LINE.NUM
@@ -94,7 +94,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-28 JUMP ;
+35 JUMP ;
 : 7_103
 
 1 LINE.NUM
@@ -107,12 +107,12 @@
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-24 JUMP ;
+29 JUMP ;
 : 7_131
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-24 JUMP ;
+29 JUMP ;
 : 7_135
 
 1 LINE.NUM
@@ -143,7 +143,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-20 JUMP ;
+27 JUMP ;
 : 7_157
 
 1 LINE.NUM
@@ -158,7 +158,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-17 JUMP ;
+24 JUMP ;
 : 7_197
 
 1 LINE.NUM
@@ -166,45 +166,71 @@
 -26 JUMP ;
 : 7_203
 1 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 
-4 JUMP ;
+9 JUMP ;
 : 7_204
 1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
 -27 JUMP ;
+: 7_213
+
+1 LINE.NUM
+  ~DO_lowerOpenValve   OFF
+
+2 LINE.NUM
+  ~DO_pumpMotor   OFF
+0 JUMP ;
+: 7_215
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+18 JUMP ;
+: 7_218
+1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
+1 JUMP ;
+: 7_220
+
+1 LINE.NUM
+  ^FLT_K5on   TRUE@!
+0 JUMP ;
+: 7_223
+
+1 LINE.NUM
+  &Function_LowerOpen   STOP.T
+16 JUMP ;
 : 7_3
 TRUE
 
 1 LINE.NUM
   ~SW_lowerOpenLimit   ?ON
 LAND
-IF -26 ELSE 0 THEN JUMP ;
+IF -31 ELSE 0 THEN JUMP ;
 : 7_5
 TRUE
 
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF -26 ELSE -28 THEN JUMP ;
+IF -31 ELSE -33 THEN JUMP ;
 : 7_10
 TRUE
 
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF 7 ELSE -17 THEN JUMP ;
+IF 7 ELSE -22 THEN JUMP ;
 : 7_11
 TRUE
 
 1 LINE.NUM
   ~SW_lowerOpenLimit   ?ON
 LAND
-IF -7 ELSE -2 THEN JUMP ;
+IF -12 ELSE -2 THEN JUMP ;
 : 7_57
 TRUE
 
 1 LINE.NUM
   ~FB_pumpMotor   ?ON
 LAND
-IF -27 ELSE -28 THEN JUMP ;
+IF -32 ELSE -33 THEN JUMP ;
 : 7_62
 TRUE
 
@@ -218,56 +244,76 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -9 ELSE -2 THEN JUMP ;
+IF -14 ELSE -2 THEN JUMP ;
 : 7_67
 TRUE
 
 1 LINE.NUM
   ~FB_slot09Fuse   ?ON
 LAND
-IF -4 ELSE -29 THEN JUMP ;
+IF -4 ELSE -34 THEN JUMP ;
 : 7_78
 TRUE
 
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -28 ELSE -10 THEN JUMP ;
+IF -33 ELSE -15 THEN JUMP ;
 : 7_98
 TRUE
 
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -26 ELSE -25 THEN JUMP ;
+IF -31 ELSE -30 THEN JUMP ;
 : 7_142
 TRUE
 
 1 LINE.NUM
   ^Timer_LowerOperate   T0=
 LAND
-IF -19 ELSE 0 THEN JUMP ;
+IF -24 ELSE 0 THEN JUMP ;
 : 7_143
 TRUE
 
 1 LINE.NUM
   ~FLT_pumpMotorOverload   ?OFF
 LAND
-IF -21 ELSE -9 THEN JUMP ;
+IF -26 ELSE 2 THEN JUMP ;
 : 7_156
 TRUE
 
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -19 ELSE -20 THEN JUMP ;
+IF -24 ELSE -25 THEN JUMP ;
 : 7_169
 TRUE
 
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -19 ELSE -18 THEN JUMP ;
+IF -24 ELSE -23 THEN JUMP ;
+: 7_212
+TRUE
+
+1 LINE.NUM
+  ~AI_LowerShutterAngle @@ 
+  109.5    F<
+LAND
+
+2 LINE.NUM
+  ~AI_LowerShutterAngle @@ 
+  100 I>F   F>
+LAND
+IF -20 ELSE -12 THEN JUMP ;
+: 7_221
+TRUE
+
+1 LINE.NUM
+  ~FB_pumpMotor   ?OFF
+LAND
+IF -18 ELSE -19 THEN JUMP ;
 T: T7
 DUMMY
 7_0
@@ -300,6 +346,11 @@ DUMMY
 7_197
 7_203
 7_204
+7_213
+7_215
+7_218
+7_220
+7_223
 7_3
 7_5
 7_10
@@ -314,5 +365,7 @@ DUMMY
 7_143
 7_156
 7_169
+7_212
+7_221
 T;
 &Function_LowerOpen ' T7 SETTASK

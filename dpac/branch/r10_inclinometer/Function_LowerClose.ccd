@@ -29,7 +29,7 @@
 : 8_43
 
 1 LINE.NUM
-  ^Time_defLowerOperate @@ 
+  ^Time_defLowerClose @@ 
   ^Timer_LowerOperate   SetTimer
 
 2 LINE.NUM
