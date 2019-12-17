@@ -74,6 +74,11 @@
 0 IVAR ^MasterCommandNum
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
+0 IVAR ^n2ndOctetLength
+0 IVAR ^nPeriodPosition
+0 IVAR ^nPeriodPosition1
+0 IVAR ^nPeriodPosition2
+0 IVAR ^nSubstringLength
 0 TVAR ^Socket_Timer
 0 TVAR ^Socket_Timer_2
 0 IVAR ^Status_AutoMode
@@ -109,11 +114,18 @@
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
 3 0 $VAR *MasterCommand 
+10 0 $VAR *s1stOctet 
+10 0 $VAR *s2ndOctet 
+10 0 $VAR *s3rdOctet 
+10 0 $VAR *s4thOctet 
 10 0 $VAR *s_DomeClose 
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
+10 0 $VAR *sDomeAirTemp 
+10 0 $VAR *sEncl 
 20 0 $VAR *sIP_PAC 
+10 0 $VAR *sSite 
 10 0 $VAR *sStatus_Shutter1 
 10 0 $VAR *sStatus_Shutter2 
 5 0 $VAR *SWversion 
@@ -122,9 +134,9 @@
 1024 0 COMVAR *Master_Handle 
 1024 0 COMVAR *Wx_Handle 
 4 0 ITABLE }SLOT08_OFF
-12 20 0 $TABLE {Status 
+20 20 0 $TABLE {Status 
 
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A090C02 0 M64BOARD %A_1mFPAC
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
  4 $40000001 SPOINT 0.0     INPUT  0  0 %Local_IO 0 POINT.TNG ~SW_stop
  4 $40000001 SPOINT 0.0     INPUT  1  0 %Local_IO 0 POINT.TNG ~SW_upperOpen
