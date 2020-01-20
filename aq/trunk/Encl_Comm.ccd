@@ -317,16 +317,22 @@
 27 LINE.NUM 0 ~DO_PanelGreen_LED @! 
 28 LINE.NUM 0 ~DO_PanelRed_LED @! 
 29 LINE.NUM 0 ~DO_Sounder @! 
-31 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-32 LINE.NUM " , Halting... " *sEnclStatus $CAT 
+31 LINE.NUM &AutoLightsOff  STOP.T 
+32 LINE.NUM &Blink  STOP.T 
+33 LINE.NUM &Get_Mirror_Temps  STOP.T 
+34 LINE.NUM &TestEnclFans  STOP.T 
+35 LINE.NUM &TestErrors  STOP.T 
+36 LINE.NUM &TestFaults  STOP.T 
+37 LINE.NUM &TestPanelFans  STOP.T 
+39 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+40 LINE.NUM " , Halting... " *sEnclStatus $CAT 
 
-33 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-34 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+41 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+42 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-35 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-36 LINE.NUM " " *sEnclStatus  $MOVE 
-38 LINE.NUM &Powerup  START.T DROP  
-39 LINE.NUM &Encl_Comm  STOP.T 
+43 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+44 LINE.NUM " " *sEnclStatus  $MOVE 
+46 LINE.NUM &Powerup  START.T DROP  
 0 JUMP ;
 : 21_107
 -22 JUMP ;

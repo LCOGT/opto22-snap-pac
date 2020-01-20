@@ -347,6 +347,7 @@ $80000002 0 %encPacInternal 0 PID |PanelFans
 9 LINE.NUM ~DI_Pole_Open_LS @@I 0 = ~DI_Tail_Open_LS @@I 0 = LAND  IF 
 10 LINE.NUM 0 ~DO_Lights_RLA @! 
 11 LINE.NUM THEN 
+13 LINE.NUM &AutoLightsOff  STOP.T 
 0 JUMP ;
 T: T36
 DUMMY
@@ -711,16 +712,22 @@ T;
 27 LINE.NUM 0 ~DO_PanelGreen_LED @! 
 28 LINE.NUM 0 ~DO_PanelRed_LED @! 
 29 LINE.NUM 0 ~DO_Sounder @! 
-31 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
-32 LINE.NUM " , Halting... " *sEnclStatus $CAT 
+31 LINE.NUM &AutoLightsOff  STOP.T 
+32 LINE.NUM &Blink  STOP.T 
+33 LINE.NUM &Get_Mirror_Temps  STOP.T 
+34 LINE.NUM &TestEnclFans  STOP.T 
+35 LINE.NUM &TestErrors  STOP.T 
+36 LINE.NUM &TestFaults  STOP.T 
+37 LINE.NUM &TestPanelFans  STOP.T 
+39 LINE.NUM " Success=TRUE" *sEnclStatus  $MOVE 
+40 LINE.NUM " , Halting... " *sEnclStatus $CAT 
 
-33 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-34 LINE.NUM *sTimestamp *sEnclStatus $CAT 
+41 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+42 LINE.NUM *sTimestamp *sEnclStatus $CAT 
 
-35 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
-36 LINE.NUM " " *sEnclStatus  $MOVE 
-38 LINE.NUM &Powerup  START.T DROP  
-39 LINE.NUM &Encl_Comm  STOP.T 
+43 LINE.NUM *sEnclStatus *cEncl_Port  PRT$ ^nEnclTransmitStatus @! 
+44 LINE.NUM " " *sEnclStatus  $MOVE 
+46 LINE.NUM &Powerup  START.T DROP  
 0 JUMP ;
 : 21_107
 -22 JUMP ;
@@ -2101,94 +2108,99 @@ T;
 : 29_0
 0 JUMP ;
 : 29_1
-6 LINE.NUM ~DI_MuteTest_SW @@I 1 = IF 
-7 LINE.NUM 1 ^nExitLoop @! 
-8 LINE.NUM 3 I>F ^dtTestSWtimer @! 
-9 LINE.NUM ^dtTestSWtimer  StartTimer 
-10 LINE.NUM BEGIN ^nExitLoop @@ 0 > WHILE 
-11 LINE.NUM ~DI_MuteTest_SW  CLR.-LATCH@I IF 
-12 LINE.NUM 0 ~DO_Sounder @! 
-13 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-14 LINE.NUM 0 ~DO_PanelRed_LED @! 
-15 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-16 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-17 LINE.NUM 0 ~DO_DoorRed_LED @! 
-18 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
-19 LINE.NUM 0 ^nExitLoop @! 
-20 LINE.NUM ELSE 
-20 LINE.NUM ^dtTestSWtimer @@F 1 I>F F< IF 
-21 LINE.NUM 1 ~DO_Sounder @! 
-22 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-23 LINE.NUM 1 ~DO_PanelRed_LED @! 
-24 LINE.NUM 1 ~DO_PanelBlue_LED @! 
-25 LINE.NUM 1 ~DO_DoorGreen_LED @! 
-26 LINE.NUM 1 ~DO_DoorRed_LED @! 
-27 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
-28 LINE.NUM ^nFanCtrlMax @@F ~AO_Panel_Fans_VDC @! 
-29 LINE.NUM THEN THEN 
-30 LINE.NUM REPEAT 
-31 LINE.NUM THEN 
-37 LINE.NUM ~DI_ESTOP_OK @@I 0 = IF 
-38 LINE.NUM ^nBlink @@ ~DO_PanelBlue_LED @! 
-39 LINE.NUM ELSE 
-40 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-41 LINE.NUM THEN 
-47 LINE.NUM ^nPanelLED_Enum @@ 0 = IF 
-48 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-49 LINE.NUM 0 ~DO_PanelRed_LED @! 
-50 LINE.NUM ELSE 
-50 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
-51 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-52 LINE.NUM 0 ~DO_PanelRed_LED @! 
-53 LINE.NUM ELSE 
-53 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
-54 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-55 LINE.NUM 1 ~DO_PanelRed_LED @! 
-56 LINE.NUM ELSE 
-56 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
-57 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-58 LINE.NUM 1 ~DO_PanelRed_LED @! 
-59 LINE.NUM ELSE 
-59 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
-60 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
-61 LINE.NUM 0 ~DO_PanelRed_LED @! 
-62 LINE.NUM ELSE 
-62 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
-63 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
-64 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
-65 LINE.NUM ELSE 
-65 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
-66 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-67 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
-68 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
-74 LINE.NUM ^nDoorLED_Enum @@ 0 = IF 
-75 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-76 LINE.NUM 0 ~DO_DoorRed_LED @! 
-77 LINE.NUM ELSE 
-77 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
-78 LINE.NUM 1 ~DO_DoorGreen_LED @! 
-79 LINE.NUM 0 ~DO_DoorRed_LED @! 
-80 LINE.NUM ELSE 
-80 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
-81 LINE.NUM 1 ~DO_DoorGreen_LED @! 
-82 LINE.NUM 1 ~DO_DoorRed_LED @! 
-83 LINE.NUM ELSE 
-83 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
-84 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-85 LINE.NUM 1 ~DO_DoorRed_LED @! 
-86 LINE.NUM ELSE 
-86 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
-87 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
-88 LINE.NUM 0 ~DO_DoorRed_LED @! 
-89 LINE.NUM ELSE 
-89 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
-90 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
-91 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
-92 LINE.NUM ELSE 
-92 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
-93 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-94 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
-95 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
+7 LINE.NUM 1 I>F ^dtBlink @! 
+8 LINE.NUM ^dtBlink  StartTimer 
+12 LINE.NUM ^dtBlink @@F 0 I>F F= IF 
+13 LINE.NUM ^nBlink @@ 1 XOR  ^nBlink @! 
+14 LINE.NUM THEN 
+22 LINE.NUM ~DI_MuteTest_SW @@I 1 = IF 
+23 LINE.NUM 1 ^nExitLoop @! 
+24 LINE.NUM 3 I>F ^dtTestSWtimer @! 
+25 LINE.NUM ^dtTestSWtimer  StartTimer 
+26 LINE.NUM BEGIN ^nExitLoop @@ 0 > WHILE 
+27 LINE.NUM ~DI_MuteTest_SW  CLR.-LATCH@I IF 
+28 LINE.NUM 0 ~DO_Sounder @! 
+29 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+30 LINE.NUM 0 ~DO_PanelRed_LED @! 
+31 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+32 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+33 LINE.NUM 0 ~DO_DoorRed_LED @! 
+34 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
+35 LINE.NUM 0 ^nExitLoop @! 
+36 LINE.NUM ELSE 
+36 LINE.NUM ^dtTestSWtimer @@F 1 I>F F< IF 
+37 LINE.NUM 1 ~DO_Sounder @! 
+38 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+39 LINE.NUM 1 ~DO_PanelRed_LED @! 
+40 LINE.NUM 1 ~DO_PanelBlue_LED @! 
+41 LINE.NUM 1 ~DO_DoorGreen_LED @! 
+42 LINE.NUM 1 ~DO_DoorRed_LED @! 
+43 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
+44 LINE.NUM ^nFanCtrlMax @@F ~AO_Panel_Fans_VDC @! 
+45 LINE.NUM THEN THEN 
+46 LINE.NUM REPEAT 
+47 LINE.NUM THEN 
+53 LINE.NUM ~DI_ESTOP_OK @@I 0 = IF 
+54 LINE.NUM ^nBlink @@ ~DO_PanelBlue_LED @! 
+55 LINE.NUM ELSE 
+56 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+57 LINE.NUM THEN 
+63 LINE.NUM ^nPanelLED_Enum @@ 0 = IF 
+64 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+65 LINE.NUM 0 ~DO_PanelRed_LED @! 
+66 LINE.NUM ELSE 
+66 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
+67 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+68 LINE.NUM 0 ~DO_PanelRed_LED @! 
+69 LINE.NUM ELSE 
+69 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
+70 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+71 LINE.NUM 1 ~DO_PanelRed_LED @! 
+72 LINE.NUM ELSE 
+72 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
+73 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+74 LINE.NUM 1 ~DO_PanelRed_LED @! 
+75 LINE.NUM ELSE 
+75 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
+76 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
+77 LINE.NUM 0 ~DO_PanelRed_LED @! 
+78 LINE.NUM ELSE 
+78 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
+79 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
+80 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
+81 LINE.NUM ELSE 
+81 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
+82 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+83 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
+84 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
+90 LINE.NUM ^nDoorLED_Enum @@ 0 = IF 
+91 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+92 LINE.NUM 0 ~DO_DoorRed_LED @! 
+93 LINE.NUM ELSE 
+93 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
+94 LINE.NUM 1 ~DO_DoorGreen_LED @! 
+95 LINE.NUM 0 ~DO_DoorRed_LED @! 
+96 LINE.NUM ELSE 
+96 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
+97 LINE.NUM 1 ~DO_DoorGreen_LED @! 
+98 LINE.NUM 1 ~DO_DoorRed_LED @! 
+99 LINE.NUM ELSE 
+99 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
+100 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+101 LINE.NUM 1 ~DO_DoorRed_LED @! 
+102 LINE.NUM ELSE 
+102 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
+103 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
+104 LINE.NUM 0 ~DO_DoorRed_LED @! 
+105 LINE.NUM ELSE 
+105 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
+106 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
+107 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
+108 LINE.NUM ELSE 
+108 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
+109 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+110 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
+111 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 29_4
 1 LINE.NUM 100  DELAY 
@@ -2658,81 +2670,82 @@ T;
 : 0_0
 2 JUMP ;
 : 0_14
-1 LINE.NUM 0 ~DO_PoleEnable @! 
-2 LINE.NUM 1 ~DO_PoleStop @! 
-3 LINE.NUM 0 ~DO_TailEnable @! 
-4 LINE.NUM 1 ~DO_TailStop @! 
-5 LINE.NUM 0 ~DO_Lights_RLA @! 
-6 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
-7 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
-8 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-9 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-10 LINE.NUM 0 ~DO_DoorRed_LED @! 
-11 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-12 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-13 LINE.NUM 0 ~DO_PanelRed_LED @! 
-14 LINE.NUM 0 ~DO_Sounder @! 
-15 LINE.NUM 120 ^nTimeoutLength @! 
-17 LINE.NUM 0 I>F ^dt24h @! 
-20 LINE.NUM " " *sEnclStatus  $MOVE 
-21 LINE.NUM " " *sWallFansOpMode  $MOVE 
-22 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
-23 LINE.NUM " " *sEnclOpMode  $MOVE 
-24 LINE.NUM 1.20000000e+002 ^dtHeartbeat  SetTimer 
-26 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
-27 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
-28 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
-29 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
-30 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
-31 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
-32 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
-33 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
-35 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
-36 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
-37 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
-38 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
-39 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
-40 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
-41 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
-42 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
-43 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@ 
+1 LINE.NUM &Encl_Comm  STOP.T 
+2 LINE.NUM 3 I>F  FDELAY 
+4 LINE.NUM 0 ~DO_PoleEnable @! 
+5 LINE.NUM 1 ~DO_PoleStop @! 
+6 LINE.NUM 0 ~DO_TailEnable @! 
+7 LINE.NUM 1 ~DO_TailStop @! 
+8 LINE.NUM 0 ~DO_Lights_RLA @! 
+9 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+10 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+11 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+12 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+13 LINE.NUM 0 ~DO_DoorRed_LED @! 
+14 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+15 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+16 LINE.NUM 0 ~DO_PanelRed_LED @! 
+17 LINE.NUM 0 ~DO_Sounder @! 
+18 LINE.NUM 120 ^nTimeoutLength @! 
+20 LINE.NUM 0 I>F ^dt24h @! 
+23 LINE.NUM " " *sEnclStatus  $MOVE 
+24 LINE.NUM " " *sWallFansOpMode  $MOVE 
+25 LINE.NUM " " *sOTAblowerOpMode  $MOVE 
+26 LINE.NUM " " *sEnclOpMode  $MOVE 
+27 LINE.NUM 1.20000000e+002 ^dtHeartbeat  SetTimer 
+29 LINE.NUM " STOP" 0 {stEnclCmds $TABLE@  $MOVE 
+30 LINE.NUM " OPEN_SHUTTERS" 1 {stEnclCmds $TABLE@  $MOVE 
+31 LINE.NUM " CLOSE_SHUTTERS" 2 {stEnclCmds $TABLE@  $MOVE 
+32 LINE.NUM " CLOSE_SEQUENTIAL" 3 {stEnclCmds $TABLE@  $MOVE 
+33 LINE.NUM " OPEN_SHUTTER_1" 4 {stEnclCmds $TABLE@  $MOVE 
+34 LINE.NUM " CLOSE_SHUTTER_1" 5 {stEnclCmds $TABLE@  $MOVE 
+35 LINE.NUM " OPEN_SHUTTER_2" 6 {stEnclCmds $TABLE@  $MOVE 
+36 LINE.NUM " CLOSE_SHUTTER_2" 7 {stEnclCmds $TABLE@  $MOVE 
+38 LINE.NUM " LIGHTS_ON" 0 {stFacilityCmds $TABLE@  $MOVE 
+39 LINE.NUM " LIGHTS_OFF" 1 {stFacilityCmds $TABLE@  $MOVE 
+40 LINE.NUM " ENC_FANS_HI" 2 {stFacilityCmds $TABLE@  $MOVE 
+41 LINE.NUM " ENC_FANS_MED" 3 {stFacilityCmds $TABLE@  $MOVE 
+42 LINE.NUM " ENC_FANS_LOW" 4 {stFacilityCmds $TABLE@  $MOVE 
+43 LINE.NUM " ENC_FANS_OFF" 5 {stFacilityCmds $TABLE@  $MOVE 
+44 LINE.NUM " OTA_BLOWER_A_HI" 6 {stFacilityCmds $TABLE@  $MOVE 
+45 LINE.NUM " OTA_BLOWER_A_MED" 7 {stFacilityCmds $TABLE@  $MOVE 
+46 LINE.NUM " OTA_BLOWER_A_LOW" 8 {stFacilityCmds $TABLE@ 
  $MOVE 
-44 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
-45 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
-46 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
-47 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
-48 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
-49 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
-50 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
-51 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
-52 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
-53 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
-54 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
-55 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
-56 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
-57 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
-58 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
-59 LINE.NUM " LED_STEADY" 24 
+47 LINE.NUM " OTA_BLOWER_A_OFF" 9 {stFacilityCmds $TABLE@  $MOVE 
+48 LINE.NUM " OTA_BLOWER_B_HI" 10 {stFacilityCmds $TABLE@  $MOVE 
+49 LINE.NUM " OTA_BLOWER_B_MED" 11 {stFacilityCmds $TABLE@  $MOVE 
+50 LINE.NUM " OTA_BLOWER_B_LOW" 12 {stFacilityCmds $TABLE@  $MOVE 
+51 LINE.NUM " OTA_BLOWER_B_OFF" 13 {stFacilityCmds $TABLE@  $MOVE 
+52 LINE.NUM " PANEL_LED_GREEN" 14 {stFacilityCmds $TABLE@  $MOVE 
+53 LINE.NUM " PANEL_LED_YELLOW" 15 {stFacilityCmds $TABLE@  $MOVE 
+54 LINE.NUM " PANEL_LED_RED" 16 {stFacilityCmds $TABLE@  $MOVE 
+55 LINE.NUM " PANEL_LED_OFF" 17 {stFacilityCmds $TABLE@  $MOVE 
+56 LINE.NUM " DOOR_LED_GREEN" 18 {stFacilityCmds $TABLE@  $MOVE 
+57 LINE.NUM " DOOR_LED_YELLOW" 19 {stFacilityCmds $TABLE@  $MOVE 
+58 LINE.NUM " DOOR_LED_RED" 20 {stFacilityCmds $TABLE@  $MOVE 
+59 LINE.NUM " DOOR_LED_OFF" 21 {stFacilityCmds $TABLE@  $MOVE 
+60 LINE.NUM " SON_ALERT_ON" 22 {stFacilityCmds $TABLE@  $MOVE 
+61 LINE.NUM " SON_ALERT_OFF" 23 {stFacilityCmds $TABLE@  $MOVE 
+62 LINE.NUM " LED_STEADY" 24 
 {stFacilityCmds $TABLE@  $MOVE 
-60 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
-61 LINE.NUM " MCB_RESET_POLE_FANS" 26 {stFacilityCmds $TABLE@  $MOVE 
-62 LINE.NUM " MCB_RESET_TAIL_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
-63 LINE.NUM " MCB_RESET_OTA_BLOWER" 28 {stFacilityCmds $TABLE@  $MOVE 
-64 LINE.NUM " MCB_RESET_PANEL_FANS" 29 {stFacilityCmds $TABLE@  $MOVE 
-65 LINE.NUM " MCB_TRIP_24V_CTRL" 30 {stFacilityCmds $TABLE@  $MOVE 
-66 LINE.NUM " MCB_TRIP_POLE_FANS" 31 {stFacilityCmds $TABLE@  $MOVE 
-67 LINE.NUM " MCB_TRIP_TAIL_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
-68 LINE.NUM " MCB_TRIP_OTA_BLOWER" 33 {stFacilityCmds $TABLE@  $MOVE 
-69 LINE.NUM " MCB_TRIP_PANEL_FANS" 34 {stFacilityCmds $TABLE@  $MOVE 
-71 LINE.NUM &Manual_auto  START.T DROP  
-72 LINE.NUM &Encl_Comm  START.T DROP  
-73 LINE.NUM &Heart_Monitor  START.T DROP  
-74 LINE.NUM &Blink  START.T DROP  
-75 LINE.NUM &Mute_Test_LED  START.T DROP  
-76 LINE.NUM &SYSTEM_READY  START.T DROP  
-77 LINE.NUM &TestErrors  START.T DROP  
-78 LINE.NUM &TestFaults  START.T DROP  
-79 LINE.NUM &Get_Mirror_Temps  START.T DROP  
+63 LINE.NUM " LED_BLINK" 25 {stFacilityCmds $TABLE@  $MOVE 
+64 LINE.NUM " MCB_RESET_POLE_FANS" 26 {stFacilityCmds $TABLE@  $MOVE 
+65 LINE.NUM " MCB_RESET_TAIL_FANS" 27 {stFacilityCmds $TABLE@  $MOVE 
+66 LINE.NUM " MCB_RESET_OTA_BLOWER" 28 {stFacilityCmds $TABLE@  $MOVE 
+67 LINE.NUM " MCB_RESET_PANEL_FANS" 29 {stFacilityCmds $TABLE@  $MOVE 
+68 LINE.NUM " MCB_TRIP_24V_CTRL" 30 {stFacilityCmds $TABLE@  $MOVE 
+69 LINE.NUM " MCB_TRIP_POLE_FANS" 31 {stFacilityCmds $TABLE@  $MOVE 
+70 LINE.NUM " MCB_TRIP_TAIL_FANS" 32 {stFacilityCmds $TABLE@  $MOVE 
+71 LINE.NUM " MCB_TRIP_OTA_BLOWER" 33 {stFacilityCmds $TABLE@  $MOVE 
+72 LINE.NUM " MCB_TRIP_PANEL_FANS" 34 {stFacilityCmds $TABLE@  $MOVE 
+74 LINE.NUM &Manual_auto  START.T DROP  
+75 LINE.NUM &Encl_Comm  START.T DROP  
+76 LINE.NUM &Heart_Monitor  START.T DROP  
+78 LINE.NUM &Mute_Test_LED  START.T DROP  
+79 LINE.NUM &SYSTEM_READY  START.T DROP  
+80 LINE.NUM &TestErrors  START.T DROP  
+81 LINE.NUM &TestFaults  START.T DROP  
+82 LINE.NUM &Get_Mirror_Temps  START.T DROP  
 0 JUMP ;
 : 0_19
 1 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
@@ -2765,6 +2778,9 @@ T;
 2 LINE.NUM *sFWVersion  Rev>$ 
 3 LINE.NUM " 1.1" *sICDVersion  $MOVE 
 -4 JUMP ;
+: 0_38
+1 LINE.NUM &Powerup  STOP.T 
+0 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -2772,6 +2788,7 @@ DUMMY
 0_19
 0_22
 0_26
+0_38
 T;
 &Powerup ' T0 SETTASK
 : 17_0
@@ -3424,6 +3441,7 @@ T;
 58 LINE.NUM *sTimestamp *sErrorList $CAT 
 
 59 LINE.NUM THEN 
+61 LINE.NUM &TestErrors  STOP.T 
 0 JUMP ;
 T: T33
 DUMMY
@@ -3477,6 +3495,7 @@ T;
 40 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 41 LINE.NUM THEN 
+43 LINE.NUM &TestFaults  STOP.T 
 0 JUMP ;
 T: T34
 DUMMY
@@ -4085,8 +4104,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/08/19 " ;
-: TIMESTAMP ." 09:54:34 " ;
+: DATESTAMP ." 01/20/20 " ;
+: TIMESTAMP ." 19:06:53 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

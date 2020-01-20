@@ -6,6 +6,7 @@
 9 LINE.NUM ~DI_Pole_Open_LS @@I 0 = ~DI_Tail_Open_LS @@I 0 = LAND  IF 
 10 LINE.NUM 0 ~DO_Lights_RLA @! 
 11 LINE.NUM THEN 
+13 LINE.NUM &AutoLightsOff  STOP.T 
 0 JUMP ;
 T: T36
 DUMMY

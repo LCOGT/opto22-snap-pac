@@ -65,6 +65,7 @@
 58 LINE.NUM *sTimestamp *sErrorList $CAT 
 
 59 LINE.NUM THEN 
+61 LINE.NUM &TestErrors  STOP.T 
 0 JUMP ;
 T: T33
 DUMMY

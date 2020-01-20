@@ -44,6 +44,7 @@
 40 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 41 LINE.NUM THEN 
+43 LINE.NUM &TestFaults  STOP.T 
 0 JUMP ;
 T: T34
 DUMMY
