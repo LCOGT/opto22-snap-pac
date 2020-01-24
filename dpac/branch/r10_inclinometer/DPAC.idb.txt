@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC_programs\dpac\r10_inclinometer\DPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    22:18:2 12/17/2019
+# TIME/DATE :    17:59:28 1/24/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 

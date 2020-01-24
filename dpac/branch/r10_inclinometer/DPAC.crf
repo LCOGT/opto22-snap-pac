@@ -92,6 +92,9 @@ _END NEW $$$.RUN
 0 IVAR ^MasterCommandNum
 0 IVAR ^MasterCommandStringRcvd
 0 IVAR ^MasterCommEstablished
+0 IVAR ^nPeriodPosition1
+0 IVAR ^nPeriodPosition2
+0 IVAR ^nSubstringLength
 0 TVAR ^Socket_Timer
 0 TVAR ^Socket_Timer_2
 0 IVAR ^Status_AutoMode
@@ -128,11 +131,18 @@ _END NEW $$$.RUN
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
 3 0 $VAR *MasterCommand 
+10 0 $VAR *s1stOctet 
+10 0 $VAR *s2ndOctet 
+10 0 $VAR *s3rdOctet 
+10 0 $VAR *s4thOctet 
 10 0 $VAR *s_DomeClose 
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
+10 0 $VAR *sDomeAirTemp 
+10 0 $VAR *sEncl 
 20 0 $VAR *sIP_PAC 
+10 0 $VAR *sSite 
 10 0 $VAR *sStatus_Shutter1 
 10 0 $VAR *sStatus_Shutter2 
 5 0 $VAR *SWversion 
@@ -141,7 +151,7 @@ _END NEW $$$.RUN
 1024 0 COMVAR *Master_Handle 
 1024 0 COMVAR *Wx_Handle 
 4 0 ITABLE }SLOT08_OFF
-12 20 0 $TABLE {Status 
+20 20 0 $TABLE {Status 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A090C02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
@@ -195,7 +205,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2 $80000001 APOINT    0.0000 $A5  0 13 %Local_IO 0 POINT.TNG ~AO_cabinetFanCtrl
  2 $40000001 APOINT    0.0000 $45  0 14 %Local_IO 0 POINT.TNG ~AI_cabinetFanTach
 : 3_0
-60 JUMP ;
+62 JUMP ;
 : 3_41
 
 1 LINE.NUM
@@ -356,7 +366,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -15 JUMP ;
 : 3_254
 1 LINE.NUM 0 ^CmdOPEN @! 
-55 JUMP ;
+57 JUMP ;
 : 3_273
 -18 JUMP ;
 : 3_279
@@ -375,7 +385,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -2 JUMP ;
 : 3_288
 1 LINE.NUM 0 ^CmdCLOSE @! 
-52 JUMP ;
+54 JUMP ;
 : 3_291
 
 1 LINE.NUM
@@ -410,16 +420,16 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -2 JUMP ;
 : 3_318
 1 LINE.NUM 0 ^CmdUPPER_OPEN @! 
-47 JUMP ;
+49 JUMP ;
 : 3_319
 1 LINE.NUM 0 ^CmdUPPER_CLOSE @! 
-48 JUMP ;
+50 JUMP ;
 : 3_320
 1 LINE.NUM 0 ^CmdLOWER_OPEN @! 
-46 JUMP ;
+48 JUMP ;
 : 3_321
 1 LINE.NUM 0 ^CmdLOWER_CLOSE @! 
-47 JUMP ;
+49 JUMP ;
 : 3_327
 
 1 LINE.NUM
@@ -427,7 +437,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-33 JUMP ;
+35 JUMP ;
 : 3_330
 
 1 LINE.NUM
@@ -435,7 +445,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-36 JUMP ;
+38 JUMP ;
 : 3_333
 
 1 LINE.NUM
@@ -443,7 +453,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-33 JUMP ;
+35 JUMP ;
 : 3_336
 
 1 LINE.NUM
@@ -451,7 +461,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-36 JUMP ;
+38 JUMP ;
 : 3_341
 -36 JUMP ;
 : 3_342
@@ -480,7 +490,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -43 JUMP ;
 : 3_409
 1 LINE.NUM 0 ^CmdTOGGLE_LIGHTS @! 
-40 JUMP ;
+42 JUMP ;
 : 3_413
 -45 JUMP ;
 : 3_417
@@ -506,8 +516,15 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
 8 LINE.NUM 1 ^FLT_K5on @! 
 9 LINE.NUM ELSE 
-10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM THEN THEN THEN 
+10 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
+11 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
+12 LINE.NUM ELSE 
+12 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
+13 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
+14 LINE.NUM ELSE 
+15 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+16 LINE.NUM THEN THEN 
+18 LINE.NUM THEN THEN THEN 
 2 JUMP ;
 : 3_433
 
@@ -555,7 +572,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 : 3_435
 -52 JUMP ;
 : 3_444
-35 JUMP ;
+37 JUMP ;
 : 3_452
 1 LINE.NUM 0 ^CmdIlluminate_On @! 
 1 JUMP ;
@@ -572,6 +589,74 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -58 JUMP ;
 : 3_467
 -59 JUMP ;
+: 3_470
+2 LINE.NUM &Function_UpperOpen  STOP.T 
+3 LINE.NUM &Function_UpperClose  STOP.T 
+4 LINE.NUM &Function_LowerOpen  STOP.T 
+5 LINE.NUM &Function_LowerClose  STOP.T 
+6 LINE.NUM &Function_Close  STOP.T 
+7 LINE.NUM &Function_Open  STOP.T 
+8 LINE.NUM 100  DELAY 
+9 LINE.NUM ~DO_upperOpen  OFF 
+10 LINE.NUM ~DO_upperClose  OFF 
+11 LINE.NUM ~DO_pumpMotor  OFF 
+12 LINE.NUM ~DO_lowerOpenValve  OFF 
+13 LINE.NUM ~DO_lowerCloseValve  OFF 
+14 LINE.NUM ^Time_defContactorRelease @@  DELAY 
+15 LINE.NUM ~FB_upperOpen @@I 0 = IF 
+16 LINE.NUM 1 ^FLT_K1on @! 
+17 LINE.NUM ELSE 
+17 LINE.NUM ~FB_upperClose @@I 0 = IF 
+18 LINE.NUM 1 ^FLT_K2on @! 
+19 LINE.NUM ELSE 
+19 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+20 LINE.NUM 1 ^FLT_K5on @! 
+21 LINE.NUM ELSE 
+23 LINE.NUM THEN THEN THEN 
+27 LINE.NUM *sEncl " doma" $= IF 
+28 LINE.NUM 0 I>F  FDELAY 
+29 LINE.NUM ELSE 
+29 LINE.NUM *sEncl " domb" $= IF 
+30 LINE.NUM 1.50000000e+000  FDELAY 
+31 LINE.NUM ELSE 
+31 LINE.NUM *sEncl " domc" $= IF 
+32 LINE.NUM 3 I>F  FDELAY 
+33 LINE.NUM THEN THEN THEN 
+21 JUMP ;
+: 3_473
+2 LINE.NUM &Function_UpperOpen  STOP.T 
+3 LINE.NUM &Function_UpperClose  STOP.T 
+4 LINE.NUM &Function_LowerOpen  STOP.T 
+5 LINE.NUM &Function_LowerClose  STOP.T 
+6 LINE.NUM &Function_Close  STOP.T 
+7 LINE.NUM &Function_Open  STOP.T 
+8 LINE.NUM 100  DELAY 
+9 LINE.NUM ~DO_upperOpen  OFF 
+10 LINE.NUM ~DO_upperClose  OFF 
+11 LINE.NUM ~DO_pumpMotor  OFF 
+12 LINE.NUM ~DO_lowerOpenValve  OFF 
+13 LINE.NUM ~DO_lowerCloseValve  OFF 
+14 LINE.NUM ^Time_defContactorRelease @@  DELAY 
+15 LINE.NUM ~FB_upperOpen @@I 0 = IF 
+16 LINE.NUM 1 ^FLT_K1on @! 
+17 LINE.NUM ELSE 
+17 LINE.NUM ~FB_upperClose @@I 0 = IF 
+18 LINE.NUM 1 ^FLT_K2on @! 
+19 LINE.NUM ELSE 
+19 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+20 LINE.NUM 1 ^FLT_K5on @! 
+21 LINE.NUM ELSE 
+23 LINE.NUM THEN THEN THEN 
+27 LINE.NUM *sEncl " doma" $= IF 
+28 LINE.NUM 0 I>F  FDELAY 
+29 LINE.NUM ELSE 
+29 LINE.NUM *sEncl " domb" $= IF 
+30 LINE.NUM 1.50000000e+000  FDELAY 
+31 LINE.NUM ELSE 
+31 LINE.NUM *sEncl " domc" $= IF 
+32 LINE.NUM 3 I>F  FDELAY 
+33 LINE.NUM THEN THEN THEN 
+-41 JUMP ;
 : 3_38
 TRUE
 
@@ -579,140 +664,140 @@ TRUE
   ^CmdHEARTBEAT @@ 
   1    =
 LAND
-IF -45 ELSE 0 THEN JUMP ;
+IF -47 ELSE 0 THEN JUMP ;
 : 3_45
 TRUE
 
 1 LINE.NUM
   ^Timer_HeartbeatWdog   T0=
 LAND
-IF 18 ELSE 24 THEN JUMP ;
+IF -4 ELSE 24 THEN JUMP ;
 : 3_58
 TRUE
 
 1 LINE.NUM
   ~SW_stop   ?OFF
 LAND
-IF -50 ELSE -3 THEN JUMP ;
+IF -52 ELSE -3 THEN JUMP ;
 : 3_66
 TRUE
 
 1 LINE.NUM
   ^CmdOPEN @@   0<>
 LAND
-IF -47 ELSE 0 THEN JUMP ;
+IF -49 ELSE 0 THEN JUMP ;
 : 3_94
 TRUE
 
 1 LINE.NUM
   ^CmdCLOSE @@   0<>
 LAND
-IF -44 ELSE 0 THEN JUMP ;
+IF -6 ELSE 0 THEN JUMP ;
 : 3_114
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_OPEN @@   0<>
 LAND
-IF -38 ELSE 1 THEN JUMP ;
+IF -40 ELSE 1 THEN JUMP ;
 : 3_123
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -63 ELSE -64 THEN JUMP ;
+IF -65 ELSE -66 THEN JUMP ;
 : 3_127
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_CLOSE @@   0<>
 LAND
-IF -39 ELSE 1 THEN JUMP ;
+IF -41 ELSE 1 THEN JUMP ;
 : 3_135
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -63 ELSE -64 THEN JUMP ;
+IF -65 ELSE -66 THEN JUMP ;
 : 3_140
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_OPEN @@   0<>
 LAND
-IF -40 ELSE 1 THEN JUMP ;
+IF -42 ELSE 1 THEN JUMP ;
 : 3_143
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -64 ELSE -63 THEN JUMP ;
+IF -66 ELSE -65 THEN JUMP ;
 : 3_153
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_CLOSE @@   0<>
 LAND
-IF -41 ELSE 12 THEN JUMP ;
+IF -43 ELSE 12 THEN JUMP ;
 : 3_160
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -63 ELSE -64 THEN JUMP ;
+IF -65 ELSE -66 THEN JUMP ;
 : 3_282
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -54 ELSE -55 THEN JUMP ;
+IF -56 ELSE -57 THEN JUMP ;
 : 3_290
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -53 ELSE -52 THEN JUMP ;
+IF -55 ELSE -54 THEN JUMP ;
 : 3_307
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -49 ELSE -50 THEN JUMP ;
+IF -51 ELSE -52 THEN JUMP ;
 : 3_328
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -45 ELSE -11 THEN JUMP ;
+IF -47 ELSE -11 THEN JUMP ;
 : 3_331
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -45 ELSE -8 THEN JUMP ;
+IF -47 ELSE -8 THEN JUMP ;
 : 3_334
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -45 ELSE -11 THEN JUMP ;
+IF -47 ELSE -11 THEN JUMP ;
 : 3_337
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -45 ELSE -8 THEN JUMP ;
+IF -47 ELSE -8 THEN JUMP ;
 : 3_365
 TRUE
 
@@ -723,7 +808,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF -56 ELSE -6 THEN JUMP ;
+IF -58 ELSE -6 THEN JUMP ;
 : 3_385
 TRUE
 
@@ -734,14 +819,14 @@ LAND
 2 LINE.NUM
   ~SW_upperCloseLimit   ?OFF
 LAND
-IF -39 ELSE 0 THEN JUMP ;
+IF -41 ELSE 0 THEN JUMP ;
 : 3_386
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -42 ELSE -41 THEN JUMP ;
+IF -44 ELSE -43 THEN JUMP ;
 : 3_394
 TRUE
 
@@ -755,35 +840,35 @@ TRUE
 1 LINE.NUM
   ^CmdTOGGLE_LIGHTS @@   0<>
 LAND
-IF -41 ELSE 2 THEN JUMP ;
+IF -43 ELSE 2 THEN JUMP ;
 : 3_415
 TRUE
 
 1 LINE.NUM
   ^LightToggle @@   0<>
 LAND
-IF -40 ELSE -39 THEN JUMP ;
+IF -42 ELSE -41 THEN JUMP ;
 : 3_437
 TRUE
 
 1 LINE.NUM
   ^CmdSTOP @@   0<>
 LAND
-IF -39 ELSE -24 THEN JUMP ;
+IF -41 ELSE -24 THEN JUMP ;
 : 3_450
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_On @@   0<>
 LAND
-IF -34 ELSE 0 THEN JUMP ;
+IF -36 ELSE 0 THEN JUMP ;
 : 3_457
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_Off @@   0<>
 LAND
-IF -34 ELSE -49 THEN JUMP ;
+IF -36 ELSE -51 THEN JUMP ;
 T: T3
 DUMMY
 3_0
@@ -845,6 +930,8 @@ DUMMY
 3_463
 3_466
 3_467
+3_470
+3_473
 3_38
 3_45
 3_58
@@ -4275,7 +4362,7 @@ T;
   44    S.!EOL
 
 2 LINE.NUM
-  8  
+  15  
   0  
   {Status 
   *Master_Handle   S.PUT#TABLE
@@ -4579,7 +4666,7 @@ DUMMY
 T;
 &Master_Comm ' T11 SETTASK
 : 0_0
-4 JUMP ;
+5 JUMP ;
 : 0_5
 
 1 LINE.NUM
@@ -4639,7 +4726,89 @@ T;
 1 LINE.NUM " 10" *SWversion  $MOVE 
 -4 JUMP ;
 : 0_45
-0 JUMP ;
+36 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+39 LINE.NUM 0 ^nPeriodPosition1 @! 
+40 LINE.NUM 0 ^nPeriodPosition2 @! 
+41 LINE.NUM 46 0 *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+42 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+43 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s1stOctet  $SUB 
+46 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+47 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+48 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+49 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s2ndOctet  $SUB 
+52 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+53 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+54 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+55 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s3rdOctet  $SUB 
+58 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+59 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ 3 *s4thOctet  $SUB 
+63 LINE.NUM *s2ndOctet " 5" $= IF 
+64 LINE.NUM " LSC" *sSite  $MOVE 
+65 LINE.NUM ELSE 
+65 LINE.NUM *s2ndOctet " 6" $= IF 
+66 LINE.NUM " MFG" *sSite  $MOVE 
+67 LINE.NUM ELSE 
+67 LINE.NUM *s2ndOctet " 7" $= IF 
+68 LINE.NUM " BPL" *sSite  $MOVE 
+69 LINE.NUM ELSE 
+69 LINE.NUM *s2ndOctet " 8" $= IF 
+70 LINE.NUM " CPT" *sSite  $MOVE 
+71 LINE.NUM ELSE 
+71 LINE.NUM *s2ndOctet " 9" $= IF 
+72 LINE.NUM " ELP" *sSite  $MOVE 
+73 LINE.NUM ELSE 
+73 LINE.NUM *s2ndOctet " 10" $= IF 
+74 LINE.NUM " COJ" *sSite  $MOVE 
+75 LINE.NUM ELSE 
+75 LINE.NUM *s2ndOctet " 11" $= IF 
+76 LINE.NUM " TLV" *sSite  $MOVE 
+77 LINE.NUM ELSE 
+77 LINE.NUM *s2ndOctet " 12" $= IF 
+78 LINE.NUM " SQA" *sSite  $MOVE 
+79 LINE.NUM ELSE 
+79 LINE.NUM *s2ndOctet " 13" $= IF 
+80 LINE.NUM " NGQ" *sSite  $MOVE 
+81 LINE.NUM ELSE 
+81 LINE.NUM *s2ndOctet " 14" $= IF 
+82 LINE.NUM " TFN" *sSite  $MOVE 
+83 LINE.NUM ELSE 
+83 LINE.NUM *s2ndOctet " 15" $= IF 
+84 LINE.NUM " PTR" *sSite  $MOVE 
+85 LINE.NUM ELSE 
+85 LINE.NUM *s2ndOctet " 16" $= IF 
+86 LINE.NUM " SPT" *sSite  $MOVE 
+87 LINE.NUM ELSE 
+87 LINE.NUM *s2ndOctet " 17" $= IF 
+88 LINE.NUM " WTF" *sSite  $MOVE 
+89 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+92 LINE.NUM *s3rdOctet " 0" $= IF 
+93 LINE.NUM " SSB" *sEncl  $MOVE 
+94 LINE.NUM ELSE 
+94 LINE.NUM *s3rdOctet " 1" $= IF 
+95 LINE.NUM " aqwa" *sEncl  $MOVE 
+96 LINE.NUM ELSE 
+96 LINE.NUM *s3rdOctet " 4" $= IF 
+97 LINE.NUM " aqwb" *sEncl  $MOVE 
+98 LINE.NUM ELSE 
+98 LINE.NUM *s3rdOctet " 10" $= IF 
+99 LINE.NUM " doma" *sEncl  $MOVE 
+100 LINE.NUM ELSE 
+100 LINE.NUM *s3rdOctet " 12" $= IF 
+101 LINE.NUM " domb" *sEncl  $MOVE 
+102 LINE.NUM ELSE 
+102 LINE.NUM *s3rdOctet " 14" $= IF 
+103 LINE.NUM " domc" *sEncl  $MOVE 
+104 LINE.NUM ELSE 
+104 LINE.NUM *s3rdOctet " 16" $= IF 
+105 LINE.NUM " domd" *sEncl  $MOVE 
+106 LINE.NUM ELSE 
+106 LINE.NUM *s3rdOctet " 20" $= IF 
+107 LINE.NUM " clma" *sEncl  $MOVE 
+108 LINE.NUM ELSE 
+108 LINE.NUM *s3rdOctet " 30" $= IF 
+109 LINE.NUM " igla" *sEncl  $MOVE 
+110 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -4776,6 +4945,9 @@ T;
 3 LINE.NUM ELSE 
 3 LINE.NUM " LightsOn=0" 7 {Status $TABLE@  $MOVE 
 4 LINE.NUM THEN 
+8 LINE.NUM ~AI_domeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
+9 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
+10 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
 -5 JUMP ;
 : 15_5
 TRUE
@@ -5064,6 +5236,9 @@ CREATE V.ARRAY
 ^MasterCommandNum ,
 ^MasterCommandStringRcvd ,
 ^MasterCommEstablished ,
+^nPeriodPosition1 ,
+^nPeriodPosition2 ,
+^nSubstringLength ,
 ^Status_AutoMode ,
 ^Status_DisabledMode ,
 ^Status_FaultMode ,
@@ -5090,11 +5265,18 @@ CREATE V.ARRAY
 ^WxOKposition ,
 ^WxStarted ,
 *MasterCommand ,
+*s1stOctet ,
+*s2ndOctet ,
+*s3rdOctet ,
+*s4thOctet ,
 *s_DomeClose ,
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
+*sDomeAirTemp ,
+*sEncl ,
 *sIP_PAC ,
+*sSite ,
 *sStatus_Shutter1 ,
 *sStatus_Shutter2 ,
 *SWversion ,
@@ -5261,6 +5443,9 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^MasterCommandNum @!
 0 ^MasterCommandStringRcvd @!
 0 ^MasterCommEstablished @!
+0 ^nPeriodPosition1 @!
+0 ^nPeriodPosition2 @!
+0 ^nSubstringLength @!
 0.0 ^Socket_Timer @!
 0.0 ^Socket_Timer_2 @!
 0 ^Status_AutoMode @!
@@ -5300,6 +5485,14 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " xxx"
  *MasterCommand $MOVE
 " "
+ *s1stOctet $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s3rdOctet $MOVE
+" "
+ *s4thOctet $MOVE
+" "
  *s_DomeClose $MOVE
 " "
  *s_DomeOpen $MOVE
@@ -5308,7 +5501,13 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " "
  *s_LightSW $MOVE
 " "
+ *sDomeAirTemp $MOVE
+" "
+ *sEncl $MOVE
+" "
  *sIP_PAC $MOVE
+" "
+ *sSite $MOVE
 " UNKNOWN"
  *sStatus_Shutter1 $MOVE
 " UNKNOWN"
@@ -5336,9 +5535,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/18/19 " ;
-: TIMESTAMP ." 22:50:33 " ;
-: CRCSTAMP  ." 4C65FF358A4A7D7E0C4F8D625EEFF09B " ;
+: DATESTAMP ." 01/24/20 " ;
+: TIMESTAMP ." 17:59:28 " ;
+: CRCSTAMP  ." DC9CD53DFB3BFD3F7E710E0005074D2F " ;
 MAKECHECK
 CLEAR.BREAKS
 
