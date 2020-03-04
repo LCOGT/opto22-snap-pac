@@ -464,7 +464,7 @@
 40 LINE.NUM 0 I>F 4 I>F ~WallFanM75_Ctrl  F!RAMP 
 41 LINE.NUM 0 I>F 4 I>F ~WallFanM77_Ctrl  F!RAMP 
 42 LINE.NUM 0 ^TempFanSpeed @! 
-44 LINE.NUM 0 ^HvacOn @! 
+44 LINE.NUM 1 ^HvacOn @! 
 45 LINE.NUM 1 ^Response @! 
 46 LINE.NUM THEN 
 92 LINE.NUM " HVAC_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 

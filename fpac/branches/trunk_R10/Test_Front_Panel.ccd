@@ -20,9 +20,6 @@
 4 LINE.NUM
   10.  
   ^EncFanSpeed @!   
-
-5 LINE.NUM
-  ^HvacOn   FALSE@!
 1 JUMP ;
 : 1_7
 
@@ -48,9 +45,6 @@
 5 LINE.NUM
   0  
   ^FanSwMode @!   
-
-6 LINE.NUM
-  ^HvacOn   TRUE@!
 0 JUMP ;
 : 1_15
 

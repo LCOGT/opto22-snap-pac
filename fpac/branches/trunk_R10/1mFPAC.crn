@@ -764,7 +764,7 @@ T;
 40 LINE.NUM 0 I>F 4 I>F ~WallFanM75_Ctrl  F!RAMP 
 41 LINE.NUM 0 I>F 4 I>F ~WallFanM77_Ctrl  F!RAMP 
 42 LINE.NUM 0 ^TempFanSpeed @! 
-44 LINE.NUM 0 ^HvacOn @! 
+44 LINE.NUM 1 ^HvacOn @! 
 45 LINE.NUM 1 ^Response @! 
 46 LINE.NUM THEN 
 92 LINE.NUM " HVAC_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -1352,9 +1352,6 @@ T;
 4 LINE.NUM
   10.  
   ^EncFanSpeed @!   
-
-5 LINE.NUM
-  ^HvacOn   FALSE@!
 1 JUMP ;
 : 1_7
 
@@ -1380,9 +1377,6 @@ T;
 5 LINE.NUM
   0  
   ^FanSwMode @!   
-
-6 LINE.NUM
-  ^HvacOn   TRUE@!
 0 JUMP ;
 : 1_15
 
@@ -1475,25 +1469,12 @@ DUMMY
 T;
 &Test_Front_Panel ' T1 SETTASK
 : 2_0
-3 JUMP ;
-: 2_3
-
-1 LINE.NUM
-  ~AirCon_Ctrl   OFF
-
-2 LINE.NUM
-  ^HvacOn   FALSE@!
-1 JUMP ;
-: 2_7
-
-1 LINE.NUM
-  ~AirCon_Ctrl   ON
 0 JUMP ;
 : 2_10
 
 1 LINE.NUM
   60    DELAY
-3 JUMP ;
+5 JUMP ;
 : 2_26
 1 LINE.NUM 100  DELAY 
 3 LINE.NUM *sSite " TFN" $= IF 
@@ -1534,20 +1515,41 @@ T;
 38 LINE.NUM THEN 
 39 LINE.NUM THEN 
 -1 JUMP ;
+: 2_29
+1 LINE.NUM ~AirCon_ON @@I 1 = IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM *sSite " TFN" $= IF 
+5 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+6 LINE.NUM ELSE 
+7 LINE.NUM 1 ~AirCon_Ctrl @! 
+8 LINE.NUM THEN 
+9 LINE.NUM THEN 
+-3 JUMP ;
+: 2_30
+1 LINE.NUM ~AirCon_ON @@I 0 = IF 
+3 LINE.NUM ELSE 
+4 LINE.NUM *sSite " TFN" $= IF 
+5 LINE.NUM 5.00000000e-001 ~AirCon_Ctrl  PULSEON 
+6 LINE.NUM ELSE 
+7 LINE.NUM 0 ~AirCon_Ctrl @! 
+8 LINE.NUM THEN 
+9 LINE.NUM THEN 
+11 LINE.NUM 0 ^HvacOn @! 
+-4 JUMP ;
 : 2_4
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -5 ELSE -3 THEN JUMP ;
+IF -2 ELSE -5 THEN JUMP ;
 : 2_8
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -5 ELSE -6 THEN JUMP ;
+IF -4 ELSE -3 THEN JUMP ;
 : 2_9
 TRUE
 
@@ -1558,10 +1560,10 @@ IF -2 ELSE -3 THEN JUMP ;
 T: T2
 DUMMY
 2_0
-2_3
-2_7
 2_10
 2_26
+2_29
+2_30
 2_4
 2_8
 2_9
@@ -1918,8 +1920,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 11/16/19 " ;
-: TIMESTAMP ." 14:52:54 " ;
+: DATESTAMP ." 03/04/20 " ;
+: TIMESTAMP ." 20:46:32 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
