@@ -38,6 +38,8 @@
 31 LINE.NUM " " *FaultString  $MOVE 
 32 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @! 
 33 LINE.NUM ~SSB_Internal_Temp @@ ~IT_Rack_Back_Temp @@ F+ 2 I>F F/ ^avg_T @! 
+36 LINE.NUM 1.80000000e+003 ^CompressorTimer_Preset @! 
+37 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
 2 JUMP ;
 : 0_9
 

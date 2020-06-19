@@ -114,6 +114,28 @@
 120 LINE.NUM ~SSB_Outgoing_Temp @@ *TemperatureString  $>F F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
 121 LINE.NUM THEN 
 122 LINE.NUM ~SSB_Internal_Temp @@ ~IT_Rack_Back_Temp @@ F+ 2 I>F F/ ^avg_T @@ 239 I>F F* F+ 240 I>F F/ ^avg_T @! 
+126 LINE.NUM ~AirCompressor_Current @@ 1 I>F F> ^CompressorTimer @@F ^CompressorTimer_Preset @@ F= LAND  IF 
+127 LINE.NUM ^CompressorTimer  StartTimer 
+128 LINE.NUM ELSE 
+128 LINE.NUM ~AirCompressor_Current @@ 1 I>F F> ^CompressorTimer  T0= LAND  IF 
+129 LINE.NUM 2.50000000e+000 ~Shunt_Trip_Compressor  PULSEON 
+130 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
+131 LINE.NUM " , AirCompressor=TRUE" *FaultString $CAT 
+
+132 LINE.NUM ELSE 
+132 LINE.NUM ~AirCompressor_Current @@ 1 I>F F<= ^CompressorTimer @@F ^CompressorTimer_Preset @@ F< ^CompressorTimer @@F 0 I>F F> LAND  LAND  IF 
+133 LINE.NUM ^CompressorTimer  StopTimer 
+134 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
+135 LINE.NUM ELSE 
+135 LINE.NUM ~AirCompressor_Current @@ 1 I>F F<= ^CompressorTimer  T0= LAND  IF 
+136 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
+137 LINE.NUM THEN THEN THEN THEN 
+140 LINE.NUM ~CompressorDoorSwitch @@I 0 = IF 
+141 LINE.NUM " AirCompressorDoorOpen" 0 *ErrorString  FindSubString -1 > IF 
+142 LINE.NUM " , AirCompressorDoorOpen" *ErrorString $CAT 
+
+143 LINE.NUM THEN 
+144 LINE.NUM THEN 
 -2 JUMP ;
 T: T7
 DUMMY

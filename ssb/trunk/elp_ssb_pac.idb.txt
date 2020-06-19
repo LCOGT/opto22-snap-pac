@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdevera\Desktop\PAC Programs\ACP\trunk\elp_ssb_pac.idb
-# VERSION :      R9.4a
-# TIME/DATE :    14:48:33 12/10/2015
+# NAME :         C:\Users\jdevera\Desktop\PAC_programs\acp\trunk\elp_ssb_pac.idb
+# VERSION :      R9.5a
+# TIME/DATE :    3:0:54 6/19/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -99,7 +99,7 @@ TAG1,acp                                               ,0    ,00000000,00000000,
 TAG1,A_acp_01                                          ,107  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,acp_02                                            ,113  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,Acp_Panel_Closed                                  ,75   ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,CompressorDoorSwtich                              ,105  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,CompressorDoorSwitch                              ,105  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,di_acp_0900                                       ,160  ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,di_acp_0901                                       ,65   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,di_acp_0906                                       ,70   ,40000000,00000000,00000000,00000000,0    ,0   
@@ -222,6 +222,8 @@ TAG1,AQ_Go_Fast_Ok                                     ,35   ,00000000,00000000,
 TAG1,avg_T                                             ,83   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,ChartSTATUS                                       ,78   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,Comm_status                                       ,44   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,CompressorTimer                                   ,101  ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,CompressorTimer_Preset                            ,100  ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,DateTemp                                          ,74   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,delta_T                                           ,81   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,EncABlink                                         ,61   ,00000000,00000000,00000000,00000008,0    ,0   

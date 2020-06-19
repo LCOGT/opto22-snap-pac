@@ -121,7 +121,7 @@
 30 LINE.NUM THEN 
 31 LINE.NUM " PANEL_FAN_1_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 32 LINE.NUM ^Position @@ -1 >= IF 
-33 LINE.NUM 6.500000e+000 2 I>F ~Acp_Panel_Fan_Speed  F!RAMP 
+33 LINE.NUM 6.50000000e+000 2 I>F ~Acp_Panel_Fan_Speed  F!RAMP 
 34 LINE.NUM 1 ^Response @! 
 35 LINE.NUM THEN 
 36 LINE.NUM " PANEL_FAN_1_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
@@ -724,9 +724,15 @@
   *Master_Handle   STREAM.CLEAR.BUF
 -8 JUMP ;
 : 6_406
+2 LINE.NUM *FaultString  $LEN 1 < IF 
 3 LINE.NUM " Success=FALSE" *StatusString  $MOVE 
-5 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-6 LINE.NUM " " *MasterCommand  $MOVE 
+4 LINE.NUM ELSE 
+5 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
+6 LINE.NUM *FaultString *StatusString $CAT 
+
+7 LINE.NUM THEN 
+10 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+11 LINE.NUM " " *MasterCommand  $MOVE 
 1 JUMP ;
 : 6_408
 
@@ -874,7 +880,7 @@
 35 LINE.NUM " , EntryDoorClosed=TRUE" *StatusString $CAT 
 
 36 LINE.NUM THEN 
-38 LINE.NUM ~CompressorDoorSwtich @@I 1 = IF 
+38 LINE.NUM ~CompressorDoorSwitch @@I 1 = IF 
 39 LINE.NUM " , CompressorCoverClosed=TRUE" *StatusString $CAT 
 
 40 LINE.NUM ELSE 
@@ -956,13 +962,13 @@
 
 100 LINE.NUM " , AcpPanelTach=" *StatusString $CAT 
 
-101 LINE.NUM ~ACP_Fan_Tach @@ 1.140000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+101 LINE.NUM ~ACP_Fan_Tach @@ 1.13999999e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 102 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 104 LINE.NUM 0 I>F ^Total_Inflow @! 
 106 LINE.NUM ~SSB_Fan_M24_Tach @@ ^AdjustTach @! 
 107 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-108 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
+108 LINE.NUM ^AdjustTach @@ 3.57100010e+000 F* ^AdjustTach @! 
 109 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
 110 LINE.NUM 0 I>F ^AdjustTach @! 
 111 LINE.NUM THEN 
@@ -974,7 +980,7 @@
 
 117 LINE.NUM ~SSB_Fan_M27_Tach @@ ^AdjustTach @! 
 118 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-119 LINE.NUM ^AdjustTach @@ 3.703000e+000 F* ^AdjustTach @! 
+119 LINE.NUM ^AdjustTach @@ 3.70300007e+000 F* ^AdjustTach @! 
 120 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
 121 LINE.NUM 0 I>F ^AdjustTach @! 
 122 LINE.NUM THEN 
@@ -986,7 +992,7 @@
 
 129 LINE.NUM ~SSB_Fan_M32_Tach @@ ^AdjustTach @! 
 130 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-131 LINE.NUM ^AdjustTach @@ 3.571000e+000 F* ^AdjustTach @! 
+131 LINE.NUM ^AdjustTach @@ 3.57100010e+000 F* ^AdjustTach @! 
 132 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
 133 LINE.NUM 0 I>F ^AdjustTach @! 
 134 LINE.NUM THEN 
@@ -998,7 +1004,7 @@
 
 140 LINE.NUM ~SSB_Fan_M35_Tach @@ ^AdjustTach @! 
 141 LINE.NUM ^AdjustTach @@ 20 I>F F- ^AdjustTach @! 
-142 LINE.NUM ^AdjustTach @@ 3.846000e+000 F* ^AdjustTach @! 
+142 LINE.NUM ^AdjustTach @@ 3.84599996e+000 F* ^AdjustTach @! 
 143 LINE.NUM ^AdjustTach @@ 0 I>F F< IF 
 144 LINE.NUM 0 I>F ^AdjustTach @! 
 145 LINE.NUM THEN 
@@ -1010,7 +1016,7 @@
 
 151 LINE.NUM " , TotalInflow=" *StatusString $CAT 
 
-152 LINE.NUM ^Total_Inflow @@ 4.000000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+152 LINE.NUM ^Total_Inflow @@ 4.00000000e+000 F/ 4 0 *EnviroTemp  FF.R$ 
 153 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 155 LINE.NUM " , OutletTach=" *StatusString $CAT 
@@ -1070,8 +1076,18 @@
 201 LINE.NUM THEN 
 203 LINE.NUM *EnviroTemp *StatusString $CAT 
 
-207 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-208 LINE.NUM " Statux 2 Sent" *MasterCommand  $MOVE 
+205 LINE.NUM " , CompressedAirPressure=" *StatusString $CAT 
+
+206 LINE.NUM ~AirPressure @@ 7 4 *EnviroTemp  FF.R$ 
+207 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+209 LINE.NUM " , AirCompressorCurrent=" *StatusString $CAT 
+
+210 LINE.NUM ~AirCompressor_Current @@ 4 1 *EnviroTemp  FF.R$ 
+211 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+216 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+217 LINE.NUM " Statux 2 Sent" *MasterCommand  $MOVE 
 -2 JUMP ;
 : 6_470
 
