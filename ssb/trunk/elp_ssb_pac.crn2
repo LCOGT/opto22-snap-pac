@@ -15,6 +15,7 @@
 0 IVAR ^EncAGrnFlag
 0 IVAR ^EncARedFlag
 0 IVAR ^ErrorFlag
+0 IVAR ^ErrorStringCheck
 0 IVAR ^fake_Fan_Sw_2
 0 FVAR ^FamMemory
 0 IVAR ^FanSwMode

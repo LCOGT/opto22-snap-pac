@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC_programs\acp\trunk\elp_ssb_pac.idb
 # VERSION :      R9.5a
-# TIME/DATE :    3:0:54 6/19/2020
+# TIME/DATE :    21:8:45 6/26/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -230,6 +230,7 @@ TAG1,EncABlink                                         ,61   ,00000000,00000000,
 TAG1,EncAGrnFlag                                       ,65   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,EncARedFlag                                       ,50   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ErrorFlag                                         ,77   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,ErrorStringCheck                                  ,102  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,fake_Fan_Sw_2                                     ,99   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FamMemory                                         ,79   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,FanSwMode                                         ,51   ,00000000,00000000,00000000,00000008,0    ,0   

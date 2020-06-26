@@ -16,6 +16,7 @@ CREATE V.ARRAY
 ^EncAGrnFlag ,
 ^EncARedFlag ,
 ^ErrorFlag ,
+^ErrorStringCheck ,
 ^fake_Fan_Sw_2 ,
 ^FamMemory ,
 ^FanSwMode ,
@@ -248,6 +249,7 @@ CONFIG_PORTS
 0 ^EncAGrnFlag @!
 0 ^EncARedFlag @!
 0 ^ErrorFlag @!
+-1 ^ErrorStringCheck @!
 0 ^fake_Fan_Sw_2 @!
 0.00000000 ^FamMemory @!
 -1 ^FanSwMode @!

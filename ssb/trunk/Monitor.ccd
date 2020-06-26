@@ -124,18 +124,20 @@
 
 132 LINE.NUM ELSE 
 132 LINE.NUM ~AirCompressor_Current @@ 1 I>F F<= ^CompressorTimer @@F ^CompressorTimer_Preset @@ F< ^CompressorTimer @@F 0 I>F F> LAND  LAND  IF 
-133 LINE.NUM ^CompressorTimer  StopTimer 
-134 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
-135 LINE.NUM ELSE 
-135 LINE.NUM ~AirCompressor_Current @@ 1 I>F F<= ^CompressorTimer  T0= LAND  IF 
-136 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
-137 LINE.NUM THEN THEN THEN THEN 
-140 LINE.NUM ~CompressorDoorSwitch @@I 0 = IF 
-141 LINE.NUM " AirCompressorDoorOpen" 0 *ErrorString  FindSubString -1 > IF 
-142 LINE.NUM " , AirCompressorDoorOpen" *ErrorString $CAT 
+133 LINE.NUM ^CompressorTimer  PauseTimer 
+135 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer @! 
+136 LINE.NUM ^CompressorTimer  PauseTimer 
+137 LINE.NUM ELSE 
+137 LINE.NUM ~AirCompressor_Current @@ 1 I>F F<= ^CompressorTimer  T0= LAND  IF 
+139 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer @! 
+140 LINE.NUM ^CompressorTimer  PauseTimer 
+141 LINE.NUM THEN THEN THEN THEN 
+144 LINE.NUM ~CompressorDoorSwitch @@I 0 = IF 
+146 LINE.NUM " AirCompressorDoorOpen" 0 *ErrorString  FindSubString 0 < IF 
+147 LINE.NUM " , AirCompressorDoorOpen" *ErrorString $CAT 
 
-143 LINE.NUM THEN 
-144 LINE.NUM THEN 
+148 LINE.NUM THEN 
+149 LINE.NUM THEN 
 -2 JUMP ;
 T: T7
 DUMMY
