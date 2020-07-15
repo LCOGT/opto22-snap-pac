@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC_programs\acp\trunk\elp_ssb_pac.idb
 # VERSION :      R9.5a
-# TIME/DATE :    21:8:45 6/26/2020
+# TIME/DATE :    22:20:39 7/15/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -259,6 +259,7 @@ TAG1,Position6                                         ,94   ,00000000,00000000,
 TAG1,PriorHeartbeatTime                                ,47   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,PriorStatusTime                                   ,87   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Response                                          ,60   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,SecondsSinceMidnight                              ,104  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ShutdownBlink                                     ,64   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ShutdownGrnFlag                                   ,69   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,ShutdownRedFlag                                   ,68   ,00000000,00000000,00000000,00000008,0    ,0   
@@ -267,6 +268,7 @@ TAG1,SiteGrnFlag                                       ,67   ,00000000,00000000,
 TAG1,SiteRedFlag                                       ,66   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,SiteSetpoint                                      ,96   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,Socket_Timer                                      ,42   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,SSB_flush_flag                                    ,103  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,SSBBlink                                          ,63   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,SSBGrnFlag                                        ,71   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,SSBRedFlag                                        ,70   ,00000000,00000000,00000000,00000008,0    ,0   
@@ -283,6 +285,7 @@ TAG1,ElapsedString                                     ,10   ,00000000,00000000,
 TAG1,EnviroString                                      ,11   ,00000000,00000000,00000000,00000040,0    ,1024
 TAG1,EnviroTemp                                        ,12   ,00000000,00000000,00000000,00000040,0    ,15  
 TAG1,ErrorString                                       ,23   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,FanSwitchState                                    ,31   ,00000000,00000000,00000000,00000040,0    ,30  
 TAG1,FaultString                                       ,13   ,00000000,00000000,00000000,00000040,0    ,1024
 TAG1,FWVersion                                         ,14   ,00000000,00000000,00000000,00000040,0    ,6   
 TAG1,HumidityString                                    ,30   ,00000000,00000000,00000000,00000040,0    ,8   

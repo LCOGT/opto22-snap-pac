@@ -44,6 +44,7 @@
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^PriorStatusTime
 0 IVAR ^Response
+0 IVAR ^SecondsSinceMidnight
 0 IVAR ^ShutdownBlink
 0 IVAR ^ShutdownGrnFlag
 0 IVAR ^ShutdownRedFlag
@@ -52,6 +53,7 @@
 0 IVAR ^SiteRedFlag
 0 FVAR ^SiteSetpoint
 0 TVAR ^Socket_Timer
+0 IVAR ^SSB_flush_flag
 0 IVAR ^SSBBlink
 0 IVAR ^SSBGrnFlag
 0 IVAR ^SSBRedFlag
@@ -68,6 +70,7 @@
 1024 0 $VAR *EnviroString 
 15 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorString 
+30 0 $VAR *FanSwitchState 
 1024 0 $VAR *FaultString 
 6 0 $VAR *FWVersion 
 8 0 $VAR *HumidityString 

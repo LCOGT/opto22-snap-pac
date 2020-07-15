@@ -44,6 +44,7 @@ CREATE V.ARRAY
 ^PriorHeartbeatTime ,
 ^PriorStatusTime ,
 ^Response ,
+^SecondsSinceMidnight ,
 ^ShutdownBlink ,
 ^ShutdownGrnFlag ,
 ^ShutdownRedFlag ,
@@ -51,6 +52,7 @@ CREATE V.ARRAY
 ^SiteGrnFlag ,
 ^SiteRedFlag ,
 ^SiteSetpoint ,
+^SSB_flush_flag ,
 ^SSBBlink ,
 ^SSBGrnFlag ,
 ^SSBRedFlag ,
@@ -67,6 +69,7 @@ CREATE V.ARRAY
 *EnviroString ,
 *EnviroTemp ,
 *ErrorString ,
+*FanSwitchState ,
 *FaultString ,
 *FWVersion ,
 *HumidityString ,
@@ -278,6 +281,7 @@ CONFIG_PORTS
 1 ^PriorHeartbeatTime @!
 0 ^PriorStatusTime @!
 0 ^Response @!
+0 ^SecondsSinceMidnight @!
 0 ^ShutdownBlink @!
 0 ^ShutdownGrnFlag @!
 0 ^ShutdownRedFlag @!
@@ -286,6 +290,7 @@ CONFIG_PORTS
 0 ^SiteRedFlag @!
 24.000000 ^SiteSetpoint @!
 0.0 ^Socket_Timer @!
+0 ^SSB_flush_flag @!
 0 ^SSBBlink @!
 0 ^SSBGrnFlag @!
 0 ^SSBRedFlag @!
@@ -310,6 +315,8 @@ CONFIG_PORTS
  *EnviroTemp $MOVE
 " "
  *ErrorString $MOVE
+" "
+ *FanSwitchState $MOVE
 " Fault"
  *FaultString $MOVE
 " 001.07"
