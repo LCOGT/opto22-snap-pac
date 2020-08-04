@@ -1009,7 +1009,7 @@
 
 209 LINE.NUM " , AirCompressorCurrent=" *StatusString $CAT 
 
-210 LINE.NUM ~AirCompressor_Current @@ 4 1 *EnviroTemp  FF.R$ 
+210 LINE.NUM ~AirCompressor_Current @@ 6 3 *EnviroTemp  FF.R$ 
 211 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 216 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 

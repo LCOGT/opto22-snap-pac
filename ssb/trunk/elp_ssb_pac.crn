@@ -1232,7 +1232,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 209 LINE.NUM " , AirCompressorCurrent=" *StatusString $CAT 
 
-210 LINE.NUM ~AirCompressor_Current @@ 4 1 *EnviroTemp  FF.R$ 
+210 LINE.NUM ~AirCompressor_Current @@ 6 3 *EnviroTemp  FF.R$ 
 211 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 216 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
@@ -2064,8 +2064,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 07/15/20 " ;
-: TIMESTAMP ." 22:20:39 " ;
+: DATESTAMP ." 08/04/20 " ;
+: TIMESTAMP ." 18:49:20 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
