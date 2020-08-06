@@ -3,6 +3,7 @@
 0 TASK &Monitor
 0 TASK &Powerup
 0 FVAR ^AdjustTach
+0 IVAR ^AirCompressorRunning
 0 IVAR ^AQ_Go_Fast_Ok
 0 FVAR ^avg_T
 0 FVAR ^ChartSTATUS

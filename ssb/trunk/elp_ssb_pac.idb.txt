@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC_programs\acp\trunk\elp_ssb_pac.idb
 # VERSION :      R9.5a
-# TIME/DATE :    18:49:20 8/4/2020
+# TIME/DATE :    16:23:42 8/6/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -218,6 +218,7 @@ TAG1,SSB_Panel_Temp                                    ,18   ,00000000,00000001,
 TAG1,Utility_Current                                   ,15   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Utility_VAC                                       ,24   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AdjustTach                                        ,72   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,AirCompressorRunning                              ,105  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,AQ_Go_Fast_Ok                                     ,35   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,avg_T                                             ,83   ,00000000,00000000,00000000,00000010,0    ,0   
 TAG1,ChartSTATUS                                       ,78   ,00000000,00000000,00000000,00000010,0    ,0   

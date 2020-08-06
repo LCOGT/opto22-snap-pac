@@ -5,6 +5,7 @@ CREATE T.ARRAY
  0 ,
 CREATE V.ARRAY
 ^AdjustTach ,
+^AirCompressorRunning ,
 ^AQ_Go_Fast_Ok ,
 ^avg_T ,
 ^ChartSTATUS ,
@@ -240,6 +241,7 @@ CONFIG_PORTS
  0 ~Enclosure_B_Red_LED @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0.00000000 ^AdjustTach @!
+0 ^AirCompressorRunning @!
 0 ^AQ_Go_Fast_Ok @!
 0.00000000 ^avg_T @!
 0.00000000 ^ChartSTATUS @!
