@@ -5458,7 +5458,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 500 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
 60.000000 ^Time_defLowerClose @!
-50.000000 ^Time_defLowerOpen @!
+60.000000 ^Time_defLowerOpen @!
 30.000000 ^Time_defOpenClear @!
 180.00000 ^Time_defUpperOperate @!
 5.0000000 ^Time_defWxWdogTimer @!
@@ -5535,9 +5535,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 01/24/20 " ;
-: TIMESTAMP ." 17:59:28 " ;
-: CRCSTAMP  ." DC9CD53DFB3BFD3F7E710E0005074D2F " ;
+: DATESTAMP ." 10/19/20 " ;
+: TIMESTAMP ." 19:57:25 " ;
+: CRCSTAMP  ." 0264D2E479EB5E80325FBC05F4145FC6 " ;
 MAKECHECK
 CLEAR.BREAKS
 

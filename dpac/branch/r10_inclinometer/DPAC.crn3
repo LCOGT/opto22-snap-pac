@@ -298,7 +298,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 500 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
 60.000000 ^Time_defLowerClose @!
-50.000000 ^Time_defLowerOpen @!
+60.000000 ^Time_defLowerOpen @!
 30.000000 ^Time_defOpenClear @!
 180.00000 ^Time_defUpperOperate @!
 5.0000000 ^Time_defWxWdogTimer @!
