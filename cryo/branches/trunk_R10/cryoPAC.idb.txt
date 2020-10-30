@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC_programs\cryopac\trunk_R10\cryoPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    18:15:59 4/23/2019
+# TIME/DATE :    20:4:55 10/30/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -112,33 +112,26 @@ TAG1,DeadmanBypass                                     ,8    ,40000000,00000000,
 TAG1,DO_XformerPWR                                     ,1    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,F4_3_Reset                                        ,5    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,F4_3_Status                                       ,6    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,GlycolCoolerPWR                                   ,2    ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,GlycolPumpOverload                                ,9    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,Honeysucker_CTRL                                  ,4    ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,ThermoPWR_Lower_M3_3                              ,2    ,10000000,00000000,00000000,00000000,0    ,0   
-TAG1,ThermoPWR_Upper_M3_7                              ,3    ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,CryoTigCurrent_Lower_M2_3                         ,14   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,CryoTigCurrent_Upper_M2_7                         ,15   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,CryoTigOutputPress_Lower_M2_3                     ,20   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,CryoTigOutputPress_Upper_M2_7                     ,22   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,CryoTigReturnPress_Lower_M2_3                     ,21   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,CryoTigReturnPress_Upper_M2_7                     ,23   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,CryoTigVolt_Lower_M2_3                            ,5    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,CryoTigVolt_Upper_M2_7                            ,6    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Exhaust_Fan_CTRL                                  ,0    ,00000000,00000002,00000000,00000000,0    ,0   
 TAG1,Exhaust_Fan_SPD                                   ,2    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,GlycolCoolerCurrent                               ,16   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,GlycolCoolerDiffPress                             ,12   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,GlycolCoolerFlow                                  ,18   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,GlycolReturnTemp                                  ,8    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,GlycolSupplyTemp                                  ,9    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Honeysucker_SPD                                   ,4    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Intake_Fan_CTRL                                   ,1    ,00000000,00000002,00000000,00000000,0    ,0   
 TAG1,Intake_Fan_Humidity                               ,10   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Intake_Fan_SPD                                    ,3    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Intake_Fan_Temp                                   ,11   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,MasterTemp                                        ,7    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoCurrent_Lower_M3_3                          ,16   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoCurrent_Upper_M3_7                          ,17   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoDiffPress_Lower_M3_3                        ,12   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoDiffPress_Upper_M3_7                        ,13   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoFlow_Lower_M3_3                             ,18   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoFlow_Upper_M3_7                             ,19   ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoTemp_Lower_M3_3                             ,8    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,ThermoTemp_Upper_M3_7                             ,9    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,CoolantDemand                                     ,25   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CoolantSetpoint                                   ,24   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CryoTigPWR_Lower_Flag                             ,50   ,00000000,00000000,00000000,00000008,0    ,0   

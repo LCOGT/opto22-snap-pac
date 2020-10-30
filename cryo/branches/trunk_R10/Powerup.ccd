@@ -18,47 +18,44 @@
   1500    DELAY
 
 6 LINE.NUM
-  ~ThermoPWR_Lower_M3_3   ON
+  ~GlycolCoolerPWR   ON
 
 7 LINE.NUM
   1500    DELAY
 
 8 LINE.NUM
-  ~ThermoPWR_Upper_M3_7   OFF
+  10 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 9 LINE.NUM
   10 I>F 
   1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
-
-10 LINE.NUM
-  10 I>F 
-  1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
-11 LINE.NUM
+10 LINE.NUM
   3000    DELAY
 
-12 LINE.NUM
+11 LINE.NUM
   ~Honeysucker_CTRL   ON
+
+12 LINE.NUM
+  6 I>F 
+  1 I>F 
+  ~Exhaust_Fan_CTRL   F!RAMP
 
 13 LINE.NUM
   6 I>F 
   1 I>F 
-  ~Exhaust_Fan_CTRL   F!RAMP
-
-14 LINE.NUM
-  6 I>F 
-  1 I>F 
   ~Intake_Fan_CTRL   F!RAMP
 
-15 LINE.NUM
+14 LINE.NUM
   10.0    FDELAY
 
-16 LINE.NUM
+15 LINE.NUM
   ~Honeysucker_CTRL   OFF
 
-17 LINE.NUM
+16 LINE.NUM
   &aps2_1m0a_monitor   START.T
   ^nIndex2 @! 
 4 JUMP ;
