@@ -191,7 +191,7 @@ CONFIG_PORTS
  *FWVersion $MOVE
 " "
  *hourString $MOVE
-" 001.01"
+" 1.1"
  *ICDVersion $MOVE
 " "
  *LastCommand $MOVE
@@ -223,7 +223,7 @@ CONFIG_PORTS
  *sOctet3 $MOVE
 " Status"
  *StatusString $MOVE
-" 8"
+" -"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE

@@ -1324,7 +1324,7 @@ CONFIG_PORTS
  *FWVersion $MOVE
 " "
  *hourString $MOVE
-" 001.01"
+" 1.1"
  *ICDVersion $MOVE
 " "
  *LastCommand $MOVE
@@ -1356,7 +1356,7 @@ CONFIG_PORTS
  *sOctet3 $MOVE
 " Status"
  *StatusString $MOVE
-" 8"
+" -"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
@@ -1382,7 +1382,7 @@ T;
    &_INIT_IO START.T DROP
    ;
 : DATESTAMP ." 10/30/20 " ;
-: TIMESTAMP ." 20:04:55 " ;
+: TIMESTAMP ." 20:25:05 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
