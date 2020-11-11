@@ -117,6 +117,7 @@ CREATE P.ARRAY
 ~Intake_Fan_SPD ,
 ~Intake_Fan_Temp ,
 ~MasterTemp ,
+~MirrorCellVolt ,
  0 ,
 CREATE PID.ARRAY
  0 ,

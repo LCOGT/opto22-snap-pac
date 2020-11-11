@@ -105,6 +105,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2 $40000001 APOINT    0.0000 $45  1  4 %Local_IO 0 POINT.TNG ~Intake_Fan_SPD
  2 $40000001 APOINT    0.0000 $45  0  5 %Local_IO 0 POINT.TNG ~Honeysucker_SPD
  2 $40000001 APOINT    0.0000 $46  0  6 %Local_IO 0 POINT.TNG ~CryoTigVolt_Lower_M2_3
+ 2 $40000001 APOINT    0.0000 $46  1  6 %Local_IO 0 POINT.TNG ~MirrorCellVolt
  4 $40000001 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~F4_3_Status
  4 $40000001 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~CryoTig_Deadman
  4 $40000001 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~GlycolPumpOverload
@@ -476,6 +477,11 @@ T;
 
 52 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
 53 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+54 LINE.NUM " , MirrorCellVoltage=" *EnviroString $CAT 
+
+55 LINE.NUM ~MirrorCellVolt @@ 5 1 *EnviroTemp  FF.R$ 
+56 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 57 LINE.NUM " , GlycolReturnTemp=" *EnviroString $CAT 
 
@@ -1261,6 +1267,7 @@ CREATE P.ARRAY
 ~Intake_Fan_SPD ,
 ~Intake_Fan_Temp ,
 ~MasterTemp ,
+~MirrorCellVolt ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -1392,9 +1399,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 10/30/20 " ;
-: TIMESTAMP ." 20:25:05 " ;
-: CRCSTAMP  ." 3004F9DA684FC99E39451322C7E322F6 " ;
+: DATESTAMP ." 11/11/20 " ;
+: TIMESTAMP ." 18:59:49 " ;
+: CRCSTAMP  ." 71F377C8AB2D5A6E920F798E6921F9D8 " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdevera\Desktop\PAC_programs\cryopac\trunk_R10\cryoPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    20:25:5 10/30/2020
+# TIME/DATE :    18:59:49 11/11/2020
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -132,6 +132,7 @@ TAG1,Intake_Fan_Humidity                               ,10   ,00000000,00000001,
 TAG1,Intake_Fan_SPD                                    ,3    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,Intake_Fan_Temp                                   ,11   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,MasterTemp                                        ,7    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,MirrorCellVolt                                    ,22   ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,CoolantDemand                                     ,25   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CoolantSetpoint                                   ,24   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CryoTigPWR_Lower_Flag                             ,50   ,00000000,00000000,00000000,00000008,0    ,0   

@@ -228,6 +228,11 @@
 52 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
 53 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
+54 LINE.NUM " , MirrorCellVoltage=" *EnviroString $CAT 
+
+55 LINE.NUM ~MirrorCellVolt @@ 5 1 *EnviroTemp  FF.R$ 
+56 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
 57 LINE.NUM " , GlycolReturnTemp=" *EnviroString $CAT 
 
 58 LINE.NUM ~GlycolReturnTemp @@ 5 1 *EnviroTemp  FF.R$ 
