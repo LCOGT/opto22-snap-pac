@@ -954,8 +954,18 @@
 222 LINE.NUM " NC" *EnviroTemp  $MOVE 
 223 LINE.NUM *EnviroTemp *StatusString $CAT 
 
-227 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-228 LINE.NUM " Statux 2 Sent" *MasterCommand  $MOVE 
+225 LINE.NUM " , CompressedAirPressure=" *StatusString $CAT 
+
+226 LINE.NUM ~AirPressure @@ 7 4 *EnviroTemp  FF.R$ 
+227 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+229 LINE.NUM " , AirCompressorCurrent=" *StatusString $CAT 
+
+230 LINE.NUM ~AirCompressor_Current @@ 6 3 *EnviroTemp  FF.R$ 
+231 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+235 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+236 LINE.NUM " Statux 2 Sent" *MasterCommand  $MOVE 
 -2 JUMP ;
 : 6_470
 

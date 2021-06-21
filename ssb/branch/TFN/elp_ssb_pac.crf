@@ -179,7 +179,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32 $40000001 SPOINT 0.0     INPUT 31  9 %acp 0 POINT.TNG ~di_acp_0931
  4 $40000001 APOINT  -15.5132 $40  0 10 %acp 0 POINT.TNG ~AirPressure
   10.3421  -15.5132 ~AirPressure SET.SCALE
- 4 $40000001 APOINT  -37.5000 $40  2 10 %acp 0 POINT.TNG ~AirCompressor_Current
+ 4 $40000001 APOINT  -37.5000 $40  1 10 %acp 0 POINT.TNG ~AirCompressor_Current
   25.0000  -37.5000 ~AirCompressor_Current SET.SCALE
  4 $40000001 APOINT  -20.0000 $40  3 10 %acp 0 POINT.TNG ~ai_acp_1003
  2 $40000001 APOINT    0.0000 $46  0 13 %acp 0 POINT.TNG ~Utility_VAC
@@ -1139,8 +1139,18 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 222 LINE.NUM " NC" *EnviroTemp  $MOVE 
 223 LINE.NUM *EnviroTemp *StatusString $CAT 
 
-227 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-228 LINE.NUM " Statux 2 Sent" *MasterCommand  $MOVE 
+225 LINE.NUM " , CompressedAirPressure=" *StatusString $CAT 
+
+226 LINE.NUM ~AirPressure @@ 7 4 *EnviroTemp  FF.R$ 
+227 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+229 LINE.NUM " , AirCompressorCurrent=" *StatusString $CAT 
+
+230 LINE.NUM ~AirCompressor_Current @@ 6 3 *EnviroTemp  FF.R$ 
+231 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+235 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+236 LINE.NUM " Statux 2 Sent" *MasterCommand  $MOVE 
 -2 JUMP ;
 : 6_470
 
@@ -1859,9 +1869,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 09/06/19 " ;
-: TIMESTAMP ." 22:14:35 " ;
-: CRCSTAMP  ." 44C89C6F64710AF7CDA6E0D515227A6B " ;
+: DATESTAMP ." 06/21/21 " ;
+: TIMESTAMP ." 18:44:56 " ;
+: CRCSTAMP  ." 5D6D6653217942F07C5FFFCBA54B2B83 " ;
 MAKECHECK
 CLEAR.BREAKS
 
