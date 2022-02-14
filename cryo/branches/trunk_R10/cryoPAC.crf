@@ -526,7 +526,7 @@ T;
 
 102 LINE.NUM " , GlycolCoolerFlow=" *EnviroString $CAT 
 
-103 LINE.NUM ~GlycolCoolerFlow @@ 1.66669998e+001 F* 10 1 *EnviroTemp  FF.R$ 
+103 LINE.NUM ~GlycolCoolerFlow @@ 1000 I>F F* 10 1 *EnviroTemp  FF.R$ 
 104 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 108 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
@@ -1399,9 +1399,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 11/11/20 " ;
-: TIMESTAMP ." 18:59:49 " ;
-: CRCSTAMP  ." 71F377C8AB2D5A6E920F798E6921F9D8 " ;
+: DATESTAMP ." 02/14/22 " ;
+: TIMESTAMP ." 11:01:27 " ;
+: CRCSTAMP  ." 106B32EA8EBEA273158AE81225EF2C08 " ;
 MAKECHECK
 CLEAR.BREAKS
 

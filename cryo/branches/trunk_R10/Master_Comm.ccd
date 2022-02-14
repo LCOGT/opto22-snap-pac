@@ -276,7 +276,7 @@
 
 102 LINE.NUM " , GlycolCoolerFlow=" *EnviroString $CAT 
 
-103 LINE.NUM ~GlycolCoolerFlow @@ 1.66669998e+001 F* 10 1 *EnviroTemp  FF.R$ 
+103 LINE.NUM ~GlycolCoolerFlow @@ 1000 I>F F* 10 1 *EnviroTemp  FF.R$ 
 104 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
 108 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
