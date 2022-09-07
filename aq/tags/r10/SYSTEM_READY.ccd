@@ -1,0 +1,295 @@
+: 17_0
+3 JUMP ;
+: 17_12
+1 LINE.NUM ~DI_Lights_Enter_SW  CLR.+LATCH@I ~DI_Lights_Enter_SW  CLR.-LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.+LATCH@I LOR  ~DI_Lights_Exit_SW  CLR.-LATCH@I LOR  IF 
+5 LINE.NUM ~DO_Lights_RLA @@I 1 XOR  ~DO_Lights_RLA @! 
+8 LINE.NUM ~DO_Lights_RLA @@I 1 = IF 
+9 LINE.NUM " , ManualON " *sLightsTest $CAT 
+
+10 LINE.NUM ELSE 
+11 LINE.NUM " , ManualOFF " *sLightsTest $CAT 
+
+12 LINE.NUM THEN 
+13 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+14 LINE.NUM *sTimestamp *sLightsTest $CAT 
+
+16 LINE.NUM THEN 
+1 JUMP ;
+: 17_13
+4 LINE.NUM &Pole_Close  ?RUNNING &Pole_Open  ?RUNNING LOR  &Tail_Close  ?RUNNING LOR  &Tail_Open  ?RUNNING LOR  IF 
+9 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+11 LINE.NUM ELSE 
+12 LINE.NUM 1 ^nPauseWallFans @! 
+14 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+16 LINE.NUM THEN 
+17 LINE.NUM THEN 
+23 LINE.NUM &Pole_Close  ?STOPPED &Pole_Open  ?STOPPED LAND  &Tail_Close  ?STOPPED LAND  &Tail_Open  ?STOPPED LAND  ^nPauseWallFans @@ 1 = LAND  IF 
+29 LINE.NUM 0 ^nPauseWallFans @! 
+31 LINE.NUM &TestEnclFans  START.T DROP  
+32 LINE.NUM THEN 
+38 LINE.NUM ~DI_FanAuto_SW @@I ~DI_FanStop_SW @@I LAND  IF 
+40 LINE.NUM " AUTO" *sWallFansOpMode  $MOVE 
+42 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+46 LINE.NUM ELSE 
+46 LINE.NUM ~DI_UltimateClosed_LS  CLR.-LATCH@I IF 
+47 LINE.NUM 3 I>F ~AO_Wall_Fans_VDC @! 
+48 LINE.NUM 1 ^WallFans_Initialized @! 
+51 LINE.NUM ELSE 
+51 LINE.NUM ~DI_UltimateClosed_LS @@I 0 = IF 
+52 LINE.NUM ^WallFans_Initialized @@ 1 = IF 
+54 LINE.NUM ELSE 
+55 LINE.NUM 3 I>F ~AO_Wall_Fans_VDC @! 
+56 LINE.NUM 1 ^WallFans_Initialized @! 
+57 LINE.NUM THEN 
+60 LINE.NUM ELSE 
+60 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
+61 LINE.NUM 0 ^WallFans_Initialized @! 
+64 LINE.NUM ^OTSmirrorTemp @@ ^DewpointTemp @@ F<= ~AI_OutletAir_RTD @@ 25 I>F F<= LAND  IF 
+65 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+68 LINE.NUM ELSE 
+68 LINE.NUM ~AI_OutletAir_RTD @@ 25 I>F F> IF 
+69 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+72 LINE.NUM ELSE 
+72 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F< IF 
+73 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+76 LINE.NUM ELSE 
+76 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F>= ~AI_OutletAir_RTD @@ 25 I>F F<= LAND  IF 
+77 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F- ~AO_Wall_Fans_VDC @! 
+79 LINE.NUM THEN THEN THEN THEN 
+81 LINE.NUM THEN THEN THEN THEN 
+104 LINE.NUM ELSE 
+104 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+105 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+107 LINE.NUM ELSE 
+108 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+109 LINE.NUM THEN 
+110 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
+111 LINE.NUM ELSE 
+111 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
+112 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+113 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
+114 LINE.NUM ELSE 
+114 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
+115 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+117 LINE.NUM ELSE 
+118 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+119 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
+120 LINE.NUM " , WallFanOpMode " *sErrorList $CAT 
+
+121 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+122 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+123 LINE.NUM THEN 
+124 LINE.NUM THEN THEN THEN THEN 
+-2 JUMP ;
+: 17_18
+9 LINE.NUM ^dtOneWeek @@F 0 I>F F= IF 
+10 LINE.NUM &TestPanelFans  START.T DROP  
+11 LINE.NUM 604800 I>F ^dtOneWeek @! 
+12 LINE.NUM THEN 
+2 JUMP ;
+: 17_25
+1 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+2 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+4 LINE.NUM ELSE 
+5 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+6 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+7 LINE.NUM " AUTO" *sOTAblowerOpMode  $MOVE 
+8 LINE.NUM THEN 
+9 LINE.NUM ELSE 
+9 LINE.NUM ~DI_OTA_BlowerStop_SW @@I ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+10 LINE.NUM 10 I>F ~AO_OTA_Blower_A @! 
+11 LINE.NUM 10 I>F ~AO_OTA_Blower_B @! 
+12 LINE.NUM " MANUAL" *sOTAblowerOpMode  $MOVE 
+13 LINE.NUM ELSE 
+13 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I 0 = LAND  IF 
+14 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+15 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+16 LINE.NUM " DISABLED" *sOTAblowerOpMode  $MOVE 
+17 LINE.NUM ELSE 
+17 LINE.NUM ~DI_OTA_BlowerStop_SW @@I 0 = ~DI_OTA_BlowerAuto_SW @@I LAND  IF 
+18 LINE.NUM *sOTAblowerOpMode " UNKNOWN" $= IF 
+20 LINE.NUM ELSE 
+21 LINE.NUM " UNKNOWN" *sOTAblowerOpMode  $MOVE 
+22 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+23 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+24 LINE.NUM " , OTAblowerOpMode " *sErrorList $CAT 
+
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+27 LINE.NUM THEN 
+28 LINE.NUM THEN THEN THEN THEN 
+36 LINE.NUM *sOTAblowerOpMode " AUTO" $= IF 
+37 LINE.NUM ~DI_UltimateClosed_LS  CLR.-LATCH@I IF 
+38 LINE.NUM 1.00000000e+001 ~AO_OTA_Blower_A @! 
+39 LINE.NUM 1.00000000e+001 ~AO_OTA_Blower_B @! 
+40 LINE.NUM ELSE 
+40 LINE.NUM ~DI_UltimateClosed_LS  CLR.+LATCH@I IF 
+41 LINE.NUM 0 I>F ~AO_OTA_Blower_A @! 
+42 LINE.NUM 0 I>F ~AO_OTA_Blower_B @! 
+43 LINE.NUM THEN THEN 
+44 LINE.NUM THEN 
+0 JUMP ;
+: 17_28
+4 LINE.NUM ~DI_GoFast_SW @@I ~DI_FenceClosed_SEN @@I LOR  ~DI_TrapKey_SW @@I LOR  IF 
+5 LINE.NUM 1 ^FastMode @! 
+6 LINE.NUM ELSE 
+7 LINE.NUM 0 ^FastMode @! 
+8 LINE.NUM THEN 
+15 LINE.NUM ^FastMode @@ 0 = ~DI_Pole_Fast_LS @@I 0 = &Pole_Close  ?RUNNING LAND  LOR  IF 
+16 LINE.NUM 0 ~DO_PoleGoFast @! 
+17 LINE.NUM ELSE 
+18 LINE.NUM 1 ~DO_PoleGoFast @! 
+19 LINE.NUM THEN 
+26 LINE.NUM ^FastMode @@ 0 = ~DI_Tail_Fast_LS @@I 0 = &Tail_Close  ?RUNNING LAND  LOR  IF 
+27 LINE.NUM 0 ~DO_TailGoFast @! 
+28 LINE.NUM ELSE 
+29 LINE.NUM 1 ~DO_TailGoFast @! 
+30 LINE.NUM THEN 
+4 JUMP ;
+: 17_31
+1 LINE.NUM ~DI_LeftStormLock_LS @@I 0 = ~DI_RightStormLock_LS @@I 0 = LOR  IF 
+2 LINE.NUM 1 ^nStormlocked @! 
+3 LINE.NUM ELSE 
+4 LINE.NUM 0 ^nStormlocked @! 
+5 LINE.NUM THEN 
+0 JUMP ;
+: 17_35
+5 LINE.NUM ~DI_Utility_TVS  CLR.-LATCH@I IF 
+6 LINE.NUM " , Utility_TVS=TRUE " *sErrorList $CAT 
+
+7 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+8 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+9 LINE.NUM THEN 
+11 LINE.NUM ~DI_FUPS_TVS  CLR.-LATCH@I IF 
+12 LINE.NUM " , FUPS_TVS=TRUE " *sErrorList $CAT 
+
+13 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+14 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+15 LINE.NUM THEN 
+17 LINE.NUM ~DI_DUPS_TVS  CLR.-LATCH@I IF 
+18 LINE.NUM " , DUPS_TVS=TRUE " *sErrorList $CAT 
+
+19 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+20 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+21 LINE.NUM THEN 
+23 LINE.NUM ~DI_PoleFans_MCB  CLR.-LATCH@I IF 
+24 LINE.NUM " , PoleFans_MCB=TRUE " *sErrorList $CAT 
+
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+27 LINE.NUM THEN 
+29 LINE.NUM ~DI_TailFans_MCB  CLR.-LATCH@I IF 
+30 LINE.NUM " , TailFans_MCB=TRUE " *sErrorList $CAT 
+
+31 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+32 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+33 LINE.NUM THEN 
+35 LINE.NUM ~DI_Webcam_MCB  CLR.-LATCH@I IF 
+36 LINE.NUM " , Webcam_MCB=TRUE " *sErrorList $CAT 
+
+37 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+38 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+39 LINE.NUM THEN 
+41 LINE.NUM ~DI_OTAblower_MCB  CLR.-LATCH@I IF 
+42 LINE.NUM " , OTA_Blower_MCB=TRUE " *sErrorList $CAT 
+
+43 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+44 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+45 LINE.NUM THEN 
+47 LINE.NUM ~DI_PanelFans_MCB  CLR.-LATCH@I IF 
+48 LINE.NUM " , PanelFans_MCB=TRUE " *sErrorList $CAT 
+
+49 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+50 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+51 LINE.NUM THEN 
+53 LINE.NUM ~DI_SmokePWR_SEN  CLR.-LATCH@I IF 
+54 LINE.NUM " , SmokeAlarmPower=TRUE " *sErrorList $CAT 
+
+55 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+56 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+57 LINE.NUM THEN 
+59 LINE.NUM ~DI_Smoke_SEN  CLR.+LATCH@I IF 
+60 LINE.NUM " , SmokeAlarm " *sErrorList $CAT 
+
+61 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+62 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+63 LINE.NUM THEN 
+0 JUMP ;
+: 17_36
+5 LINE.NUM ~DI_ESTOP_OK  CLR.-LATCH@I IF 
+6 LINE.NUM " , Estop " *sFaultList $CAT 
+
+7 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+8 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+9 LINE.NUM ELSE 
+9 LINE.NUM ~DI_24vCtrl_MCB  CLR.-LATCH@I IF 
+10 LINE.NUM " , 24vCtrl_MCB " *sFaultList $CAT 
+
+11 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+12 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+13 LINE.NUM ELSE 
+13 LINE.NUM ~DI_Tscope_MCB  CLR.-LATCH@I IF 
+14 LINE.NUM " , TSCOPE_MCB " *sFaultList $CAT 
+
+15 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+16 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+23 LINE.NUM ELSE 
+23 LINE.NUM ~DI_SmokeHeat_SEN  CLR.+LATCH@I IF 
+24 LINE.NUM " , SmokeAlarmHeat " *sFaultList $CAT 
+
+25 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+26 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+27 LINE.NUM ELSE 
+27 LINE.NUM ~DI_24vPSU_OK  CLR.-LATCH@I IF 
+28 LINE.NUM " , 24V_Supply " *sFaultList $CAT 
+
+29 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+30 LINE.NUM *sTimestamp *sFaultList $CAT 
+
+31 LINE.NUM THEN THEN THEN THEN THEN 
+33 LINE.NUM " Shutter1Open" 0 *sFaultList  FindSubString ^nPoleOpenFault @! 
+34 LINE.NUM " Shutter2Open" 0 *sFaultList  FindSubString ^nTailOpenFault @! 
+35 LINE.NUM " Shutter1Close" 0 *sFaultList  FindSubString ^nPoleCloseFault @! 
+36 LINE.NUM " Shutter2Close" 0 *sFaultList  FindSubString ^nTailCloseFault @! 
+37 LINE.NUM " Shutter1L2" 0 *sFaultList  FindSubString ^nPoleOpenL2Fault @! 
+38 LINE.NUM " Shutter2L2" 0 *sFaultList  FindSubString ^nTailOpenL2Fault @! 
+0 JUMP ;
+: 17_46
+1 LINE.NUM 100  DELAY 
+-6 JUMP ;
+: 17_50
+1 LINE.NUM ~AI_AqHumidity_SEN @@ ^RH @! 
+2 LINE.NUM ~AI_AqTemp_SEN @@ ^T @! 
+6 LINE.NUM 2.43039993e+002 ^RH @@ 100 I>F F/  FLN 1.76250000e+001 ^T @@ F* 2.43039993e+002 ^T @@ F+ F/ F+ F* 1.76250000e+001 ^RH @@ 100 I>F F/  FLN F- 1.76250000e+001 ^T @@ F* 2.43039993e+002 ^T @@ F+ F/ F- F/ ^DewpointTemp @! 
+-9 JUMP ;
+T: T17
+DUMMY
+17_0
+17_12
+17_13
+17_18
+17_25
+17_28
+17_31
+17_35
+17_36
+17_46
+17_50
+T;
+&SYSTEM_READY ' T17 SETTASK

@@ -1,0 +1,61 @@
+: 32_0
+0 JUMP ;
+: 32_1
+6 LINE.NUM ~AO_Wall_Fans_VDC @@ 10 I>F F= IF 
+7 LINE.NUM 20 I>F ^dt20sec @! 
+8 LINE.NUM ^dt20sec  StartTimer 
+9 LINE.NUM 0 ^nAbort @! 
+10 LINE.NUM BEGIN ^dt20sec @@F 0 I>F F> WHILE 
+11 LINE.NUM ~AO_Wall_Fans_VDC @@ 9.89999962e+000 F< IF 
+12 LINE.NUM 1 ^nAbort @! 
+13 LINE.NUM THEN 
+14 LINE.NUM REPEAT 
+15 LINE.NUM ^nAbort @@ 1 < ~AI_PoleFanExhaust_TACH @@ 116 I>F F< LAND  IF 
+16 LINE.NUM " , WallFansUnderSpd " *sErrorList $CAT 
+
+17 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+18 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+19 LINE.NUM THEN 
+20 LINE.NUM THEN 
+28 LINE.NUM ~AO_Wall_Fans_VDC @@ 5 I>F F= IF 
+29 LINE.NUM 20 I>F ^dt20sec @! 
+30 LINE.NUM ^dt20sec  StartTimer 
+31 LINE.NUM 0 ^nAbort @! 
+32 LINE.NUM BEGIN ^dt20sec @@F 0 I>F F> WHILE 
+33 LINE.NUM ~AO_Wall_Fans_VDC @@ 4.90000010e+000 F< ~AO_Wall_Fans_VDC @@ 5.09999990e+000 F> LOR  IF 
+34 LINE.NUM 1 ^nAbort @! 
+35 LINE.NUM THEN 
+36 LINE.NUM REPEAT 
+37 LINE.NUM ^nAbort @@ 1 < ~AI_PoleFanExhaust_TACH @@ 70 I>F F< LAND  IF 
+38 LINE.NUM " , WallFansUnderSpd " *sErrorList $CAT 
+
+39 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+40 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+41 LINE.NUM THEN 
+42 LINE.NUM THEN 
+50 LINE.NUM ~AO_Wall_Fans_VDC @@ 1.50000000e+000 F= IF 
+51 LINE.NUM 20 I>F ^dt20sec @! 
+52 LINE.NUM ^dt20sec  StartTimer 
+53 LINE.NUM 0 ^nAbort @! 
+54 LINE.NUM BEGIN ^dt20sec @@F 0 I>F F> WHILE 
+55 LINE.NUM ~AO_Wall_Fans_VDC @@ 1.39999998e+000 F< ~AO_Wall_Fans_VDC @@ 1.60000002e+000 F> LOR  IF 
+56 LINE.NUM 1 ^nAbort @! 
+57 LINE.NUM THEN 
+58 LINE.NUM REPEAT 
+59 LINE.NUM ^nAbort @@ 1 < ~AI_PoleFanExhaust_TACH @@ 26 I>F F< LAND  IF 
+60 LINE.NUM " , WallFansUnderSpd " *sErrorList $CAT 
+
+61 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+62 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+63 LINE.NUM THEN 
+64 LINE.NUM THEN 
+0 JUMP ;
+T: T32
+DUMMY
+32_0
+32_1
+T;
+&TestEnclFans ' T32 SETTASK
