@@ -1092,7 +1092,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 87 LINE.NUM " , InternalHumidity=" *StatusString $CAT 
 
-88 LINE.NUM ~SSB_Internal_Humidity @@ 4 10 *EnviroTemp  FF.R$ 
+88 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
 89 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 90 LINE.NUM " , AcpPanelTemp=" *StatusString $CAT 
@@ -2072,8 +2072,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 08/06/20 " ;
-: TIMESTAMP ." 16:23:42 " ;
+: DATESTAMP ." 10/28/22 " ;
+: TIMESTAMP ." 13:51:19 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

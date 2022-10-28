@@ -868,7 +868,7 @@
 
 87 LINE.NUM " , InternalHumidity=" *StatusString $CAT 
 
-88 LINE.NUM ~SSB_Internal_Humidity @@ 4 10 *EnviroTemp  FF.R$ 
+88 LINE.NUM ~SSB_Internal_Humidity @@ 4 1 *EnviroTemp  FF.R$ 
 89 LINE.NUM *EnviroTemp *StatusString $CAT 
 
 90 LINE.NUM " , AcpPanelTemp=" *StatusString $CAT 
