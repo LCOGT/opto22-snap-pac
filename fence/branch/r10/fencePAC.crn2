@@ -1,0 +1,49 @@
+0 TASK  &_INIT_IO
+0 TASK &Powerup
+0 TASK &StirFan_Control
+0 TVAR ^dtGetChar
+0 TVAR ^dtGetTime
+0 FVAR ^f120
+0 FVAR ^f24hrsInSec
+0 IVAR ^n1
+0 IVAR ^n30
+0 IVAR ^nASCII
+0 IVAR ^nCharCount
+0 IVAR ^nFanCtrlMax
+0 IVAR ^nGetTimeChartStatus
+0 IVAR ^nIndex0
+0 IVAR ^nIndex1
+0 IVAR ^nIndex2
+0 IVAR ^nIP_integer
+0 IVAR ^nMaxStirFanTach
+0 IVAR ^nNTPstatus
+0 IVAR ^nReceiveStatus
+0 IVAR ^nSetTimeDateStatus
+0 IVAR ^nStirFanChartStatus
+4 0 $VAR *sDay 
+40 0 $VAR *sDebug 
+8 0 $VAR *sIP_hex 
+25 0 $VAR *sIP_NTP 
+15 0 $VAR *sIP_PAC 
+4 0 $VAR *sMonth 
+9 0 $VAR *sTime 
+5 0 $VAR *sYear 
+1024 0 COMVAR *cNTPserver 
+5 10 0 $TABLE {stTimeDate 
+
+nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %local_IO
+ 4  1 SPOINT 0.0     INPUT  0  0 %local_IO 0 POINT.TNG ~DI_Lock2
+ 4  1 SPOINT 0.0     INPUT  1  0 %local_IO 0 POINT.TNG ~DI_Lock1
+ 4  1 SPOINT 0.0     INPUT  2  0 %local_IO 0 POINT.TNG ~DI_SafetyRelayK6_2
+ 4  1 SPOINT 0.0     INPUT  3  0 %local_IO 0 POINT.TNG ~DI_SafetyRelayK8_2
+ 4  1 SPOINT 0.0     INPUT  0  1 %local_IO 0 POINT.TNG ~DI_SafetyRelayK9_2
+ 4  1 SPOINT 0.0     INPUT  1  1 %local_IO 0 POINT.TNG ~DI_DC_MCB_F3_6
+ 4  1 SPOINT 0.0     INPUT  2  1 %local_IO 0 POINT.TNG ~DI_aqwC_MCB
+ 4  1 SPOINT 0.0     INPUT  0  2 %local_IO 0 POINT.TNG ~DI_aqwA_MCB
+ 4  1 SPOINT 0.0     INPUT  1  2 %local_IO 0 POINT.TNG ~DI_aqwB_MCB
+ 4  1 SPOINT 0.0     INPUT  2  2 %local_IO 0 POINT.TNG ~DI_FUPS_SPD
+ 4  1 SPOINT 0.0     INPUT  3  2 %local_IO 0 POINT.TNG ~DI_Cabinet_Door
+ 2  1 APOINT -200.0000 10  0  3 %local_IO 0 POINT.TNG ~AI_CabinetTemp
+ 4  1 SPOINT 0.0    OUTPUT  0  4 %local_IO 0 POINT.TNG ~DO_DC_MCB_F3_6
+ 2  1 APOINT    0.0000 165  0  5 %local_IO 0 POINT.TNG ~AO_StirFan
+ 2  1 APOINT    0.0000 69  0  6 %local_IO 0 POINT.TNG ~AI_StirFanTach
