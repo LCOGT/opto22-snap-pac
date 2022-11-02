@@ -30,7 +30,6 @@ CREATE V.ARRAY
 *sYear ,
 *_HSV_SEMA ,
 *_HSV_TEMP ,
-*cNTPserver ,
  0 ,
 CREATE TI.ARRAY
 ^dtGetChar ,
@@ -111,8 +110,6 @@ CONFIG_PORTS
  *sTime $MOVE
 " "
  *sYear $MOVE
-" 0.0.0.0"
- *cNTPserver $MOVE
  " "
 0 -1 {stTimeDate Init$Table
  " " *_HSV_INIT_IO $MOVE

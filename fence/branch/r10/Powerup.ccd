@@ -1,5 +1,5 @@
 : 0_0
-2 JUMP ;
+0 JUMP ;
 : 0_2
 1 LINE.NUM 5 I>F 5 I>F ~AO_StirFan  F!RAMP 
 2 LINE.NUM 2.00000000e+001  FDELAY 
@@ -32,8 +32,7 @@
 33 LINE.NUM ^nIndex0 @@ 1 +  ^nIndex0 @! 
 34 LINE.NUM REPEAT 
 36 LINE.NUM " tcp:10.10.20.11:13" *sIP_NTP  $MOVE 
-37 LINE.NUM *sIP_NTP *cNTPserver  $MOVE 
--3 JUMP ;
+0 JUMP ;
 T: T0
 DUMMY
 0_0
