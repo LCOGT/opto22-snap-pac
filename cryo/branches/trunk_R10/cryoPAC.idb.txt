@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdeve\Desktop\PAC_programs\cryopac\trunk_R10\cryoPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    11:1:27 2/14/2022
+# TIME/DATE :    11:10:49 11/4/2022
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
