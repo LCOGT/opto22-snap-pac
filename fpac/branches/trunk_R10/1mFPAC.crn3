@@ -23,6 +23,7 @@ CREATE V.ARRAY
 ^Fans_ON ,
 ^FanSwAuto ,
 ^FanSwMode ,
+^HvacFlag ,
 ^HvacOn ,
 ^indexStep ,
 ^LEDsBlink ,
@@ -78,6 +79,7 @@ CREATE V.ARRAY
  0 ,
 CREATE TI.ARRAY
 ^Heartbeat_Timer ,
+^HVACtimer ,
 ^Socket_Timer ,
 ^Timer_GetChar ,
  0 ,
@@ -210,7 +212,9 @@ CONFIG_PORTS
 0 ^FanSwAuto @!
 -1 ^FanSwMode @!
 0.0 ^Heartbeat_Timer @!
+0 ^HvacFlag @!
 0 ^HvacOn @!
+0.0 ^HVACtimer @!
 0 ^indexStep @!
 0 ^LEDsBlink @!
 0 ^ListeningForMaster @!

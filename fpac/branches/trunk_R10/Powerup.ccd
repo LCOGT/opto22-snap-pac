@@ -50,7 +50,7 @@
   ~CabinetFanCtrl @!   
 -2 JUMP ;
 : 0_26
-1 JUMP ;
+2 JUMP ;
 : 0_28
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 4 LINE.NUM 46 3 *sIP_PAC  FindChar ^nPeriodPosition @! 
@@ -99,7 +99,13 @@
 36 LINE.NUM *s2ndOctet " 17" $= IF 
 37 LINE.NUM " WTF" *sSite  $MOVE 
 38 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
--2 JUMP ;
+0 JUMP ;
+: 0_32
+1 LINE.NUM " 1.1" *ICDVersion  $MOVE 
+2 LINE.NUM *FWVersion  Rev>$ 
+3 LINE.NUM " 392" *SWVersion  $MOVE 
+5 LINE.NUM ~ECB_Ctrl  OFF 
+-3 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -108,5 +114,6 @@ DUMMY
 0_22
 0_26
 0_28
+0_32
 T;
 &Powerup ' T0 SETTASK

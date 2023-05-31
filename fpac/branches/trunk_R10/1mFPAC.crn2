@@ -22,7 +22,9 @@
 0 IVAR ^FanSwAuto
 0 IVAR ^FanSwMode
 0 TVAR ^Heartbeat_Timer
+0 IVAR ^HvacFlag
 0 IVAR ^HvacOn
+0 TVAR ^HVACtimer
 0 IVAR ^indexStep
 0 IVAR ^LEDsBlink
 0 IVAR ^ListeningForMaster

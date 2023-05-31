@@ -4,7 +4,7 @@
 
 1 LINE.NUM
   60    DELAY
-5 JUMP ;
+3 JUMP ;
 : 2_26
 1 LINE.NUM 100  DELAY 
 3 LINE.NUM *sSite " TFN" $= IF 
@@ -66,20 +66,43 @@
 9 LINE.NUM THEN 
 11 LINE.NUM 0 ^HvacOn @! 
 -4 JUMP ;
+: 2_37
+3 LINE.NUM ^HvacFlag @@ 1 = IF 
+4 LINE.NUM 0 ^HvacFlag @! 
+5 LINE.NUM 3 I>F ^HVACtimer @! 
+6 LINE.NUM ^HVACtimer  StartTimer 
+7 LINE.NUM THEN 
+9 LINE.NUM ^HVACtimer @@F 0 I>F F> IF 
+11 LINE.NUM ELSE 
+12 LINE.NUM ~AirCon_ON @@I 1 = IF 
+13 LINE.NUM 1 ^HvacOn @! 
+14 LINE.NUM *sSite " TFN" $= IF 
+16 LINE.NUM ELSE 
+17 LINE.NUM 1 ~AirCon_Ctrl @! 
+18 LINE.NUM THEN 
+19 LINE.NUM ELSE 
+20 LINE.NUM 0 ^HvacOn @! 
+21 LINE.NUM *sSite " TFN" $= IF 
+23 LINE.NUM ELSE 
+24 LINE.NUM 0 ~AirCon_Ctrl @! 
+25 LINE.NUM THEN 
+26 LINE.NUM THEN 
+27 LINE.NUM THEN 
+2 JUMP ;
 : 2_4
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -2 ELSE -5 THEN JUMP ;
+IF -3 ELSE -6 THEN JUMP ;
 : 2_8
 TRUE
 
 1 LINE.NUM
   ^HvacOn @@   0<>
 LAND
-IF -4 ELSE -3 THEN JUMP ;
+IF -5 ELSE -4 THEN JUMP ;
 : 2_9
 TRUE
 
@@ -94,6 +117,7 @@ DUMMY
 2_26
 2_29
 2_30
+2_37
 2_4
 2_8
 2_9
