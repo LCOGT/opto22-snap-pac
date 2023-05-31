@@ -1,0 +1,119 @@
+: 0_0
+0 JUMP ;
+: 0_1
+
+1 LINE.NUM
+  &DomeShutter   START.T
+  ^DomeShutter_Chart_Status @! 
+
+2 LINE.NUM
+  &LED_control   START.T
+  ^AQ_Go_Fast_Ok @! 
+
+3 LINE.NUM
+  &Test_HVAC   START.T
+  ^Test_HVAC_Status @! 
+
+4 LINE.NUM
+  &Master_Comm   START.T
+  ^MasterCommEstablished @! 
+
+5 LINE.NUM
+  &Test_Front_Panel   START.T
+  ^Test_Front_Panel_Status @! 
+
+6 LINE.NUM
+  &WhiteLights   START.T
+  ^WhiteLights_Chart @! 
+1 JUMP ;
+: 0_10
+
+1 LINE.NUM
+  90.0  
+  ^Heartbeat_Timer   SetTimer
+
+2 LINE.NUM
+  ^Heartbeat_Timer   StartTimer
+2 JUMP ;
+: 0_22
+
+1 LINE.NUM
+  10.0  
+  ^TempPanelSpeed F@!   
+
+2 LINE.NUM
+  0.0  
+  ^TempFanSpeed F@!   
+
+3 LINE.NUM
+  10.0  
+  ~CabinetFanCtrl @!   
+-2 JUMP ;
+: 0_26
+2 JUMP ;
+: 0_28
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+4 LINE.NUM 46 3 *sIP_PAC  FindChar ^nPeriodPosition @! 
+5 LINE.NUM ^nPeriodPosition @@ 4 > IF 
+6 LINE.NUM 2 ^n2ndOctetLength @! 
+7 LINE.NUM ELSE 
+8 LINE.NUM 1 ^n2ndOctetLength @! 
+9 LINE.NUM THEN 
+11 LINE.NUM *sIP_PAC 3 ^n2ndOctetLength @@ *s2ndOctet  $SUB 
+12 LINE.NUM *s2ndOctet " 5" $= IF 
+13 LINE.NUM " LSC" *sSite  $MOVE 
+14 LINE.NUM ELSE 
+14 LINE.NUM *s2ndOctet " 6" $= IF 
+15 LINE.NUM " MFG" *sSite  $MOVE 
+16 LINE.NUM ELSE 
+16 LINE.NUM *s2ndOctet " 7" $= IF 
+17 LINE.NUM " BPL" *sSite  $MOVE 
+18 LINE.NUM ELSE 
+18 LINE.NUM *s2ndOctet " 8" $= IF 
+19 LINE.NUM " CPT" *sSite  $MOVE 
+20 LINE.NUM ELSE 
+20 LINE.NUM *s2ndOctet " 9" $= IF 
+21 LINE.NUM " ELP" *sSite  $MOVE 
+22 LINE.NUM ELSE 
+22 LINE.NUM *s2ndOctet " 10" $= IF 
+23 LINE.NUM " COJ" *sSite  $MOVE 
+24 LINE.NUM ELSE 
+24 LINE.NUM *s2ndOctet " 11" $= IF 
+25 LINE.NUM " TLV" *sSite  $MOVE 
+26 LINE.NUM ELSE 
+26 LINE.NUM *s2ndOctet " 12" $= IF 
+27 LINE.NUM " SQA" *sSite  $MOVE 
+28 LINE.NUM ELSE 
+28 LINE.NUM *s2ndOctet " 13" $= IF 
+29 LINE.NUM " NGQ" *sSite  $MOVE 
+30 LINE.NUM ELSE 
+30 LINE.NUM *s2ndOctet " 14" $= IF 
+31 LINE.NUM " TFN" *sSite  $MOVE 
+32 LINE.NUM ELSE 
+32 LINE.NUM *s2ndOctet " 15" $= IF 
+33 LINE.NUM " PTR" *sSite  $MOVE 
+34 LINE.NUM ELSE 
+34 LINE.NUM *s2ndOctet " 16" $= IF 
+35 LINE.NUM " SPT" *sSite  $MOVE 
+36 LINE.NUM ELSE 
+36 LINE.NUM *s2ndOctet " 17" $= IF 
+37 LINE.NUM " WTF" *sSite  $MOVE 
+38 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+0 JUMP ;
+: 0_32
+1 LINE.NUM " 1.1" *ICDVersion  $MOVE 
+2 LINE.NUM *FWVersion  Rev>$ 
+3 LINE.NUM " 392" *SWVersion  $MOVE 
+5 LINE.NUM ~ECB_Ctrl  OFF 
+-3 JUMP ;
+T: T0
+DUMMY
+0_0
+0_1
+0_10
+0_22
+0_26
+0_28
+0_32
+T;
+&Powerup ' T0 SETTASK
