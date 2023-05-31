@@ -590,66 +590,14 @@
 97 LINE.NUM THEN 
 107 LINE.NUM " , FansSwitch=" *StatusString $CAT 
 
-108 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 0 = LAND  IF 
-109 LINE.NUM 2 ^FanSwMode @! 
-110 LINE.NUM 1 ~Fan_Green_LED @! 
-111 LINE.NUM 0 ~Fan_Red_LED @! 
-112 LINE.NUM " AUTO" *StatusString $CAT 
+108 LINE.NUM *FanSwitchState *StatusString $CAT 
 
-114 LINE.NUM ~SSB_Outgoing_Temp @@ 27 I>F F>= IF 
-115 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-120 LINE.NUM 1 ~SSB_status_Red_LED @! 
-121 LINE.NUM 0 ~SSB_status_Green_LED @! 
-122 LINE.NUM 1 ^TempLatch @! 
-123 LINE.NUM " >= 27C. FORCE_FAN_COOL" *TempServoState  $MOVE 
-124 LINE.NUM THEN 
-125 LINE.NUM ^TempLatch @@ 1 = ~SSB_Outgoing_Temp @@ 26 I>F F< LAND  IF 
-126 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-131 LINE.NUM 1 ~SSB_status_Red_LED @! 
-132 LINE.NUM 1 ~SSB_status_Green_LED @! 
-133 LINE.NUM 0 ^TempLatch @! 
-134 LINE.NUM " RETURNING_TO_NORMAL" *TempServoState  $MOVE 
-135 LINE.NUM THEN 
-136 LINE.NUM ~SSB_Outgoing_Temp @@ 25 I>F F< IF 
-137 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-142 LINE.NUM 0 ~SSB_status_Red_LED @! 
-143 LINE.NUM 1 ~SSB_status_Green_LED @! 
-144 LINE.NUM 0 ^TempLatch @! 
-145 LINE.NUM "  <= 24C. NORMAL" *TempServoState  $MOVE 
-146 LINE.NUM THEN 
-167 LINE.NUM ELSE 
-167 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 1 = LAND  IF 
-168 LINE.NUM 0 ^FanSwMode @! 
-169 LINE.NUM 0 ~Fan_Green_LED @! 
-170 LINE.NUM 1 ~Fan_Red_LED @! 
-171 LINE.NUM " OFF" *StatusString $CAT 
+202 LINE.NUM " , TemperatureServoState=" *StatusString $CAT 
 
-172 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-177 LINE.NUM 0 ^TempLatch @! 
-178 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
-179 LINE.NUM ELSE 
-179 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 0 = LAND  IF 
-180 LINE.NUM 1 ^FanSwMode @! 
-181 LINE.NUM 1 ~Fan_Green_LED @! 
-182 LINE.NUM 1 ~Fan_Red_LED @! 
-183 LINE.NUM " ON" *StatusString $CAT 
+203 LINE.NUM *TempServoState *StatusString $CAT 
 
-184 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-189 LINE.NUM 0 ^TempLatch @! 
-190 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
-191 LINE.NUM ELSE 
-192 LINE.NUM 3 ^FanSwMode @! 
-193 LINE.NUM 0 ~Fan_Green_LED @! 
-194 LINE.NUM 0 ~Fan_Red_LED @! 
-195 LINE.NUM " FAULT" *StatusString $CAT 
-
-196 LINE.NUM THEN THEN THEN 
-198 LINE.NUM " , TemperatureServoState=" *StatusString $CAT 
-
-199 LINE.NUM *TempServoState *StatusString $CAT 
-
-202 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-203 LINE.NUM " Statux 1 Sent" *MasterCommand  $MOVE 
+206 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+207 LINE.NUM " Statux 1 Sent" *MasterCommand  $MOVE 
 14 JUMP ;
 : 6_370
 
@@ -803,7 +751,7 @@
 43 LINE.NUM " , EntryDoorClosed=TRUE" *StatusString $CAT 
 
 44 LINE.NUM THEN 
-46 LINE.NUM ~CompressorDoorSwtich @@I 1 = IF 
+46 LINE.NUM ~CompressorDoorSwitch @@I 1 = IF 
 47 LINE.NUM " , CompressorCoverClosed=TRUE" *StatusString $CAT 
 
 48 LINE.NUM ELSE 

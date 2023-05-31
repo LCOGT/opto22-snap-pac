@@ -5,10 +5,12 @@ CREATE T.ARRAY
  0 ,
 CREATE V.ARRAY
 ^AdjustTach ,
+^AirCompressorRunning ,
 ^AQ_Go_Fast_Ok ,
 ^avg_T ,
 ^ChartSTATUS ,
 ^Comm_status ,
+^CompressorTimer_Preset ,
 ^DateTemp ,
 ^delta_T ,
 ^EncABlink ,
@@ -67,6 +69,7 @@ CREATE V.ARRAY
 *EnviroString ,
 *EnviroTemp ,
 *ErrorString ,
+*FanSwitchState ,
 *FaultString ,
 *FWVersion ,
 *HumidityString ,
@@ -85,6 +88,7 @@ CREATE V.ARRAY
 *Master_Handle ,
  0 ,
 CREATE TI.ARRAY
+^CompressorTimer ,
 ^Heartbeat_Timer ,
 ^Socket_Timer ,
  0 ,
@@ -101,7 +105,7 @@ CREATE P.ARRAY
 ~A_acp_01 ,
 ~acp_02 ,
 ~Acp_Panel_Closed ,
-~CompressorDoorSwtich ,
+~CompressorDoorSwitch ,
 ~di_acp_0900 ,
 ~di_acp_0901 ,
 ~di_acp_0906 ,
@@ -195,10 +199,13 @@ CONFIG_PORTS
  0 ~Enclosure_B_Red_LED @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0.00000000 ^AdjustTach @!
+0 ^AirCompressorRunning @!
 0 ^AQ_Go_Fast_Ok @!
 0.00000000 ^avg_T @!
 0.00000000 ^ChartSTATUS @!
 0 ^Comm_status @!
+0.0 ^CompressorTimer @!
+0.00000000 ^CompressorTimer_Preset @!
 0 ^DateTemp @!
 0.00000000 ^delta_T @!
 0 ^EncABlink @!
@@ -267,6 +274,8 @@ CONFIG_PORTS
  *EnviroTemp $MOVE
 " "
  *ErrorString $MOVE
+" "
+ *FanSwitchState $MOVE
 " Fault"
  *FaultString $MOVE
 " 001.07"

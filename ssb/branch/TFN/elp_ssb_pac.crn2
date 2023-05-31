@@ -3,10 +3,13 @@
 0 TASK &Monitor
 0 TASK &Powerup
 0 FVAR ^AdjustTach
+0 IVAR ^AirCompressorRunning
 0 IVAR ^AQ_Go_Fast_Ok
 0 FVAR ^avg_T
 0 FVAR ^ChartSTATUS
 0 IVAR ^Comm_status
+0 TVAR ^CompressorTimer
+0 FVAR ^CompressorTimer_Preset
 0 IVAR ^DateTemp
 0 FVAR ^delta_T
 0 IVAR ^EncABlink
@@ -67,6 +70,7 @@
 1024 0 $VAR *EnviroString 
 15 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorString 
+30 0 $VAR *FanSwitchState 
 1024 0 $VAR *FaultString 
 6 0 $VAR *FWVersion 
 8 0 $VAR *HumidityString 
@@ -92,7 +96,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 32 $40000001 SPOINT 0.0     INPUT  6  0 %acp 0 POINT.TNG ~EnclosureCKey
 32 $40000001 SPOINT 0.0     INPUT  7  0 %acp 0 POINT.TNG ~SpareKey
 32 $40000001 SPOINT 0.0     INPUT  8  0 %acp 0 POINT.TNG ~SSBdoorSwitch
-32 $40000001 SPOINT 0.0     INPUT  9  0 %acp 0 POINT.TNG ~CompressorDoorSwtich
+32 $40000001 SPOINT 0.0     INPUT  9  0 %acp 0 POINT.TNG ~CompressorDoorSwitch
 32 $40000001 SPOINT 0.0     INPUT 10  0 %acp 0 POINT.TNG ~SmokeAlarmOK
 32 $40000001 SPOINT 0.0     INPUT 11  0 %acp 0 POINT.TNG ~A_acp_01
 32 $40000001 SPOINT 0.0     INPUT 12  0 %acp 0 POINT.TNG ~Mute_Test

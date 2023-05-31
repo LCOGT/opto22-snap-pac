@@ -35,69 +35,102 @@
 21 LINE.NUM ^Heartbeat_Timer @@F 0 I>F F<= IF 
 22 LINE.NUM 0 ^ValidTemp @! 
 23 LINE.NUM THEN 
-33 LINE.NUM " , FansSwitch=" *StatusString $CAT 
-
 34 LINE.NUM ~Fan_Sw_1 @@I 0 = ~Fan_Sw_2 @@I 0 = LAND  IF 
 35 LINE.NUM 2 ^FanSwMode @! 
 36 LINE.NUM 1 ~Fan_Green_LED @! 
 37 LINE.NUM 0 ~Fan_Red_LED @! 
-38 LINE.NUM " AUTO" *StatusString $CAT 
+38 LINE.NUM " AUTO" *FanSwitchState  $MOVE 
+41 LINE.NUM ~SSB_Outgoing_Temp @@ 27 I>F F>= IF 
+42 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+47 LINE.NUM 1 ~SSB_status_Red_LED @! 
+48 LINE.NUM 0 ~SSB_status_Green_LED @! 
+49 LINE.NUM 1 ^TempLatch @! 
+51 LINE.NUM " >= 27C. FORCE_FAN_COOL" *TempServoState  $MOVE 
+52 LINE.NUM THEN 
+53 LINE.NUM ^TempLatch @@ 1 = ~SSB_Outgoing_Temp @@ 26 I>F F< LAND  IF 
+54 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+59 LINE.NUM 1 ~SSB_status_Red_LED @! 
+60 LINE.NUM 1 ~SSB_status_Green_LED @! 
+61 LINE.NUM 0 ^TempLatch @! 
+62 LINE.NUM " RETURNING_TO_NORMAL" *TempServoState  $MOVE 
+63 LINE.NUM THEN 
+64 LINE.NUM ~SSB_Outgoing_Temp @@ 25 I>F F< IF 
+65 LINE.NUM ^SSB_flush_flag @@ 1 = IF 
+67 LINE.NUM ELSE 
+67 LINE.NUM ^SSB_flush_flag @@ 0 = IF 
+68 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+69 LINE.NUM THEN THEN 
+74 LINE.NUM 0 ~SSB_status_Red_LED @! 
+75 LINE.NUM 1 ~SSB_status_Green_LED @! 
+76 LINE.NUM 0 ^TempLatch @! 
+78 LINE.NUM "  <= 24C. NORMAL" *TempServoState  $MOVE 
+81 LINE.NUM  SinceMidnight ^SecondsSinceMidnight @! 
+82 LINE.NUM ^SecondsSinceMidnight @@ 43200 > ^SecondsSinceMidnight @@ 43260 < LAND  IF 
+83 LINE.NUM 1 ^SSB_flush_flag @! 
+84 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+85 LINE.NUM ELSE 
+86 LINE.NUM 0 ^SSB_flush_flag @! 
+87 LINE.NUM THEN 
+89 LINE.NUM THEN 
+110 LINE.NUM ELSE 
+110 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 1 = LAND  IF 
+111 LINE.NUM 0 ^FanSwMode @! 
+112 LINE.NUM 0 ~Fan_Green_LED @! 
+113 LINE.NUM 1 ~Fan_Red_LED @! 
+114 LINE.NUM " OFF" *FanSwitchState  $MOVE 
+116 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+121 LINE.NUM 0 ^TempLatch @! 
+122 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
+123 LINE.NUM ELSE 
+123 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 0 = LAND  IF 
+124 LINE.NUM 1 ^FanSwMode @! 
+125 LINE.NUM 1 ~Fan_Green_LED @! 
+126 LINE.NUM 1 ~Fan_Red_LED @! 
+127 LINE.NUM " ON" *FanSwitchState  $MOVE 
+129 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
+134 LINE.NUM 0 ^TempLatch @! 
+135 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
+136 LINE.NUM ELSE 
+137 LINE.NUM 3 ^FanSwMode @! 
+138 LINE.NUM 0 ~Fan_Green_LED @! 
+139 LINE.NUM 0 ~Fan_Red_LED @! 
+140 LINE.NUM " FAULT" *FanSwitchState  $MOVE 
+142 LINE.NUM THEN THEN THEN 
+146 LINE.NUM ^ValidTemp @@ 0 = IF 
+147 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
+148 LINE.NUM ELSE 
+149 LINE.NUM ~SSB_Outgoing_Temp @@ *TemperatureString  $>F F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
+150 LINE.NUM THEN 
+152 LINE.NUM ~IT_Rack_Back_Temp @@ ^avg_T @! 
+157 LINE.NUM ~AirCompressor_Current @@ 7 I>F F> IF 
+158 LINE.NUM 1 ^AirCompressorRunning @! 
+159 LINE.NUM ELSE 
+160 LINE.NUM 0 ^AirCompressorRunning @! 
+161 LINE.NUM THEN 
+163 LINE.NUM ^AirCompressorRunning @@ ^CompressorTimer @@F ^CompressorTimer_Preset @@ F= LAND  IF 
+164 LINE.NUM ^CompressorTimer  StartTimer 
+165 LINE.NUM ELSE 
+165 LINE.NUM ^AirCompressorRunning @@ ^CompressorTimer  T0= LAND  IF 
+166 LINE.NUM 2.50000000e+000 ~Shunt_Trip_Compressor  PULSEON 
+167 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer  SetTimer 
+168 LINE.NUM " , AirCompressor=TRUE" *FaultString $CAT 
 
-40 LINE.NUM ~SSB_Outgoing_Temp @@ 27 I>F F>= IF 
-41 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-46 LINE.NUM 1 ~SSB_status_Red_LED @! 
-47 LINE.NUM 0 ~SSB_status_Green_LED @! 
-48 LINE.NUM 1 ^TempLatch @! 
-49 LINE.NUM " FORCE_COOL" *TempServoState  $MOVE 
-50 LINE.NUM THEN 
-51 LINE.NUM ^TempLatch @@ 1 = ~SSB_Outgoing_Temp @@ 26 I>F F< LAND  IF 
-52 LINE.NUM 5 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-57 LINE.NUM 1 ~SSB_status_Red_LED @! 
-58 LINE.NUM 1 ~SSB_status_Green_LED @! 
-59 LINE.NUM 0 ^TempLatch @! 
-60 LINE.NUM " RETURNING_TO_NORMAL" *TempServoState  $MOVE 
-61 LINE.NUM THEN 
-62 LINE.NUM ~SSB_Outgoing_Temp @@ 25 I>F F< IF 
-63 LINE.NUM ^SSB_flush_flag @@ 1 = IF 
-65 LINE.NUM ELSE 
-65 LINE.NUM ^SSB_flush_flag @@ 0 = IF 
-66 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-67 LINE.NUM THEN THEN 
-72 LINE.NUM 0 ~SSB_status_Red_LED @! 
-73 LINE.NUM 1 ~SSB_status_Green_LED @! 
-74 LINE.NUM 0 ^TempLatch @! 
-75 LINE.NUM " RETURNED_TO_NORMAL" *TempServoState  $MOVE 
-76 LINE.NUM  SinceMidnight ^SecondsSinceMidnight @! 
-77 LINE.NUM ^SecondsSinceMidnight @@ 43200 > ^SecondsSinceMidnight @@ 43500 < LAND  IF 
-78 LINE.NUM 1 ^SSB_flush_flag @! 
-79 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-80 LINE.NUM ELSE 
-81 LINE.NUM 0 ^SSB_flush_flag @! 
-82 LINE.NUM THEN 
-84 LINE.NUM THEN 
-105 LINE.NUM ELSE 
-105 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 1 = LAND  IF 
-106 LINE.NUM 0 ^FanSwMode @! 
-107 LINE.NUM 0 ~Fan_Green_LED @! 
-108 LINE.NUM 1 ~Fan_Red_LED @! 
-110 LINE.NUM 0 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-115 LINE.NUM 0 ^TempLatch @! 
-116 LINE.NUM " ON_HVAC_ONLY" *TempServoState  $MOVE 
-117 LINE.NUM ELSE 
-117 LINE.NUM ~Fan_Sw_1 @@I 1 = ~Fan_Sw_2 @@I 0 = LAND  IF 
-118 LINE.NUM 1 ^FanSwMode @! 
-119 LINE.NUM 1 ~Fan_Green_LED @! 
-120 LINE.NUM 1 ~Fan_Red_LED @! 
-122 LINE.NUM 10 I>F 2 I>F ~SSB_Exhaust_Fan_Speed  F!RAMP 
-127 LINE.NUM 0 ^TempLatch @! 
-128 LINE.NUM " MANUAL_ALL_FANS!" *TempServoState  $MOVE 
-129 LINE.NUM THEN THEN THEN 
-131 LINE.NUM ^ValidTemp @@ 0 = IF 
-132 LINE.NUM ~SSB_Outgoing_Temp @@ ~SSB_Incoming_Air_Temp @@ F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
-133 LINE.NUM ELSE 
-134 LINE.NUM ~SSB_Outgoing_Temp @@ *TemperatureString  $>F F- ^delta_T @@ 239 I>F F* F+ 240 I>F F/ ^delta_T @! 
-135 LINE.NUM THEN 
-137 LINE.NUM ~IT_Rack_Back_Temp @@ ^avg_T @! 
+169 LINE.NUM ELSE 
+169 LINE.NUM ^AirCompressorRunning @@ 0 = ^CompressorTimer @@F ^CompressorTimer_Preset @@ F< ^CompressorTimer @@F 0 I>F F> LAND  LAND  IF 
+170 LINE.NUM ^CompressorTimer  PauseTimer 
+172 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer @! 
+173 LINE.NUM ^CompressorTimer  PauseTimer 
+174 LINE.NUM ELSE 
+174 LINE.NUM ^AirCompressorRunning @@ 0 = ^CompressorTimer  T0= LAND  IF 
+176 LINE.NUM ^CompressorTimer_Preset @@ ^CompressorTimer @! 
+177 LINE.NUM ^CompressorTimer  PauseTimer 
+178 LINE.NUM THEN THEN THEN THEN 
+182 LINE.NUM ~CompressorDoorSwitch @@I 0 = IF 
+184 LINE.NUM " AirCompressorDoorOpen" 0 *ErrorString  FindSubString 0 < IF 
+185 LINE.NUM " , AirCompressorDoorOpen" *ErrorString $CAT 
+
+186 LINE.NUM THEN 
+187 LINE.NUM THEN 
 -2 JUMP ;
 T: T7
 DUMMY
