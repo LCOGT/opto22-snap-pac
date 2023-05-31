@@ -1,0 +1,306 @@
+CREATE T.ARRAY
+&DomeShutter ,
+&LED_control ,
+&Master_Comm ,
+&Powerup ,
+&Test_Front_Panel ,
+&Test_HVAC ,
+&WhiteLights ,
+ 0 ,
+CREATE V.ARRAY
+^AirConFlag ,
+^AQ_Go_Fast_Ok ,
+^Blinker ,
+^CellFanSpeed ,
+^Dim ,
+^Dimmer ,
+^DimResponse ,
+^DomeShutter_Chart_Status ,
+^DoorDim ,
+^DoorGrnFlag ,
+^DoorRedFlag ,
+^EncFanSpeed ,
+^Fans_ON ,
+^FanSwAuto ,
+^FanSwMode ,
+^HvacFlag ,
+^HvacOn ,
+^indexStep ,
+^LEDsBlink ,
+^ListeningForMaster ,
+^Master_CommClosed ,
+^Master_Handle_CharNumWaiting ,
+^MasterCommandNum ,
+^MasterCommandStringRcvd ,
+^MasterCommEstablished ,
+^MasterXmitStatus ,
+^n2ndOctetLength ,
+^nPeriodPosition ,
+^PanelDim ,
+^PanelFanSpeed ,
+^PanelGrnFlag ,
+^PanelRedFlag ,
+^Position ,
+^PriorHeartbeatTime ,
+^Response ,
+^TempFanSpeed ,
+^TempPanelSpeed ,
+^Test_Front_Panel_Status ,
+^Test_HVAC_Status ,
+^WhiteLights_Chart ,
+^WT_LT_Status ,
+*DateString ,
+*ElapsedString ,
+*EnviroString ,
+*EnviroTemp ,
+*ErrorString ,
+*FaultString ,
+*FWVersion ,
+*ICDVersion ,
+*imp_MasterCommand ,
+*LastCommand ,
+*MasterCommand ,
+*s2ndOctet ,
+*s_DomeClose ,
+*s_DomeOpen ,
+*s_DomeStop ,
+*s_LightSW ,
+*SentString ,
+*sIP_PAC ,
+*sSite ,
+*StateString ,
+*StatusString ,
+*SWVersion ,
+*TimeString ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*Dome_Handle ,
+*Master_Handle ,
+ 0 ,
+CREATE TI.ARRAY
+^Heartbeat_Timer ,
+^HVACtimer ,
+^Socket_Timer ,
+^Timer_GetChar ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+{Status ,
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%A_1mFPAC ,
+ 0 ,
+CREATE P.ARRAY
+~AirCon_Ctrl ,
+~AirCon_MCB_ON ,
+~AirCon_ON ,
+~AirConOpMode_Auto ,
+~Az_MCB_ON ,
+~AzContactorsON ,
+~AzDisabled ,
+~AzDriveAvailable ,
+~AzIsolatorON ,
+~AzOpModeAuto ,
+~BrakePressSenseFuseOK ,
+~CabinetDoorOpen ,
+~CryoCabinet_MCB_ON ,
+~DCS_Sense_MCB_OK ,
+~DCSvoltON ,
+~Dehumidifier_MCB_ON ,
+~DehumidifierShuntTrip ,
+~DomeSafetyPWRAutoBypassON ,
+~DomeSafetyPWRManBypassOFF ,
+~DomeShutterClose ,
+~DomeShutterOpen ,
+~DomeShutterStop ,
+~DriveBTBcontactsFuseOK ,
+~DUPS_Mon_Ctrl ,
+~DupsSurgeOK ,
+~ECB_Ctrl ,
+~ECB_Status ,
+~EncoderPuffer ,
+~EncodersFuseOK ,
+~EnetSwitchOK ,
+~EntryDoorClosed ,
+~EntryDoorGreenLED ,
+~EntryDoorOverrideFree ,
+~EntryDoorRedLED ,
+~EntryLockLED ,
+~GoFast ,
+~GoFastOrEntryLockTrapped ,
+~LadderFree ,
+~LampTest ,
+~Main24V_PSU_OK ,
+~MirrorCell24V_PSU_MCB_OK ,
+~MirrorCell24V_PSU_OK ,
+~PanelGreenLED ,
+~PanelRedLED ,
+~Pitch_MCB_ON ,
+~PitchContactorsON ,
+~Red_Lt_Ctrl ,
+~RedLights_MCB_ON ,
+~Roll_MCB_ON ,
+~RollContactorsON ,
+~SlipringContactorsCoilON ,
+~SlipringContactorsON ,
+~Sonalert ,
+~Spare5V_PSU_MCB_OK ,
+~TscopeLimitsFuseOK ,
+~TscopeOpModeAuto ,
+~UPS_L1G_SurgeOK ,
+~UPS_L2G_SurgeOK ,
+~UPS_LL_SurgeOK ,
+~Utility_L1G_SurgeOK ,
+~Utility_L2G_SurgeOK ,
+~Utility_NG_SurgeOK ,
+~WallFanM73_MCB_ON ,
+~WallFanM73_OK ,
+~WallFanM75_MCB_ON ,
+~WallFanM75_OK ,
+~WallFanM77_MCB_ON ,
+~WallFanM77_OK ,
+~WallFanOpMode_Auto ,
+~WallFanOpMode_Man ,
+~WallSensorsFuseOK ,
+~WiFi_Fault ,
+~WtLightSwitch ,
+~XT22_4_STATUS ,
+~CabinetFanCtrl ,
+~CabinetFanSpeed ,
+~CabinetTemp ,
+~DCSvoltage ,
+~DehumidifierCurrent ,
+~PitchBrakePressure ,
+~RedLightVoltage ,
+~RollBrakePressure ,
+~UPSvoltage ,
+~UtilityVoltage ,
+~WallExitAirTemp ,
+~WallFanM73_Ctrl ,
+~WallFanM75_Ctrl ,
+~WallFanM77_Ctrl ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+" %A_1mFPAC  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%A_1mFPAC ENABLE
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+1 ^AirConFlag @!
+0 ^AQ_Go_Fast_Ok @!
+0 ^Blinker @!
+0.00000000 ^CellFanSpeed @!
+0 ^Dim @!
+0 ^Dimmer @!
+0 ^DimResponse @!
+0 ^DomeShutter_Chart_Status @!
+0 ^DoorDim @!
+0 ^DoorGrnFlag @!
+0 ^DoorRedFlag @!
+0.00000000 ^EncFanSpeed @!
+0 ^Fans_ON @!
+0 ^FanSwAuto @!
+-1 ^FanSwMode @!
+0.0 ^Heartbeat_Timer @!
+0 ^HvacFlag @!
+0 ^HvacOn @!
+0.0 ^HVACtimer @!
+0 ^indexStep @!
+0 ^LEDsBlink @!
+0 ^ListeningForMaster @!
+0 ^Master_CommClosed @!
+0 ^Master_Handle_CharNumWaiting @!
+0 ^MasterCommandNum @!
+0 ^MasterCommandStringRcvd @!
+0 ^MasterCommEstablished @!
+0 ^MasterXmitStatus @!
+0 ^n2ndOctetLength @!
+0 ^nPeriodPosition @!
+0 ^PanelDim @!
+0.00000000 ^PanelFanSpeed @!
+0 ^PanelGrnFlag @!
+0 ^PanelRedFlag @!
+-1 ^Position @!
+120 ^PriorHeartbeatTime @!
+0 ^Response @!
+0.0 ^Socket_Timer @!
+0 ^TempFanSpeed @!
+0 ^TempPanelSpeed @!
+0 ^Test_Front_Panel_Status @!
+0 ^Test_HVAC_Status @!
+0.0 ^Timer_GetChar @!
+0 ^WhiteLights_Chart @!
+0 ^WT_LT_Status @!
+" "
+ *DateString $MOVE
+" "
+ *ElapsedString $MOVE
+" Enviro"
+ *EnviroString $MOVE
+" "
+ *EnviroTemp $MOVE
+" Error"
+ *ErrorString $MOVE
+" Fault"
+ *FaultString $MOVE
+" 001.02"
+ *FWVersion $MOVE
+" 001.01"
+ *ICDVersion $MOVE
+" xxx"
+ *imp_MasterCommand $MOVE
+" "
+ *LastCommand $MOVE
+" "
+ *MasterCommand $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s_DomeClose $MOVE
+" "
+ *s_DomeOpen $MOVE
+" "
+ *s_DomeStop $MOVE
+" "
+ *s_LightSW $MOVE
+" Null"
+ *SentString $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sSite $MOVE
+" State"
+ *StateString $MOVE
+" Status"
+ *StatusString $MOVE
+" 001.10"
+ *SWVersion $MOVE
+" "
+ *TimeString $MOVE
+" tcp:10.0.13.68:22005"
+ *Dome_Handle $MOVE
+" tcp:22004"
+ *Master_Handle $MOVE
+ " "
+0 -1 {Status Init$Table
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;

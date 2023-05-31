@@ -1,0 +1,271 @@
+# REV = 1
+
+# PAC CONTROL TAG DATABASE DUMP
+# ----------------------------------------------------------------
+# NAME :         C:\Users\jdeve\Desktop\PAC_programs\fpac\branch\trunk_R10\1mFPAC.idb
+# VERSION :      R10.2a
+# TIME/DATE :    12:31:24 5/31/2023
+# 
+# INSTRUCTIONS : This file gets written with the corresponding IDB file.
+#                It is not read by PAC Control. It may be used by other programs to 
+#                get basic information about the tag database.
+#                
+#                Each tag (e.g. variables, I/O units and points, charts, etc.) is 
+#                listed here. 
+#                
+#                More columns or tag types (e.g. TAG2) may be added in the future.
+#                
+#                
+# BITMASK INFO:  Here is the list of bitmasks used by PAC Control.
+#                More than one bit may be set for a given tag. Currently, the only types
+#                that can have more than one bit set at a time are digital points with 
+#                features (e.g. digital input with counter) or a pointer.
+#                
+#                BITMASK 0
+#                -------------------------------------------
+#                DIN_SMART                        0x40000000
+#                DIN_COUNTER                      0x00000001
+#                DIN_COUNTER_QUADRATURE           0x00000002
+#                DOUT_SMART                       0x10000000
+#                DOUT_TPO                         0x00010000
+#                DIN_ON_PULSE_MEAS                0x00000010
+#                DIN_OFF_PULSE_MEAS               0x00000020
+#                DIN_FREQUENCY                    0x00000040
+#                DIN_PERIOD                       0x00000080
+#                DIN_ON_TIME_TOTALIZER            0x00000100
+#                DIN_OFF_TIME_TOTALIZER           0x00000200
+#                
+#                BITMASK 1
+#                -------------------------------------------
+#                AIN                              0x00000001
+#                AOUT                             0x00000002
+#                PID_LOOP    (mistic)             0x00000200
+#                PID_LOOP_2  (OptoMMP)            0x00000004
+#                DIGITAL_EVENT_REACTION           0x00000008
+#                ANALOG_EVENT_REACTION            0x00000010
+#                EVENT_REACTION_GROUP             0x00000080
+#                CHART                            0x00000100
+#                SERIAL_CHANNEL                   0x00000400
+#                
+#                BITMASK 2
+#                -------------------------------------------
+#                G4EB2                            0x00000001
+#                G4D16R                           0x00000002
+#                G4D32RS                          0x00000004
+#                G4A8R, G4RAX                     0x00000008
+#                B200                             0x00001000
+#                B3000 (digital)                  0x00002000
+#                B3000 (analog)                   0x00004000
+#                B100                             0X00010000
+#                SNAP-BRS                         0X00020000
+#                SNAP-ENET-D64                    0x00040000
+#                SNAP-B3000-ENET, SNAP-ENET-RTC   0x00080000
+#                SNAP-UP1-D64                     0x00100000
+#                SNAP-UP1-ADS                     0x00200000
+#                SNAP-UP1-M64                     0x00400000
+#                SNAP-ENET-S64                    0x00800000
+#                SNAP-PAC-R1                      0x10000000
+#                SNAP-PAC-R2                      0x20000000
+#                Generic memory map device        0x40000000
+#                SNAP-PAC-R1-B                    0x80000000
+#                SNAP-PAC-EB1                     0x00000010
+#                SNAP-PAC-EB2                     0x00000020
+#                SNAP-PAC-SB1                     0x00000100
+#                SNAP-PAC-SB2                     0x00000200
+#                E1                               0x01000000
+#                E2                               0x02000000
+#                GRV-EPIC-PR1                     0x04000000
+# 
+#                BITMASK 3
+#                -------------------------------------------
+#                VARIABLE_INTEGER                 0x00000008
+#                VARIABLE_FLOAT                   0x00000010
+#                VARIABLE_TIMER                   0x00000020
+#                VARIABLE_STRING                  0x00000040
+#                VARIABLE_POINTER                 0x80000000
+#                TABLE_INTEGER                    0x00000100
+#                TABLE_FLOAT                      0x00000200
+#                TABLE_STRING                     0x00000800
+#                TABLE_POINTER                    0x00001000
+#                VARIABLE_UP_TIMER                0X00002000
+#                VARIABLE_INTEGER_64              0X00004000
+#                TABLE_INTEGER_64                 0X00010000
+#                TABLE_NULL                       0X00020000
+#                VARIABLE_STREAM                  0x00040000
+
+
+
+
+#  (Please note that the TAG1 definition may have columns added in the future.
+#   Any new columns will be added to the right of the existing ones.)
+#   This file should be parsed accordingly.)
+
+# TAG1,NAME,ID,BITMASK_0,BITMASK_1,BITMASK_2,BITMASK_3,TABLE_LENGTH,STRING_WIDTH
+
+TAG1,DomeShutter                                       ,12   ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,LED_control                                       ,11   ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,Master_Comm                                       ,5    ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,Powerup                                           ,0    ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,Test_Front_Panel                                  ,1    ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,Test_HVAC                                         ,2    ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,WhiteLights                                       ,3    ,00000000,00000100,00000000,00000000,0    ,0   
+TAG1,A_1mFPAC                                          ,0    ,00000000,00000000,20000000,00000000,0    ,0   
+TAG1,AirCon_Ctrl                                       ,59   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,AirCon_MCB_ON                                     ,13   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AirCon_ON                                         ,57   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AirConOpMode_Auto                                 ,18   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Az_MCB_ON                                         ,8    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AzContactorsON                                    ,87   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AzDisabled                                        ,69   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AzDriveAvailable                                  ,109  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AzIsolatorON                                      ,101  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,AzOpModeAuto                                      ,41   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,BrakePressSenseFuseOK                             ,79   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,CabinetDoorOpen                                   ,23   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,CryoCabinet_MCB_ON                                ,27   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DCS_Sense_MCB_OK                                  ,110  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DCSvoltON                                         ,103  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Dehumidifier_MCB_ON                               ,12   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DehumidifierShuntTrip                             ,111  ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,DomeSafetyPWRAutoBypassON                         ,96   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DomeSafetyPWRManBypassOFF                         ,97   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DomeShutterClose                                  ,32   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DomeShutterOpen                                   ,31   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DomeShutterStop                                   ,33   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DriveBTBcontactsFuseOK                            ,76   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DUPS_Mon_Ctrl                                     ,92   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,DupsSurgeOK                                       ,35   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,ECB_Ctrl                                          ,61   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,ECB_Status                                        ,46   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,EncoderPuffer                                     ,102  ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,EncodersFuseOK                                    ,80   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,EnetSwitchOK                                      ,39   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,EntryDoorClosed                                   ,36   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,EntryDoorGreenLED                                 ,90   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,EntryDoorOverrideFree                             ,70   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,EntryDoorRedLED                                   ,89   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,EntryLockLED                                      ,93   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,GoFast                                            ,71   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,GoFastOrEntryLockTrapped                          ,72   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,LadderFree                                        ,82   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,LampTest                                          ,99   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Main24V_PSU_OK                                    ,20   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,MirrorCell24V_PSU_MCB_OK                          ,42   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,MirrorCell24V_PSU_OK                              ,25   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,PanelGreenLED                                     ,75   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,PanelRedLED                                       ,74   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,Pitch_MCB_ON                                      ,7    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,PitchContactorsON                                 ,86   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Red_Lt_Ctrl                                       ,60   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,RedLights_MCB_ON                                  ,14   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Roll_MCB_ON                                       ,6    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,RollContactorsON                                  ,85   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,SlipringContactorsCoilON                          ,98   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,SlipringContactorsON                              ,88   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Sonalert                                          ,73   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,Spare5V_PSU_MCB_OK                                ,104  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,TscopeLimitsFuseOK                                ,77   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,TscopeOpModeAuto                                  ,100  ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,UPS_L1G_SurgeOK                                   ,2    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,UPS_L2G_SurgeOK                                   ,1    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,UPS_LL_SurgeOK                                    ,0    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Utility_L1G_SurgeOK                               ,5    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Utility_L2G_SurgeOK                               ,4    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,Utility_NG_SurgeOK                                ,3    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanM73_MCB_ON                                 ,9    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanM73_OK                                     ,28   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanM75_MCB_ON                                 ,10   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanM75_OK                                     ,29   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanM77_MCB_ON                                 ,11   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanM77_OK                                     ,30   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanOpMode_Auto                                ,17   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallFanOpMode_Man                                 ,15   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WallSensorsFuseOK                                 ,78   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WiFi_Fault                                        ,40   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,WtLightSwitch                                     ,34   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,XT22_4_STATUS                                     ,94   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,CabinetFanCtrl                                    ,11   ,00000000,00000002,00000000,00000000,0    ,0   
+TAG1,CabinetFanSpeed                                   ,9    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,CabinetTemp                                       ,14   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,DCSvoltage                                        ,8    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,DehumidifierCurrent                               ,16   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,PitchBrakePressure                                ,1    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,RedLightVoltage                                   ,2    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,RollBrakePressure                                 ,0    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,UPSvoltage                                        ,7    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,UtilityVoltage                                    ,3    ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,WallExitAirTemp                                   ,15   ,00000000,00000001,00000000,00000000,0    ,0   
+TAG1,WallFanM73_Ctrl                                   ,4    ,00000000,00000002,00000000,00000000,0    ,0   
+TAG1,WallFanM75_Ctrl                                   ,5    ,00000000,00000002,00000000,00000000,0    ,0   
+TAG1,WallFanM77_Ctrl                                   ,6    ,00000000,00000002,00000000,00000000,0    ,0   
+TAG1,AirConFlag                                        ,70   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,AQ_Go_Fast_Ok                                     ,58   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Blinker                                           ,54   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,CellFanSpeed                                      ,45   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,Dim                                               ,62   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Dimmer                                            ,55   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,DimResponse                                       ,56   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,DomeShutter_Chart_Status                          ,67   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,DoorDim                                           ,52   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,DoorGrnFlag                                       ,51   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,DoorRedFlag                                       ,50   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,EncFanSpeed                                       ,46   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,Fans_ON                                           ,1    ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FanSwAuto                                         ,35   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FanSwMode                                         ,42   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Heartbeat_Timer                                   ,31   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,HvacFlag                                          ,71   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,HvacOn                                            ,57   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,HVACtimer                                         ,72   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,indexStep                                         ,61   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,LEDsBlink                                         ,53   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,ListeningForMaster                                ,19   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Master_CommClosed                                 ,20   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Master_Handle_CharNumWaiting                      ,21   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,MasterCommandNum                                  ,59   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,MasterCommandStringRcvd                           ,23   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,MasterCommEstablished                             ,24   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,MasterXmitStatus                                  ,36   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,n2ndOctetLength                                   ,68   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,nPeriodPosition                                   ,69   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,PanelDim                                          ,38   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,PanelFanSpeed                                     ,44   ,00000000,00000000,00000000,00000010,0    ,0   
+TAG1,PanelGrnFlag                                      ,48   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,PanelRedFlag                                      ,47   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Position                                          ,33   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,PriorHeartbeatTime                                ,32   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Response                                          ,34   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Socket_Timer                                      ,60   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,TempFanSpeed                                      ,65   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,TempPanelSpeed                                    ,66   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Test_Front_Panel_Status                           ,0    ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Test_HVAC_Status                                  ,3    ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,Timer_GetChar                                     ,26   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,WhiteLights_Chart                                 ,4    ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,WT_LT_Status                                      ,5    ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,DateString                                        ,23   ,00000000,00000000,00000000,00000040,0    ,12  
+TAG1,ElapsedString                                     ,24   ,00000000,00000000,00000000,00000040,0    ,12  
+TAG1,EnviroString                                      ,16   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,EnviroTemp                                        ,22   ,00000000,00000000,00000000,00000040,0    ,6   
+TAG1,ErrorString                                       ,18   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,FaultString                                       ,17   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,FWVersion                                         ,19   ,00000000,00000000,00000000,00000040,0    ,6   
+TAG1,ICDVersion                                        ,21   ,00000000,00000000,00000000,00000040,0    ,6   
+TAG1,imp_MasterCommand                                 ,26   ,00000000,00000000,00000000,00000040,0    ,3   
+TAG1,LastCommand                                       ,28   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,MasterCommand                                     ,0    ,00000000,00000000,00000000,00000040,0    ,32  
+TAG1,s2ndOctet                                         ,35   ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,s_DomeClose                                       ,32   ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,s_DomeOpen                                        ,31   ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,s_DomeStop                                        ,30   ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,s_LightSW                                         ,29   ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,SentString                                        ,27   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,sIP_PAC                                           ,33   ,00000000,00000000,00000000,00000040,0    ,20  
+TAG1,sSite                                             ,34   ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,StateString                                       ,15   ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,StatusString                                      ,2    ,00000000,00000000,00000000,00000040,0    ,1024
+TAG1,SWVersion                                         ,20   ,00000000,00000000,00000000,00000040,0    ,6   
+TAG1,TimeString                                        ,25   ,00000000,00000000,00000000,00000040,0    ,12  
+TAG1,Status                                            ,0    ,00000000,00000000,00000000,00000800,12   ,20  
+TAG1,Dome_Handle                                       ,1    ,00000000,00000000,00000000,00040000,0    ,1024
+TAG1,Master_Handle                                     ,0    ,00000000,00000000,00000000,00040000,0    ,1024

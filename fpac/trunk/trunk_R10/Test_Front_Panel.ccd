@@ -1,0 +1,138 @@
+: 1_0
+2 JUMP ;
+: 1_5
+
+1 LINE.NUM
+  10.0  
+  2.0  
+  ~WallFanM73_Ctrl   F!RAMP
+
+2 LINE.NUM
+  10.0  
+  2.0  
+  ~WallFanM75_Ctrl   F!RAMP
+
+3 LINE.NUM
+  10.0  
+  2.0  
+  ~WallFanM77_Ctrl   F!RAMP
+
+4 LINE.NUM
+  10.  
+  ^EncFanSpeed @!   
+1 JUMP ;
+: 1_7
+
+1 LINE.NUM
+  0.0  
+  4.0  
+  ~WallFanM73_Ctrl   F!RAMP
+
+2 LINE.NUM
+  0.0  
+  4.0  
+  ~WallFanM75_Ctrl   F!RAMP
+
+3 LINE.NUM
+  0.0  
+  4.0  
+  ~WallFanM77_Ctrl   F!RAMP
+
+4 LINE.NUM
+  10.  
+  ^EncFanSpeed @!   
+
+5 LINE.NUM
+  0  
+  ^FanSwMode @!   
+0 JUMP ;
+: 1_15
+
+1 LINE.NUM
+  500    DELAY
+3 JUMP ;
+: 1_59
+
+1 LINE.NUM
+  1  
+  ^FanSwMode @!   
+-4 JUMP ;
+: 1_62
+
+1 LINE.NUM
+  2  
+  ^FanSwMode @!   
+
+2 LINE.NUM
+  ^TempFanSpeed @@F 
+  2.0  
+  ~WallFanM73_Ctrl   F!RAMP
+
+3 LINE.NUM
+  ^TempFanSpeed @@F 
+  2.0  
+  ~WallFanM75_Ctrl   F!RAMP
+
+4 LINE.NUM
+  ^TempFanSpeed @@F 
+  2.0  
+  ~WallFanM77_Ctrl   F!RAMP
+
+5 LINE.NUM
+  ^TempPanelSpeed @@F 
+  2.0  
+  ~CabinetFanCtrl   F!RAMP
+-3 JUMP ;
+: 1_63
+
+1 LINE.NUM
+  8  
+  ^FanSwMode @!   
+-4 JUMP ;
+: 1_3
+TRUE
+
+1 LINE.NUM
+  ~WallFanOpMode_Auto   ?OFF
+LAND
+
+2 LINE.NUM
+  ~WallFanOpMode_Man   ?ON
+LAND
+IF -4 ELSE 0 THEN JUMP ;
+: 1_23
+TRUE
+
+1 LINE.NUM
+  ~WallFanOpMode_Auto   ?OFF
+LAND
+
+2 LINE.NUM
+  ~WallFanOpMode_Man   ?OFF
+LAND
+IF -7 ELSE 0 THEN JUMP ;
+: 1_50
+TRUE
+
+1 LINE.NUM
+  ~WallFanOpMode_Man   ?ON
+LAND
+
+2 LINE.NUM
+  ~WallFanOpMode_Auto   ?ON
+LAND
+IF -5 ELSE -4 THEN JUMP ;
+T: T1
+DUMMY
+1_0
+1_5
+1_7
+1_15
+1_59
+1_62
+1_63
+1_3
+1_23
+1_50
+T;
+&Test_Front_Panel ' T1 SETTASK
