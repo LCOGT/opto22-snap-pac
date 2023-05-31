@@ -103,7 +103,7 @@
 : 0_32
 1 LINE.NUM " 1.1" *ICDVersion  $MOVE 
 2 LINE.NUM *FWVersion  Rev>$ 
-3 LINE.NUM " 392" *SWVersion  $MOVE 
+3 LINE.NUM " 1.12" *SWVersion  $MOVE 
 5 LINE.NUM ~ECB_Ctrl  OFF 
 -3 JUMP ;
 T: T0
