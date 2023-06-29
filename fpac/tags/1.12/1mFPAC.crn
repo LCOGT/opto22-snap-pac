@@ -312,7 +312,7 @@ T;
 1 LINE.NUM
   *Master_Handle   ACCEPT
   ^MasterCommEstablished @! 
-40 JUMP ;
+37 JUMP ;
 : 5_12
 
 1 LINE.NUM
@@ -323,13 +323,13 @@ T;
 1 LINE.NUM
   *Master_Handle   LISTEN
   ^ListeningForMaster @! 
-39 JUMP ;
+36 JUMP ;
 : 5_20
 
 1 LINE.NUM
   *Master_Handle   ?STREAM.KEY
   ^Master_Handle_CharNumWaiting @! 
-40 JUMP ;
+37 JUMP ;
 : 5_22
 
 1 LINE.NUM
@@ -351,12 +351,12 @@ T;
 2 LINE.NUM
   0  
   ^indexStep @!   
-39 JUMP ;
+36 JUMP ;
 : 5_41
 
 1 LINE.NUM
   10    DELAY
-25 JUMP ;
+22 JUMP ;
 : 5_60
 
 1 LINE.NUM
@@ -395,9 +395,9 @@ T;
   ^indexStep @@ 
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-38 JUMP ;
+35 JUMP ;
 : 5_112
-17 JUMP ;
+14 JUMP ;
 : 5_115
 
 1 LINE.NUM
@@ -406,9 +406,9 @@ T;
   ^indexStep @@ 
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-37 JUMP ;
+34 JUMP ;
 : 5_119
-16 JUMP ;
+13 JUMP ;
 : 5_122
 
 1 LINE.NUM
@@ -417,9 +417,9 @@ T;
   ^indexStep @@ 
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-36 JUMP ;
+33 JUMP ;
 : 5_126
-15 JUMP ;
+12 JUMP ;
 : 5_127
 
 1 LINE.NUM
@@ -428,9 +428,9 @@ T;
   ^indexStep @@ 
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-35 JUMP ;
+32 JUMP ;
 : 5_131
-9 JUMP ;
+7 JUMP ;
 : 5_140
 1 LINE.NUM " STATUS=True, ICDVersion=" *StatusString  $MOVE 
 2 LINE.NUM *ICDVersion *StatusString $CAT 
@@ -698,12 +698,12 @@ T;
 219 LINE.NUM " , LedMode=STEADY" *EnviroString $CAT 
 
 220 LINE.NUM THEN 
-222 LINE.NUM " , ECBtripped=" *EnviroString $CAT 
+222 LINE.NUM " , ECBTripped=" *EnviroString $CAT 
 
 223 LINE.NUM ~ECB_Status @@I IF 
-224 LINE.NUM " TRUE" *EnviroTemp  $MOVE 
+224 LINE.NUM " FALSE" *EnviroTemp  $MOVE 
 225 LINE.NUM ELSE 
-226 LINE.NUM " FALSE" *EnviroTemp  $MOVE 
+226 LINE.NUM " TRUE" *EnviroTemp  $MOVE 
 227 LINE.NUM THEN 
 228 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
@@ -721,7 +721,7 @@ T;
   ^indexStep @@ 
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-33 JUMP ;
+30 JUMP ;
 : 5_147
 
 1 LINE.NUM
@@ -733,7 +733,7 @@ T;
   0  
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-35 JUMP ;
+31 JUMP ;
 : 5_154
 -20 JUMP ;
 : 5_156
@@ -909,39 +909,30 @@ T;
 249 LINE.NUM 0 ~Sonalert @! 
 250 LINE.NUM 1 ^Response @! 
 251 LINE.NUM THEN 
-253 LINE.NUM ^Response @@ 1 = IF 
-254 LINE.NUM " TRUE" *SentString  $MOVE 
-256 LINE.NUM ELSE 
-257 LINE.NUM " FALSE" *SentString  $MOVE 
-259 LINE.NUM THEN 
-260 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-261 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-262 LINE.NUM " " *MasterCommand  $MOVE 
+252 LINE.NUM " ECB_RESET" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+253 LINE.NUM ^Position @@ -1 >= IF 
+254 LINE.NUM 1 I>F ~ECB_Ctrl  PULSEON 
+255 LINE.NUM 1 ^Response @! 
+256 LINE.NUM THEN 
+258 LINE.NUM ^Response @@ 1 = IF 
+259 LINE.NUM " TRUE" *SentString  $MOVE 
+261 LINE.NUM ELSE 
+262 LINE.NUM " FALSE" *SentString  $MOVE 
+264 LINE.NUM THEN 
+265 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+266 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+267 LINE.NUM " " *MasterCommand  $MOVE 
 -2 JUMP ;
-: 5_193
-2 LINE.NUM 1 I>F ~ECB_Ctrl  PULSEON 
-2 JUMP ;
-: 5_197
-
-1 LINE.NUM
-  " RESET_ECB" 
- 
-  ^indexStep @@ 
-  *MasterCommand   FindSubString
-  ^MasterCommandStringRcvd @! 
-28 JUMP ;
 : 5_200
--26 JUMP ;
-: 5_201
--27 JUMP ;
+-24 JUMP ;
 : 5_205
--28 JUMP ;
+-25 JUMP ;
 : 5_206
--29 JUMP ;
+-26 JUMP ;
 : 5_207
--30 JUMP ;
+-27 JUMP ;
 : 5_214
--31 JUMP ;
+-28 JUMP ;
 : 5_292
 
 1 LINE.NUM
@@ -959,7 +950,7 @@ T;
   0  
   *MasterCommand   FindSubString
   ^MasterCommandStringRcvd @! 
-22 JUMP ;
+21 JUMP ;
 : 5_299
 
 1 LINE.NUM
@@ -970,18 +961,18 @@ T;
 
 1 LINE.NUM
   *Master_Handle   STREAM.CLEAR.BUF
-23 JUMP ;
+22 JUMP ;
 : 5_313
 
 1 LINE.NUM
   *Master_Handle   STREAM.CLEAR.BUF
--18 JUMP ;
+-15 JUMP ;
 : 5_320
 
 1 LINE.NUM
   *Master_Handle   CLOSE
   ^Master_CommClosed @! 
--35 JUMP ;
+-32 JUMP ;
 : 5_332
 
 1 LINE.NUM
@@ -1003,7 +994,7 @@ LOR
   ^MasterCommEstablished @@ 
   -47    =
 LOR
-IF -33 ELSE -43 THEN JUMP ;
+IF -30 ELSE -40 THEN JUMP ;
 : 5_14
 FALSE
 
@@ -1016,7 +1007,7 @@ LOR
   ^ListeningForMaster @@ 
   -47    =
 LOR
-IF -43 ELSE -42 THEN JUMP ;
+IF -40 ELSE -39 THEN JUMP ;
 : 5_17
 TRUE
 
@@ -1024,7 +1015,7 @@ TRUE
   ^Master_Handle_CharNumWaiting @@ 
   0    <
 LAND
-IF 1 ELSE -40 THEN JUMP ;
+IF 1 ELSE -37 THEN JUMP ;
 : 5_19
 TRUE
 
@@ -1045,7 +1036,7 @@ LOR
   ^Master_Handle_CharNumWaiting @@ 
   -39    =
 LOR
-IF -42 ELSE -41 THEN JUMP ;
+IF -39 ELSE -38 THEN JUMP ;
 : 5_35
 TRUE
 
@@ -1066,7 +1057,7 @@ LOR
   ^MasterCommandStringRcvd @@ 
   -39    =
 LOR
-IF -41 ELSE -40 THEN JUMP ;
+IF -38 ELSE -37 THEN JUMP ;
 : 5_66
 TRUE
 
@@ -1074,7 +1065,7 @@ TRUE
   ^Master_Handle_CharNumWaiting @@ 
   6    <
 LAND
-IF -41 ELSE -43 THEN JUMP ;
+IF -38 ELSE -40 THEN JUMP ;
 : 5_72
 TRUE
 
@@ -1089,15 +1080,15 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -39 ELSE -26 THEN JUMP ;
+IF -36 ELSE -23 THEN JUMP ;
 : 5_117
 TRUE
 
 1 LINE.NUM
   ^MasterCommandStringRcvd @@ 
-  -1    >
+  0    =
 LAND
-IF -38 ELSE -41 THEN JUMP ;
+IF -35 ELSE -38 THEN JUMP ;
 : 5_124
 TRUE
 
@@ -1105,7 +1096,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -37 ELSE -40 THEN JUMP ;
+IF -34 ELSE -37 THEN JUMP ;
 : 5_129
 TRUE
 
@@ -1113,7 +1104,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -36 ELSE -34 THEN JUMP ;
+IF -33 ELSE -31 THEN JUMP ;
 : 5_139
 TRUE
 
@@ -1121,7 +1112,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -36 ELSE -28 THEN JUMP ;
+IF -33 ELSE -37 THEN JUMP ;
 : 5_144
 FALSE
 
@@ -1129,15 +1120,7 @@ FALSE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LOR
-IF -46 ELSE -39 THEN JUMP ;
-: 5_195
-TRUE
-
-1 LINE.NUM
-  ^MasterCommandStringRcvd @@ 
-  -1    >
-LAND
-IF -31 ELSE -42 THEN JUMP ;
+IF -43 ELSE -36 THEN JUMP ;
 : 5_293
 TRUE
 
@@ -1145,7 +1128,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -22 ELSE -23 THEN JUMP ;
+IF -21 ELSE -22 THEN JUMP ;
 : 5_300
 TRUE
 
@@ -1153,7 +1136,7 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   -1    >
 LAND
-IF -23 ELSE -25 THEN JUMP ;
+IF -22 ELSE -24 THEN JUMP ;
 : 5_325
 TRUE
 
@@ -1161,14 +1144,14 @@ TRUE
   ^MasterCommandStringRcvd @@ 
   0    <=
 LAND
-IF 1 ELSE -22 THEN JUMP ;
+IF 1 ELSE -21 THEN JUMP ;
 : 5_330
 TRUE
 
 1 LINE.NUM
   *Master_Handle   ?OPEN 0>
 LAND
-IF 0 ELSE -56 THEN JUMP ;
+IF 0 ELSE -52 THEN JUMP ;
 T: T5
 DUMMY
 5_0
@@ -1199,10 +1182,7 @@ DUMMY
 5_156
 5_183
 5_186
-5_193
-5_197
 5_200
-5_201
 5_205
 5_206
 5_207
@@ -1229,7 +1209,6 @@ DUMMY
 5_129
 5_139
 5_144
-5_195
 5_293
 5_300
 5_325
@@ -1973,8 +1952,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 05/31/23 " ;
-: TIMESTAMP ." 12:43:09 " ;
+: DATESTAMP ." 06/29/23 " ;
+: TIMESTAMP ." 15:16:39 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
