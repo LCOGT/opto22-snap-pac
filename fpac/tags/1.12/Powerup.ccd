@@ -105,6 +105,7 @@
 2 LINE.NUM *FWVersion  Rev>$ 
 3 LINE.NUM " 1.12" *SWVersion  $MOVE 
 5 LINE.NUM ~ECB_Ctrl  OFF 
+6 LINE.NUM 1 I>F ~ECB_Ctrl  PULSEON 
 -3 JUMP ;
 T: T0
 DUMMY
