@@ -131,6 +131,51 @@
 
 186 LINE.NUM THEN 
 187 LINE.NUM THEN 
+192 LINE.NUM ~FenceKey @@I 0 = IF 
+193 LINE.NUM 1 ~Fence_Green_LED @! 
+194 LINE.NUM 0 ~Fence_Red_LED @! 
+195 LINE.NUM ELSE 
+196 LINE.NUM 0 ~Fence_Green_LED @! 
+197 LINE.NUM 1 ~Fence_Red_LED @! 
+198 LINE.NUM THEN 
+201 LINE.NUM ~EnclosureAKey @@I 0 = IF 
+202 LINE.NUM 1 ~Enclosure_A_Green_LED @! 
+203 LINE.NUM 0 ~Enclosure_A_Red_LED @! 
+204 LINE.NUM ELSE 
+205 LINE.NUM 0 ~Enclosure_A_Green_LED @! 
+206 LINE.NUM 1 ~Enclosure_A_Red_LED @! 
+207 LINE.NUM THEN 
+210 LINE.NUM ~EnclosureBKey @@I 0 = IF 
+211 LINE.NUM 1 ~Enclosure_B_Green_LED @! 
+212 LINE.NUM 0 ~Enclosure_B_Red_LED @! 
+213 LINE.NUM ELSE 
+214 LINE.NUM 0 ~Enclosure_B_Green_LED @! 
+215 LINE.NUM 1 ~Enclosure_B_Red_LED @! 
+216 LINE.NUM THEN 
+219 LINE.NUM ~EnclosureCKey @@I 1 = IF 
+220 LINE.NUM 1 ~Enclosure_C_Green_LED @! 
+221 LINE.NUM 0 ~Enclosure_C_Red_LED @! 
+222 LINE.NUM ELSE 
+223 LINE.NUM 0 ~Enclosure_C_Green_LED @! 
+224 LINE.NUM 1 ~Enclosure_C_Red_LED @! 
+225 LINE.NUM THEN 
+228 LINE.NUM ~EnclosureDKey @@I 1 = IF 
+229 LINE.NUM 1 ~Enclosure_D_Green_LED @! 
+230 LINE.NUM 0 ~Enclosure_D_Red_LED @! 
+231 LINE.NUM ELSE 
+232 LINE.NUM 0 ~Enclosure_D_Green_LED @! 
+233 LINE.NUM 1 ~Enclosure_D_Red_LED @! 
+234 LINE.NUM THEN 
+237 LINE.NUM ~SiteStatusKey @@I 1 = IF 
+238 LINE.NUM 1 ~Keyring_Status_Green_LED @! 
+239 LINE.NUM 0 ~Keyring_Status_Red_LED @! 
+240 LINE.NUM ELSE 
+241 LINE.NUM 0 ~Keyring_Status_Green_LED @! 
+242 LINE.NUM 1 ~Keyring_Status_Red_LED @! 
+243 LINE.NUM THEN 
+246 LINE.NUM ~ShutdownStatusKey @@I 1 = IF 
+250 LINE.NUM ELSE 
+254 LINE.NUM THEN 
 -2 JUMP ;
 T: T7
 DUMMY
