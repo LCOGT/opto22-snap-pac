@@ -131,21 +131,21 @@
 
 186 LINE.NUM THEN 
 187 LINE.NUM THEN 
-192 LINE.NUM ~FenceKey @@I 0 = IF 
+192 LINE.NUM ~FenceKey @@I 1 = IF 
 193 LINE.NUM 1 ~Fence_Green_LED @! 
 194 LINE.NUM 0 ~Fence_Red_LED @! 
 195 LINE.NUM ELSE 
 196 LINE.NUM 0 ~Fence_Green_LED @! 
 197 LINE.NUM 1 ~Fence_Red_LED @! 
 198 LINE.NUM THEN 
-201 LINE.NUM ~EnclosureAKey @@I 0 = IF 
+201 LINE.NUM ~EnclosureAKey @@I 1 = IF 
 202 LINE.NUM 1 ~Enclosure_A_Green_LED @! 
 203 LINE.NUM 0 ~Enclosure_A_Red_LED @! 
 204 LINE.NUM ELSE 
 205 LINE.NUM 0 ~Enclosure_A_Green_LED @! 
 206 LINE.NUM 1 ~Enclosure_A_Red_LED @! 
 207 LINE.NUM THEN 
-210 LINE.NUM ~EnclosureBKey @@I 0 = IF 
+210 LINE.NUM ~EnclosureBKey @@I 1 = IF 
 211 LINE.NUM 1 ~Enclosure_B_Green_LED @! 
 212 LINE.NUM 0 ~Enclosure_B_Red_LED @! 
 213 LINE.NUM ELSE 
