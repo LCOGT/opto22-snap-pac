@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdeve\Desktop\PAC_programs\dpac\r10_inclinometer\DPAC.idb
+# NAME :         C:\Users\jdeve\Desktop\PAC_programs\dpac\r10_inclinometer_VFD\DPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    17:50:13 3/31/2022
+# TIME/DATE :    15:36:47 2/9/2024
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -119,6 +119,9 @@ TAG1,Status_Monitor                                    ,15   ,00000000,00000100,
 TAG1,White_Lights                                      ,16   ,00000000,00000100,00000000,00000000,0    ,0   
 TAG1,A_1mFPAC                                          ,1    ,00000000,00000000,20000000,00000000,0    ,0   
 TAG1,Local_IO                                          ,0    ,00000000,00000000,20000000,00000000,0    ,0   
+TAG1,DI_DriveRun                                       ,8    ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_VFDfault                                       ,27   ,40000000,00000000,00000000,00000000,0    ,0   
+TAG1,DI_VFDoverload                                    ,14   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_domeLights                                     ,39   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_Illuminate                                     ,42   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_lowerCloseValve                                ,41   ,10000000,00000000,00000000,00000000,0    ,0   
@@ -128,11 +131,10 @@ TAG1,DO_slot08Fuse                                     ,32   ,10000000,00000000,
 TAG1,DO_slot09Fuse                                     ,36   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_upperClose                                     ,34   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,DO_upperOpen                                      ,33   ,10000000,00000000,00000000,00000000,0    ,0   
+TAG1,DO_VFDfaultReset                                  ,43   ,10000000,00000000,00000000,00000000,0    ,0   
 TAG1,FB_pumpMotor                                      ,11   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FB_slot08Fuse                                     ,30   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FB_slot09Fuse                                     ,31   ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,FB_upperClose                                     ,8    ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,FB_upperOpen                                      ,27   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_cabinetDoor                                   ,3    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_heat                                          ,25   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_lambertCB                                     ,15   ,40000000,00000000,00000000,00000000,0    ,0   
@@ -143,7 +145,6 @@ TAG1,FLT_pumpMotorOverload                             ,16   ,40000000,00000000,
 TAG1,FLT_smoke                                         ,26   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_smokeDetectorPwr                              ,21   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_upperCloseOvrTrvl                             ,10   ,40000000,00000000,00000000,00000000,0    ,0   
-TAG1,FLT_upperMotorOverload                            ,14   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_upperOpenOvrTrvl                              ,9    ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_upperShutterCB                                ,13   ,40000000,00000000,00000000,00000000,0    ,0   
 TAG1,FLT_wireless                                      ,6    ,40000000,00000000,00000000,00000000,0    ,0   
@@ -187,12 +188,10 @@ TAG1,FaultModeStarted                                  ,5    ,00000000,00000000,
 TAG1,FLT_ClearSW                                       ,36   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_CloseLS                                       ,84   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_CloseTimeout                                  ,86   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FLT_CloseUpperFailedToStart                       ,51   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_DisabledCircuit                               ,4    ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FLT_DriveRunning                                  ,47   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_K10overload                                   ,65   ,00000000,00000000,00000000,00000008,0    ,0   
-TAG1,FLT_K1off                                         ,44   ,00000000,00000000,00000000,00000008,0    ,0   
-TAG1,FLT_K1on                                          ,42   ,00000000,00000000,00000000,00000008,0    ,0   
-TAG1,FLT_K2off                                         ,51   ,00000000,00000000,00000000,00000008,0    ,0   
-TAG1,FLT_K2on                                          ,47   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_K5off                                         ,60   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_K5on                                          ,63   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_K8overload                                    ,45   ,00000000,00000000,00000000,00000008,0    ,0   
@@ -201,6 +200,7 @@ TAG1,FLT_LowerCloseTimeout                             ,64   ,00000000,00000000,
 TAG1,FLT_LowerCloseUnknown                             ,61   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_LowerOpenTimeout                              ,70   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_OpenClearTimeout                              ,81   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FLT_OpenUpperFailedToStart                        ,44   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_SLOT08fuse                                    ,41   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_SLOT09fuse                                    ,67   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_UpCloseOT                                     ,54   ,00000000,00000000,00000000,00000008,0    ,0   
