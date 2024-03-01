@@ -37,12 +37,10 @@ CREATE V.ARRAY
 ^FLT_ClearSW ,
 ^FLT_CloseLS ,
 ^FLT_CloseTimeout ,
+^FLT_CloseUpperFailedToStart ,
 ^FLT_DisabledCircuit ,
+^FLT_DriveRunning ,
 ^FLT_K10overload ,
-^FLT_K1off ,
-^FLT_K1on ,
-^FLT_K2off ,
-^FLT_K2on ,
 ^FLT_K5off ,
 ^FLT_K5on ,
 ^FLT_K8overload ,
@@ -51,6 +49,7 @@ CREATE V.ARRAY
 ^FLT_LowerCloseUnknown ,
 ^FLT_LowerOpenTimeout ,
 ^FLT_OpenClearTimeout ,
+^FLT_OpenUpperFailedToStart ,
 ^FLT_SLOT08fuse ,
 ^FLT_SLOT09fuse ,
 ^FLT_UpCloseOT ,
@@ -152,6 +151,9 @@ CREATE B.ARRAY
 %Local_IO ,
  0 ,
 CREATE P.ARRAY
+~DI_DriveRun ,
+~DI_VFDfault ,
+~DI_VFDoverload ,
 ~DO_domeLights ,
 ~DO_Illuminate ,
 ~DO_lowerCloseValve ,
@@ -161,11 +163,10 @@ CREATE P.ARRAY
 ~DO_slot09Fuse ,
 ~DO_upperClose ,
 ~DO_upperOpen ,
+~DO_VFDfaultReset ,
 ~FB_pumpMotor ,
 ~FB_slot08Fuse ,
 ~FB_slot09Fuse ,
-~FB_upperClose ,
-~FB_upperOpen ,
 ~FLT_cabinetDoor ,
 ~FLT_heat ,
 ~FLT_lambertCB ,
@@ -176,7 +177,6 @@ CREATE P.ARRAY
 ~FLT_smoke ,
 ~FLT_smokeDetectorPwr ,
 ~FLT_upperCloseOvrTrvl ,
-~FLT_upperMotorOverload ,
 ~FLT_upperOpenOvrTrvl ,
 ~FLT_upperShutterCB ,
 ~FLT_wireless ,
@@ -244,12 +244,10 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^FLT_ClearSW @!
 0 ^FLT_CloseLS @!
 0 ^FLT_CloseTimeout @!
+0 ^FLT_CloseUpperFailedToStart @!
 0 ^FLT_DisabledCircuit @!
+0 ^FLT_DriveRunning @!
 0 ^FLT_K10overload @!
-0 ^FLT_K1off @!
-0 ^FLT_K1on @!
-0 ^FLT_K2off @!
-0 ^FLT_K2on @!
 0 ^FLT_K5off @!
 0 ^FLT_K5on @!
 0 ^FLT_K8overload @!
@@ -258,6 +256,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^FLT_LowerCloseUnknown @!
 0 ^FLT_LowerOpenTimeout @!
 0 ^FLT_OpenClearTimeout @!
+0 ^FLT_OpenUpperFailedToStart @!
 0 ^FLT_SLOT08fuse @!
 0 ^FLT_SLOT09fuse @!
 0 ^FLT_UpCloseOT @!

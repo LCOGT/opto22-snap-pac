@@ -44,11 +44,14 @@
 : 5_50
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 17 JUMP ;
 : 5_53
 
 1 LINE.NUM
+  ~DO_upperClose   OFF
+
+2 LINE.NUM
   ~DO_upperOpen   OFF
 -2 JUMP ;
 : 5_67
@@ -59,12 +62,12 @@
 : 5_68
 
 1 LINE.NUM
-  ^FLT_K1off   TRUE@!
+  ^FLT_OpenUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 5_73
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -9 JUMP ;
 : 5_79
 -10 JUMP ;
@@ -73,7 +76,7 @@
 : 5_85
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -10 JUMP ;
 : 5_99
 
@@ -83,7 +86,7 @@
 : 5_104
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 5_107
 -15 JUMP ;
@@ -102,7 +105,7 @@
 : 5_118
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -3 JUMP ;
 : 5_122
 
@@ -165,7 +168,7 @@ IF -28 ELSE 4 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -27 ELSE -4 THEN JUMP ;
 : 5_63
@@ -179,28 +182,28 @@ IF -27 ELSE 6 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -26 ELSE -34 THEN JUMP ;
 : 5_86
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -24 ELSE -33 THEN JUMP ;
 : 5_96
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_VFDoverload   ?ON
 LAND
 IF -24 ELSE 1 THEN JUMP ;
 : 5_103
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -24 ELSE -22 THEN JUMP ;
 : 5_110
@@ -214,14 +217,14 @@ IF -19 ELSE -9 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -21 ELSE -23 THEN JUMP ;
 : 5_147
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -11 ELSE -8 THEN JUMP ;
 : 5_168

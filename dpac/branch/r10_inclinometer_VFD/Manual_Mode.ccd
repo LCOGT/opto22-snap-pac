@@ -112,17 +112,14 @@
   ^Time_defContactorRelease @@   DELAY
 0 JUMP ;
 : 2_113
-1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_upperClose @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_K5on @! 
-9 LINE.NUM ELSE 
-10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM THEN THEN THEN 
+4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K5on @! 
+6 LINE.NUM ELSE 
+7 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+9 LINE.NUM THEN THEN 
 1 JUMP ;
 : 2_125
 

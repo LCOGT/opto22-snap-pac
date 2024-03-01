@@ -53,12 +53,10 @@ _END NEW $$$.RUN
 0 IVAR ^FLT_ClearSW
 0 IVAR ^FLT_CloseLS
 0 IVAR ^FLT_CloseTimeout
+0 IVAR ^FLT_CloseUpperFailedToStart
 0 IVAR ^FLT_DisabledCircuit
+0 IVAR ^FLT_DriveRunning
 0 IVAR ^FLT_K10overload
-0 IVAR ^FLT_K1off
-0 IVAR ^FLT_K1on
-0 IVAR ^FLT_K2off
-0 IVAR ^FLT_K2on
 0 IVAR ^FLT_K5off
 0 IVAR ^FLT_K5on
 0 IVAR ^FLT_K8overload
@@ -67,6 +65,7 @@ _END NEW $$$.RUN
 0 IVAR ^FLT_LowerCloseUnknown
 0 IVAR ^FLT_LowerOpenTimeout
 0 IVAR ^FLT_OpenClearTimeout
+0 IVAR ^FLT_OpenUpperFailedToStart
 0 IVAR ^FLT_SLOT08fuse
 0 IVAR ^FLT_SLOT09fuse
 0 IVAR ^FLT_UpCloseOT
@@ -153,7 +152,7 @@ _END NEW $$$.RUN
 4 0 ITABLE }SLOT08_OFF
 20 20 0 $TABLE {Status 
 
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A0A0A02 0 M64BOARD %A_1mFPAC
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
  4 $40000001 SPOINT 0.0     INPUT  0  0 %Local_IO 0 POINT.TNG ~SW_stop
  4 $40000001 SPOINT 0.0     INPUT  1  0 %Local_IO 0 POINT.TNG ~SW_upperOpen
@@ -163,13 +162,13 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $40000001 SPOINT 0.0     INPUT  1  1 %Local_IO 0 POINT.TNG ~SW_LowerClose
  4 $40000001 SPOINT 0.0     INPUT  2  1 %Local_IO 0 POINT.TNG ~FLT_wireless
  4 $40000001 SPOINT 0.0     INPUT  3  1 %Local_IO 0 POINT.TNG ~FLT_lightsCB
- 4 $40000001 SPOINT 0.0     INPUT  0  2 %Local_IO 0 POINT.TNG ~FB_upperClose
+ 4 $40000001 SPOINT 0.0     INPUT  0  2 %Local_IO 0 POINT.TNG ~DI_DriveRun
  4 $40000001 SPOINT 0.0     INPUT  1  2 %Local_IO 0 POINT.TNG ~FLT_upperOpenOvrTrvl
  4 $40000001 SPOINT 0.0     INPUT  2  2 %Local_IO 0 POINT.TNG ~FLT_upperCloseOvrTrvl
  4 $40000001 SPOINT 0.0     INPUT  3  2 %Local_IO 0 POINT.TNG ~FB_pumpMotor
  4 $40000001 SPOINT 0.0     INPUT  0  3 %Local_IO 0 POINT.TNG ~FLT_lowerShutterCB
  4 $40000001 SPOINT 0.0     INPUT  1  3 %Local_IO 0 POINT.TNG ~FLT_upperShutterCB
- 4 $40000001 SPOINT 0.0     INPUT  2  3 %Local_IO 0 POINT.TNG ~FLT_upperMotorOverload
+ 4 $40000001 SPOINT 0.0     INPUT  2  3 %Local_IO 0 POINT.TNG ~DI_VFDoverload
  4 $40000001 SPOINT 0.0     INPUT  3  3 %Local_IO 0 POINT.TNG ~FLT_lambertCB
  4 $40000001 SPOINT 0.0     INPUT  0  4 %Local_IO 0 POINT.TNG ~FLT_pumpMotorOverload
  4 $40000001 SPOINT 0.0     INPUT  1  4 %Local_IO 0 POINT.TNG ~SW_upperShutterClear
@@ -182,7 +181,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $40000001 SPOINT 0.0     INPUT  0  6 %Local_IO 0 POINT.TNG ~FLT_smoke
  4 $40000001 SPOINT 0.0     INPUT  1  6 %Local_IO 0 POINT.TNG ~FLT_heat
  4 $40000001 SPOINT 0.0     INPUT  2  6 %Local_IO 0 POINT.TNG ~FLT_lambertPwr
- 4 $40000001 SPOINT 0.0     INPUT  3  6 %Local_IO 0 POINT.TNG ~FB_upperOpen
+ 4 $40000001 SPOINT 0.0     INPUT  3  6 %Local_IO 0 POINT.TNG ~DI_VFDfault
  4 $40000001 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~SW_lowerOpenLimit
  4 $40000001 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~SW_lowerCloseLimit
  4 $40000001 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~FB_slot08Fuse
@@ -193,6 +192,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $80000001 SPOINT 0.0    OUTPUT  3  8 %Local_IO 0 POINT.TNG ~DO_Illuminate
  4 $80000001 SPOINT 0.0    OUTPUT  0  9 %Local_IO 0 POINT.TNG ~DO_slot09Fuse
  4 $80000001 SPOINT 0.0    OUTPUT  1  9 %Local_IO 0 POINT.TNG ~DO_pumpMotor
+ 4 $80000001 SPOINT 0.0    OUTPUT  2  9 %Local_IO 0 POINT.TNG ~DO_VFDfaultReset
  4 $80000001 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_domeLights
  4 $80000001 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_lowerOpenValve
  4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_lowerCloseValve
@@ -349,17 +349,14 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
   ^Time_defContactorRelease @@   DELAY
 0 JUMP ;
 : 3_233
-1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_upperClose @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_K5on @! 
-9 LINE.NUM ELSE 
-10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM THEN THEN THEN 
+4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K5on @! 
+6 LINE.NUM ELSE 
+7 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+9 LINE.NUM THEN THEN 
 -4 JUMP ;
 : 3_240
 1 LINE.NUM 0 ^CmdHEARTBEAT @! 
@@ -499,24 +496,21 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 1 LINE.NUM 0 ^CmdSTOP @! 
 2 JUMP ;
 : 3_432
-1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_upperClose @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_K5on @! 
+4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K5on @! 
+6 LINE.NUM ELSE 
+7 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
+8 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
 9 LINE.NUM ELSE 
-10 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
-11 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM ELSE 
-12 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
-13 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
-14 LINE.NUM ELSE 
-15 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-16 LINE.NUM THEN THEN 
-18 LINE.NUM THEN THEN THEN 
+9 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
+10 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
+11 LINE.NUM ELSE 
+12 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+13 LINE.NUM THEN THEN 
+15 LINE.NUM THEN THEN 
 2 JUMP ;
 : 3_433
 
@@ -595,25 +589,22 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 12 LINE.NUM ~DO_lowerOpenValve  OFF 
 13 LINE.NUM ~DO_lowerCloseValve  OFF 
 14 LINE.NUM ^Time_defContactorRelease @@  DELAY 
-15 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-16 LINE.NUM 1 ^FLT_K1on @! 
+15 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+16 LINE.NUM 1 ^FLT_DriveRunning @! 
 17 LINE.NUM ELSE 
-17 LINE.NUM ~FB_upperClose @@I 0 = IF 
-18 LINE.NUM 1 ^FLT_K2on @! 
+17 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+18 LINE.NUM 1 ^FLT_K5on @! 
 19 LINE.NUM ELSE 
-19 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-20 LINE.NUM 1 ^FLT_K5on @! 
-21 LINE.NUM ELSE 
-23 LINE.NUM THEN THEN THEN 
-27 LINE.NUM *sEncl " doma" $= IF 
-28 LINE.NUM 0 I>F  FDELAY 
+21 LINE.NUM THEN THEN 
+25 LINE.NUM *sEncl " doma" $= IF 
+26 LINE.NUM 0 I>F  FDELAY 
+27 LINE.NUM ELSE 
+27 LINE.NUM *sEncl " domb" $= IF 
+28 LINE.NUM 1.50000000e+000  FDELAY 
 29 LINE.NUM ELSE 
-29 LINE.NUM *sEncl " domb" $= IF 
-30 LINE.NUM 1.50000000e+000  FDELAY 
-31 LINE.NUM ELSE 
-31 LINE.NUM *sEncl " domc" $= IF 
-32 LINE.NUM 3 I>F  FDELAY 
-33 LINE.NUM THEN THEN THEN 
+29 LINE.NUM *sEncl " domc" $= IF 
+30 LINE.NUM 3 I>F  FDELAY 
+31 LINE.NUM THEN THEN THEN 
 -34 JUMP ;
 : 3_473
 2 LINE.NUM &Function_UpperOpen  STOP.T 
@@ -629,25 +620,22 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 12 LINE.NUM ~DO_lowerOpenValve  OFF 
 13 LINE.NUM ~DO_lowerCloseValve  OFF 
 14 LINE.NUM ^Time_defContactorRelease @@  DELAY 
-15 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-16 LINE.NUM 1 ^FLT_K1on @! 
+15 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+16 LINE.NUM 1 ^FLT_DriveRunning @! 
 17 LINE.NUM ELSE 
-17 LINE.NUM ~FB_upperClose @@I 0 = IF 
-18 LINE.NUM 1 ^FLT_K2on @! 
+17 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+18 LINE.NUM 1 ^FLT_K5on @! 
 19 LINE.NUM ELSE 
-19 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-20 LINE.NUM 1 ^FLT_K5on @! 
-21 LINE.NUM ELSE 
-23 LINE.NUM THEN THEN THEN 
-27 LINE.NUM *sEncl " doma" $= IF 
-28 LINE.NUM 0 I>F  FDELAY 
+21 LINE.NUM THEN THEN 
+25 LINE.NUM *sEncl " doma" $= IF 
+26 LINE.NUM 0 I>F  FDELAY 
+27 LINE.NUM ELSE 
+27 LINE.NUM *sEncl " domb" $= IF 
+28 LINE.NUM 1.50000000e+000  FDELAY 
 29 LINE.NUM ELSE 
-29 LINE.NUM *sEncl " domb" $= IF 
-30 LINE.NUM 1.50000000e+000  FDELAY 
-31 LINE.NUM ELSE 
-31 LINE.NUM *sEncl " domc" $= IF 
-32 LINE.NUM 3 I>F  FDELAY 
-33 LINE.NUM THEN THEN THEN 
+29 LINE.NUM *sEncl " domc" $= IF 
+30 LINE.NUM 3 I>F  FDELAY 
+31 LINE.NUM THEN THEN THEN 
 -40 JUMP ;
 : 3_38
 TRUE
@@ -1261,15 +1249,12 @@ T;
   2000    DELAY
 12 JUMP ;
 : 14_73
-1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_upperClose @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_K5on @! 
-10 LINE.NUM THEN THEN THEN 
+4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K5on @! 
+7 LINE.NUM THEN THEN 
 -4 JUMP ;
 : 14_74
 
@@ -2272,49 +2257,49 @@ DUMMY
 T;
 &Function_Open ' T13 SETTASK
 : 6_0
-111 JUMP ;
+108 JUMP ;
 : 6_5
 
 1 LINE.NUM
   ~DO_upperClose   ON
-112 JUMP ;
+108 JUMP ;
 : 6_12
 
 1 LINE.NUM
   ~DO_upperClose   OFF
-94 JUMP ;
+91 JUMP ;
 : 6_24
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-143 JUMP ;
+139 JUMP ;
 : 6_32
 
 1 LINE.NUM
   ~DO_upperClose   OFF
-87 JUMP ;
+84 JUMP ;
 : 6_34
 
 1 LINE.NUM
   ~DO_upperClose   ON
-120 JUMP ;
+116 JUMP ;
 : 6_39
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-140 JUMP ;
+136 JUMP ;
 : 6_40
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-139 JUMP ;
+135 JUMP ;
 : 6_48
 
 1 LINE.NUM
   ~DO_upperOpen   ON
-128 JUMP ;
+124 JUMP ;
 : 6_49
-51 JUMP ;
+48 JUMP ;
 : 6_72
 
 1 LINE.NUM
@@ -2343,34 +2328,22 @@ T;
 0 JUMP ;
 : 6_74
 -3 JUMP ;
-: 6_104
-
-1 LINE.NUM
-  ~DO_upperOpen   OFF
-0 JUMP ;
-: 6_105
-
-1 LINE.NUM
-  ^FLT_K1on   TRUE@!
-0 JUMP ;
-: 6_108
-
-1 LINE.NUM
-  &Function_UpperClose   STOP.T
-132 JUMP ;
 : 6_111
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-131 JUMP ;
+130 JUMP ;
 : 6_113
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -2 JUMP ;
 : 6_114
 
 1 LINE.NUM
+  ~DO_upperOpen   OFF
+
+2 LINE.NUM
   ~DO_upperClose   OFF
 -2 JUMP ;
 : 6_121
@@ -2388,31 +2361,31 @@ T;
 
 4 LINE.NUM
   ^Timer_UpperContactor   StartTimer
--18 JUMP ;
+-15 JUMP ;
 : 6_132
 
 1 LINE.NUM
-  ^FLT_K2off   TRUE@!
+  ^FLT_CloseUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 6_133
 
 1 LINE.NUM
   ~DO_upperClose   OFF
-102 JUMP ;
+101 JUMP ;
 : 6_135
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-125 JUMP ;
+124 JUMP ;
 : 6_143
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
--17 JUMP ;
+  ^FLT_DriveRunning   TRUE@!
+-14 JUMP ;
 : 6_154
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 6_158
 
@@ -2428,12 +2401,12 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-120 JUMP ;
+119 JUMP ;
 : 6_168
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-119 JUMP ;
+118 JUMP ;
 : 6_171
 
 1 LINE.NUM
@@ -2447,12 +2420,12 @@ T;
 : 6_176
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -3 JUMP ;
 : 6_184
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 6_188
 
@@ -2468,7 +2441,7 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-112 JUMP ;
+111 JUMP ;
 : 6_218
 
 1 LINE.NUM
@@ -2478,7 +2451,7 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-110 JUMP ;
+109 JUMP ;
 : 6_229
 
 1 LINE.NUM
@@ -2494,12 +2467,12 @@ T;
 
 4 LINE.NUM
   ^Timer_UpperContactor   StartTimer
--33 JUMP ;
+-30 JUMP ;
 : 6_238
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-108 JUMP ;
+107 JUMP ;
 : 6_239
 
 1 LINE.NUM
@@ -2509,27 +2482,27 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-106 JUMP ;
+105 JUMP ;
 : 6_243
 
 1 LINE.NUM
   ~DO_upperClose   OFF
-82 JUMP ;
+81 JUMP ;
 : 6_244
 
 1 LINE.NUM
-  ^FLT_K2off   TRUE@!
+  ^FLT_CloseUpperFailedToStart   TRUE@!
 -3 JUMP ;
 : 6_254
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 13 JUMP ;
 : 6_262
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-102 JUMP ;
+101 JUMP ;
 : 6_266
 
 1 LINE.NUM
@@ -2538,12 +2511,12 @@ T;
 : 6_270
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -3 JUMP ;
 : 6_278
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 6_282
 
@@ -2559,12 +2532,12 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-96 JUMP ;
+95 JUMP ;
 : 6_291
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-95 JUMP ;
+94 JUMP ;
 : 6_294
 
 1 LINE.NUM
@@ -2578,12 +2551,12 @@ T;
 : 6_300
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -3 JUMP ;
 : 6_312
 
 1 LINE.NUM
-  ^FLT_K2on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 2 JUMP ;
 : 6_315
 
@@ -2594,12 +2567,12 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-89 JUMP ;
+88 JUMP ;
 : 6_322
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-88 JUMP ;
+87 JUMP ;
 : 6_325
 
 1 LINE.NUM
@@ -2617,12 +2590,12 @@ T;
 
 1 LINE.NUM
   2000    DELAY
-73 JUMP ;
+72 JUMP ;
 : 6_340
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-84 JUMP ;
+83 JUMP ;
 : 6_342
 
 1 LINE.NUM
@@ -2638,7 +2611,7 @@ T;
 
 4 LINE.NUM
   ^Timer_UpperContactor   StartTimer
--56 JUMP ;
+-53 JUMP ;
 : 6_348
 
 1 LINE.NUM
@@ -2647,23 +2620,23 @@ T;
 : 6_353
 
 1 LINE.NUM
-  ^FLT_K1off   TRUE@!
+  ^FLT_OpenUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 6_354
 
 1 LINE.NUM
   ~DO_upperOpen   OFF
-69 JUMP ;
+68 JUMP ;
 : 6_359
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-79 JUMP ;
+78 JUMP ;
 : 6_360
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-78 JUMP ;
+77 JUMP ;
 : 6_373
 
 1 LINE.NUM
@@ -2672,7 +2645,7 @@ T;
 : 6_377
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 0 JUMP ;
 : 6_379
 
@@ -2687,7 +2660,7 @@ T;
 : 6_384
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -2 JUMP ;
 : 6_389
 
@@ -2697,7 +2670,7 @@ T;
 : 6_395
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 6_398
 
@@ -2712,8 +2685,8 @@ T;
 : 6_409
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
--72 JUMP ;
+  ^FLT_DriveRunning   TRUE@!
+-69 JUMP ;
 : 6_412
 
 1 LINE.NUM
@@ -2723,17 +2696,17 @@ T;
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-66 JUMP ;
+65 JUMP ;
 : 6_418
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-65 JUMP ;
+64 JUMP ;
 : 6_419
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-64 JUMP ;
+63 JUMP ;
 : 6_423
 
 1 LINE.NUM
@@ -2742,13 +2715,13 @@ T;
 : 6_427
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 6_431
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-61 JUMP ;
+60 JUMP ;
 : 6_440
 
 1 LINE.NUM
@@ -2758,72 +2731,72 @@ T;
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-57 JUMP ;
+56 JUMP ;
 : 6_446
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-57 JUMP ;
+56 JUMP ;
 : 6_447
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-53 JUMP ;
+52 JUMP ;
 : 6_448
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-50 JUMP ;
+49 JUMP ;
 : 6_449
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-47 JUMP ;
+46 JUMP ;
 : 6_460
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-34 JUMP ;
+33 JUMP ;
 : 6_461
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-40 JUMP ;
+39 JUMP ;
 : 6_462
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-37 JUMP ;
+36 JUMP ;
 : 6_463
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-34 JUMP ;
+33 JUMP ;
 : 6_464
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-31 JUMP ;
+30 JUMP ;
 : 6_475
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-18 JUMP ;
+17 JUMP ;
 : 6_476
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-19 JUMP ;
+18 JUMP ;
 : 6_477
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-20 JUMP ;
+19 JUMP ;
 : 6_478
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-21 JUMP ;
+20 JUMP ;
 : 6_2
 FALSE
 
@@ -2834,7 +2807,7 @@ LOR
 2 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LOR
-IF -99 ELSE 0 THEN JUMP ;
+IF -96 ELSE 0 THEN JUMP ;
 : 6_3
 TRUE
 
@@ -2848,7 +2821,7 @@ TRUE
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF -67 ELSE -101 THEN JUMP ;
+IF -67 ELSE -98 THEN JUMP ;
 : 6_11
 FALSE
 
@@ -2859,14 +2832,14 @@ LOR
 2 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LOR
-IF -103 ELSE 12 THEN JUMP ;
+IF -100 ELSE 11 THEN JUMP ;
 : 6_13
 TRUE
 
 1 LINE.NUM
   ~SW_upperShutterClear   ?OFF
 LAND
-IF -102 ELSE 5 THEN JUMP ;
+IF -99 ELSE 5 THEN JUMP ;
 : 6_46
 TRUE
 
@@ -2887,7 +2860,7 @@ TRUE
 1 LINE.NUM
   ~SW_upperOpenLimit   ?OFF
 LAND
-IF -26 ELSE 35 THEN JUMP ;
+IF -26 ELSE 34 THEN JUMP ;
 : 6_64
 TRUE
 
@@ -2901,7 +2874,7 @@ TRUE
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF -6 ELSE -101 THEN JUMP ;
+IF -6 ELSE -98 THEN JUMP ;
 : 6_77
 FALSE
 
@@ -2912,252 +2885,245 @@ LOR
 2 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LOR
-IF -56 ELSE 21 THEN JUMP ;
-: 6_106
-TRUE
-
-1 LINE.NUM
-  ~FB_upperOpen   ?OFF
-LAND
-IF -101 ELSE 0 THEN JUMP ;
+IF -56 ELSE 20 THEN JUMP ;
 : 6_112
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -97 ELSE -13 THEN JUMP ;
+IF -96 ELSE -12 THEN JUMP ;
 : 6_127
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -11 ELSE 0 THEN JUMP ;
+IF -10 ELSE 0 THEN JUMP ;
 : 6_134
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -96 ELSE -2 THEN JUMP ;
+IF -95 ELSE -2 THEN JUMP ;
 : 6_144
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -95 ELSE -111 THEN JUMP ;
+IF -94 ELSE -107 THEN JUMP ;
 : 6_150
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -94 ELSE 1 THEN JUMP ;
+IF -93 ELSE 1 THEN JUMP ;
 : 6_153
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -96 ELSE -94 THEN JUMP ;
+IF -95 ELSE -93 THEN JUMP ;
 : 6_165
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_VFDoverload   ?ON
 LAND
-IF -91 ELSE -11 THEN JUMP ;
+IF -90 ELSE -10 THEN JUMP ;
 : 6_177
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -91 ELSE -93 THEN JUMP ;
+IF -90 ELSE -92 THEN JUMP ;
 : 6_180
 TRUE
 
 1 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LAND
-IF -90 ELSE 25 THEN JUMP ;
+IF -89 ELSE 25 THEN JUMP ;
 : 6_183
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -92 ELSE -90 THEN JUMP ;
+IF -91 ELSE -89 THEN JUMP ;
 : 6_223
 TRUE
 
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -105 ELSE -89 THEN JUMP ;
+IF -104 ELSE -88 THEN JUMP ;
 : 6_236
 TRUE
 
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -83 ELSE -86 THEN JUMP ;
+IF -82 ELSE -85 THEN JUMP ;
 : 6_242
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -85 ELSE 0 THEN JUMP ;
+IF -84 ELSE 0 THEN JUMP ;
 : 6_246
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -22 ELSE -2 THEN JUMP ;
+IF -21 ELSE -2 THEN JUMP ;
 : 6_253
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -85 ELSE -119 THEN JUMP ;
+IF -84 ELSE -115 THEN JUMP ;
 : 6_271
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -83 ELSE -120 THEN JUMP ;
+IF -82 ELSE -116 THEN JUMP ;
 : 6_274
 TRUE
 
 1 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LAND
-IF -85 ELSE 17 THEN JUMP ;
+IF -84 ELSE 17 THEN JUMP ;
 : 6_277
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -84 ELSE -82 THEN JUMP ;
+IF -83 ELSE -81 THEN JUMP ;
 : 6_289
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_VFDoverload   -LATCH@I
 LAND
-IF -84 ELSE -25 THEN JUMP ;
+IF -83 ELSE -24 THEN JUMP ;
 : 6_301
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -79 ELSE -81 THEN JUMP ;
+IF -78 ELSE -80 THEN JUMP ;
 : 6_303
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -81 ELSE -3 THEN JUMP ;
+IF -80 ELSE -3 THEN JUMP ;
 : 6_313
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -80 ELSE -126 THEN JUMP ;
+IF -79 ELSE -122 THEN JUMP ;
 : 6_338
 TRUE
 
 1 LINE.NUM
   ~SW_upperOpenLimit   ?OFF
 LAND
-IF -74 ELSE -73 THEN JUMP ;
+IF -73 ELSE -72 THEN JUMP ;
 : 6_347
 TRUE
 
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -72 ELSE -73 THEN JUMP ;
+IF -71 ELSE -72 THEN JUMP ;
 : 6_351
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -32 ELSE 0 THEN JUMP ;
+IF -31 ELSE 0 THEN JUMP ;
 : 6_355
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -73 ELSE -2 THEN JUMP ;
+IF -72 ELSE -2 THEN JUMP ;
 : 6_376
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -70 ELSE -69 THEN JUMP ;
+IF -69 ELSE -68 THEN JUMP ;
 : 6_381
 TRUE
 
 1 LINE.NUM
   ~FLT_upperOpenOvrTrvl   ?OFF
 LAND
-IF -72 ELSE -35 THEN JUMP ;
+IF -71 ELSE -34 THEN JUMP ;
 : 6_385
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -69 ELSE -70 THEN JUMP ;
+IF -68 ELSE -69 THEN JUMP ;
 : 6_391
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_VFDoverload   ?ON
 LAND
-IF -69 ELSE -3 THEN JUMP ;
+IF -68 ELSE -3 THEN JUMP ;
 : 6_394
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -69 ELSE -67 THEN JUMP ;
+IF -68 ELSE -66 THEN JUMP ;
 : 6_400
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -69 ELSE -3 THEN JUMP ;
+IF -68 ELSE -3 THEN JUMP ;
 : 6_410
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -68 ELSE -139 THEN JUMP ;
+IF -67 ELSE -135 THEN JUMP ;
 : 6_426
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
-IF -63 ELSE -61 THEN JUMP ;
+IF -62 ELSE -60 THEN JUMP ;
 T: T6
 DUMMY
 6_0
@@ -3172,9 +3138,6 @@ DUMMY
 6_49
 6_72
 6_74
-6_104
-6_105
-6_108
 6_111
 6_113
 6_114
@@ -3272,7 +3235,6 @@ DUMMY
 6_64
 6_67
 6_77
-6_106
 6_112
 6_127
 6_134
@@ -3355,11 +3317,14 @@ T;
 : 5_50
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 17 JUMP ;
 : 5_53
 
 1 LINE.NUM
+  ~DO_upperClose   OFF
+
+2 LINE.NUM
   ~DO_upperOpen   OFF
 -2 JUMP ;
 : 5_67
@@ -3370,12 +3335,12 @@ T;
 : 5_68
 
 1 LINE.NUM
-  ^FLT_K1off   TRUE@!
+  ^FLT_OpenUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 5_73
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -9 JUMP ;
 : 5_79
 -10 JUMP ;
@@ -3384,7 +3349,7 @@ T;
 : 5_85
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -10 JUMP ;
 : 5_99
 
@@ -3394,7 +3359,7 @@ T;
 : 5_104
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 1 JUMP ;
 : 5_107
 -15 JUMP ;
@@ -3413,7 +3378,7 @@ T;
 : 5_118
 
 1 LINE.NUM
-  ^FLT_K1on   TRUE@!
+  ^FLT_DriveRunning   TRUE@!
 -3 JUMP ;
 : 5_122
 
@@ -3476,7 +3441,7 @@ IF -28 ELSE 4 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -27 ELSE -4 THEN JUMP ;
 : 5_63
@@ -3490,28 +3455,28 @@ IF -27 ELSE 6 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -26 ELSE -34 THEN JUMP ;
 : 5_86
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -24 ELSE -33 THEN JUMP ;
 : 5_96
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_VFDoverload   ?ON
 LAND
 IF -24 ELSE 1 THEN JUMP ;
 : 5_103
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -24 ELSE -22 THEN JUMP ;
 : 5_110
@@ -3525,14 +3490,14 @@ IF -19 ELSE -9 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -21 ELSE -23 THEN JUMP ;
 : 5_147
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_DriveRun   ?ON
 LAND
 IF -11 ELSE -8 THEN JUMP ;
 : 5_168
@@ -4083,17 +4048,14 @@ T;
   ^Time_defContactorRelease @@   DELAY
 0 JUMP ;
 : 2_113
-1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_upperClose @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_K5on @! 
-9 LINE.NUM ELSE 
-10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM THEN THEN THEN 
+4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_K5on @! 
+6 LINE.NUM ELSE 
+7 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
+9 LINE.NUM THEN THEN 
 1 JUMP ;
 : 2_125
 
@@ -5191,12 +5153,10 @@ CREATE V.ARRAY
 ^FLT_ClearSW ,
 ^FLT_CloseLS ,
 ^FLT_CloseTimeout ,
+^FLT_CloseUpperFailedToStart ,
 ^FLT_DisabledCircuit ,
+^FLT_DriveRunning ,
 ^FLT_K10overload ,
-^FLT_K1off ,
-^FLT_K1on ,
-^FLT_K2off ,
-^FLT_K2on ,
 ^FLT_K5off ,
 ^FLT_K5on ,
 ^FLT_K8overload ,
@@ -5205,6 +5165,7 @@ CREATE V.ARRAY
 ^FLT_LowerCloseUnknown ,
 ^FLT_LowerOpenTimeout ,
 ^FLT_OpenClearTimeout ,
+^FLT_OpenUpperFailedToStart ,
 ^FLT_SLOT08fuse ,
 ^FLT_SLOT09fuse ,
 ^FLT_UpCloseOT ,
@@ -5306,6 +5267,9 @@ CREATE B.ARRAY
 %Local_IO ,
  0 ,
 CREATE P.ARRAY
+~DI_DriveRun ,
+~DI_VFDfault ,
+~DI_VFDoverload ,
 ~DO_domeLights ,
 ~DO_Illuminate ,
 ~DO_lowerCloseValve ,
@@ -5315,11 +5279,10 @@ CREATE P.ARRAY
 ~DO_slot09Fuse ,
 ~DO_upperClose ,
 ~DO_upperOpen ,
+~DO_VFDfaultReset ,
 ~FB_pumpMotor ,
 ~FB_slot08Fuse ,
 ~FB_slot09Fuse ,
-~FB_upperClose ,
-~FB_upperOpen ,
 ~FLT_cabinetDoor ,
 ~FLT_heat ,
 ~FLT_lambertCB ,
@@ -5330,7 +5293,6 @@ CREATE P.ARRAY
 ~FLT_smoke ,
 ~FLT_smokeDetectorPwr ,
 ~FLT_upperCloseOvrTrvl ,
-~FLT_upperMotorOverload ,
 ~FLT_upperOpenOvrTrvl ,
 ~FLT_upperShutterCB ,
 ~FLT_wireless ,
@@ -5398,12 +5360,10 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^FLT_ClearSW @!
 0 ^FLT_CloseLS @!
 0 ^FLT_CloseTimeout @!
+0 ^FLT_CloseUpperFailedToStart @!
 0 ^FLT_DisabledCircuit @!
+0 ^FLT_DriveRunning @!
 0 ^FLT_K10overload @!
-0 ^FLT_K1off @!
-0 ^FLT_K1on @!
-0 ^FLT_K2off @!
-0 ^FLT_K2on @!
 0 ^FLT_K5off @!
 0 ^FLT_K5on @!
 0 ^FLT_K8overload @!
@@ -5412,6 +5372,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^FLT_LowerCloseUnknown @!
 0 ^FLT_LowerOpenTimeout @!
 0 ^FLT_OpenClearTimeout @!
+0 ^FLT_OpenUpperFailedToStart @!
 0 ^FLT_SLOT08fuse @!
 0 ^FLT_SLOT09fuse @!
 0 ^FLT_UpCloseOT @!
@@ -5529,9 +5490,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/31/22 " ;
-: TIMESTAMP ." 17:50:13 " ;
-: CRCSTAMP  ." F6293200EBDEDBD8730B65FEB800CFB9 " ;
+: DATESTAMP ." 02/28/24 " ;
+: TIMESTAMP ." 10:24:43 " ;
+: CRCSTAMP  ." 21A92480A4A119BDB3B9E11BBA311082 " ;
 MAKECHECK
 CLEAR.BREAKS
 
