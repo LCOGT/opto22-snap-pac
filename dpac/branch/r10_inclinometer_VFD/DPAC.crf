@@ -49,6 +49,7 @@ _END NEW $$$.RUN
 0 IVAR ^CmdUPPER_CLOSE
 0 IVAR ^CmdUPPER_OPEN
 0 IVAR ^CountK1
+0 IVAR ^FanCtrlMax
 0 IVAR ^FaultModeStarted
 0 IVAR ^FLT_ClearSW
 0 IVAR ^FLT_CloseLS
@@ -94,6 +95,7 @@ _END NEW $$$.RUN
 0 IVAR ^nPeriodPosition1
 0 IVAR ^nPeriodPosition2
 0 IVAR ^nSubstringLength
+0 IVAR ^PanelFanErrorFlag
 0 TVAR ^Socket_Timer
 0 TVAR ^Socket_Timer_2
 0 IVAR ^Status_AutoMode
@@ -118,6 +120,7 @@ _END NEW $$$.RUN
 0 TVAR ^Timer_UpperContactor
 0 TVAR ^Timer_UpperOperate
 0 TVAR ^Timer_WxWdog
+0 IVAR ^VFD_FAULT_RESET
 0 IVAR ^White_Lights_Chart
 0 IVAR ^WTlightSwitchState
 0 IVAR ^WTswitchOldState
@@ -196,8 +199,6 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $80000001 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_domeLights
  4 $80000001 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_lowerOpenValve
  4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_lowerCloseValve
- 4 $40000001 APOINT -3000.0000 $40  0 11 %Local_IO 0 POINT.TNG ~AI_lowerOpenPressure
-2000.0000 -3000.0000 ~AI_lowerOpenPressure SET.SCALE
  4 $40000001 APOINT -537.5000 $40  1 11 %Local_IO 0 100.000000 1 POINT.TNGX ~AI_LowerShutterAngle
  360.0000 -537.5000 ~AI_LowerShutterAngle SET.SCALE
  2 $40000001 APOINT -200.0000 $A  0 12 %Local_IO 0 POINT.TNG ~AI_cabinetTemp
@@ -205,7 +206,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  2 $80000001 APOINT    0.0000 $A5  0 13 %Local_IO 0 POINT.TNG ~AO_cabinetFanCtrl
  2 $40000001 APOINT    0.0000 $45  0 14 %Local_IO 0 POINT.TNG ~AI_cabinetFanTach
 : 3_0
-61 JUMP ;
+64 JUMP ;
 : 3_41
 
 1 LINE.NUM
@@ -363,7 +364,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -15 JUMP ;
 : 3_254
 1 LINE.NUM 0 ^CmdOPEN @! 
-56 JUMP ;
+59 JUMP ;
 : 3_273
 -18 JUMP ;
 : 3_279
@@ -382,7 +383,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -2 JUMP ;
 : 3_288
 1 LINE.NUM 0 ^CmdCLOSE @! 
-53 JUMP ;
+56 JUMP ;
 : 3_291
 
 1 LINE.NUM
@@ -409,16 +410,16 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -2 JUMP ;
 : 3_318
 1 LINE.NUM 0 ^CmdUPPER_OPEN @! 
-48 JUMP ;
+51 JUMP ;
 : 3_319
 1 LINE.NUM 0 ^CmdUPPER_CLOSE @! 
-49 JUMP ;
+52 JUMP ;
 : 3_320
 1 LINE.NUM 0 ^CmdLOWER_OPEN @! 
-47 JUMP ;
+50 JUMP ;
 : 3_321
 1 LINE.NUM 0 ^CmdLOWER_CLOSE @! 
-48 JUMP ;
+51 JUMP ;
 : 3_327
 
 1 LINE.NUM
@@ -426,7 +427,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-35 JUMP ;
+38 JUMP ;
 : 3_330
 
 1 LINE.NUM
@@ -434,7 +435,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-38 JUMP ;
+41 JUMP ;
 : 3_333
 
 1 LINE.NUM
@@ -442,7 +443,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-35 JUMP ;
+38 JUMP ;
 : 3_336
 
 1 LINE.NUM
@@ -450,7 +451,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 2 LINE.NUM
   100    DELAY
-38 JUMP ;
+41 JUMP ;
 : 3_341
 -35 JUMP ;
 : 3_342
@@ -479,7 +480,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -42 JUMP ;
 : 3_409
 1 LINE.NUM 0 ^CmdTOGGLE_LIGHTS @! 
-41 JUMP ;
+44 JUMP ;
 : 3_413
 -44 JUMP ;
 : 3_417
@@ -558,7 +559,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 : 3_435
 -51 JUMP ;
 : 3_444
-37 JUMP ;
+41 JUMP ;
 : 3_452
 1 LINE.NUM 0 ^CmdIlluminate_On @! 
 1 JUMP ;
@@ -637,6 +638,14 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 30 LINE.NUM 3 I>F  FDELAY 
 31 LINE.NUM THEN THEN THEN 
 -40 JUMP ;
+: 3_483
+1 LINE.NUM 0 ^VFD_FAULT_RESET @! 
+0 JUMP ;
+: 3_486
+1 LINE.NUM 2 I>F ~DO_VFDfaultReset  PULSEON 
+0 JUMP ;
+: 3_487
+-63 JUMP ;
 : 3_38
 TRUE
 
@@ -644,7 +653,7 @@ TRUE
   ^CmdHEARTBEAT @@ 
   1    =
 LAND
-IF -46 ELSE 0 THEN JUMP ;
+IF -49 ELSE 0 THEN JUMP ;
 : 3_45
 TRUE
 
@@ -658,119 +667,119 @@ TRUE
 1 LINE.NUM
   ~SW_stop   ?OFF
 LAND
-IF -51 ELSE -3 THEN JUMP ;
+IF -54 ELSE -3 THEN JUMP ;
 : 3_66
 TRUE
 
 1 LINE.NUM
   ^CmdOPEN @@   0<>
 LAND
-IF -48 ELSE 0 THEN JUMP ;
+IF -51 ELSE 0 THEN JUMP ;
 : 3_94
 TRUE
 
 1 LINE.NUM
   ^CmdCLOSE @@   0<>
 LAND
-IF -6 ELSE 0 THEN JUMP ;
+IF -9 ELSE 0 THEN JUMP ;
 : 3_114
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_OPEN @@   0<>
 LAND
-IF -40 ELSE 1 THEN JUMP ;
+IF -43 ELSE 1 THEN JUMP ;
 : 3_123
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -64 ELSE -65 THEN JUMP ;
+IF -67 ELSE -68 THEN JUMP ;
 : 3_127
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_CLOSE @@   0<>
 LAND
-IF -41 ELSE 1 THEN JUMP ;
+IF -44 ELSE 1 THEN JUMP ;
 : 3_135
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -64 ELSE -65 THEN JUMP ;
+IF -67 ELSE -68 THEN JUMP ;
 : 3_140
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_OPEN @@   0<>
 LAND
-IF -42 ELSE 1 THEN JUMP ;
+IF -45 ELSE 1 THEN JUMP ;
 : 3_143
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -65 ELSE -64 THEN JUMP ;
+IF -68 ELSE -67 THEN JUMP ;
 : 3_153
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_CLOSE @@   0<>
 LAND
-IF -43 ELSE 11 THEN JUMP ;
+IF -46 ELSE 11 THEN JUMP ;
 : 3_160
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -64 ELSE -65 THEN JUMP ;
+IF -67 ELSE -68 THEN JUMP ;
 : 3_282
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -55 ELSE -56 THEN JUMP ;
+IF -58 ELSE -59 THEN JUMP ;
 : 3_290
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -54 ELSE -53 THEN JUMP ;
+IF -57 ELSE -56 THEN JUMP ;
 : 3_328
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -46 ELSE -10 THEN JUMP ;
+IF -49 ELSE -10 THEN JUMP ;
 : 3_331
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -46 ELSE -7 THEN JUMP ;
+IF -49 ELSE -7 THEN JUMP ;
 : 3_334
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -46 ELSE -10 THEN JUMP ;
+IF -49 ELSE -10 THEN JUMP ;
 : 3_337
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -46 ELSE -7 THEN JUMP ;
+IF -49 ELSE -7 THEN JUMP ;
 : 3_365
 TRUE
 
@@ -781,7 +790,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF -56 ELSE 8 THEN JUMP ;
+IF -59 ELSE 8 THEN JUMP ;
 : 3_385
 TRUE
 
@@ -792,63 +801,66 @@ LAND
 2 LINE.NUM
   ~SW_upperCloseLimit   ?OFF
 LAND
-IF -40 ELSE 0 THEN JUMP ;
+IF -43 ELSE 0 THEN JUMP ;
 : 3_386
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -43 ELSE -42 THEN JUMP ;
+IF -46 ELSE -45 THEN JUMP ;
 : 3_394
 TRUE
 
 1 LINE.NUM
   ^Timer_WxWdog   T0=
 LAND
-IF -3 ELSE 6 THEN JUMP ;
+IF -3 ELSE 7 THEN JUMP ;
 : 3_406
 TRUE
 
 1 LINE.NUM
   ^CmdTOGGLE_LIGHTS @@   0<>
 LAND
-IF -42 ELSE 2 THEN JUMP ;
+IF -45 ELSE 2 THEN JUMP ;
 : 3_415
 TRUE
 
 1 LINE.NUM
   ^LightToggle @@   0<>
 LAND
-IF -41 ELSE -40 THEN JUMP ;
+IF -44 ELSE -43 THEN JUMP ;
 : 3_437
 TRUE
 
 1 LINE.NUM
   ^CmdSTOP @@   0<>
 LAND
-IF -40 ELSE -23 THEN JUMP ;
+IF -43 ELSE -23 THEN JUMP ;
 : 3_450
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_On @@   0<>
 LAND
-IF -35 ELSE 0 THEN JUMP ;
+IF -38 ELSE 0 THEN JUMP ;
 : 3_457
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_Off @@   0<>
 LAND
-IF -35 ELSE -50 THEN JUMP ;
+IF -38 ELSE 1 THEN JUMP ;
 : 3_477
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -65 ELSE -31 THEN JUMP ;
+IF -68 ELSE -34 THEN JUMP ;
+: 3_482
+TRUE
+IF -33 ELSE -55 THEN JUMP ;
 T: T3
 DUMMY
 3_0
@@ -911,6 +923,9 @@ DUMMY
 3_467
 3_470
 3_473
+3_483
+3_486
+3_487
 3_38
 3_45
 3_58
@@ -940,6 +955,7 @@ DUMMY
 3_450
 3_457
 3_477
+3_482
 T;
 &Auto_Mode ' T3 SETTASK
 : 9_0
@@ -4293,7 +4309,10 @@ T;
 41 LINE.NUM 114 OF 
 42 LINE.NUM 1 ^CmdIlluminate_Off @! 
 43 LINE.NUM ENDOF 
-47 LINE.NUM ENDCASE 
+44 LINE.NUM 115 OF 
+45 LINE.NUM 1 ^VFD_FAULT_RESET @! 
+46 LINE.NUM ENDOF 
+50 LINE.NUM ENDCASE 
 24 JUMP ;
 : 11_52
 
@@ -4619,7 +4638,7 @@ DUMMY
 T;
 &Master_Comm ' T11 SETTASK
 : 0_0
-5 JUMP ;
+4 JUMP ;
 : 0_5
 
 1 LINE.NUM
@@ -4648,14 +4667,7 @@ T;
 
 2 LINE.NUM
   ~DO_slot09Fuse   ON
-1 JUMP ;
-: 0_33
-
-1 LINE.NUM
-  10 I>F 
-  1 I>F 
-  ~AO_cabinetFanCtrl   F!RAMP
--3 JUMP ;
+0 JUMP ;
 : 0_36
 4 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
 6 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
@@ -4674,10 +4686,10 @@ T;
 22 LINE.NUM ELSE 
 22 LINE.NUM " ERROR" *sStatus_Shutter2  $MOVE 
 23 LINE.NUM THEN THEN THEN THEN THEN 
--2 JUMP ;
+2 JUMP ;
 : 0_42
 1 LINE.NUM " 10" *SWversion  $MOVE 
--4 JUMP ;
+-3 JUMP ;
 : 0_45
 36 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
 39 LINE.NUM 0 ^nPeriodPosition1 @! 
@@ -4762,15 +4774,32 @@ T;
 109 LINE.NUM " igla" *sEncl  $MOVE 
 110 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN 
 -2 JUMP ;
+: 0_48
+3 LINE.NUM 0 I>F ~AO_cabinetFanCtrl @! 
+4 LINE.NUM 15 I>F  FDELAY 
+6 LINE.NUM 5 I>F ~AO_cabinetFanCtrl @! 
+7 LINE.NUM 15 I>F  FDELAY 
+9 LINE.NUM ~AI_cabinetFanTach @@ 99 I>F F>= IF 
+10 LINE.NUM 5 ^FanCtrlMax @! 
+11 LINE.NUM ELSE 
+12 LINE.NUM 10 I>F ~AO_cabinetFanCtrl @! 
+13 LINE.NUM 15 I>F  FDELAY 
+14 LINE.NUM ~AI_cabinetFanTach @@ 99 I>F F>= IF 
+15 LINE.NUM 10 ^FanCtrlMax @! 
+16 LINE.NUM ELSE 
+17 LINE.NUM 1 ^PanelFanErrorFlag @! 
+18 LINE.NUM THEN 
+19 LINE.NUM THEN 
+-6 JUMP ;
 T: T0
 DUMMY
 0_0
 0_5
 0_12
-0_33
 0_36
 0_42
 0_45
+0_48
 T;
 &Powerup ' T0 SETTASK
 : 15_0
@@ -4791,7 +4820,7 @@ T;
 
 5 LINE.NUM
   ^Status_DisabledMode   TRUE@!
-13 JUMP ;
+14 JUMP ;
 : 15_3
 
 1 LINE.NUM
@@ -4814,19 +4843,19 @@ T;
 
 7 LINE.NUM
   ~DO_slot09Fuse   OFF
-12 JUMP ;
+13 JUMP ;
 : 15_15
 
 1 LINE.NUM
   30    DELAY
-9 JUMP ;
+10 JUMP ;
 : 15_20
 
 1 LINE.NUM
   ^FLT_CloseLS   TRUE@!
 0 JUMP ;
 : 15_21
-7 JUMP ;
+8 JUMP ;
 : 15_50
 
 1 LINE.NUM
@@ -4904,7 +4933,27 @@ T;
 8 LINE.NUM ~AI_domeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
 9 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
 10 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
--5 JUMP ;
+15 LINE.NUM ~DI_VFDfault @@I 1 = IF 
+16 LINE.NUM " VFDfault=0" 15 {Status $TABLE@  $MOVE 
+17 LINE.NUM ELSE 
+18 LINE.NUM " VFDfault=1" 15 {Status $TABLE@  $MOVE 
+19 LINE.NUM THEN 
+22 LINE.NUM ~DI_VFDoverload @@I 1 = IF 
+23 LINE.NUM " VFDoverload=1" 16 {Status $TABLE@  $MOVE 
+24 LINE.NUM ELSE 
+25 LINE.NUM " VFDoverload=0" 16 {Status $TABLE@  $MOVE 
+26 LINE.NUM THEN 
+0 JUMP ;
+: 15_78
+1 LINE.NUM ~AI_cabinetTemp @@ 20 I>F F< IF 
+2 LINE.NUM 0 I>F ~AO_cabinetFanCtrl @! 
+3 LINE.NUM ELSE 
+3 LINE.NUM ~AI_cabinetTemp @@ 20 I>F F>= ~AI_cabinetTemp @@ 30 I>F F<= LAND  IF 
+4 LINE.NUM ^FanCtrlMax @@F ~AI_cabinetTemp @@ 20 I>F F- 10 I>F F/ F* ~AO_cabinetFanCtrl @! 
+5 LINE.NUM ELSE 
+6 LINE.NUM ^FanCtrlMax @@F ~AO_cabinetFanCtrl @! 
+7 LINE.NUM THEN THEN 
+-6 JUMP ;
 : 15_5
 TRUE
 IF 2 ELSE 2 THEN JUMP ;
@@ -4918,7 +4967,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF 0 ELSE -11 THEN JUMP ;
+IF 0 ELSE -12 THEN JUMP ;
 : 15_18
 TRUE
 
@@ -4929,7 +4978,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF -10 ELSE -11 THEN JUMP ;
+IF -11 ELSE -12 THEN JUMP ;
 T: T15
 DUMMY
 15_0
@@ -4944,6 +4993,7 @@ DUMMY
 15_69
 15_72
 15_75
+15_78
 15_5
 15_8
 15_18
@@ -5149,6 +5199,7 @@ CREATE V.ARRAY
 ^CmdUPPER_CLOSE ,
 ^CmdUPPER_OPEN ,
 ^CountK1 ,
+^FanCtrlMax ,
 ^FaultModeStarted ,
 ^FLT_ClearSW ,
 ^FLT_CloseLS ,
@@ -5194,6 +5245,7 @@ CREATE V.ARRAY
 ^nPeriodPosition1 ,
 ^nPeriodPosition2 ,
 ^nSubstringLength ,
+^PanelFanErrorFlag ,
 ^Status_AutoMode ,
 ^Status_DisabledMode ,
 ^Status_FaultMode ,
@@ -5208,6 +5260,7 @@ CREATE V.ARRAY
 ^Time_defOpenClear ,
 ^Time_defUpperOperate ,
 ^Time_defWxWdogTimer ,
+^VFD_FAULT_RESET ,
 ^White_Lights_Chart ,
 ^WTlightSwitchState ,
 ^WTswitchOldState ,
@@ -5312,7 +5365,6 @@ CREATE P.ARRAY
 ~AI_cabinetFanTach ,
 ~AI_cabinetTemp ,
 ~AI_domeAirTemp ,
-~AI_lowerOpenPressure ,
 ~AI_LowerShutterAngle ,
 ~AO_cabinetFanCtrl ,
  0 ,
@@ -5356,6 +5408,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^CmdUPPER_CLOSE @!
 0 ^CmdUPPER_OPEN @!
 0 ^CountK1 @!
+0 ^FanCtrlMax @!
 0 ^FaultModeStarted @!
 0 ^FLT_ClearSW @!
 0 ^FLT_CloseLS @!
@@ -5401,6 +5454,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^nPeriodPosition1 @!
 0 ^nPeriodPosition2 @!
 0 ^nSubstringLength @!
+0 ^PanelFanErrorFlag @!
 0.0 ^Socket_Timer @!
 0.0 ^Socket_Timer_2 @!
 0 ^Status_AutoMode @!
@@ -5410,7 +5464,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^Status_Monitor_Started @!
 0 ^StatusTransmit_Status @!
 0.50000000 ^Time_defContactorOperate @!
-500 ^Time_defContactorRelease @!
+1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
 60.000000 ^Time_defLowerClose @!
 60.000000 ^Time_defLowerOpen @!
@@ -5425,6 +5479,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0.0 ^Timer_UpperContactor @!
 0.0 ^Timer_UpperOperate @!
 0.0 ^Timer_WxWdog @!
+0 ^VFD_FAULT_RESET @!
 0 ^White_Lights_Chart @!
 0 ^WTlightSwitchState @!
 0 ^WTswitchOldState @!
@@ -5490,9 +5545,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 02/28/24 " ;
-: TIMESTAMP ." 10:24:43 " ;
-: CRCSTAMP  ." 21A92480A4A119BDB3B9E11BBA311082 " ;
+: DATESTAMP ." 03/05/24 " ;
+: TIMESTAMP ." 15:52:38 " ;
+: CRCSTAMP  ." 9ABF9C7A45B81C8A3E7B67457EE9AB78 " ;
 MAKECHECK
 CLEAR.BREAKS
 

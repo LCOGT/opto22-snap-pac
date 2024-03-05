@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdeve\Desktop\PAC_programs\dpac\r10_inclinometer_VFD\DPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    10:36:49 3/1/2024
+# TIME/DATE :    15:52:38 3/5/2024
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -164,7 +164,6 @@ TAG1,SW_whiteLights                                    ,20   ,40000000,00000000,
 TAG1,AI_cabinetFanTach                                 ,5    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_cabinetTemp                                    ,2    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_domeAirTemp                                    ,3    ,00000000,00000001,00000000,00000000,0    ,0   
-TAG1,AI_lowerOpenPressure                              ,0    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AI_LowerShutterAngle                              ,1    ,00000000,00000001,00000000,00000000,0    ,0   
 TAG1,AO_cabinetFanCtrl                                 ,4    ,00000000,00000002,00000000,00000000,0    ,0   
 TAG1,AQ_Go_Fast_Ok                                     ,101  ,00000000,00000000,00000000,00000008,0    ,0   
@@ -184,6 +183,7 @@ TAG1,CmdTOGGLE_LIGHTS                                  ,72   ,00000000,00000000,
 TAG1,CmdUPPER_CLOSE                                    ,30   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CmdUPPER_OPEN                                     ,29   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CountK1                                           ,43   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,FanCtrlMax                                        ,112  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FaultModeStarted                                  ,5    ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_ClearSW                                       ,36   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,FLT_CloseLS                                       ,84   ,00000000,00000000,00000000,00000008,0    ,0   
@@ -229,6 +229,7 @@ TAG1,MasterCommEstablished                             ,22   ,00000000,00000000,
 TAG1,nPeriodPosition1                                  ,108  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nPeriodPosition2                                  ,109  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,nSubstringLength                                  ,110  ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,PanelFanErrorFlag                                 ,113  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Socket_Timer                                      ,102  ,00000000,00000000,00000000,00000020,0    ,0   
 TAG1,Socket_Timer_2                                    ,104  ,00000000,00000000,00000000,00000020,0    ,0   
 TAG1,Status_AutoMode                                   ,92   ,00000000,00000000,00000000,00000008,0    ,0   
@@ -253,6 +254,7 @@ TAG1,Timer_OpenClear                                   ,80   ,00000000,00000000,
 TAG1,Timer_UpperContactor                              ,49   ,00000000,00000000,00000000,00000020,0    ,0   
 TAG1,Timer_UpperOperate                                ,39   ,00000000,00000000,00000000,00000020,0    ,0   
 TAG1,Timer_WxWdog                                      ,76   ,00000000,00000000,00000000,00000020,0    ,0   
+TAG1,VFD_FAULT_RESET                                   ,111  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,White_Lights_Chart                                ,96   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,WTlightSwitchState                                ,97   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,WTswitchOldState                                  ,98   ,00000000,00000000,00000000,00000008,0    ,0   

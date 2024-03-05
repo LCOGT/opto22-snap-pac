@@ -16,7 +16,7 @@
 
 5 LINE.NUM
   ^Status_DisabledMode   TRUE@!
-13 JUMP ;
+14 JUMP ;
 : 15_3
 
 1 LINE.NUM
@@ -39,19 +39,19 @@
 
 7 LINE.NUM
   ~DO_slot09Fuse   OFF
-12 JUMP ;
+13 JUMP ;
 : 15_15
 
 1 LINE.NUM
   30    DELAY
-9 JUMP ;
+10 JUMP ;
 : 15_20
 
 1 LINE.NUM
   ^FLT_CloseLS   TRUE@!
 0 JUMP ;
 : 15_21
-7 JUMP ;
+8 JUMP ;
 : 15_50
 
 1 LINE.NUM
@@ -129,7 +129,27 @@
 8 LINE.NUM ~AI_domeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
 9 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
 10 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
--5 JUMP ;
+15 LINE.NUM ~DI_VFDfault @@I 1 = IF 
+16 LINE.NUM " VFDfault=0" 15 {Status $TABLE@  $MOVE 
+17 LINE.NUM ELSE 
+18 LINE.NUM " VFDfault=1" 15 {Status $TABLE@  $MOVE 
+19 LINE.NUM THEN 
+22 LINE.NUM ~DI_VFDoverload @@I 1 = IF 
+23 LINE.NUM " VFDoverload=1" 16 {Status $TABLE@  $MOVE 
+24 LINE.NUM ELSE 
+25 LINE.NUM " VFDoverload=0" 16 {Status $TABLE@  $MOVE 
+26 LINE.NUM THEN 
+0 JUMP ;
+: 15_78
+1 LINE.NUM ~AI_cabinetTemp @@ 20 I>F F< IF 
+2 LINE.NUM 0 I>F ~AO_cabinetFanCtrl @! 
+3 LINE.NUM ELSE 
+3 LINE.NUM ~AI_cabinetTemp @@ 20 I>F F>= ~AI_cabinetTemp @@ 30 I>F F<= LAND  IF 
+4 LINE.NUM ^FanCtrlMax @@F ~AI_cabinetTemp @@ 20 I>F F- 10 I>F F/ F* ~AO_cabinetFanCtrl @! 
+5 LINE.NUM ELSE 
+6 LINE.NUM ^FanCtrlMax @@F ~AO_cabinetFanCtrl @! 
+7 LINE.NUM THEN THEN 
+-6 JUMP ;
 : 15_5
 TRUE
 IF 2 ELSE 2 THEN JUMP ;
@@ -143,7 +163,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF 0 ELSE -11 THEN JUMP ;
+IF 0 ELSE -12 THEN JUMP ;
 : 15_18
 TRUE
 
@@ -154,7 +174,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF -10 ELSE -11 THEN JUMP ;
+IF -11 ELSE -12 THEN JUMP ;
 T: T15
 DUMMY
 15_0
@@ -169,6 +189,7 @@ DUMMY
 15_69
 15_72
 15_75
+15_78
 15_5
 15_8
 15_18

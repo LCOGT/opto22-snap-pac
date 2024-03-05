@@ -31,6 +31,7 @@
 0 IVAR ^CmdUPPER_CLOSE
 0 IVAR ^CmdUPPER_OPEN
 0 IVAR ^CountK1
+0 IVAR ^FanCtrlMax
 0 IVAR ^FaultModeStarted
 0 IVAR ^FLT_ClearSW
 0 IVAR ^FLT_CloseLS
@@ -76,6 +77,7 @@
 0 IVAR ^nPeriodPosition1
 0 IVAR ^nPeriodPosition2
 0 IVAR ^nSubstringLength
+0 IVAR ^PanelFanErrorFlag
 0 TVAR ^Socket_Timer
 0 TVAR ^Socket_Timer_2
 0 IVAR ^Status_AutoMode
@@ -100,6 +102,7 @@
 0 TVAR ^Timer_UpperContactor
 0 TVAR ^Timer_UpperOperate
 0 TVAR ^Timer_WxWdog
+0 IVAR ^VFD_FAULT_RESET
 0 IVAR ^White_Lights_Chart
 0 IVAR ^WTlightSwitchState
 0 IVAR ^WTswitchOldState
@@ -178,8 +181,6 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $80000001 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_domeLights
  4 $80000001 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_lowerOpenValve
  4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_lowerCloseValve
- 4 $40000001 APOINT -3000.0000 $40  0 11 %Local_IO 0 POINT.TNG ~AI_lowerOpenPressure
-2000.0000 -3000.0000 ~AI_lowerOpenPressure SET.SCALE
  4 $40000001 APOINT -537.5000 $40  1 11 %Local_IO 0 100.000000 1 POINT.TNGX ~AI_LowerShutterAngle
  360.0000 -537.5000 ~AI_LowerShutterAngle SET.SCALE
  2 $40000001 APOINT -200.0000 $A  0 12 %Local_IO 0 POINT.TNG ~AI_cabinetTemp

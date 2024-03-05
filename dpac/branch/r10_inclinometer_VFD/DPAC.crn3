@@ -33,6 +33,7 @@ CREATE V.ARRAY
 ^CmdUPPER_CLOSE ,
 ^CmdUPPER_OPEN ,
 ^CountK1 ,
+^FanCtrlMax ,
 ^FaultModeStarted ,
 ^FLT_ClearSW ,
 ^FLT_CloseLS ,
@@ -78,6 +79,7 @@ CREATE V.ARRAY
 ^nPeriodPosition1 ,
 ^nPeriodPosition2 ,
 ^nSubstringLength ,
+^PanelFanErrorFlag ,
 ^Status_AutoMode ,
 ^Status_DisabledMode ,
 ^Status_FaultMode ,
@@ -92,6 +94,7 @@ CREATE V.ARRAY
 ^Time_defOpenClear ,
 ^Time_defUpperOperate ,
 ^Time_defWxWdogTimer ,
+^VFD_FAULT_RESET ,
 ^White_Lights_Chart ,
 ^WTlightSwitchState ,
 ^WTswitchOldState ,
@@ -196,7 +199,6 @@ CREATE P.ARRAY
 ~AI_cabinetFanTach ,
 ~AI_cabinetTemp ,
 ~AI_domeAirTemp ,
-~AI_lowerOpenPressure ,
 ~AI_LowerShutterAngle ,
 ~AO_cabinetFanCtrl ,
  0 ,
@@ -240,6 +242,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^CmdUPPER_CLOSE @!
 0 ^CmdUPPER_OPEN @!
 0 ^CountK1 @!
+0 ^FanCtrlMax @!
 0 ^FaultModeStarted @!
 0 ^FLT_ClearSW @!
 0 ^FLT_CloseLS @!
@@ -285,6 +288,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^nPeriodPosition1 @!
 0 ^nPeriodPosition2 @!
 0 ^nSubstringLength @!
+0 ^PanelFanErrorFlag @!
 0.0 ^Socket_Timer @!
 0.0 ^Socket_Timer_2 @!
 0 ^Status_AutoMode @!
@@ -294,7 +298,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^Status_Monitor_Started @!
 0 ^StatusTransmit_Status @!
 0.50000000 ^Time_defContactorOperate @!
-500 ^Time_defContactorRelease @!
+1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
 60.000000 ^Time_defLowerClose @!
 60.000000 ^Time_defLowerOpen @!
@@ -309,6 +313,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0.0 ^Timer_UpperContactor @!
 0.0 ^Timer_UpperOperate @!
 0.0 ^Timer_WxWdog @!
+0 ^VFD_FAULT_RESET @!
 0 ^White_Lights_Chart @!
 0 ^WTlightSwitchState @!
 0 ^WTswitchOldState @!
