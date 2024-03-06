@@ -1,5 +1,5 @@
 : 0_0
-4 JUMP ;
+7 JUMP ;
 : 0_5
 
 1 LINE.NUM
@@ -20,7 +20,7 @@
 
 5 LINE.NUM
   &Powerup   STOP.T
-5 JUMP ;
+7 JUMP ;
 : 0_12
 
 1 LINE.NUM
@@ -152,6 +152,46 @@
 18 LINE.NUM THEN 
 19 LINE.NUM THEN 
 -6 JUMP ;
+: 0_51
+
+1 LINE.NUM
+  ~DO_upperOpen   OFF
+
+2 LINE.NUM
+  ~DO_upperClose   OFF
+
+3 LINE.NUM
+  ~DO_pumpMotor   OFF
+
+4 LINE.NUM
+  ~DO_lowerOpenValve   OFF
+
+5 LINE.NUM
+  ~DO_lowerCloseValve   OFF
+-3 JUMP ;
+: 0_53
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+3 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+4 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -161,5 +201,7 @@ DUMMY
 0_42
 0_45
 0_48
+0_51
+0_53
 T;
 &Powerup ' T0 SETTASK
