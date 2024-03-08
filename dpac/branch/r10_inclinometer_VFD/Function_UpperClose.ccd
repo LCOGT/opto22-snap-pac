@@ -1,10 +1,10 @@
 : 6_0
-108 JUMP ;
+143 JUMP ;
 : 6_5
 
 1 LINE.NUM
   ~DO_upperClose   ON
-108 JUMP ;
+109 JUMP ;
 : 6_12
 
 1 LINE.NUM
@@ -14,7 +14,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-139 JUMP ;
+141 JUMP ;
 : 6_32
 
 1 LINE.NUM
@@ -24,22 +24,22 @@
 
 1 LINE.NUM
   ~DO_upperClose   ON
-116 JUMP ;
+117 JUMP ;
 : 6_39
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-136 JUMP ;
+138 JUMP ;
 : 6_40
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-135 JUMP ;
+137 JUMP ;
 : 6_48
 
 1 LINE.NUM
   ~DO_upperOpen   ON
-124 JUMP ;
+125 JUMP ;
 : 6_49
 48 JUMP ;
 : 6_72
@@ -74,7 +74,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-130 JUMP ;
+132 JUMP ;
 : 6_113
 
 1 LINE.NUM
@@ -113,12 +113,12 @@
 
 1 LINE.NUM
   ~DO_upperClose   OFF
-101 JUMP ;
+102 JUMP ;
 : 6_135
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-124 JUMP ;
+126 JUMP ;
 : 6_143
 
 1 LINE.NUM
@@ -143,12 +143,12 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-119 JUMP ;
+121 JUMP ;
 : 6_168
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-118 JUMP ;
+120 JUMP ;
 : 6_171
 
 1 LINE.NUM
@@ -183,7 +183,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-111 JUMP ;
+113 JUMP ;
 : 6_218
 
 1 LINE.NUM
@@ -193,7 +193,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-109 JUMP ;
+111 JUMP ;
 : 6_229
 
 1 LINE.NUM
@@ -214,7 +214,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-107 JUMP ;
+109 JUMP ;
 : 6_239
 
 1 LINE.NUM
@@ -224,12 +224,12 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-105 JUMP ;
+107 JUMP ;
 : 6_243
 
 1 LINE.NUM
   ~DO_upperClose   OFF
-81 JUMP ;
+82 JUMP ;
 : 6_244
 
 1 LINE.NUM
@@ -244,7 +244,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-101 JUMP ;
+103 JUMP ;
 : 6_266
 
 1 LINE.NUM
@@ -274,12 +274,12 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-95 JUMP ;
+97 JUMP ;
 : 6_291
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-94 JUMP ;
+96 JUMP ;
 : 6_294
 
 1 LINE.NUM
@@ -309,12 +309,12 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-88 JUMP ;
+90 JUMP ;
 : 6_322
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-87 JUMP ;
+89 JUMP ;
 : 6_325
 
 1 LINE.NUM
@@ -332,12 +332,12 @@
 
 1 LINE.NUM
   2000    DELAY
-72 JUMP ;
+73 JUMP ;
 : 6_340
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-83 JUMP ;
+85 JUMP ;
 : 6_342
 
 1 LINE.NUM
@@ -368,17 +368,17 @@
 
 1 LINE.NUM
   ~DO_upperOpen   OFF
-68 JUMP ;
+69 JUMP ;
 : 6_359
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-78 JUMP ;
+80 JUMP ;
 : 6_360
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-77 JUMP ;
+79 JUMP ;
 : 6_373
 
 1 LINE.NUM
@@ -438,17 +438,17 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-65 JUMP ;
+67 JUMP ;
 : 6_418
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-64 JUMP ;
+66 JUMP ;
 : 6_419
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-63 JUMP ;
+65 JUMP ;
 : 6_423
 
 1 LINE.NUM
@@ -463,7 +463,7 @@
 
 1 LINE.NUM
   &Function_UpperClose   STOP.T
-60 JUMP ;
+62 JUMP ;
 : 6_440
 
 1 LINE.NUM
@@ -473,72 +473,77 @@
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-56 JUMP ;
+57 JUMP ;
 : 6_446
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-56 JUMP ;
+57 JUMP ;
 : 6_447
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-52 JUMP ;
+53 JUMP ;
 : 6_448
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-49 JUMP ;
+50 JUMP ;
 : 6_449
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-46 JUMP ;
+47 JUMP ;
 : 6_460
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-33 JUMP ;
+34 JUMP ;
 : 6_461
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-39 JUMP ;
+40 JUMP ;
 : 6_462
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-36 JUMP ;
+37 JUMP ;
 : 6_463
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-33 JUMP ;
+34 JUMP ;
 : 6_464
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-30 JUMP ;
+31 JUMP ;
 : 6_475
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-17 JUMP ;
+18 JUMP ;
 : 6_476
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-18 JUMP ;
+19 JUMP ;
 : 6_477
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-19 JUMP ;
+20 JUMP ;
 : 6_478
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-20 JUMP ;
+21 JUMP ;
+: 6_506
+
+1 LINE.NUM
+  &Function_UpperClose   STOP.T
+46 JUMP ;
 : 6_2
 FALSE
 
@@ -549,21 +554,21 @@ LOR
 2 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LOR
-IF -96 ELSE 0 THEN JUMP ;
+IF -97 ELSE 0 THEN JUMP ;
 : 6_3
 TRUE
 
 1 LINE.NUM
   ~SW_lowerCloseLimit   ?OFF
 LAND
-IF 0 ELSE -85 THEN JUMP ;
+IF 0 ELSE -86 THEN JUMP ;
 : 6_4
 TRUE
 
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF -67 ELSE -98 THEN JUMP ;
+IF -68 ELSE -99 THEN JUMP ;
 : 6_11
 FALSE
 
@@ -574,21 +579,21 @@ LOR
 2 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LOR
-IF -100 ELSE 11 THEN JUMP ;
+IF -101 ELSE 11 THEN JUMP ;
 : 6_13
 TRUE
 
 1 LINE.NUM
   ~SW_upperShutterClear   ?OFF
 LAND
-IF -99 ELSE 5 THEN JUMP ;
+IF -100 ELSE 5 THEN JUMP ;
 : 6_46
 TRUE
 
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF -28 ELSE 1 THEN JUMP ;
+IF -29 ELSE 1 THEN JUMP ;
 : 6_53
 TRUE
 
@@ -602,7 +607,7 @@ TRUE
 1 LINE.NUM
   ~SW_upperOpenLimit   ?OFF
 LAND
-IF -26 ELSE 34 THEN JUMP ;
+IF -27 ELSE 34 THEN JUMP ;
 : 6_64
 TRUE
 
@@ -616,7 +621,7 @@ TRUE
 1 LINE.NUM
   ~SW_upperShutterClear   ?ON
 LAND
-IF -6 ELSE -98 THEN JUMP ;
+IF -6 ELSE -99 THEN JUMP ;
 : 6_77
 FALSE
 
@@ -627,14 +632,14 @@ LOR
 2 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LOR
-IF -56 ELSE 20 THEN JUMP ;
+IF -57 ELSE 20 THEN JUMP ;
 : 6_112
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -96 ELSE -12 THEN JUMP ;
+IF -97 ELSE -12 THEN JUMP ;
 : 6_127
 TRUE
 
@@ -648,77 +653,77 @@ TRUE
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -95 ELSE -2 THEN JUMP ;
+IF -96 ELSE -2 THEN JUMP ;
 : 6_144
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -94 ELSE -107 THEN JUMP ;
+IF -95 ELSE -108 THEN JUMP ;
 : 6_150
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -93 ELSE 1 THEN JUMP ;
+IF -94 ELSE 1 THEN JUMP ;
 : 6_153
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -95 ELSE -93 THEN JUMP ;
+IF -96 ELSE -94 THEN JUMP ;
 : 6_165
 TRUE
 
 1 LINE.NUM
   ~DI_VFDoverload   ?ON
 LAND
-IF -90 ELSE -10 THEN JUMP ;
+IF -91 ELSE -10 THEN JUMP ;
 : 6_177
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -90 ELSE -92 THEN JUMP ;
+IF -91 ELSE -93 THEN JUMP ;
 : 6_180
 TRUE
 
 1 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LAND
-IF -89 ELSE 25 THEN JUMP ;
+IF -90 ELSE 26 THEN JUMP ;
 : 6_183
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -91 ELSE -89 THEN JUMP ;
+IF -92 ELSE -90 THEN JUMP ;
 : 6_223
 TRUE
 
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -104 ELSE -88 THEN JUMP ;
+IF -105 ELSE -89 THEN JUMP ;
 : 6_236
 TRUE
 
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -82 ELSE -85 THEN JUMP ;
+IF -83 ELSE -86 THEN JUMP ;
 : 6_242
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -84 ELSE 0 THEN JUMP ;
+IF -85 ELSE 0 THEN JUMP ;
 : 6_246
 TRUE
 
@@ -732,70 +737,70 @@ TRUE
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -84 ELSE -115 THEN JUMP ;
+IF -85 ELSE -116 THEN JUMP ;
 : 6_271
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -82 ELSE -116 THEN JUMP ;
+IF -83 ELSE -117 THEN JUMP ;
 : 6_274
 TRUE
 
 1 LINE.NUM
   ~FLT_upperCloseOvrTrvl   ?OFF
 LAND
-IF -84 ELSE 17 THEN JUMP ;
+IF -85 ELSE 18 THEN JUMP ;
 : 6_277
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -83 ELSE -81 THEN JUMP ;
+IF -84 ELSE -82 THEN JUMP ;
 : 6_289
 TRUE
 
 1 LINE.NUM
   ~DI_VFDoverload   -LATCH@I
 LAND
-IF -83 ELSE -24 THEN JUMP ;
+IF -84 ELSE -24 THEN JUMP ;
 : 6_301
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -78 ELSE -80 THEN JUMP ;
+IF -79 ELSE -81 THEN JUMP ;
 : 6_303
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -80 ELSE -3 THEN JUMP ;
+IF -81 ELSE -3 THEN JUMP ;
 : 6_313
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -79 ELSE -122 THEN JUMP ;
+IF -80 ELSE -123 THEN JUMP ;
 : 6_338
 TRUE
 
 1 LINE.NUM
   ~SW_upperOpenLimit   ?OFF
 LAND
-IF -73 ELSE -72 THEN JUMP ;
+IF -74 ELSE -73 THEN JUMP ;
 : 6_347
 TRUE
 
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -71 ELSE -72 THEN JUMP ;
+IF -72 ELSE -73 THEN JUMP ;
 : 6_351
 TRUE
 
@@ -809,63 +814,70 @@ TRUE
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -72 ELSE -2 THEN JUMP ;
+IF -73 ELSE -2 THEN JUMP ;
 : 6_376
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -69 ELSE -68 THEN JUMP ;
+IF -70 ELSE -69 THEN JUMP ;
 : 6_381
 TRUE
 
 1 LINE.NUM
   ~FLT_upperOpenOvrTrvl   ?OFF
 LAND
-IF -71 ELSE -34 THEN JUMP ;
+IF -72 ELSE -34 THEN JUMP ;
 : 6_385
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -68 ELSE -69 THEN JUMP ;
+IF -69 ELSE -70 THEN JUMP ;
 : 6_391
 TRUE
 
 1 LINE.NUM
   ~DI_VFDoverload   ?ON
 LAND
-IF -68 ELSE -3 THEN JUMP ;
+IF -69 ELSE -3 THEN JUMP ;
 : 6_394
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -68 ELSE -66 THEN JUMP ;
+IF -69 ELSE -67 THEN JUMP ;
 : 6_400
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -68 ELSE -3 THEN JUMP ;
+IF -69 ELSE -3 THEN JUMP ;
 : 6_410
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -67 ELSE -135 THEN JUMP ;
+IF -68 ELSE -136 THEN JUMP ;
 : 6_426
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -62 ELSE -60 THEN JUMP ;
+IF -63 ELSE -61 THEN JUMP ;
+: 6_505
+TRUE
+
+1 LINE.NUM
+  ~DI_VFDfault   ?OFF
+LAND
+IF -47 ELSE -35 THEN JUMP ;
 T: T6
 DUMMY
 6_0
@@ -966,6 +978,7 @@ DUMMY
 6_476
 6_477
 6_478
+6_506
 6_2
 6_3
 6_4
@@ -1011,5 +1024,6 @@ DUMMY
 6_400
 6_410
 6_426
+6_505
 T;
 &Function_UpperClose ' T6 SETTASK

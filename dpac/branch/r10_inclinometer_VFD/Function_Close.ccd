@@ -22,7 +22,7 @@
 1 LINE.NUM
   &Function_LowerClose   START.T
   ^Function_LowerClose_Started @! 
-16 JUMP ;
+17 JUMP ;
 : 14_7
 
 1 LINE.NUM
@@ -51,28 +51,28 @@
 
 2 LINE.NUM
   ^Timer_Close   StartTimer
-15 JUMP ;
+16 JUMP ;
 : 14_24
 
 1 LINE.NUM
   &Function_UpperClose   START.T
   ^Function_UpperClose_Started @! 
-14 JUMP ;
+15 JUMP ;
 : 14_26
 
 1 LINE.NUM
   10    DELAY
-13 JUMP ;
+14 JUMP ;
 : 14_29
 
 1 LINE.NUM
   &Function_Close   STOP.T
-18 JUMP ;
+19 JUMP ;
 : 14_33
 
 1 LINE.NUM
   10    DELAY
-13 JUMP ;
+14 JUMP ;
 : 14_41
 
 1 LINE.NUM
@@ -82,17 +82,17 @@
 
 1 LINE.NUM
   &Function_Close   STOP.T
-15 JUMP ;
+16 JUMP ;
 : 14_55
 
 1 LINE.NUM
   4000    DELAY
-12 JUMP ;
+13 JUMP ;
 : 14_68
 
 1 LINE.NUM
   2000    DELAY
-12 JUMP ;
+13 JUMP ;
 : 14_73
 1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
 2 LINE.NUM 1 ^FLT_DriveRunning @! 
@@ -141,6 +141,9 @@
 11 LINE.NUM
   ~DO_lowerCloseValve   OFF
 -2 JUMP ;
+: 14_83
+1 LINE.NUM 1 I>F  FDELAY 
+0 JUMP ;
 : 14_1
 TRUE
 
@@ -154,21 +157,21 @@ TRUE
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -18 ELSE -17 THEN JUMP ;
+IF -19 ELSE -18 THEN JUMP ;
 : 14_5
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -15 ELSE 0 THEN JUMP ;
+IF -16 ELSE 0 THEN JUMP ;
 : 14_6
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -18 ELSE -17 THEN JUMP ;
+IF -19 ELSE -18 THEN JUMP ;
 : 14_20
 TRUE
 
@@ -179,7 +182,7 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF -14 ELSE 0 THEN JUMP ;
+IF -15 ELSE 0 THEN JUMP ;
 : 14_21
 TRUE
 
@@ -190,35 +193,35 @@ LAND
 2 LINE.NUM
   ~SW_lowerCloseLimit   ?OFF
 LAND
-IF -11 ELSE 1 THEN JUMP ;
+IF -12 ELSE 1 THEN JUMP ;
 : 14_22
 TRUE
 
 1 LINE.NUM
   ~SW_lowerCloseLimit   ?ON
 LAND
-IF -11 ELSE 1 THEN JUMP ;
+IF -12 ELSE 1 THEN JUMP ;
 : 14_25
 TRUE
 
 1 LINE.NUM
   ^Timer_Close   T0=
 LAND
-IF -15 ELSE -18 THEN JUMP ;
+IF -16 ELSE -19 THEN JUMP ;
 : 14_34
 TRUE
 
 1 LINE.NUM
   ^Timer_Close   T0=
 LAND
-IF -16 ELSE -17 THEN JUMP ;
+IF -17 ELSE -18 THEN JUMP ;
 : 14_63
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -6 ELSE -21 THEN JUMP ;
+IF -6 ELSE -22 THEN JUMP ;
 T: T14
 DUMMY
 14_0
@@ -238,6 +241,7 @@ DUMMY
 14_73
 14_74
 14_75
+14_83
 14_1
 14_2
 14_5

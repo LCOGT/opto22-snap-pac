@@ -115,6 +115,7 @@
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
 3 0 $VAR *MasterCommand 
+20 0 $VAR *Response 
 10 0 $VAR *s1stOctet 
 10 0 $VAR *s2ndOctet 
 10 0 $VAR *s3rdOctet 
@@ -123,6 +124,7 @@
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
+10 0 $VAR *S_WatchDogTimer 
 10 0 $VAR *sDomeAirTemp 
 10 0 $VAR *sEncl 
 20 0 $VAR *sIP_PAC 

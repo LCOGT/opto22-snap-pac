@@ -107,6 +107,7 @@ CREATE V.ARRAY
 ^WxOKposition ,
 ^WxStarted ,
 *MasterCommand ,
+*Response ,
 *s1stOctet ,
 *s2ndOctet ,
 *s3rdOctet ,
@@ -115,6 +116,7 @@ CREATE V.ARRAY
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
+*S_WatchDogTimer ,
 *sDomeAirTemp ,
 *sEncl ,
 *sIP_PAC ,
@@ -329,6 +331,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " xxx"
  *MasterCommand $MOVE
 " "
+ *Response $MOVE
+" "
  *s1stOctet $MOVE
 " "
  *s2ndOctet $MOVE
@@ -344,6 +348,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
  *s_DomeStop $MOVE
 " "
  *s_LightSW $MOVE
+" "
+ *S_WatchDogTimer $MOVE
 " "
  *sDomeAirTemp $MOVE
 " "

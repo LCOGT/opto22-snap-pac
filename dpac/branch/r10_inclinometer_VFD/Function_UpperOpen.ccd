@@ -1,10 +1,10 @@
 : 5_0
-33 JUMP ;
+44 JUMP ;
 : 5_1
 
 1 LINE.NUM
   ~DO_upperOpen   ON
-40 JUMP ;
+41 JUMP ;
 : 5_3
 
 1 LINE.NUM
@@ -14,7 +14,7 @@
 
 1 LINE.NUM
   &Function_UpperOpen   STOP.T
-40 JUMP ;
+42 JUMP ;
 : 5_24
 
 1 LINE.NUM
@@ -58,7 +58,7 @@
 
 1 LINE.NUM
   ~DO_upperOpen   OFF
-33 JUMP ;
+34 JUMP ;
 : 5_68
 
 1 LINE.NUM
@@ -116,7 +116,7 @@
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-12 JUMP ;
+13 JUMP ;
 : 5_142
 -22 JUMP ;
 : 5_143
@@ -132,94 +132,99 @@
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-8 JUMP ;
+9 JUMP ;
 : 5_177
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-9 JUMP ;
+10 JUMP ;
 : 5_178
 
 1 LINE.NUM
   ^Time_defContactorRelease @@   DELAY
-10 JUMP ;
+11 JUMP ;
+: 5_191
+
+1 LINE.NUM
+  &Function_UpperClose   STOP.T
+14 JUMP ;
 : 5_2
 TRUE
 
 1 LINE.NUM
   ~SW_upperOpenLimit   ?OFF
 LAND
-IF -8 ELSE -28 THEN JUMP ;
+IF -9 ELSE -29 THEN JUMP ;
 : 5_14
 TRUE
 
 1 LINE.NUM
   ~SW_upperOpenLimit   ?OFF
 LAND
-IF -31 ELSE 0 THEN JUMP ;
+IF -32 ELSE 0 THEN JUMP ;
 : 5_27
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperOperate   T0=
 LAND
-IF -28 ELSE 4 THEN JUMP ;
+IF -29 ELSE 4 THEN JUMP ;
 : 5_49
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -27 ELSE -4 THEN JUMP ;
+IF -28 ELSE -4 THEN JUMP ;
 : 5_63
 TRUE
 
 1 LINE.NUM
   ^Timer_UpperContactor   T0=
 LAND
-IF -27 ELSE 6 THEN JUMP ;
+IF -28 ELSE 6 THEN JUMP ;
 : 5_72
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -26 ELSE -34 THEN JUMP ;
+IF -27 ELSE -35 THEN JUMP ;
 : 5_86
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -24 ELSE -33 THEN JUMP ;
+IF -25 ELSE -34 THEN JUMP ;
 : 5_96
 TRUE
 
 1 LINE.NUM
   ~DI_VFDoverload   ?ON
 LAND
-IF -24 ELSE 1 THEN JUMP ;
+IF -25 ELSE 1 THEN JUMP ;
 : 5_103
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -24 ELSE -22 THEN JUMP ;
+IF -25 ELSE -23 THEN JUMP ;
 : 5_110
 TRUE
 
 1 LINE.NUM
   ~FLT_upperOpenOvrTrvl   ?OFF
 LAND
-IF -19 ELSE -9 THEN JUMP ;
+IF -20 ELSE -9 THEN JUMP ;
 : 5_119
 TRUE
 
 1 LINE.NUM
   ~DI_DriveRun   ?ON
 LAND
-IF -21 ELSE -23 THEN JUMP ;
+IF -22 ELSE -24 THEN JUMP ;
 : 5_147
 TRUE
 
@@ -233,7 +238,14 @@ TRUE
 1 LINE.NUM
   ~FB_slot08Fuse   ?ON
 LAND
-IF -34 ELSE -18 THEN JUMP ;
+IF -35 ELSE -19 THEN JUMP ;
+: 5_192
+TRUE
+
+1 LINE.NUM
+  ~DI_VFDfault   ?OFF
+LAND
+IF -15 ELSE -11 THEN JUMP ;
 T: T5
 DUMMY
 5_0
@@ -267,6 +279,7 @@ DUMMY
 5_176
 5_177
 5_178
+5_191
 5_2
 5_14
 5_27
@@ -280,5 +293,6 @@ DUMMY
 5_119
 5_147
 5_168
+5_192
 T;
 &Function_UpperOpen ' T5 SETTASK

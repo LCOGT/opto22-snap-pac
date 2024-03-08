@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdeve\Desktop\PAC_programs\dpac\r10_inclinometer_VFD\DPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    16:26:27 3/5/2024
+# TIME/DATE :    16:33:22 3/7/2024
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -267,6 +267,7 @@ TAG1,WxLoopNum                                         ,16   ,00000000,00000000,
 TAG1,WxOKposition                                      ,18   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,WxStarted                                         ,12   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,MasterCommand                                     ,3    ,00000000,00000000,00000000,00000040,0    ,3   
+TAG1,Response                                          ,19   ,00000000,00000000,00000000,00000040,0    ,20  
 TAG1,s1stOctet                                         ,17   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,s2ndOctet                                         ,14   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,s3rdOctet                                         ,13   ,00000000,00000000,00000000,00000040,0    ,10  
@@ -275,6 +276,7 @@ TAG1,s_DomeClose                                       ,11   ,00000000,00000000,
 TAG1,s_DomeOpen                                        ,10   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,s_DomeStop                                        ,9    ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,s_LightSW                                         ,8    ,00000000,00000000,00000000,00000040,0    ,10  
+TAG1,S_WatchDogTimer                                   ,20   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,sDomeAirTemp                                      ,18   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,sEncl                                             ,12   ,00000000,00000000,00000000,00000040,0    ,10  
 TAG1,sIP_PAC                                           ,7    ,00000000,00000000,00000000,00000040,0    ,20  
