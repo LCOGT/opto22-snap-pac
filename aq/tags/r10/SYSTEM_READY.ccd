@@ -44,9 +44,6 @@
 60 LINE.NUM ELSE 
 60 LINE.NUM ~DI_UltimateClosed_LS @@I 1 = IF 
 61 LINE.NUM 0 ^WallFans_Initialized @! 
-64 LINE.NUM ^OTSmirrorTemp @@ ^DewpointTemp @@ F<= ~AI_OutletAir_RTD @@ 25 I>F F<= LAND  IF 
-65 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-68 LINE.NUM ELSE 
 68 LINE.NUM ~AI_OutletAir_RTD @@ 25 I>F F> IF 
 69 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
 72 LINE.NUM ELSE 
@@ -55,32 +52,32 @@
 76 LINE.NUM ELSE 
 76 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F>= ~AI_OutletAir_RTD @@ 25 I>F F<= LAND  IF 
 77 LINE.NUM ~AI_OutletAir_RTD @@ 15 I>F F- ~AO_Wall_Fans_VDC @! 
-79 LINE.NUM THEN THEN THEN THEN 
+79 LINE.NUM THEN THEN THEN 
 81 LINE.NUM THEN THEN THEN THEN 
-104 LINE.NUM ELSE 
-104 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
-105 LINE.NUM ^nPauseWallFans @@ 1 = IF 
 107 LINE.NUM ELSE 
-108 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
-109 LINE.NUM THEN 
-110 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
-111 LINE.NUM ELSE 
-111 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
-112 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-113 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
+107 LINE.NUM ~DI_FanStop_SW @@I ~DI_FanAuto_SW @@I 0 = LAND  IF 
+108 LINE.NUM ^nPauseWallFans @@ 1 = IF 
+110 LINE.NUM ELSE 
+111 LINE.NUM 10 I>F ~AO_Wall_Fans_VDC @! 
+112 LINE.NUM THEN 
+113 LINE.NUM " MANUAL" *sWallFansOpMode  $MOVE 
 114 LINE.NUM ELSE 
-114 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
-115 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+114 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I 0 = LAND  IF 
+115 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+116 LINE.NUM " DISABLED" *sWallFansOpMode  $MOVE 
 117 LINE.NUM ELSE 
-118 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
-119 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
-120 LINE.NUM " , WallFanOpMode " *sErrorList $CAT 
+117 LINE.NUM ~DI_FanStop_SW @@I 0 = ~DI_FanAuto_SW @@I LAND  IF 
+118 LINE.NUM *sWallFansOpMode " UNKNOWN" $= IF 
+120 LINE.NUM ELSE 
+121 LINE.NUM 0 I>F ~AO_Wall_Fans_VDC @! 
+122 LINE.NUM " UNKNOWN" *sWallFansOpMode  $MOVE 
+123 LINE.NUM " , WallFanOpMode " *sErrorList $CAT 
 
-121 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-122 LINE.NUM *sTimestamp *sErrorList $CAT 
+124 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+125 LINE.NUM *sTimestamp *sErrorList $CAT 
 
-123 LINE.NUM THEN 
-124 LINE.NUM THEN THEN THEN THEN 
+126 LINE.NUM THEN 
+127 LINE.NUM THEN THEN THEN THEN 
 -2 JUMP ;
 : 17_18
 9 LINE.NUM ^dtOneWeek @@F 0 I>F F= IF 

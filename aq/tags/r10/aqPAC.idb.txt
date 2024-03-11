@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdeve\Desktop\PAC_programs\aqpac\r10\aqPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    11:39:54 9/7/2022
+# TIME/DATE :    11:49:35 3/11/2024
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -211,6 +211,7 @@ TAG1,AQ_Go_Fast_Ok                                     ,47   ,00000000,00000000,
 TAG1,AqDemand                                          ,61   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,AUTOMODE                                          ,0    ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,Blue_Light_Time                                   ,46   ,00000000,00000000,00000000,00000008,0    ,0   
+TAG1,BlueLED_Flag                                      ,155  ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CCC_started                                       ,21   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,cdmOPENSLOW                                       ,53   ,00000000,00000000,00000000,00000008,0    ,0   
 TAG1,CHART_STARTED                                     ,1    ,00000000,00000000,00000000,00000008,0    ,0   
