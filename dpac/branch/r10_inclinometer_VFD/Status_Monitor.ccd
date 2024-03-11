@@ -85,26 +85,23 @@
 16 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 15_69
-19 LINE.NUM *sStatus_Shutter2 " OPEN" $= IF 
-20 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
-21 LINE.NUM ELSE 
-21 LINE.NUM *sStatus_Shutter2 " CLOSED" $= IF 
-22 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
-23 LINE.NUM ELSE 
-23 LINE.NUM *sStatus_Shutter2 " OPENING" $= IF 
-24 LINE.NUM " Shutter2=2" 1 {Status $TABLE@  $MOVE 
-25 LINE.NUM ELSE 
-25 LINE.NUM *sStatus_Shutter2 " CLOSING" $= IF 
-26 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
-27 LINE.NUM ELSE 
-27 LINE.NUM *sStatus_Shutter2 " STOPPED" $= IF 
-28 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
-29 LINE.NUM ELSE 
-29 LINE.NUM *sStatus_Shutter2 " ERROR" $= IF 
-30 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
-31 LINE.NUM ELSE 
-31 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
-32 LINE.NUM THEN THEN THEN THEN THEN THEN 
+2 LINE.NUM ~SW_lowerOpenLimit @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
+3 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
+4 LINE.NUM ELSE 
+4 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
+5 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
+6 LINE.NUM ELSE 
+6 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
+7 LINE.NUM " Shutter2=2" 1 {Status $TABLE@  $MOVE 
+8 LINE.NUM ELSE 
+8 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
+9 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
+10 LINE.NUM ELSE 
+10 LINE.NUM ~SW_lowerOpenLimit @@I LNOT  ~SW_lowerCloseLimit @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
+14 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
+15 LINE.NUM ELSE 
+15 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
+16 LINE.NUM THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 15_72
 1 LINE.NUM ^Status_DisabledMode @@ IF 

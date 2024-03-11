@@ -148,8 +148,6 @@
 4 LINE.NUM ELSE 
 4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
 5 LINE.NUM 1 ^FLT_K5on @! 
-6 LINE.NUM ELSE 
-7 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
 9 LINE.NUM THEN THEN 
 -4 JUMP ;
 : 3_240
@@ -293,15 +291,6 @@
 4 LINE.NUM ELSE 
 4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
 5 LINE.NUM 1 ^FLT_K5on @! 
-6 LINE.NUM ELSE 
-7 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
-8 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-9 LINE.NUM ELSE 
-9 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
-10 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
-11 LINE.NUM ELSE 
-12 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-13 LINE.NUM THEN THEN 
 15 LINE.NUM THEN THEN 
 25 JUMP ;
 : 3_433
@@ -550,7 +539,6 @@
 -24 JUMP ;
 : 3_534
 1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
 5 LINE.NUM ^Timer_HeartbeatWdog @@F 3 0 *S_WatchDogTimer  FF.R$ 
 7 LINE.NUM *S_WatchDogTimer 3  SWAP $TRIM 
 9 LINE.NUM *S_WatchDogTimer *Response  $MOVE 
@@ -770,6 +758,10 @@ LAND
 IF -79 ELSE -47 THEN JUMP ;
 : 3_482
 TRUE
+
+1 LINE.NUM
+  ^VFD_FAULT_RESET @@   0<>
+LAND
 IF -46 ELSE -67 THEN JUMP ;
 : 3_509
 TRUE

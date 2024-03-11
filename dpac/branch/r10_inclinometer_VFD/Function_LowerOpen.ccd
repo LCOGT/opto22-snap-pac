@@ -165,11 +165,9 @@
   0    DELAY
 -26 JUMP ;
 : 7_203
-1 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 
-9 JUMP ;
+22 JUMP ;
 : 7_204
-1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
--27 JUMP ;
+21 JUMP ;
 : 7_213
 
 1 LINE.NUM
@@ -184,8 +182,7 @@
   ^Time_defContactorRelease @@   DELAY
 18 JUMP ;
 : 7_218
-1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-1 JUMP ;
+18 JUMP ;
 : 7_220
 
 1 LINE.NUM
@@ -244,7 +241,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -14 ELSE -2 THEN JUMP ;
+IF -4 ELSE -2 THEN JUMP ;
 : 7_67
 TRUE
 
@@ -258,7 +255,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -33 ELSE -15 THEN JUMP ;
+IF -33 ELSE -41 THEN JUMP ;
 : 7_98
 TRUE
 
@@ -313,7 +310,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -18 ELSE -19 THEN JUMP ;
+IF -18 ELSE -17 THEN JUMP ;
 T: T7
 DUMMY
 7_0

@@ -69,7 +69,6 @@
 1 LINE.NUM " " *Response  $MOVE 
 3 LINE.NUM 0 ~DO_domeLights @! 
 4 LINE.NUM ^LightToggle @@ ^LightToggleOld @! 
-6 LINE.NUM 1 I>F  FDELAY 
 8 LINE.NUM ~DO_domeLights @@I 0 = IF 
 9 LINE.NUM " Success=True" *Response  $MOVE 
 10 LINE.NUM ELSE 
@@ -82,7 +81,6 @@
 1 LINE.NUM " " *Response  $MOVE 
 3 LINE.NUM 1 ~DO_domeLights @! 
 4 LINE.NUM ^LightToggle @@ ^LightToggleOld @! 
-6 LINE.NUM 1 I>F  FDELAY 
 8 LINE.NUM ~DO_domeLights @@I 1 = IF 
 9 LINE.NUM " Success=True" *Response  $MOVE 
 10 LINE.NUM ELSE 

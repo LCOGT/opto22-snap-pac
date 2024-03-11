@@ -357,8 +357,6 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 4 LINE.NUM ELSE 
 4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
 5 LINE.NUM 1 ^FLT_K5on @! 
-6 LINE.NUM ELSE 
-7 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
 9 LINE.NUM THEN THEN 
 -4 JUMP ;
 : 3_240
@@ -502,15 +500,6 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 4 LINE.NUM ELSE 
 4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
 5 LINE.NUM 1 ^FLT_K5on @! 
-6 LINE.NUM ELSE 
-7 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
-8 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-9 LINE.NUM ELSE 
-9 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
-10 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
-11 LINE.NUM ELSE 
-12 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-13 LINE.NUM THEN THEN 
 15 LINE.NUM THEN THEN 
 25 JUMP ;
 : 3_433
@@ -759,7 +748,6 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 -24 JUMP ;
 : 3_534
 1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
 5 LINE.NUM ^Timer_HeartbeatWdog @@F 3 0 *S_WatchDogTimer  FF.R$ 
 7 LINE.NUM *S_WatchDogTimer 3  SWAP $TRIM 
 9 LINE.NUM *S_WatchDogTimer *Response  $MOVE 
@@ -979,6 +967,10 @@ LAND
 IF -79 ELSE -47 THEN JUMP ;
 : 3_482
 TRUE
+
+1 LINE.NUM
+  ^VFD_FAULT_RESET @@   0<>
+LAND
 IF -46 ELSE -67 THEN JUMP ;
 : 3_509
 TRUE
@@ -1745,11 +1737,9 @@ T;
 : 8_190
 -30 JUMP ;
 : 8_198
-1 LINE.NUM " CLOSING" *sStatus_Shutter2  $MOVE 
-4 JUMP ;
+16 JUMP ;
 : 8_199
-1 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
--21 JUMP ;
+15 JUMP ;
 : 8_13
 TRUE
 
@@ -1791,7 +1781,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -8 ELSE 0 THEN JUMP ;
+IF -3 ELSE 0 THEN JUMP ;
 : 8_61
 TRUE
 
@@ -1812,7 +1802,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -29 ELSE -10 THEN JUMP ;
+IF -29 ELSE -30 THEN JUMP ;
 : 8_113
 TRUE
 
@@ -2073,11 +2063,9 @@ T;
   0    DELAY
 -26 JUMP ;
 : 7_203
-1 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 
-9 JUMP ;
+22 JUMP ;
 : 7_204
-1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
--27 JUMP ;
+21 JUMP ;
 : 7_213
 
 1 LINE.NUM
@@ -2092,8 +2080,7 @@ T;
   ^Time_defContactorRelease @@   DELAY
 18 JUMP ;
 : 7_218
-1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-1 JUMP ;
+18 JUMP ;
 : 7_220
 
 1 LINE.NUM
@@ -2152,7 +2139,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -14 ELSE -2 THEN JUMP ;
+IF -4 ELSE -2 THEN JUMP ;
 : 7_67
 TRUE
 
@@ -2166,7 +2153,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -33 ELSE -15 THEN JUMP ;
+IF -33 ELSE -41 THEN JUMP ;
 : 7_98
 TRUE
 
@@ -2221,7 +2208,7 @@ TRUE
 1 LINE.NUM
   ~FB_pumpMotor   ?OFF
 LAND
-IF -18 ELSE -19 THEN JUMP ;
+IF -18 ELSE -17 THEN JUMP ;
 T: T7
 DUMMY
 7_0
@@ -3191,7 +3178,7 @@ IF -84 ELSE -82 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_VFDoverload   -LATCH@I
+  ~DI_VFDoverload   ?ON
 LAND
 IF -84 ELSE -24 THEN JUMP ;
 : 6_301
@@ -4251,8 +4238,6 @@ T;
 4 LINE.NUM ELSE 
 4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
 5 LINE.NUM 1 ^FLT_K5on @! 
-6 LINE.NUM ELSE 
-7 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
 9 LINE.NUM THEN THEN 
 1 JUMP ;
 : 2_125
@@ -4851,23 +4836,6 @@ T;
   ~DO_slot09Fuse   ON
 0 JUMP ;
 : 0_36
-4 LINE.NUM ~SW_lowerOpenLimit @@I 1 = IF 
-6 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
-9 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
-10 LINE.NUM ELSE 
-10 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
-12 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 
-13 LINE.NUM ELSE 
-13 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
-15 LINE.NUM " CLOSING" *sStatus_Shutter2  $MOVE 
-16 LINE.NUM ELSE 
-16 LINE.NUM ~SW_lowerOpenLimit @@I LNOT  ~SW_lowerCloseLimit @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
-21 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-22 LINE.NUM ELSE 
-22 LINE.NUM " ERROR" *sStatus_Shutter2  $MOVE 
-23 LINE.NUM THEN THEN THEN THEN THEN 
 2 JUMP ;
 : 0_42
 1 LINE.NUM " 10" *SWversion  $MOVE 
@@ -5113,26 +5081,23 @@ T;
 16 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 15_69
-19 LINE.NUM *sStatus_Shutter2 " OPEN" $= IF 
-20 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
-21 LINE.NUM ELSE 
-21 LINE.NUM *sStatus_Shutter2 " CLOSED" $= IF 
-22 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
-23 LINE.NUM ELSE 
-23 LINE.NUM *sStatus_Shutter2 " OPENING" $= IF 
-24 LINE.NUM " Shutter2=2" 1 {Status $TABLE@  $MOVE 
-25 LINE.NUM ELSE 
-25 LINE.NUM *sStatus_Shutter2 " CLOSING" $= IF 
-26 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
-27 LINE.NUM ELSE 
-27 LINE.NUM *sStatus_Shutter2 " STOPPED" $= IF 
-28 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
-29 LINE.NUM ELSE 
-29 LINE.NUM *sStatus_Shutter2 " ERROR" $= IF 
-30 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
-31 LINE.NUM ELSE 
-31 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
-32 LINE.NUM THEN THEN THEN THEN THEN THEN 
+2 LINE.NUM ~SW_lowerOpenLimit @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
+3 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
+4 LINE.NUM ELSE 
+4 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
+5 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
+6 LINE.NUM ELSE 
+6 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
+7 LINE.NUM " Shutter2=2" 1 {Status $TABLE@  $MOVE 
+8 LINE.NUM ELSE 
+8 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
+9 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
+10 LINE.NUM ELSE 
+10 LINE.NUM ~SW_lowerOpenLimit @@I LNOT  ~SW_lowerCloseLimit @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
+14 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
+15 LINE.NUM ELSE 
+15 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
+16 LINE.NUM THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 15_72
 1 LINE.NUM ^Status_DisabledMode @@ IF 
@@ -5294,7 +5259,6 @@ T;
 1 LINE.NUM " " *Response  $MOVE 
 3 LINE.NUM 0 ~DO_domeLights @! 
 4 LINE.NUM ^LightToggle @@ ^LightToggleOld @! 
-6 LINE.NUM 1 I>F  FDELAY 
 8 LINE.NUM ~DO_domeLights @@I 0 = IF 
 9 LINE.NUM " Success=True" *Response  $MOVE 
 10 LINE.NUM ELSE 
@@ -5307,7 +5271,6 @@ T;
 1 LINE.NUM " " *Response  $MOVE 
 3 LINE.NUM 1 ~DO_domeLights @! 
 4 LINE.NUM ^LightToggle @@ ^LightToggleOld @! 
-6 LINE.NUM 1 I>F  FDELAY 
 8 LINE.NUM ~DO_domeLights @@I 1 = IF 
 9 LINE.NUM " Success=True" *Response  $MOVE 
 10 LINE.NUM ELSE 
@@ -5783,9 +5746,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/07/24 " ;
-: TIMESTAMP ." 16:33:22 " ;
-: CRCSTAMP  ." AFFF5BE9FD88ACAE0FB0295C2CC6D59C " ;
+: DATESTAMP ." 03/11/24 " ;
+: TIMESTAMP ." 12:21:38 " ;
+: CRCSTAMP  ." 92B329F985BD7ABA9CAF826D30A1E9CB " ;
 MAKECHECK
 CLEAR.BREAKS
 

@@ -763,7 +763,7 @@ IF -84 ELSE -82 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_VFDoverload   -LATCH@I
+  ~DI_VFDoverload   ?ON
 LAND
 IF -84 ELSE -24 THEN JUMP ;
 : 6_301
