@@ -1,57 +1,5 @@
 : 15_0
-5 JUMP ;
-: 15_2
-
-1 LINE.NUM
-  &Auto_Mode   STOP.T
-
-2 LINE.NUM
-  &Manual_Mode   STOP.T
-
-3 LINE.NUM
-  &Fault_Mode   STOP.T
-
-4 LINE.NUM
-  100    DELAY
-
-5 LINE.NUM
-  ^Status_DisabledMode   TRUE@!
-14 JUMP ;
-: 15_3
-
-1 LINE.NUM
-  ~DO_upperOpen   OFF
-
-2 LINE.NUM
-  ~DO_upperClose   OFF
-
-3 LINE.NUM
-  ~DO_pumpMotor   OFF
-
-4 LINE.NUM
-  ~DO_lowerOpenValve   OFF
-
-5 LINE.NUM
-  ~DO_lowerCloseValve   OFF
-
-6 LINE.NUM
-  ~DO_slot08Fuse   OFF
-
-7 LINE.NUM
-  ~DO_slot09Fuse   OFF
-13 JUMP ;
-: 15_15
-
-1 LINE.NUM
-  30    DELAY
-10 JUMP ;
-: 15_20
-
-1 LINE.NUM
-  ^FLT_CloseLS   TRUE@!
 0 JUMP ;
-: 15_21
-8 JUMP ;
 : 15_50
 
 1 LINE.NUM
@@ -60,16 +8,16 @@
 : 15_53
 -2 JUMP ;
 : 15_67
-1 LINE.NUM ~SW_upperOpenLimit @@I 0 = IF 
+1 LINE.NUM ~DI_UpperOpenLimitSwitch @@I 0 = IF 
 2 LINE.NUM " Shutter1=0" 0 {Status $TABLE@  $MOVE 
 3 LINE.NUM ELSE 
-3 LINE.NUM ~FLT_upperOpenOvrTrvl @@I 0 = IF 
+3 LINE.NUM ~DI_UpperOpenOvrTrvl @@I 0 = IF 
 4 LINE.NUM " Shutter1=0" 0 {Status $TABLE@  $MOVE 
 5 LINE.NUM ELSE 
-5 LINE.NUM ~SW_upperCloseLimit @@I 0 = IF 
+5 LINE.NUM ~DI_UpperCloseLimitSwitch @@I 0 = IF 
 6 LINE.NUM " Shutter1=1" 0 {Status $TABLE@  $MOVE 
 7 LINE.NUM ELSE 
-7 LINE.NUM ~FLT_upperCloseOvrTrvl @@I 0 = IF 
+7 LINE.NUM ~DI_UpperCloseOvrTrvl @@I 0 = IF 
 8 LINE.NUM " Shutter1=1" 0 {Status $TABLE@  $MOVE 
 9 LINE.NUM ELSE 
 9 LINE.NUM &Function_UpperOpen  ?RUNNING 1 = IF 
@@ -78,17 +26,17 @@
 11 LINE.NUM &Function_UpperClose  ?RUNNING 1 = IF 
 12 LINE.NUM " Shutter1=3" 0 {Status $TABLE@  $MOVE 
 13 LINE.NUM ELSE 
-13 LINE.NUM ~SW_upperOpenLimit @@I ~SW_upperCloseLimit @@I LAND  &Function_UpperOpen  ?RUNNING LNOT  LAND  &Function_UpperClose  ?RUNNING LNOT  1 = LAND  IF 
+13 LINE.NUM ~DI_UpperOpenLimitSwitch @@I ~DI_UpperCloseLimitSwitch @@I LAND  &Function_UpperOpen  ?RUNNING LNOT  LAND  &Function_UpperClose  ?RUNNING LNOT  1 = LAND  IF 
 14 LINE.NUM " Shutter1=4" 0 {Status $TABLE@  $MOVE 
 15 LINE.NUM ELSE 
 15 LINE.NUM " Shutter1=5" 0 {Status $TABLE@  $MOVE 
 16 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 15_69
-2 LINE.NUM ~SW_lowerOpenLimit @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
+2 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
 3 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~SW_lowerCloseLimit @@I 1 = IF 
+4 LINE.NUM ~DI_LowerCloseLimitSwitch @@I 1 = IF 
 5 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
 6 LINE.NUM ELSE 
 6 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
@@ -97,7 +45,7 @@
 8 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
 9 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
 10 LINE.NUM ELSE 
-10 LINE.NUM ~SW_lowerOpenLimit @@I LNOT  ~SW_lowerCloseLimit @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
+10 LINE.NUM ~DI_LowerOpenLimitSwitch @@I LNOT  ~DI_LowerCloseLimitSwitch @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
 14 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
 15 LINE.NUM ELSE 
 15 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
@@ -118,12 +66,12 @@
 9 LINE.NUM THEN THEN THEN THEN 
 0 JUMP ;
 : 15_75
-1 LINE.NUM ~DO_domeLights @@I 1 = IF 
+1 LINE.NUM ~DO_DomeLights @@I 1 = IF 
 2 LINE.NUM " LightsOn=1" 7 {Status $TABLE@  $MOVE 
 3 LINE.NUM ELSE 
 3 LINE.NUM " LightsOn=0" 7 {Status $TABLE@  $MOVE 
 4 LINE.NUM THEN 
-8 LINE.NUM ~AI_domeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
+8 LINE.NUM ~AI_DomeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
 9 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
 10 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
 15 LINE.NUM ~DI_VFDfault @@I 1 = IF 
@@ -138,48 +86,18 @@
 26 LINE.NUM THEN 
 0 JUMP ;
 : 15_78
-1 LINE.NUM ~AI_cabinetTemp @@ 20 I>F F< IF 
-2 LINE.NUM 0 I>F ~AO_cabinetFanCtrl @! 
+1 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F< IF 
+2 LINE.NUM 0 I>F ~AO_CabinetFanCtrl @! 
 3 LINE.NUM ELSE 
-3 LINE.NUM ~AI_cabinetTemp @@ 20 I>F F>= ~AI_cabinetTemp @@ 30 I>F F<= LAND  IF 
-4 LINE.NUM ^FanCtrlMax @@F ~AI_cabinetTemp @@ 20 I>F F- 10 I>F F/ F* ~AO_cabinetFanCtrl @! 
+3 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F>= ~AI_CabinetTemp @@ 30 I>F F<= LAND  IF 
+4 LINE.NUM ^FanCtrlMax @@F ~AI_CabinetTemp @@ 20 I>F F- 10 I>F F/ F* ~AO_CabinetFanCtrl @! 
 5 LINE.NUM ELSE 
-6 LINE.NUM ^FanCtrlMax @@F ~AO_cabinetFanCtrl @! 
+6 LINE.NUM ^FanCtrlMax @@F ~AO_CabinetFanCtrl @! 
 7 LINE.NUM THEN THEN 
 -6 JUMP ;
-: 15_5
-TRUE
-IF 2 ELSE 2 THEN JUMP ;
-: 15_8
-TRUE
-
-1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
-LAND
-
-2 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
-LAND
-IF 0 ELSE -12 THEN JUMP ;
-: 15_18
-TRUE
-
-1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
-LAND
-
-2 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
-LAND
-IF -11 ELSE -12 THEN JUMP ;
 T: T15
 DUMMY
 15_0
-15_2
-15_3
-15_15
-15_20
-15_21
 15_50
 15_53
 15_67
@@ -187,8 +105,5 @@ DUMMY
 15_72
 15_75
 15_78
-15_5
-15_8
-15_18
 T;
 &Status_Monitor ' T15 SETTASK

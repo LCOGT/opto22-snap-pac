@@ -9,10 +9,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 4 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -32,7 +32,7 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 4 LINE.NUM
   2000    DELAY
@@ -97,8 +97,8 @@
 1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
 2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K5on @! 
+4 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
 7 LINE.NUM THEN THEN 
 -4 JUMP ;
 : 14_74
@@ -127,19 +127,19 @@
   100    DELAY
 
 7 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 8 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 9 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 10 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 11 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 -2 JUMP ;
 : 14_83
 1 LINE.NUM 1 I>F  FDELAY 
@@ -176,29 +176,29 @@ IF -19 ELSE -18 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
+  ~DI_UpperCloseLimitSwitch   ?OFF
 LAND
 
 2 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
+  ~DI_LowerCloseLimitSwitch   ?ON
 LAND
 IF -15 ELSE 0 THEN JUMP ;
 : 14_21
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?OFF
+  ~DI_UpperShutterClearSwitch   ?OFF
 LAND
 
 2 LINE.NUM
-  ~SW_lowerCloseLimit   ?OFF
+  ~DI_LowerCloseLimitSwitch   ?OFF
 LAND
 IF -12 ELSE 1 THEN JUMP ;
 : 14_22
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
+  ~DI_LowerCloseLimitSwitch   ?ON
 LAND
 IF -12 ELSE 1 THEN JUMP ;
 : 14_25

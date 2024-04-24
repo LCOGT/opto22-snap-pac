@@ -3,19 +3,19 @@
 : 2_2
 
 1 LINE.NUM
-  ~SW_stop   CLR.-LATCH
+  ~DI_SW_Stop   CLR.-LATCH
 
 2 LINE.NUM
-  ~SW_upperOpen   CLR.+LATCH
+  ~DI_SW_UpperOpen   CLR.+LATCH
 
 3 LINE.NUM
-  ~SW_upperClose   CLR.+LATCH
+  ~DI_SW_UpperClose   CLR.+LATCH
 
 4 LINE.NUM
-  ~SW_LowerOpen   CLR.+LATCH
+  ~DI_SW_LowerOpen   CLR.+LATCH
 
 5 LINE.NUM
-  ~SW_LowerClose   CLR.+LATCH
+  ~DI_SW_LowerClose   CLR.+LATCH
 11 JUMP ;
 : 2_69
 
@@ -26,10 +26,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 4 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -49,7 +49,7 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 4 LINE.NUM
   2000    DELAY
@@ -75,10 +75,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 
 4 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -92,10 +92,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 4 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -115,8 +115,8 @@
 1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
 2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K5on @! 
+4 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
 9 LINE.NUM THEN THEN 
 1 JUMP ;
 : 2_125
@@ -143,19 +143,19 @@
   100    DELAY
 
 8 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 9 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 10 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 11 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 12 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 -3 JUMP ;
 : 2_128
 1 LINE.NUM %A_1mFPAC 1 *s_DomeStop  IO.SP.$READ DROP  
@@ -191,14 +191,14 @@ FALSE
 LOR
 
 2 LINE.NUM
-  ~SW_stop   ?OFF
+  ~DI_SW_Stop   ?OFF
 LOR
 IF -3 ELSE 0 THEN JUMP ;
 : 2_10
 TRUE
 
 1 LINE.NUM
-  ~SW_upperOpen   ?ON
+  ~DI_SW_UpperOpen   ?ON
 LAND
 
 2 LINE.NUM
@@ -209,7 +209,7 @@ IF 1 ELSE 0 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_upperClose   ?ON
+  ~DI_SW_UpperClose   ?ON
 LAND
 
 2 LINE.NUM
@@ -234,7 +234,7 @@ IF -15 ELSE -14 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_LowerOpen   ?ON
+  ~DI_SW_LowerOpen   ?ON
 LAND
 
 2 LINE.NUM
@@ -245,7 +245,7 @@ IF 1 ELSE 0 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_LowerClose   ?ON
+  ~DI_SW_LowerClose   ?ON
 LAND
 
 2 LINE.NUM

@@ -10,7 +10,7 @@
 : 16_13
 
 1 LINE.NUM
-  ~DO_domeLights   OFF
+  ~DO_DomeLights   OFF
 
 2 LINE.NUM
   ^WTlightSwitchState @@ 
@@ -19,7 +19,7 @@
 : 16_16
 
 1 LINE.NUM
-  ~DO_domeLights   ON
+  ~DO_DomeLights   ON
 
 2 LINE.NUM
   ^WTlightSwitchState @@ 
@@ -60,31 +60,31 @@
 : 16_75
 
 1 LINE.NUM
-  ~DO_domeLights   ON
+  ~DO_DomeLights   ON
 -7 JUMP ;
 : 16_83
 1 LINE.NUM %A_1mFPAC 0 *s_LightSW  IO.SP.$READ DROP  
 2 JUMP ;
 : 16_84
 1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 0 ~DO_domeLights @! 
+3 LINE.NUM 0 ~DO_DomeLights @! 
 4 LINE.NUM ^LightToggle @@ ^LightToggleOld @! 
-8 LINE.NUM ~DO_domeLights @@I 0 = IF 
+8 LINE.NUM ~DO_DomeLights @@I 0 = IF 
 9 LINE.NUM " Success=True" *Response  $MOVE 
 10 LINE.NUM ELSE 
-10 LINE.NUM ~DO_domeLights @@I 1 = IF 
+10 LINE.NUM ~DO_DomeLights @@I 1 = IF 
 11 LINE.NUM " Success=False" *Response  $MOVE 
 12 LINE.NUM THEN THEN 
 14 LINE.NUM *Response *Master_Handle  PRT$ DROP  
 -4 JUMP ;
 : 16_85
 1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 ~DO_domeLights @! 
+3 LINE.NUM 1 ~DO_DomeLights @! 
 4 LINE.NUM ^LightToggle @@ ^LightToggleOld @! 
-8 LINE.NUM ~DO_domeLights @@I 1 = IF 
+8 LINE.NUM ~DO_DomeLights @@I 1 = IF 
 9 LINE.NUM " Success=True" *Response  $MOVE 
 10 LINE.NUM ELSE 
-10 LINE.NUM ~DO_domeLights @@I 0 = IF 
+10 LINE.NUM ~DO_DomeLights @@I 0 = IF 
 11 LINE.NUM " Success=False" *Response  $MOVE 
 12 LINE.NUM THEN THEN 
 14 LINE.NUM *Response *Master_Handle  PRT$ DROP  
@@ -118,7 +118,7 @@ IF 0 ELSE 1 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DO_domeLights   ?ON
+  ~DO_DomeLights   ?ON
 LAND
 IF -17 ELSE -16 THEN JUMP ;
 : 16_62
@@ -133,14 +133,14 @@ IF 0 ELSE -10 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DO_domeLights   ?ON
+  ~DO_DomeLights   ?ON
 LAND
 IF -8 ELSE -7 THEN JUMP ;
 : 16_76
 TRUE
 
 1 LINE.NUM
-  ~SW_whiteLights   ?OFF
+  ~DI_SW_WhiteLights   ?OFF
 LAND
 IF -11 ELSE -6 THEN JUMP ;
 T: T16

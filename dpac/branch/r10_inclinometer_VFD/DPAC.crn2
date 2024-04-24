@@ -32,29 +32,27 @@
 0 IVAR ^CmdUPPER_OPEN
 0 IVAR ^CountK1
 0 IVAR ^FanCtrlMax
+0 IVAR ^FaultListLength
+0 IVAR ^FaultLogged
 0 IVAR ^FaultModeStarted
 0 IVAR ^FLT_ClearSW
-0 IVAR ^FLT_CloseLS
 0 IVAR ^FLT_CloseTimeout
 0 IVAR ^FLT_CloseUpperFailedToStart
 0 IVAR ^FLT_DisabledCircuit
 0 IVAR ^FLT_DriveRunning
-0 IVAR ^FLT_K10overload
-0 IVAR ^FLT_K5off
-0 IVAR ^FLT_K5on
-0 IVAR ^FLT_K8overload
-0 IVAR ^FLT_K9overload
 0 IVAR ^FLT_LowerCloseTimeout
-0 IVAR ^FLT_LowerCloseUnknown
 0 IVAR ^FLT_LowerOpenTimeout
 0 IVAR ^FLT_OpenClearTimeout
 0 IVAR ^FLT_OpenUpperFailedToStart
+0 IVAR ^FLT_PumpContactorStuckOn
+0 IVAR ^FLT_PumpMotorOverload
+0 IVAR ^FLT_PumpMTRcontactorNotOperating
 0 IVAR ^FLT_SLOT08fuse
 0 IVAR ^FLT_SLOT09fuse
-0 IVAR ^FLT_UpCloseOT
 0 IVAR ^FLT_UpCloseTimeout
 0 IVAR ^FLT_UpOpenOT
 0 IVAR ^FLT_UpOpenTimeout
+0 IVAR ^FLT_VFDoverload
 0 2IVAR ^FPAC_scratchpad
 0 IVAR ^Function_Close_Started
 0 IVAR ^Function_LowerClose_Started
@@ -114,6 +112,7 @@
 0 IVAR ^WxLoopNum
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
+100 0 $VAR *FaultList 
 3 0 $VAR *MasterCommand 
 20 0 $VAR *Response 
 10 0 $VAR *s1stOctet 
@@ -131,6 +130,7 @@
 10 0 $VAR *sSite 
 10 0 $VAR *sStatus_Shutter1 
 10 0 $VAR *sStatus_Shutter2 
+30 0 $VAR *sTimestamp 
 5 0 $VAR *SWversion 
 40 0 $VAR *WxGETstring 
 1024 0 $VAR *WxHTML 
@@ -141,51 +141,51 @@
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
- 4 $40000001 SPOINT 0.0     INPUT  0  0 %Local_IO 0 POINT.TNG ~SW_stop
- 4 $40000001 SPOINT 0.0     INPUT  1  0 %Local_IO 0 POINT.TNG ~SW_upperOpen
- 4 $40000001 SPOINT 0.0     INPUT  2  0 %Local_IO 0 POINT.TNG ~SW_upperClose
- 4 $40000001 SPOINT 0.0     INPUT  3  0 %Local_IO 0 POINT.TNG ~SW_auto
- 4 $40000001 SPOINT 0.0     INPUT  0  1 %Local_IO 0 POINT.TNG ~SW_LowerOpen
- 4 $40000001 SPOINT 0.0     INPUT  1  1 %Local_IO 0 POINT.TNG ~SW_LowerClose
- 4 $40000001 SPOINT 0.0     INPUT  2  1 %Local_IO 0 POINT.TNG ~FLT_wireless
- 4 $40000001 SPOINT 0.0     INPUT  3  1 %Local_IO 0 POINT.TNG ~FLT_lightsCB
+ 4 $40000001 SPOINT 0.0     INPUT  0  0 %Local_IO 0 POINT.TNG ~DI_SW_Stop
+ 4 $40000001 SPOINT 0.0     INPUT  1  0 %Local_IO 0 POINT.TNG ~DI_SW_UpperOpen
+ 4 $40000001 SPOINT 0.0     INPUT  2  0 %Local_IO 0 POINT.TNG ~DI_SW_UpperClose
+ 4 $40000001 SPOINT 0.0     INPUT  3  0 %Local_IO 0 POINT.TNG ~DI_SW_Auto
+ 4 $40000001 SPOINT 0.0     INPUT  0  1 %Local_IO 0 POINT.TNG ~DI_SW_LowerOpen
+ 4 $40000001 SPOINT 0.0     INPUT  1  1 %Local_IO 0 POINT.TNG ~DI_SW_LowerClose
+ 4 $40000001 SPOINT 0.0     INPUT  2  1 %Local_IO 0 POINT.TNG ~DI_WirelessFault
+ 4 $40000001 SPOINT 0.0     INPUT  3  1 %Local_IO 0 POINT.TNG ~DI_WhiteLightsCircuitBreaker
  4 $40000001 SPOINT 0.0     INPUT  0  2 %Local_IO 0 POINT.TNG ~DI_DriveRun
- 4 $40000001 SPOINT 0.0     INPUT  1  2 %Local_IO 0 POINT.TNG ~FLT_upperOpenOvrTrvl
- 4 $40000001 SPOINT 0.0     INPUT  2  2 %Local_IO 0 POINT.TNG ~FLT_upperCloseOvrTrvl
- 4 $40000001 SPOINT 0.0     INPUT  3  2 %Local_IO 0 POINT.TNG ~FB_pumpMotor
- 4 $40000001 SPOINT 0.0     INPUT  0  3 %Local_IO 0 POINT.TNG ~FLT_lowerShutterCB
- 4 $40000001 SPOINT 0.0     INPUT  1  3 %Local_IO 0 POINT.TNG ~FLT_upperShutterCB
+ 4 $40000001 SPOINT 0.0     INPUT  1  2 %Local_IO 0 POINT.TNG ~DI_UpperOpenOvrTrvl
+ 4 $40000001 SPOINT 0.0     INPUT  2  2 %Local_IO 0 POINT.TNG ~DI_UpperCloseOvrTrvl
+ 4 $40000001 SPOINT 0.0     INPUT  3  2 %Local_IO 0 POINT.TNG ~DI_PumpMotorContactor
+ 4 $40000001 SPOINT 0.0     INPUT  0  3 %Local_IO 0 POINT.TNG ~DI_PumpMotorCircuitBreaker
+ 4 $40000001 SPOINT 0.0     INPUT  1  3 %Local_IO 0 POINT.TNG ~DI_UpperMotorCircuitBreaker
  4 $40000001 SPOINT 0.0     INPUT  2  3 %Local_IO 0 POINT.TNG ~DI_VFDoverload
- 4 $40000001 SPOINT 0.0     INPUT  3  3 %Local_IO 0 POINT.TNG ~FLT_lambertCB
- 4 $40000001 SPOINT 0.0     INPUT  0  4 %Local_IO 0 POINT.TNG ~FLT_pumpMotorOverload
- 4 $40000001 SPOINT 0.0     INPUT  1  4 %Local_IO 0 POINT.TNG ~SW_upperShutterClear
- 4 $40000001 SPOINT 0.0     INPUT  2  4 %Local_IO 0 POINT.TNG ~SW_upperOpenLimit
- 4 $40000001 SPOINT 0.0     INPUT  3  4 %Local_IO 0 POINT.TNG ~SW_upperCloseLimit
- 4 $40000001 SPOINT 0.0     INPUT  0  5 %Local_IO 0 POINT.TNG ~FLT_cabinetDoor
- 4 $40000001 SPOINT 0.0     INPUT  1  5 %Local_IO 0 POINT.TNG ~SW_whiteLights
- 4 $40000001 SPOINT 0.0     INPUT  2  5 %Local_IO 0 POINT.TNG ~FLT_smokeDetectorPwr
- 4 $40000001 SPOINT 0.0     INPUT  3  5 %Local_IO 0 POINT.TNG ~SW_standby
- 4 $40000001 SPOINT 0.0     INPUT  0  6 %Local_IO 0 POINT.TNG ~FLT_smoke
- 4 $40000001 SPOINT 0.0     INPUT  1  6 %Local_IO 0 POINT.TNG ~FLT_heat
- 4 $40000001 SPOINT 0.0     INPUT  2  6 %Local_IO 0 POINT.TNG ~FLT_lambertPwr
+ 4 $40000001 SPOINT 0.0     INPUT  3  3 %Local_IO 0 POINT.TNG ~DI_LambertCircuitBreaker
+ 4 $40000001 SPOINT 0.0     INPUT  0  4 %Local_IO 0 POINT.TNG ~DI_PumpMotorOverload
+ 4 $40000001 SPOINT 0.0     INPUT  1  4 %Local_IO 0 POINT.TNG ~DI_UpperShutterClearSwitch
+ 4 $40000001 SPOINT 0.0     INPUT  2  4 %Local_IO 0 POINT.TNG ~DI_UpperOpenLimitSwitch
+ 4 $40000001 SPOINT 0.0     INPUT  3  4 %Local_IO 0 POINT.TNG ~DI_UpperCloseLimitSwitch
+ 4 $40000001 SPOINT 0.0     INPUT  0  5 %Local_IO 0 POINT.TNG ~DI_CabinetDoorSwitch
+ 4 $40000001 SPOINT 0.0     INPUT  1  5 %Local_IO 0 POINT.TNG ~DI_SW_WhiteLights
+ 4 $40000001 SPOINT 0.0     INPUT  2  5 %Local_IO 0 POINT.TNG ~DI_SmokeDetectorPWR
+ 4 $40000001 SPOINT 0.0     INPUT  3  5 %Local_IO 0 POINT.TNG ~DI_SW_Standby
+ 4 $40000001 SPOINT 0.0     INPUT  0  6 %Local_IO 0 POINT.TNG ~DI_SmokeDetector
+ 4 $40000001 SPOINT 0.0     INPUT  1  6 %Local_IO 0 POINT.TNG ~DI_SmokeDetectorHeat
+ 4 $40000001 SPOINT 0.0     INPUT  2  6 %Local_IO 0 POINT.TNG ~DI_LambertPWR
  4 $40000001 SPOINT 0.0     INPUT  3  6 %Local_IO 0 POINT.TNG ~DI_VFDfault
- 4 $40000001 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~SW_lowerOpenLimit
- 4 $40000001 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~SW_lowerCloseLimit
- 4 $40000001 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~FB_slot08Fuse
- 4 $40000001 SPOINT 0.0     INPUT  3  7 %Local_IO 0 POINT.TNG ~FB_slot09Fuse
- 4 $80000001 SPOINT 0.0    OUTPUT  0  8 %Local_IO 0 POINT.TNG ~DO_slot08Fuse
- 4 $80000001 SPOINT 0.0    OUTPUT  1  8 %Local_IO 0 POINT.TNG ~DO_upperOpen
- 4 $80000001 SPOINT 0.0    OUTPUT  2  8 %Local_IO 0 POINT.TNG ~DO_upperClose
+ 4 $40000001 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~DI_LowerOpenLimitSwitch
+ 4 $40000001 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~DI_LowerCloseLimitSwitch
+ 4 $40000001 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~DI_Card08Fuse
+ 4 $40000001 SPOINT 0.0     INPUT  3  7 %Local_IO 0 POINT.TNG ~DI_Card09Fuse
+ 4 $80000001 SPOINT 0.0    OUTPUT  0  8 %Local_IO 0 POINT.TNG ~DO_Card08Fuse
+ 4 $80000001 SPOINT 0.0    OUTPUT  1  8 %Local_IO 0 POINT.TNG ~DO_UpperOpen
+ 4 $80000001 SPOINT 0.0    OUTPUT  2  8 %Local_IO 0 POINT.TNG ~DO_UpperClose
  4 $80000001 SPOINT 0.0    OUTPUT  3  8 %Local_IO 0 POINT.TNG ~DO_Illuminate
- 4 $80000001 SPOINT 0.0    OUTPUT  0  9 %Local_IO 0 POINT.TNG ~DO_slot09Fuse
- 4 $80000001 SPOINT 0.0    OUTPUT  1  9 %Local_IO 0 POINT.TNG ~DO_pumpMotor
+ 4 $80000001 SPOINT 0.0    OUTPUT  0  9 %Local_IO 0 POINT.TNG ~DO_Card09Fuse
+ 4 $80000001 SPOINT 0.0    OUTPUT  1  9 %Local_IO 0 POINT.TNG ~DO_PumpMotor
  4 $80000001 SPOINT 0.0    OUTPUT  2  9 %Local_IO 0 POINT.TNG ~DO_VFDfaultReset
- 4 $80000001 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_domeLights
- 4 $80000001 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_lowerOpenValve
- 4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_lowerCloseValve
+ 4 $80000001 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_DomeLights
+ 4 $80000001 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_LowerOpenValve
+ 4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_LowerCloseValve
  4 $40000001 APOINT -537.5000 $40  1 11 %Local_IO 0 100.000000 1 POINT.TNGX ~AI_LowerShutterAngle
  360.0000 -537.5000 ~AI_LowerShutterAngle SET.SCALE
- 2 $40000001 APOINT -200.0000 $A  0 12 %Local_IO 0 POINT.TNG ~AI_cabinetTemp
- 2 $40000001 APOINT -200.0000 $A  1 12 %Local_IO 0 POINT.TNG ~AI_domeAirTemp
- 2 $80000001 APOINT    0.0000 $A5  0 13 %Local_IO 0 POINT.TNG ~AO_cabinetFanCtrl
- 2 $40000001 APOINT    0.0000 $45  0 14 %Local_IO 0 POINT.TNG ~AI_cabinetFanTach
+ 2 $40000001 APOINT -200.0000 $A  0 12 %Local_IO 0 POINT.TNG ~AI_CabinetTemp
+ 2 $40000001 APOINT -200.0000 $A  1 12 %Local_IO 0 POINT.TNG ~AI_DomeAirTemp
+ 2 $80000001 APOINT    0.0000 $A5  0 13 %Local_IO 0 POINT.TNG ~AO_CabinetFanCtrl
+ 2 $40000001 APOINT    0.0000 $45  0 14 %Local_IO 0 POINT.TNG ~AI_CabinetFanTach
