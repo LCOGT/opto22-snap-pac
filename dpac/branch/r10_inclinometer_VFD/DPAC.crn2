@@ -112,7 +112,8 @@
 0 IVAR ^WxLoopNum
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
-100 0 $VAR *FaultList 
+1000 0 $VAR *FaultList 
+20 0 $VAR *FaultListSubString 
 3 0 $VAR *MasterCommand 
 20 0 $VAR *Response 
 10 0 $VAR *s1stOctet 

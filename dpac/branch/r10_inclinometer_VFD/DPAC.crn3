@@ -105,6 +105,7 @@ CREATE V.ARRAY
 ^WxOKposition ,
 ^WxStarted ,
 *FaultList ,
+*FaultListSubString ,
 *MasterCommand ,
 *Response ,
 *s1stOctet ,
@@ -328,6 +329,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 0 -1 }SLOT08_OFF InitTable
 " "
  *FaultList $MOVE
+" "
+ *FaultListSubString $MOVE
 " xxx"
  *MasterCommand $MOVE
 " "

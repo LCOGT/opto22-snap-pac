@@ -152,7 +152,7 @@
 -4 JUMP ;
 : 3_240
 1 LINE.NUM 0 ^CmdHEARTBEAT @! 
--15 JUMP ;
+57 JUMP ;
 : 3_254
 1 LINE.NUM 0 ^CmdOPEN @! 
 78 JUMP ;
@@ -543,6 +543,7 @@
 7 LINE.NUM *S_WatchDogTimer 3  SWAP $TRIM 
 9 LINE.NUM *S_WatchDogTimer *Response  $MOVE 
 11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+13 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 
 -64 JUMP ;
 : 3_540
 1 LINE.NUM 0 ^CmdCLEAR_FAULTS @! 
@@ -561,7 +562,11 @@
 4 LINE.NUM *Response *Master_Handle  PRT$ DROP  
 1 JUMP ;
 : 3_549
-1 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+3 LINE.NUM *FaultList 0 2 *FaultListSubString  $SUB 
+4 LINE.NUM *FaultListSubString " , " $= IF 
+5 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
+6 LINE.NUM THEN 
+8 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
 1 JUMP ;
 : 3_550
 -80 JUMP ;
@@ -1177,6 +1182,10 @@ LAND
 IF -41 ELSE 0 THEN JUMP ;
 : 3_539
 TRUE
+
+1 LINE.NUM
+  ^CmdGET_FAULTS @@   0<>
+LAND
 IF -41 ELSE -79 THEN JUMP ;
 T: T3
 DUMMY
