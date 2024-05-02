@@ -27,7 +27,7 @@ SUB.CODE null$VAR &Timestamp
 8 LINE.NUM *sDate 0 5 *sDate  $SUB 
 9 LINE.NUM *sDate 0 PARAM $CAT 
 
-10 LINE.NUM " ," 0 PARAM $CAT 
+10 LINE.NUM " T" 0 PARAM $CAT 
 
 11 LINE.NUM *sTimeString  TIME>$ 
 12 LINE.NUM *sTimeString 0 PARAM $CAT 
@@ -106,6 +106,7 @@ ENDCODE
 0 IVAR ^LightToggle
 0 IVAR ^LightToggleOld
 0 IVAR ^ListeningForMaster
+0 IVAR ^LowerShutterIsOpenViaInclinometer
 0 IVAR ^MainChartStarted
 0 IVAR ^ManModeStarted
 0 IVAR ^Master_CommClosed
@@ -126,6 +127,7 @@ ENDCODE
 0 IVAR ^Status_ManualMode
 0 IVAR ^Status_Monitor_Started
 0 IVAR ^StatusTransmit_Status
+0 TVAR ^SynchClockTimer
 0 FVAR ^Time_defContactorOperate
 0 IVAR ^Time_defContactorRelease
 0 FVAR ^Time_defHeartbeatWdog
@@ -180,7 +182,7 @@ ENDCODE
 1024 0 COMVAR *Master_Handle 
 1024 0 COMVAR *Wx_Handle 
 4 0 ITABLE }SLOT08_OFF
-20 20 0 $TABLE {Status 
+20 30 0 $TABLE {Status 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
@@ -800,7 +802,13 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 4 LINE.NUM *FaultListSubString " , " $= IF 
 5 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
 6 LINE.NUM THEN 
-8 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+8 LINE.NUM *FaultList " " $= IF 
+9 LINE.NUM " None" *FaultList  $MOVE 
+10 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+11 LINE.NUM " " *FaultList  $MOVE 
+12 LINE.NUM ELSE 
+13 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+14 LINE.NUM THEN 
 1 JUMP ;
 : 3_550
 -80 JUMP ;
@@ -1821,7 +1829,7 @@ T;
 
 1 LINE.NUM
   &Function_Close   STOP.T
-19 JUMP ;
+20 JUMP ;
 : 14_33
 
 1 LINE.NUM
@@ -1836,7 +1844,7 @@ T;
 
 1 LINE.NUM
   &Function_Close   STOP.T
-16 JUMP ;
+17 JUMP ;
 : 14_55
 
 1 LINE.NUM
@@ -1930,13 +1938,9 @@ IF -19 ELSE -18 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_UpperCloseLimitSwitch   ?OFF
-LAND
-
-2 LINE.NUM
   ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-IF -15 ELSE 0 THEN JUMP ;
+IF 5 ELSE 0 THEN JUMP ;
 : 14_21
 TRUE
 
@@ -1976,6 +1980,17 @@ TRUE
   &Function_UpperClose   ?RUNNING
 LAND
 IF -6 ELSE -22 THEN JUMP ;
+: 14_86
+FALSE
+
+1 LINE.NUM
+  ~DI_UpperCloseLimitSwitch   ?OFF
+LOR
+
+2 LINE.NUM
+  ~DI_UpperCloseOvrTrvl   ?OFF
+LOR
+IF -21 ELSE -6 THEN JUMP ;
 T: T14
 DUMMY
 14_0
@@ -2006,6 +2021,7 @@ DUMMY
 14_25
 14_34
 14_63
+14_86
 T;
 &Function_Close ' T14 SETTASK
 : 8_0
@@ -5395,7 +5411,7 @@ T;
 15 LINE.NUM ELSE 
 15 LINE.NUM " Shutter1=5" 0 {Status $TABLE@  $MOVE 
 16 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
-5 JUMP ;
+6 JUMP ;
 : 15_69
 2 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
 3 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
@@ -5414,7 +5430,7 @@ T;
 15 LINE.NUM ELSE 
 15 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
 16 LINE.NUM THEN THEN THEN THEN THEN 
-4 JUMP ;
+5 JUMP ;
 : 15_72
 1 LINE.NUM ^Status_DisabledMode @@ IF 
 2 LINE.NUM " OpMode=0" 2 {Status $TABLE@  $MOVE 
@@ -5428,7 +5444,7 @@ T;
 7 LINE.NUM ^Status_FaultMode @@ IF 
 8 LINE.NUM " OpMode=3" 2 {Status $TABLE@  $MOVE 
 9 LINE.NUM THEN THEN THEN THEN 
-3 JUMP ;
+4 JUMP ;
 : 15_75
 1 LINE.NUM ~DO_DomeLights @@I 1 = IF 
 2 LINE.NUM " LightsOn=1" 7 {Status $TABLE@  $MOVE 
@@ -5453,7 +5469,7 @@ T;
 32 LINE.NUM ELSE 
 33 LINE.NUM " Fault=0" 17 {Status $TABLE@  $MOVE 
 34 LINE.NUM THEN 
-2 JUMP ;
+3 JUMP ;
 : 15_78
 1 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F< IF 
 2 LINE.NUM 0 I>F ~AO_CabinetFanCtrl @! 
@@ -5488,73 +5504,110 @@ T;
 15 LINE.NUM ELSE 
 15 LINE.NUM " Shutter1=5" 0 {Status $TABLE@  $MOVE 
 16 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
-19 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
-20 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
-21 LINE.NUM ELSE 
-21 LINE.NUM ~DI_LowerCloseLimitSwitch @@I 1 = IF 
-22 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
+20 LINE.NUM *sSite " BPL" $= IF 
+21 LINE.NUM ~AI_LowerShutterAngle @@ 110 I>F F> ~AI_LowerShutterAngle @@ 120 I>F F< LAND  IF 
+22 LINE.NUM 1 ^LowerShutterIsOpenViaInclinometer @! 
 23 LINE.NUM ELSE 
-23 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
-24 LINE.NUM " Shutter2=2" 1 {Status $TABLE@  $MOVE 
-25 LINE.NUM ELSE 
-25 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
-26 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
-27 LINE.NUM ELSE 
-27 LINE.NUM ~DI_LowerOpenLimitSwitch @@I LNOT  ~DI_LowerCloseLimitSwitch @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
-31 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
-32 LINE.NUM ELSE 
-32 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
-33 LINE.NUM THEN THEN THEN THEN THEN 
-36 LINE.NUM ^Status_DisabledMode @@ IF 
-37 LINE.NUM " OpMode=0" 2 {Status $TABLE@  $MOVE 
-38 LINE.NUM ELSE 
-38 LINE.NUM ^Status_ManualMode @@ IF 
-39 LINE.NUM " OpMode=1" 2 {Status $TABLE@  $MOVE 
-40 LINE.NUM ELSE 
-40 LINE.NUM ^Status_AutoMode @@ IF 
-41 LINE.NUM " OpMode=2" 2 {Status $TABLE@  $MOVE 
-42 LINE.NUM ELSE 
-42 LINE.NUM ^Status_FaultMode @@ IF 
-43 LINE.NUM " OpMode=3" 2 {Status $TABLE@  $MOVE 
-44 LINE.NUM THEN THEN THEN THEN 
-48 LINE.NUM " PowerInterlock=0" 3 {Status $TABLE@  $MOVE 
-51 LINE.NUM *FaultList  $LEN 0 > IF 
-52 LINE.NUM " Fault=1" 4 {Status $TABLE@  $MOVE 
-53 LINE.NUM ELSE 
-54 LINE.NUM " Fault=0" 4 {Status $TABLE@  $MOVE 
-55 LINE.NUM THEN 
-58 LINE.NUM ~DI_CabinetDoorSwitch @@I 0 = IF 
-59 LINE.NUM " ObstacleWarning=1" 5 {Status $TABLE@  $MOVE 
-60 LINE.NUM ELSE 
-61 LINE.NUM " ObstacleWarning=0" 5 {Status $TABLE@  $MOVE 
-62 LINE.NUM THEN 
-65 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-66 LINE.NUM *sTimestamp 6 {Status $TABLE@  $MOVE 
-69 LINE.NUM ~DO_DomeLights @@I 1 = IF 
-70 LINE.NUM " LightsOn=1" 7 {Status $TABLE@  $MOVE 
-71 LINE.NUM ELSE 
-72 LINE.NUM " LightsOn=0" 7 {Status $TABLE@  $MOVE 
-73 LINE.NUM THEN 
-76 LINE.NUM " SideSw=0" 8 {Status $TABLE@  $MOVE 
-79 LINE.NUM " Storm=0" 9 {Status $TABLE@  $MOVE 
-82 LINE.NUM " Switch=9" 10 {Status $TABLE@  $MOVE 
-85 LINE.NUM " Door=9" 11 {Status $TABLE@  $MOVE 
-88 LINE.NUM " E-stopON=9" 12 {Status $TABLE@  $MOVE 
-91 LINE.NUM " FenceSecure=9" 13 {Status $TABLE@  $MOVE 
-95 LINE.NUM ~AI_DomeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
-96 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
-97 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
-101 LINE.NUM ~DI_VFDfault @@I 1 = IF 
-102 LINE.NUM " VFDfault=0" 15 {Status $TABLE@  $MOVE 
-103 LINE.NUM ELSE 
-104 LINE.NUM " VFDfault=1" 15 {Status $TABLE@  $MOVE 
-105 LINE.NUM THEN 
-108 LINE.NUM ~DI_VFDoverload @@I 1 = IF 
-109 LINE.NUM " VFDoverload=1" 16 {Status $TABLE@  $MOVE 
-110 LINE.NUM ELSE 
-111 LINE.NUM " VFDoverload=0" 16 {Status $TABLE@  $MOVE 
-112 LINE.NUM THEN 
--2 JUMP ;
+24 LINE.NUM 0 ^LowerShutterIsOpenViaInclinometer @! 
+25 LINE.NUM THEN 
+26 LINE.NUM ELSE 
+27 LINE.NUM ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  IF 
+28 LINE.NUM 1 ^LowerShutterIsOpenViaInclinometer @! 
+29 LINE.NUM ELSE 
+30 LINE.NUM 0 ^LowerShutterIsOpenViaInclinometer @! 
+31 LINE.NUM THEN 
+32 LINE.NUM THEN 
+35 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = ^LowerShutterIsOpenViaInclinometer @@ 1 = LOR  IF 
+36 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
+37 LINE.NUM ELSE 
+37 LINE.NUM ~DI_LowerCloseLimitSwitch @@I 1 = IF 
+38 LINE.NUM " Shutter2=1" 1 {Status $TABLE@  $MOVE 
+39 LINE.NUM ELSE 
+39 LINE.NUM &Function_LowerOpen  ?RUNNING 1 = IF 
+40 LINE.NUM " Shutter2=2" 1 {Status $TABLE@  $MOVE 
+41 LINE.NUM ELSE 
+41 LINE.NUM &Function_LowerClose  ?RUNNING 1 = IF 
+42 LINE.NUM " Shutter2=3" 1 {Status $TABLE@  $MOVE 
+43 LINE.NUM ELSE 
+43 LINE.NUM ~DI_LowerOpenLimitSwitch @@I LNOT  ~DI_LowerCloseLimitSwitch @@I LNOT  LAND  &Function_LowerOpen  ?RUNNING LNOT  LAND  &Function_LowerClose  ?RUNNING LNOT  1 = LAND  IF 
+47 LINE.NUM " Shutter2=4" 1 {Status $TABLE@  $MOVE 
+48 LINE.NUM ELSE 
+48 LINE.NUM " Shutter2=5" 1 {Status $TABLE@  $MOVE 
+49 LINE.NUM THEN THEN THEN THEN THEN 
+52 LINE.NUM ^Status_DisabledMode @@ IF 
+53 LINE.NUM " OpMode=0" 2 {Status $TABLE@  $MOVE 
+54 LINE.NUM ELSE 
+54 LINE.NUM ^Status_ManualMode @@ IF 
+55 LINE.NUM " OpMode=1" 2 {Status $TABLE@  $MOVE 
+56 LINE.NUM ELSE 
+56 LINE.NUM ^Status_AutoMode @@ IF 
+57 LINE.NUM " OpMode=2" 2 {Status $TABLE@  $MOVE 
+58 LINE.NUM ELSE 
+58 LINE.NUM ^Status_FaultMode @@ IF 
+59 LINE.NUM " OpMode=3" 2 {Status $TABLE@  $MOVE 
+60 LINE.NUM THEN THEN THEN THEN 
+64 LINE.NUM " PowerInterlock=0" 3 {Status $TABLE@  $MOVE 
+67 LINE.NUM *FaultList  $LEN 0 > IF 
+68 LINE.NUM " Fault=1" 4 {Status $TABLE@  $MOVE 
+69 LINE.NUM ELSE 
+70 LINE.NUM " Fault=0" 4 {Status $TABLE@  $MOVE 
+71 LINE.NUM THEN 
+74 LINE.NUM ~DI_CabinetDoorSwitch @@I 0 = IF 
+75 LINE.NUM " ObstacleWarning=1" 5 {Status $TABLE@  $MOVE 
+76 LINE.NUM ELSE 
+77 LINE.NUM " ObstacleWarning=0" 5 {Status $TABLE@  $MOVE 
+78 LINE.NUM THEN 
+81 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+82 LINE.NUM *_HSV_SEMA Acquire1String " Timestamp="  *_HSV_TEMP $MOVE *sTimestamp  *_HSV_TEMP $CAT *_HSV_TEMP 6 {Status $TABLE@ $MOVE Release1String 
+85 LINE.NUM ~DO_DomeLights @@I 1 = IF 
+86 LINE.NUM " LightsOn=1" 7 {Status $TABLE@  $MOVE 
+87 LINE.NUM ELSE 
+88 LINE.NUM " LightsOn=0" 7 {Status $TABLE@  $MOVE 
+89 LINE.NUM THEN 
+92 LINE.NUM " SideSw=0" 8 {Status $TABLE@  $MOVE 
+95 LINE.NUM " Storm=0" 9 {Status $TABLE@  $MOVE 
+98 LINE.NUM " Switch=9" 10 {Status $TABLE@  $MOVE 
+101 LINE.NUM " Door=9" 11 {Status $TABLE@  $MOVE 
+104 LINE.NUM " E-stopON=9" 12 {Status $TABLE@  $MOVE 
+107 LINE.NUM " FenceSecure=9" 13 {Status $TABLE@  $MOVE 
+111 LINE.NUM ~AI_DomeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
+112 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
+113 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
+117 LINE.NUM ~DI_VFDfault @@I 1 = IF 
+118 LINE.NUM " VFDfault=0" 15 {Status $TABLE@  $MOVE 
+119 LINE.NUM ELSE 
+120 LINE.NUM " VFDfault=1" 15 {Status $TABLE@  $MOVE 
+121 LINE.NUM THEN 
+124 LINE.NUM ~DI_VFDoverload @@I 1 = IF 
+125 LINE.NUM " VFDoverload=1" 16 {Status $TABLE@  $MOVE 
+126 LINE.NUM ELSE 
+127 LINE.NUM " VFDoverload=0" 16 {Status $TABLE@  $MOVE 
+128 LINE.NUM THEN 
+0 JUMP ;
+: 15_88
+3 LINE.NUM ^SynchClockTimer @@F 0 I>F F= IF 
+4 LINE.NUM *sSite " BPL" $= IF 
+5 LINE.NUM 5 I>F " udp:time.nist.gov:123"  SYNC.TIME DROP  
+6 LINE.NUM ELSE 
+6 LINE.NUM *sSite " ELP" $= IF 
+7 LINE.NUM 5 I>F " udp:tym.elp.lco.gtn:123"  SYNC.TIME DROP  
+8 LINE.NUM ELSE 
+8 LINE.NUM *sSite " TFN" $= IF 
+9 LINE.NUM 5 I>F " udp:tym.tfn.lco.gtn:123"  SYNC.TIME DROP  
+10 LINE.NUM ELSE 
+10 LINE.NUM *sSite " LSC" $= IF 
+11 LINE.NUM 5 I>F " udp:tym.lsc.lco.gtn:123"  SYNC.TIME DROP  
+12 LINE.NUM ELSE 
+12 LINE.NUM *sSite " CPT" $= IF 
+13 LINE.NUM 5 I>F " udp:tym.cpt.lco.gtn:123"  SYNC.TIME DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM *sSite " COJ" $= IF 
+15 LINE.NUM 5 I>F " udp:tym.coj.lco.gtn:123"  SYNC.TIME DROP  
+16 LINE.NUM THEN THEN THEN THEN THEN THEN 
+18 LINE.NUM 60 I>F ^SynchClockTimer @! 
+19 LINE.NUM ^SynchClockTimer  StartTimer 
+20 LINE.NUM THEN 
+-3 JUMP ;
 T: T15
 DUMMY
 15_0
@@ -5566,6 +5619,7 @@ DUMMY
 15_75
 15_78
 15_85
+15_88
 T;
 &Status_Monitor ' T15 SETTASK
 : 16_0
@@ -5807,6 +5861,7 @@ CREATE V.ARRAY
 ^LightToggle ,
 ^LightToggleOld ,
 ^ListeningForMaster ,
+^LowerShutterIsOpenViaInclinometer ,
 ^MainChartStarted ,
 ^ManModeStarted ,
 ^Master_CommClosed ,
@@ -5876,6 +5931,7 @@ CREATE V.ARRAY
 CREATE TI.ARRAY
 ^Socket_Timer ,
 ^Socket_Timer_2 ,
+^SynchClockTimer ,
 ^Timer_Close ,
 ^Timer_HeartbeatWdog ,
 ^Timer_LowerContactor ,
@@ -6019,6 +6075,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^LightToggle @!
 0 ^LightToggleOld @!
 0 ^ListeningForMaster @!
+0 ^LowerShutterIsOpenViaInclinometer @!
 0 ^MainChartStarted @!
 0 ^ManModeStarted @!
 0 ^Master_CommClosed @!
@@ -6039,6 +6096,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^Status_ManualMode @!
 0 ^Status_Monitor_Started @!
 0 ^StatusTransmit_Status @!
+0.0 ^SynchClockTimer @!
 0.50000000 ^Time_defContactorOperate @!
 1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
@@ -6131,8 +6189,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/25/24 " ;
-: TIMESTAMP ." 15:15:49 " ;
+: DATESTAMP ." 05/02/24 " ;
+: TIMESTAMP ." 16:07:30 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

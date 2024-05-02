@@ -566,7 +566,13 @@
 4 LINE.NUM *FaultListSubString " , " $= IF 
 5 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
 6 LINE.NUM THEN 
-8 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+8 LINE.NUM *FaultList " " $= IF 
+9 LINE.NUM " None" *FaultList  $MOVE 
+10 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+11 LINE.NUM " " *FaultList  $MOVE 
+12 LINE.NUM ELSE 
+13 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+14 LINE.NUM THEN 
 1 JUMP ;
 : 3_550
 -80 JUMP ;

@@ -66,6 +66,7 @@ CREATE V.ARRAY
 ^LightToggle ,
 ^LightToggleOld ,
 ^ListeningForMaster ,
+^LowerShutterIsOpenViaInclinometer ,
 ^MainChartStarted ,
 ^ManModeStarted ,
 ^Master_CommClosed ,
@@ -135,6 +136,7 @@ CREATE V.ARRAY
 CREATE TI.ARRAY
 ^Socket_Timer ,
 ^Socket_Timer_2 ,
+^SynchClockTimer ,
 ^Timer_Close ,
 ^Timer_HeartbeatWdog ,
 ^Timer_LowerContactor ,
@@ -278,6 +280,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^LightToggle @!
 0 ^LightToggleOld @!
 0 ^ListeningForMaster @!
+0 ^LowerShutterIsOpenViaInclinometer @!
 0 ^MainChartStarted @!
 0 ^ManModeStarted @!
 0 ^Master_CommClosed @!
@@ -298,6 +301,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^Status_ManualMode @!
 0 ^Status_Monitor_Started @!
 0 ^StatusTransmit_Status @!
+0.0 ^SynchClockTimer @!
 0.50000000 ^Time_defContactorOperate @!
 1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!

@@ -67,7 +67,7 @@
 
 1 LINE.NUM
   &Function_Close   STOP.T
-19 JUMP ;
+20 JUMP ;
 : 14_33
 
 1 LINE.NUM
@@ -82,7 +82,7 @@
 
 1 LINE.NUM
   &Function_Close   STOP.T
-16 JUMP ;
+17 JUMP ;
 : 14_55
 
 1 LINE.NUM
@@ -176,13 +176,9 @@ IF -19 ELSE -18 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_UpperCloseLimitSwitch   ?OFF
-LAND
-
-2 LINE.NUM
   ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-IF -15 ELSE 0 THEN JUMP ;
+IF 5 ELSE 0 THEN JUMP ;
 : 14_21
 TRUE
 
@@ -222,6 +218,17 @@ TRUE
   &Function_UpperClose   ?RUNNING
 LAND
 IF -6 ELSE -22 THEN JUMP ;
+: 14_86
+FALSE
+
+1 LINE.NUM
+  ~DI_UpperCloseLimitSwitch   ?OFF
+LOR
+
+2 LINE.NUM
+  ~DI_UpperCloseOvrTrvl   ?OFF
+LOR
+IF -21 ELSE -6 THEN JUMP ;
 T: T14
 DUMMY
 14_0
@@ -252,5 +259,6 @@ DUMMY
 14_25
 14_34
 14_63
+14_86
 T;
 &Function_Close ' T14 SETTASK
