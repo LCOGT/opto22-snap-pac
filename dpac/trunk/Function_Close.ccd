@@ -9,10 +9,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 4 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -32,7 +32,7 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 4 LINE.NUM
   2000    DELAY
@@ -67,7 +67,7 @@
 
 1 LINE.NUM
   &Function_Close   STOP.T
-18 JUMP ;
+19 JUMP ;
 : 14_33
 
 1 LINE.NUM
@@ -82,7 +82,7 @@
 
 1 LINE.NUM
   &Function_Close   STOP.T
-15 JUMP ;
+16 JUMP ;
 : 14_55
 
 1 LINE.NUM
@@ -94,14 +94,14 @@
   2000    DELAY
 12 JUMP ;
 : 14_73
-1 LINE.NUM ~FB_upperOpen @@I 0 = IF 
+1 LINE.NUM ~DI_UpperOpenContactor @@I 0 = IF 
 2 LINE.NUM 1 ^FLT_K1on @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~FB_upperClose @@I 0 = IF 
+4 LINE.NUM ~DI_UpperCloseContactor @@I 0 = IF 
 5 LINE.NUM 1 ^FLT_K2on @! 
 7 LINE.NUM ELSE 
-7 LINE.NUM ~FB_pumpMotor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_K5on @! 
+7 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+8 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
 10 LINE.NUM THEN THEN THEN 
 -4 JUMP ;
 : 14_74
@@ -130,19 +130,19 @@
   100    DELAY
 
 7 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 8 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 9 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 10 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 11 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 -2 JUMP ;
 : 14_1
 TRUE
@@ -176,29 +176,25 @@ IF -18 ELSE -17 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
+  ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-
-2 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
-LAND
-IF -14 ELSE 0 THEN JUMP ;
+IF 5 ELSE 0 THEN JUMP ;
 : 14_21
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?OFF
+  ~DI_UpperShutterClearSwitch   ?OFF
 LAND
 
 2 LINE.NUM
-  ~SW_lowerCloseLimit   ?OFF
+  ~DI_LowerCloseLimitSwitch   ?OFF
 LAND
 IF -11 ELSE 1 THEN JUMP ;
 : 14_22
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
+  ~DI_LowerCloseLimitSwitch   ?ON
 LAND
 IF -11 ELSE 1 THEN JUMP ;
 : 14_25
@@ -222,6 +218,17 @@ TRUE
   &Function_UpperClose   ?RUNNING
 LAND
 IF -6 ELSE -21 THEN JUMP ;
+: 14_83
+FALSE
+
+1 LINE.NUM
+  ~DI_UpperCloseLimitSwitch   ?OFF
+LOR
+
+2 LINE.NUM
+  ~DI_UpperCloseOvrTrvl   ?OFF
+LOR
+IF -20 ELSE -6 THEN JUMP ;
 T: T14
 DUMMY
 14_0
@@ -251,5 +258,6 @@ DUMMY
 14_25
 14_34
 14_63
+14_83
 T;
 &Function_Close ' T14 SETTASK

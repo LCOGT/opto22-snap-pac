@@ -3,12 +3,12 @@
 : 6_5
 
 1 LINE.NUM
-  ~DO_upperClose   ON
+  ~DO_UpperClose   ON
 112 JUMP ;
 : 6_12
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 94 JUMP ;
 : 6_24
 
@@ -18,12 +18,12 @@
 : 6_32
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 87 JUMP ;
 : 6_34
 
 1 LINE.NUM
-  ~DO_upperClose   ON
+  ~DO_UpperClose   ON
 120 JUMP ;
 : 6_39
 
@@ -38,7 +38,7 @@
 : 6_48
 
 1 LINE.NUM
-  ~DO_upperOpen   ON
+  ~DO_UpperOpen   ON
 128 JUMP ;
 : 6_49
 51 JUMP ;
@@ -54,26 +54,26 @@
   100    DELAY
 
 4 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 5 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 6 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 7 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 8 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 0 JUMP ;
 : 6_74
 -3 JUMP ;
 : 6_104
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 0 JUMP ;
 : 6_105
 
@@ -98,7 +98,7 @@
 : 6_114
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 -2 JUMP ;
 : 6_121
 
@@ -119,12 +119,12 @@
 : 6_132
 
 1 LINE.NUM
-  ^FLT_K2off   TRUE@!
+  ^FLT_CloseUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 6_133
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 102 JUMP ;
 : 6_135
 
@@ -144,7 +144,7 @@
 : 6_158
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 73 JUMP ;
 : 6_160
 
@@ -169,7 +169,7 @@
 : 6_172
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 69 JUMP ;
 : 6_176
 
@@ -184,7 +184,7 @@
 : 6_188
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 67 JUMP ;
 : 6_189
 
@@ -240,12 +240,12 @@
 : 6_243
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 82 JUMP ;
 : 6_244
 
 1 LINE.NUM
-  ^FLT_K2off   TRUE@!
+  ^FLT_CloseUpperFailedToStart   TRUE@!
 -3 JUMP ;
 : 6_254
 
@@ -260,7 +260,7 @@
 : 6_266
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 14 JUMP ;
 : 6_270
 
@@ -275,7 +275,7 @@
 : 6_282
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 46 JUMP ;
 : 6_283
 
@@ -300,7 +300,7 @@
 : 6_296
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 40 JUMP ;
 : 6_300
 
@@ -315,7 +315,7 @@
 : 6_315
 
 1 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 2 JUMP ;
 : 6_321
 
@@ -374,12 +374,12 @@
 : 6_353
 
 1 LINE.NUM
-  ^FLT_K1off   TRUE@!
+  ^FLT_OpenUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 6_354
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 69 JUMP ;
 : 6_359
 
@@ -394,7 +394,7 @@
 : 6_373
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 21 JUMP ;
 : 6_377
 
@@ -409,7 +409,7 @@
 : 6_382
 
 1 LINE.NUM
-  ^FLT_K8overload   TRUE@!
+  ^FLT_UpperMotorOverload   TRUE@!
 8 JUMP ;
 : 6_384
 
@@ -419,7 +419,7 @@
 : 6_389
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 15 JUMP ;
 : 6_395
 
@@ -429,7 +429,7 @@
 : 6_398
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 12 JUMP ;
 : 6_399
 
@@ -444,7 +444,7 @@
 : 6_412
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 7 JUMP ;
 : 6_417
 
@@ -464,7 +464,7 @@
 : 6_423
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 4 JUMP ;
 : 6_427
 
@@ -555,110 +555,110 @@
 FALSE
 
 1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
+  ~DI_UpperCloseLimitSwitch   ?OFF
 LOR
 
 2 LINE.NUM
-  ~FLT_upperCloseOvrTrvl   ?OFF
+  ~DI_UpperCloseOvrTrvl   ?OFF
 LOR
 IF -99 ELSE 0 THEN JUMP ;
 : 6_3
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerCloseLimit   ?OFF
+  ~DI_LowerCloseLimitSwitch   ?OFF
 LAND
 IF 0 ELSE -85 THEN JUMP ;
 : 6_4
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?ON
+  ~DI_UpperShutterClearSwitch   ?ON
 LAND
 IF -67 ELSE -101 THEN JUMP ;
 : 6_11
 FALSE
 
 1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
+  ~DI_UpperCloseLimitSwitch   ?OFF
 LOR
 
 2 LINE.NUM
-  ~FLT_upperCloseOvrTrvl   ?OFF
+  ~DI_UpperCloseOvrTrvl   ?OFF
 LOR
 IF -103 ELSE 12 THEN JUMP ;
 : 6_13
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?OFF
+  ~DI_UpperShutterClearSwitch   ?OFF
 LAND
 IF -102 ELSE 5 THEN JUMP ;
 : 6_46
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?ON
+  ~DI_UpperShutterClearSwitch   ?ON
 LAND
 IF -28 ELSE 1 THEN JUMP ;
 : 6_53
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerCloseLimit   ?ON
+  ~DI_LowerCloseLimitSwitch   ?ON
 LAND
 IF -4 ELSE -3 THEN JUMP ;
 : 6_59
 TRUE
 
 1 LINE.NUM
-  ~SW_upperOpenLimit   ?OFF
+  ~DI_UpperOpenLimitSwitch   ?OFF
 LAND
 IF -26 ELSE 35 THEN JUMP ;
 : 6_64
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerCloseLimit   ?OFF
+  ~DI_LowerCloseLimitSwitch   ?OFF
 LAND
 IF 0 ELSE -6 THEN JUMP ;
 : 6_67
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?ON
+  ~DI_UpperShutterClearSwitch   ?ON
 LAND
 IF -6 ELSE -101 THEN JUMP ;
 : 6_77
 FALSE
 
 1 LINE.NUM
-  ~SW_upperCloseLimit   ?OFF
+  ~DI_UpperCloseLimitSwitch   ?OFF
 LOR
 
 2 LINE.NUM
-  ~FLT_upperCloseOvrTrvl   ?OFF
+  ~DI_UpperCloseOvrTrvl   ?OFF
 LOR
 IF -56 ELSE 21 THEN JUMP ;
 : 6_106
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -101 ELSE 0 THEN JUMP ;
 : 6_112
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -97 ELSE -13 THEN JUMP ;
 : 6_127
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -11 ELSE 0 THEN JUMP ;
 : 6_134
@@ -672,7 +672,7 @@ IF -96 ELSE -2 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -95 ELSE -111 THEN JUMP ;
 : 6_150
@@ -686,49 +686,49 @@ IF -94 ELSE 1 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -96 ELSE -94 THEN JUMP ;
 : 6_165
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_UpperMotorOverload   ?OFF
 LAND
 IF -91 ELSE -11 THEN JUMP ;
 : 6_177
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -91 ELSE -93 THEN JUMP ;
 : 6_180
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperCloseOvrTrvl   ?OFF
+  ~DI_UpperCloseOvrTrvl   ?OFF
 LAND
 IF -90 ELSE 25 THEN JUMP ;
 : 6_183
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -92 ELSE -90 THEN JUMP ;
 : 6_223
 TRUE
 
 1 LINE.NUM
-  ~FB_slot08Fuse   ?ON
+  ~DI_Card08Fuse   ?ON
 LAND
 IF -105 ELSE -89 THEN JUMP ;
 : 6_236
 TRUE
 
 1 LINE.NUM
-  ~FB_slot08Fuse   ?ON
+  ~DI_Card08Fuse   ?ON
 LAND
 IF -83 ELSE -86 THEN JUMP ;
 : 6_242
@@ -742,49 +742,49 @@ IF -85 ELSE 0 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -22 ELSE -2 THEN JUMP ;
 : 6_253
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -85 ELSE -119 THEN JUMP ;
 : 6_271
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -83 ELSE -120 THEN JUMP ;
 : 6_274
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperCloseOvrTrvl   ?OFF
+  ~DI_UpperCloseOvrTrvl   ?OFF
 LAND
 IF -85 ELSE 17 THEN JUMP ;
 : 6_277
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -84 ELSE -82 THEN JUMP ;
 : 6_289
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_UpperMotorOverload   ?OFF
 LAND
 IF -84 ELSE -25 THEN JUMP ;
 : 6_301
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -79 ELSE -81 THEN JUMP ;
 : 6_303
@@ -798,28 +798,28 @@ IF -81 ELSE -3 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperClose   ?OFF
+  ~DI_UpperCloseContactor   ?OFF
 LAND
 IF -80 ELSE -126 THEN JUMP ;
 : 6_338
 TRUE
 
 1 LINE.NUM
-  ~SW_upperOpenLimit   ?OFF
+  ~DI_UpperOpenLimitSwitch   ?OFF
 LAND
 IF -74 ELSE -73 THEN JUMP ;
 : 6_347
 TRUE
 
 1 LINE.NUM
-  ~FB_slot08Fuse   ?ON
+  ~DI_Card08Fuse   ?ON
 LAND
 IF -72 ELSE -73 THEN JUMP ;
 : 6_351
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -32 ELSE 0 THEN JUMP ;
 : 6_355
@@ -833,35 +833,35 @@ IF -73 ELSE -2 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -70 ELSE -69 THEN JUMP ;
 : 6_381
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperOpenOvrTrvl   ?OFF
+  ~DI_UpperOpenOvrTrvl   ?OFF
 LAND
 IF -72 ELSE -35 THEN JUMP ;
 : 6_385
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -69 ELSE -70 THEN JUMP ;
 : 6_391
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_UpperMotorOverload   ?OFF
 LAND
 IF -69 ELSE -3 THEN JUMP ;
 : 6_394
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -69 ELSE -67 THEN JUMP ;
 : 6_400
@@ -875,14 +875,14 @@ IF -69 ELSE -3 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -68 ELSE -139 THEN JUMP ;
 : 6_426
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -63 ELSE -61 THEN JUMP ;
 T: T6

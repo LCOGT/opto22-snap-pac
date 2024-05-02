@@ -67,19 +67,19 @@
 : 1_37
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 2 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 3 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 4 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 5 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 12 JUMP ;
 : 1_40
 
@@ -107,36 +107,36 @@
 : 1_43
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 2 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 3 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 4 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 5 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 5 JUMP ;
 : 1_44
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 2 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 3 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 4 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 5 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 
 6 LINE.NUM
   2000    DELAY
@@ -170,19 +170,19 @@
 : 1_56
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 2 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 3 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 4 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 5 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 0 JUMP ;
 : 1_58
 
@@ -298,22 +298,22 @@
 TRUE
 
 1 LINE.NUM
-  ~SW_standby   ?OFF
+  ~DI_SW_Standby   ?OFF
 LAND
 
 2 LINE.NUM
-  ~SW_auto   ?OFF
+  ~DI_SW_Auto   ?OFF
 LAND
 IF -15 ELSE -19 THEN JUMP ;
 : 1_3
 TRUE
 
 1 LINE.NUM
-  ~SW_standby   ?ON
+  ~DI_SW_Standby   ?ON
 LAND
 
 2 LINE.NUM
-  ~SW_auto   ?OFF
+  ~DI_SW_Auto   ?OFF
 LAND
 
 3 LINE.NUM
@@ -324,11 +324,11 @@ IF -17 ELSE -19 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_standby   ?ON
+  ~DI_SW_Standby   ?ON
 LAND
 
 2 LINE.NUM
-  ~SW_auto   ?ON
+  ~DI_SW_Auto   ?ON
 LAND
 
 3 LINE.NUM
@@ -339,11 +339,11 @@ IF -15 ELSE -19 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_standby   ?OFF
+  ~DI_SW_Standby   ?OFF
 LAND
 
 2 LINE.NUM
-  ~SW_auto   ?ON
+  ~DI_SW_Auto   ?ON
 LAND
 
 3 LINE.NUM

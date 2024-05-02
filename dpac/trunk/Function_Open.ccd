@@ -15,10 +15,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_lowerCloseValve   OFF
+  ~DO_LowerCloseValve   OFF
 
 4 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -38,10 +38,10 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_upperClose   OFF
+  ~DO_UpperClose   OFF
 
 4 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 
 5 LINE.NUM
   2000    DELAY
@@ -79,7 +79,7 @@
   100    DELAY
 
 3 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 -3 JUMP ;
 : 13_9
 TRUE
@@ -99,7 +99,7 @@ IF -4 ELSE -2 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?ON
+  ~DI_UpperShutterClearSwitch   ?ON
 LAND
 IF -2 ELSE -8 THEN JUMP ;
 : 13_23

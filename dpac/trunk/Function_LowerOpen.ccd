@@ -3,18 +3,18 @@
 : 7_7
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   ON
+  ~DO_LowerOpenValve   ON
 
 2 LINE.NUM
-  ~DO_pumpMotor   ON
+  ~DO_PumpMotor   ON
 39 JUMP ;
 : 7_14
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 2 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 9 JUMP ;
 : 7_18
 
@@ -50,15 +50,15 @@
 : 7_46
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 2 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 2 JUMP ;
 : 7_55
 
 1 LINE.NUM
-  ^FLT_K5off   TRUE@!
+  ^FLT_PumpMTRcontactorNotOperating   TRUE@!
 -2 JUMP ;
 : 7_66
 
@@ -73,7 +73,7 @@
 : 7_79
 
 1 LINE.NUM
-  ^FLT_K5on   TRUE@!
+  ^FLT_PumpContactorStuckOn   TRUE@!
 -9 JUMP ;
 : 7_81
 
@@ -88,7 +88,7 @@
 : 7_97
 
 1 LINE.NUM
-  ^FLT_K5on   TRUE@!
+  ^FLT_PumpContactorStuckOn   TRUE@!
 0 JUMP ;
 : 7_102
 
@@ -98,10 +98,10 @@
 : 7_103
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 2 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 -4 JUMP ;
 : 7_112
 
@@ -126,18 +126,18 @@
 : 7_144
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 2 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 -2 JUMP ;
 : 7_145
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 2 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 -4 JUMP ;
 : 7_152
 
@@ -147,12 +147,12 @@
 : 7_157
 
 1 LINE.NUM
-  ^FLT_K5on   TRUE@!
+  ^FLT_PumpContactorStuckOn   TRUE@!
 -2 JUMP ;
 : 7_168
 
 1 LINE.NUM
-  ^FLT_K5on   TRUE@!
+  ^FLT_PumpContactorStuckOn   TRUE@!
 0 JUMP ;
 : 7_173
 
@@ -173,10 +173,10 @@
 : 7_213
 
 1 LINE.NUM
-  ~DO_lowerOpenValve   OFF
+  ~DO_LowerOpenValve   OFF
 
 2 LINE.NUM
-  ~DO_pumpMotor   OFF
+  ~DO_PumpMotor   OFF
 0 JUMP ;
 : 7_215
 
@@ -189,7 +189,7 @@
 : 7_220
 
 1 LINE.NUM
-  ^FLT_K5on   TRUE@!
+  ^FLT_PumpContactorStuckOn   TRUE@!
 0 JUMP ;
 : 7_223
 
@@ -200,35 +200,35 @@
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerOpenLimit   ?ON
+  ~DI_LowerOpenLimitSwitch   ?ON
 LAND
 IF -31 ELSE 0 THEN JUMP ;
 : 7_5
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?ON
+  ~DI_UpperShutterClearSwitch   ?ON
 LAND
 IF -31 ELSE -33 THEN JUMP ;
 : 7_10
 TRUE
 
 1 LINE.NUM
-  ~SW_upperShutterClear   ?ON
+  ~DI_UpperShutterClearSwitch   ?ON
 LAND
 IF 7 ELSE -22 THEN JUMP ;
 : 7_11
 TRUE
 
 1 LINE.NUM
-  ~SW_lowerOpenLimit   ?ON
+  ~DI_LowerOpenLimitSwitch   ?ON
 LAND
 IF -12 ELSE -2 THEN JUMP ;
 : 7_57
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?ON
+  ~DI_PumpMotorContactor   ?ON
 LAND
 IF -32 ELSE -33 THEN JUMP ;
 : 7_62
@@ -242,28 +242,28 @@ IF 1 ELSE 0 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?OFF
+  ~DI_PumpMotorContactor   ?OFF
 LAND
 IF -14 ELSE -2 THEN JUMP ;
 : 7_67
 TRUE
 
 1 LINE.NUM
-  ~FB_slot09Fuse   ?ON
+  ~DI_Card09Fuse   ?ON
 LAND
 IF -4 ELSE -34 THEN JUMP ;
 : 7_78
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?OFF
+  ~DI_PumpMotorContactor   ?OFF
 LAND
 IF -33 ELSE -15 THEN JUMP ;
 : 7_98
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?OFF
+  ~DI_PumpMotorContactor   ?OFF
 LAND
 IF -31 ELSE -30 THEN JUMP ;
 : 7_142
@@ -277,21 +277,21 @@ IF -24 ELSE 0 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FLT_pumpMotorOverload   ?OFF
+  ~DI_PumpMotorOverload   ?OFF
 LAND
 IF -26 ELSE 2 THEN JUMP ;
 : 7_156
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?OFF
+  ~DI_PumpMotorContactor   ?OFF
 LAND
 IF -24 ELSE -25 THEN JUMP ;
 : 7_169
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?OFF
+  ~DI_PumpMotorContactor   ?OFF
 LAND
 IF -24 ELSE -23 THEN JUMP ;
 : 7_212
@@ -311,7 +311,7 @@ IF -20 ELSE -12 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_pumpMotor   ?OFF
+  ~DI_PumpMotorContactor   ?OFF
 LAND
 IF -18 ELSE -19 THEN JUMP ;
 T: T7

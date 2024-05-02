@@ -33,30 +33,32 @@ CREATE V.ARRAY
 ^CmdUPPER_CLOSE ,
 ^CmdUPPER_OPEN ,
 ^CountK1 ,
+^FanCtrlMax ,
+^FaultLogged ,
 ^FaultModeStarted ,
 ^FLT_ClearSW ,
 ^FLT_CloseLS ,
 ^FLT_CloseTimeout ,
+^FLT_CloseUpperFailedToStart ,
 ^FLT_DisabledCircuit ,
 ^FLT_K10overload ,
-^FLT_K1off ,
 ^FLT_K1on ,
-^FLT_K2off ,
 ^FLT_K2on ,
-^FLT_K5off ,
-^FLT_K5on ,
-^FLT_K8overload ,
 ^FLT_K9overload ,
 ^FLT_LowerCloseTimeout ,
 ^FLT_LowerCloseUnknown ,
 ^FLT_LowerOpenTimeout ,
 ^FLT_OpenClearTimeout ,
+^FLT_OpenUpperFailedToStart ,
+^FLT_PumpContactorStuckOn ,
+^FLT_PumpMTRcontactorNotOperating ,
 ^FLT_SLOT08fuse ,
 ^FLT_SLOT09fuse ,
 ^FLT_UpCloseOT ,
 ^FLT_UpCloseTimeout ,
 ^FLT_UpOpenOT ,
 ^FLT_UpOpenTimeout ,
+^FLT_UpperMotorOverload ,
 ^FPAC_scratchpad ,
 ^Function_Close_Started ,
 ^Function_LowerClose_Started ,
@@ -79,6 +81,7 @@ CREATE V.ARRAY
 ^nPeriodPosition1 ,
 ^nPeriodPosition2 ,
 ^nSubstringLength ,
+^PanelFanErrorFlag ,
 ^Status_AutoMode ,
 ^Status_DisabledMode ,
 ^Status_FaultMode ,
@@ -104,7 +107,10 @@ CREATE V.ARRAY
 ^WxLoopNum ,
 ^WxOKposition ,
 ^WxStarted ,
+*FaultList ,
+*FaultListSubString ,
 *MasterCommand ,
+*Response ,
 *s1stOctet ,
 *s2ndOctet ,
 *s3rdOctet ,
@@ -113,12 +119,14 @@ CREATE V.ARRAY
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
+*S_WatchdogTimer ,
 *sDomeAirTemp ,
 *sEncl ,
 *sIP_PAC ,
 *sSite ,
 *sStatus_Shutter1 ,
 *sStatus_Shutter2 ,
+*sTimestamp ,
 *SWversion ,
 *WxGETstring ,
 *WxHTML ,
@@ -130,6 +138,7 @@ CREATE V.ARRAY
 CREATE TI.ARRAY
 ^Socket_Timer ,
 ^Socket_Timer_2 ,
+^SynchClockTimer ,
 ^Timer_Close ,
 ^Timer_HeartbeatWdog ,
 ^Timer_LowerContactor ,
@@ -152,53 +161,52 @@ CREATE B.ARRAY
 %Local_IO ,
  0 ,
 CREATE P.ARRAY
-~DO_domeLights ,
+~DI_CabinetDoorSwitch ,
+~DI_Card08Fuse ,
+~DI_Card09Fuse ,
+~DI_LambertCircuitBreaker ,
+~DI_LambertPWR ,
+~DI_LowerCloseLimitSwitch ,
+~DI_LowerOpenLimitSwitch ,
+~DI_PumpMotorCircuitBreaker ,
+~DI_PumpMotorContactor ,
+~DI_PumpMotorOverload ,
+~DI_SmokeDetector ,
+~DI_SmokeDetectorHeat ,
+~DI_SmokeDetectorPWR ,
+~DI_SW_Auto ,
+~DI_SW_LowerClose ,
+~DI_SW_LowerOpen ,
+~DI_SW_Standby ,
+~DI_SW_Stop ,
+~DI_SW_UpperClose ,
+~DI_SW_UpperOpen ,
+~DI_SW_WhiteLights ,
+~DI_UpperCloseContactor ,
+~DI_UpperCloseLimitSwitch ,
+~DI_UpperCloseOvrTrvl ,
+~DI_UpperMotorCircuitBreaker ,
+~DI_UpperMotorOverload ,
+~DI_UpperOpenContactor ,
+~DI_UpperOpenLimitSwitch ,
+~DI_UpperOpenOvrTrvl ,
+~DI_UpperShutterClearSwitch ,
+~DI_WhiteLightsCircuitBreaker ,
+~DI_WirelessFault ,
+~DO_Card08Fuse ,
+~DO_Card09Fuse ,
+~DO_DomeLights ,
 ~DO_Illuminate ,
-~DO_lowerCloseValve ,
-~DO_lowerOpenValve ,
-~DO_pumpMotor ,
-~DO_slot08Fuse ,
-~DO_slot09Fuse ,
-~DO_upperClose ,
-~DO_upperOpen ,
-~FB_pumpMotor ,
-~FB_slot08Fuse ,
-~FB_slot09Fuse ,
-~FB_upperClose ,
-~FB_upperOpen ,
-~FLT_cabinetDoor ,
-~FLT_heat ,
-~FLT_lambertCB ,
-~FLT_lambertPwr ,
-~FLT_lightsCB ,
-~FLT_lowerShutterCB ,
-~FLT_pumpMotorOverload ,
-~FLT_smoke ,
-~FLT_smokeDetectorPwr ,
-~FLT_upperCloseOvrTrvl ,
-~FLT_upperMotorOverload ,
-~FLT_upperOpenOvrTrvl ,
-~FLT_upperShutterCB ,
-~FLT_wireless ,
-~SW_auto ,
-~SW_LowerClose ,
-~SW_lowerCloseLimit ,
-~SW_LowerOpen ,
-~SW_lowerOpenLimit ,
-~SW_standby ,
-~SW_stop ,
-~SW_upperClose ,
-~SW_upperCloseLimit ,
-~SW_upperOpen ,
-~SW_upperOpenLimit ,
-~SW_upperShutterClear ,
-~SW_whiteLights ,
-~AI_cabinetFanTach ,
-~AI_cabinetTemp ,
-~AI_domeAirTemp ,
-~AI_lowerOpenPressure ,
+~DO_LowerCloseValve ,
+~DO_LowerOpenValve ,
+~DO_PumpMotor ,
+~DO_UpperClose ,
+~DO_UpperOpen ,
+~AI_CabinetFanTach ,
+~AI_CabinetTemp ,
+~AI_DomeAirTemp ,
 ~AI_LowerShutterAngle ,
-~AO_cabinetFanCtrl ,
+~AO_CabinetFanCtrl ,
  0 ,
 CREATE PID.ARRAY
  0 ,
@@ -215,13 +223,13 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 %A_1mFPAC ENABLE
 " %Local_IO  (2/2)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
 %Local_IO ENABLE
- 0 ~FB_slot08Fuse IN.I!POINT
- 0 ~DO_slot08Fuse @!
- 0 ~DO_upperOpen @!
- 0 ~DO_upperClose @!
- 0 ~DO_slot09Fuse @!
- 0 ~DO_pumpMotor @!
- 0 ~DO_domeLights @!
+ 0 ~DI_Card08Fuse IN.I!POINT
+ 0 ~DO_Card08Fuse @!
+ 0 ~DO_UpperOpen @!
+ 0 ~DO_UpperClose @!
+ 0 ~DO_Card09Fuse @!
+ 0 ~DO_PumpMotor @!
+ 0 ~DO_DomeLights @!
  " Initializing variables" *_HSV_INIT_IO $MOVE
 0 ^AQ_Go_Fast_Ok @!
 0 ^AutoModeStarted @!
@@ -240,30 +248,32 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^CmdUPPER_CLOSE @!
 0 ^CmdUPPER_OPEN @!
 0 ^CountK1 @!
+0 ^FanCtrlMax @!
+-1 ^FaultLogged @!
 0 ^FaultModeStarted @!
 0 ^FLT_ClearSW @!
 0 ^FLT_CloseLS @!
 0 ^FLT_CloseTimeout @!
+0 ^FLT_CloseUpperFailedToStart @!
 0 ^FLT_DisabledCircuit @!
 0 ^FLT_K10overload @!
-0 ^FLT_K1off @!
 0 ^FLT_K1on @!
-0 ^FLT_K2off @!
 0 ^FLT_K2on @!
-0 ^FLT_K5off @!
-0 ^FLT_K5on @!
-0 ^FLT_K8overload @!
 0 ^FLT_K9overload @!
 0 ^FLT_LowerCloseTimeout @!
 0 ^FLT_LowerCloseUnknown @!
 0 ^FLT_LowerOpenTimeout @!
 0 ^FLT_OpenClearTimeout @!
+0 ^FLT_OpenUpperFailedToStart @!
+0 ^FLT_PumpContactorStuckOn @!
+0 ^FLT_PumpMTRcontactorNotOperating @!
 0 ^FLT_SLOT08fuse @!
 0 ^FLT_SLOT09fuse @!
 0 ^FLT_UpCloseOT @!
 0 ^FLT_UpCloseTimeout @!
 0 ^FLT_UpOpenOT @!
 0 ^FLT_UpOpenTimeout @!
+0 ^FLT_UpperMotorOverload @!
 0.. ^FPAC_scratchpad @!
 0 ^Function_Close_Started @!
 0 ^Function_LowerClose_Started @!
@@ -286,6 +296,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^nPeriodPosition1 @!
 0 ^nPeriodPosition2 @!
 0 ^nSubstringLength @!
+0 ^PanelFanErrorFlag @!
 0.0 ^Socket_Timer @!
 0.0 ^Socket_Timer_2 @!
 0 ^Status_AutoMode @!
@@ -294,6 +305,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^Status_ManualMode @!
 0 ^Status_Monitor_Started @!
 0 ^StatusTransmit_Status @!
+0.0 ^SynchClockTimer @!
 0.50000000 ^Time_defContactorOperate @!
 500 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
@@ -322,8 +334,14 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^WxOKposition @!
 0 ^WxStarted @!
 0 0 -1 }SLOT08_OFF InitTable
+" "
+ *FaultList $MOVE
+" "
+ *FaultListSubString $MOVE
 " xxx"
  *MasterCommand $MOVE
+" "
+ *Response $MOVE
 " "
  *s1stOctet $MOVE
 " "
@@ -341,6 +359,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " "
  *s_LightSW $MOVE
 " "
+ *S_WatchdogTimer $MOVE
+" "
  *sDomeAirTemp $MOVE
 " "
  *sEncl $MOVE
@@ -352,6 +372,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
  *sStatus_Shutter1 $MOVE
 " UNKNOWN"
  *sStatus_Shutter2 $MOVE
+" "
+ *sTimestamp $MOVE
 " "
  *SWversion $MOVE
 " GET /OKTOOPEN.html HTTP/1.0"

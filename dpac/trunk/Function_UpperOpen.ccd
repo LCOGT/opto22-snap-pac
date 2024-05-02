@@ -3,12 +3,12 @@
 : 5_1
 
 1 LINE.NUM
-  ~DO_upperOpen   ON
+  ~DO_UpperOpen   ON
 40 JUMP ;
 : 5_3
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 20 JUMP ;
 : 5_10
 
@@ -39,7 +39,7 @@
 : 5_42
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 21 JUMP ;
 : 5_50
 
@@ -49,17 +49,17 @@
 : 5_53
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 -2 JUMP ;
 : 5_67
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 33 JUMP ;
 : 5_68
 
 1 LINE.NUM
-  ^FLT_K1off   TRUE@!
+  ^FLT_OpenUpperFailedToStart   TRUE@!
 1 JUMP ;
 : 5_73
 
@@ -78,7 +78,7 @@
 : 5_99
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 13 JUMP ;
 : 5_104
 
@@ -90,7 +90,7 @@
 : 5_108
 
 1 LINE.NUM
-  ^FLT_K8overload   TRUE@!
+  ^FLT_UpperMotorOverload   TRUE@!
 -2 JUMP ;
 : 5_114
 
@@ -107,7 +107,7 @@
 : 5_122
 
 1 LINE.NUM
-  ~DO_upperOpen   OFF
+  ~DO_UpperOpen   OFF
 7 JUMP ;
 : 5_124
 
@@ -144,14 +144,14 @@
 TRUE
 
 1 LINE.NUM
-  ~SW_upperOpenLimit   ?OFF
+  ~DI_UpperOpenLimitSwitch   ?OFF
 LAND
 IF -8 ELSE -28 THEN JUMP ;
 : 5_14
 TRUE
 
 1 LINE.NUM
-  ~SW_upperOpenLimit   ?OFF
+  ~DI_UpperOpenLimitSwitch   ?OFF
 LAND
 IF -31 ELSE 0 THEN JUMP ;
 : 5_27
@@ -165,7 +165,7 @@ IF -28 ELSE 4 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -27 ELSE -4 THEN JUMP ;
 : 5_63
@@ -179,56 +179,56 @@ IF -27 ELSE 6 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -26 ELSE -34 THEN JUMP ;
 : 5_86
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -24 ELSE -33 THEN JUMP ;
 : 5_96
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperMotorOverload   ?OFF
+  ~DI_UpperMotorOverload   ?OFF
 LAND
 IF -24 ELSE 1 THEN JUMP ;
 : 5_103
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -24 ELSE -22 THEN JUMP ;
 : 5_110
 TRUE
 
 1 LINE.NUM
-  ~FLT_upperOpenOvrTrvl   ?OFF
+  ~DI_UpperOpenOvrTrvl   ?OFF
 LAND
 IF -19 ELSE -9 THEN JUMP ;
 : 5_119
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -21 ELSE -23 THEN JUMP ;
 : 5_147
 TRUE
 
 1 LINE.NUM
-  ~FB_upperOpen   ?OFF
+  ~DI_UpperOpenContactor   ?OFF
 LAND
 IF -11 ELSE -8 THEN JUMP ;
 : 5_168
 TRUE
 
 1 LINE.NUM
-  ~FB_slot08Fuse   ?ON
+  ~DI_Card08Fuse   ?ON
 LAND
 IF -34 ELSE -18 THEN JUMP ;
 T: T5

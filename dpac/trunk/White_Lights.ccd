@@ -10,7 +10,7 @@
 : 16_13
 
 1 LINE.NUM
-  ~DO_domeLights   OFF
+  ~DO_DomeLights   OFF
 
 2 LINE.NUM
   ^WTlightSwitchState @@ 
@@ -19,7 +19,7 @@
 : 16_16
 
 1 LINE.NUM
-  ~DO_domeLights   ON
+  ~DO_DomeLights   ON
 
 2 LINE.NUM
   ^WTlightSwitchState @@ 
@@ -60,7 +60,7 @@
 : 16_70
 
 1 LINE.NUM
-  ~DO_domeLights   ON
+  ~DO_DomeLights   ON
 
 2 LINE.NUM
   ^LightToggle @@ 
@@ -69,7 +69,7 @@
 : 16_71
 
 1 LINE.NUM
-  ~DO_domeLights   OFF
+  ~DO_DomeLights   OFF
 
 2 LINE.NUM
   ^LightToggle @@ 
@@ -78,7 +78,7 @@
 : 16_75
 
 1 LINE.NUM
-  ~DO_domeLights   ON
+  ~DO_DomeLights   ON
 -9 JUMP ;
 : 16_83
 1 LINE.NUM %A_1mFPAC 0 *s_LightSW  IO.SP.$READ DROP  
@@ -112,7 +112,7 @@ IF 0 ELSE 1 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DO_domeLights   ?ON
+  ~DO_DomeLights   ?ON
 LAND
 IF -17 ELSE -16 THEN JUMP ;
 : 16_62
@@ -127,14 +127,14 @@ IF 0 ELSE -10 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DO_domeLights   ?ON
+  ~DO_DomeLights   ?ON
 LAND
 IF -9 ELSE -10 THEN JUMP ;
 : 16_76
 TRUE
 
 1 LINE.NUM
-  ~SW_whiteLights   ?OFF
+  ~DI_SW_WhiteLights   ?OFF
 LAND
 IF -9 ELSE -6 THEN JUMP ;
 T: T16
