@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------
 # NAME :         C:\Users\jdeve\Desktop\PAC_programs\dpac\r10_inclinometer_VFD\DPAC.idb
 # VERSION :      R10.2a
-# TIME/DATE :    16:7:30 5/2/2024
+# TIME/DATE :    10:53:16 5/3/2024
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 

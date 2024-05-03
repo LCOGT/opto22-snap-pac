@@ -813,7 +813,13 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 4 LINE.NUM *FaultListSubString " , " $= IF 
 5 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
 6 LINE.NUM THEN 
-8 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+8 LINE.NUM *FaultList " " $= IF 
+9 LINE.NUM " None" *FaultList  $MOVE 
+10 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+11 LINE.NUM " " *FaultList  $MOVE 
+12 LINE.NUM ELSE 
+13 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+14 LINE.NUM THEN 
 1 JUMP ;
 : 3_550
 -80 JUMP ;
@@ -1028,19 +1034,6 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
 
 318 LINE.NUM THEN 
 320 LINE.NUM THEN 
-323 LINE.NUM ^FLT_UpOpenOT @@ 1 = IF 
-325 LINE.NUM 0 ^FLT_UpOpenOT @! 
-328 LINE.NUM -1 ^FaultLogged @! 
-329 LINE.NUM " UpperOpenOvertravel" 0 *FaultList  FindSubString ^FaultLogged @! 
-331 LINE.NUM ^FaultLogged @@ 0 >= IF 
-333 LINE.NUM ELSE 
-335 LINE.NUM " , UpperOpenOvertravel " *FaultList $CAT 
-
-336 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-337 LINE.NUM *sTimestamp *FaultList $CAT 
-
-338 LINE.NUM THEN 
-340 LINE.NUM THEN 
 343 LINE.NUM ^FLT_UpOpenTimeout @@ 1 = IF 
 345 LINE.NUM 0 ^FLT_UpOpenTimeout @! 
 348 LINE.NUM -1 ^FaultLogged @! 
@@ -1834,7 +1827,7 @@ T;
 
 1 LINE.NUM
   &Function_Close   STOP.T
-19 JUMP ;
+20 JUMP ;
 : 14_33
 
 1 LINE.NUM
@@ -1849,7 +1842,7 @@ T;
 
 1 LINE.NUM
   &Function_Close   STOP.T
-16 JUMP ;
+17 JUMP ;
 : 14_55
 
 1 LINE.NUM
@@ -1943,13 +1936,9 @@ IF -19 ELSE -18 THEN JUMP ;
 TRUE
 
 1 LINE.NUM
-  ~DI_UpperCloseLimitSwitch   ?OFF
-LAND
-
-2 LINE.NUM
   ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-IF -15 ELSE 0 THEN JUMP ;
+IF 5 ELSE 0 THEN JUMP ;
 : 14_21
 TRUE
 
@@ -1989,6 +1978,17 @@ TRUE
   &Function_UpperClose   ?RUNNING
 LAND
 IF -6 ELSE -22 THEN JUMP ;
+: 14_86
+FALSE
+
+1 LINE.NUM
+  ~DI_UpperCloseLimitSwitch   ?OFF
+LOR
+
+2 LINE.NUM
+  ~DI_UpperCloseOvrTrvl   ?OFF
+LOR
+IF -21 ELSE -6 THEN JUMP ;
 T: T14
 DUMMY
 14_0
@@ -2019,6 +2019,7 @@ DUMMY
 14_25
 14_34
 14_63
+14_86
 T;
 &Function_Close ' T14 SETTASK
 : 8_0
@@ -6186,9 +6187,9 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 04/30/24 " ;
-: TIMESTAMP ." 15:48:00 " ;
-: CRCSTAMP  ." C19B1BF668B0921053551F81B1516592 " ;
+: DATESTAMP ." 05/03/24 " ;
+: TIMESTAMP ." 10:53:16 " ;
+: CRCSTAMP  ." C90D49F0A70CE645B7A44AA080A1503E " ;
 MAKECHECK
 CLEAR.BREAKS
 

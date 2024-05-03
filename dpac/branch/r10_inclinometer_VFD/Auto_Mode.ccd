@@ -787,19 +787,6 @@
 
 318 LINE.NUM THEN 
 320 LINE.NUM THEN 
-323 LINE.NUM ^FLT_UpOpenOT @@ 1 = IF 
-325 LINE.NUM 0 ^FLT_UpOpenOT @! 
-328 LINE.NUM -1 ^FaultLogged @! 
-329 LINE.NUM " UpperOpenOvertravel" 0 *FaultList  FindSubString ^FaultLogged @! 
-331 LINE.NUM ^FaultLogged @@ 0 >= IF 
-333 LINE.NUM ELSE 
-335 LINE.NUM " , UpperOpenOvertravel " *FaultList $CAT 
-
-336 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-337 LINE.NUM *sTimestamp *FaultList $CAT 
-
-338 LINE.NUM THEN 
-340 LINE.NUM THEN 
 343 LINE.NUM ^FLT_UpOpenTimeout @@ 1 = IF 
 345 LINE.NUM 0 ^FLT_UpOpenTimeout @! 
 348 LINE.NUM -1 ^FaultLogged @! 
