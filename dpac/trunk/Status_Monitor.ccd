@@ -189,27 +189,32 @@
 53 LINE.NUM ELSE 
 54 LINE.NUM " Fault=0" 4 {Status $TABLE@  $MOVE 
 55 LINE.NUM THEN 
-58 LINE.NUM ~DI_CabinetDoorSwitch @@I 0 = IF 
-59 LINE.NUM " ObstacleWarning=1" 5 {Status $TABLE@  $MOVE 
+58 LINE.NUM *ErrorList  $LEN 0 > IF 
+59 LINE.NUM " Error=1" 5 {Status $TABLE@  $MOVE 
 60 LINE.NUM ELSE 
-61 LINE.NUM " ObstacleWarning=0" 5 {Status $TABLE@  $MOVE 
+61 LINE.NUM " Error=0" 5 {Status $TABLE@  $MOVE 
 62 LINE.NUM THEN 
-65 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-66 LINE.NUM *_HSV_SEMA Acquire1String " Timestamp="  *_HSV_TEMP $MOVE *sTimestamp  *_HSV_TEMP $CAT *_HSV_TEMP 6 {Status $TABLE@ $MOVE Release1String 
-69 LINE.NUM ~DO_DomeLights @@I 1 = IF 
-70 LINE.NUM " LightsOn=1" 7 {Status $TABLE@  $MOVE 
-71 LINE.NUM ELSE 
-72 LINE.NUM " LightsOn=0" 7 {Status $TABLE@  $MOVE 
-73 LINE.NUM THEN 
-76 LINE.NUM " SideSw=0" 8 {Status $TABLE@  $MOVE 
-79 LINE.NUM " Storm=0" 9 {Status $TABLE@  $MOVE 
-82 LINE.NUM " Switch=9" 10 {Status $TABLE@  $MOVE 
-85 LINE.NUM " Door=9" 11 {Status $TABLE@  $MOVE 
-88 LINE.NUM " E-stopON=9" 12 {Status $TABLE@  $MOVE 
-91 LINE.NUM " FenceSecure=9" 13 {Status $TABLE@  $MOVE 
-95 LINE.NUM ~AI_DomeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
-96 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
-97 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 14 {Status $TABLE@ $MOVE Release1String 
+65 LINE.NUM ~DI_CabinetDoorSwitch @@I 0 = IF 
+66 LINE.NUM " ObstacleWarning=1" 6 {Status $TABLE@  $MOVE 
+67 LINE.NUM ELSE 
+68 LINE.NUM " ObstacleWarning=0" 6 {Status $TABLE@  $MOVE 
+69 LINE.NUM THEN 
+72 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+73 LINE.NUM *_HSV_SEMA Acquire1String " Timestamp="  *_HSV_TEMP $MOVE *sTimestamp  *_HSV_TEMP $CAT *_HSV_TEMP 7 {Status $TABLE@ $MOVE Release1String 
+76 LINE.NUM ~DO_DomeLights @@I 1 = IF 
+77 LINE.NUM " LightsOn=1" 8 {Status $TABLE@  $MOVE 
+78 LINE.NUM ELSE 
+79 LINE.NUM " LightsOn=0" 8 {Status $TABLE@  $MOVE 
+80 LINE.NUM THEN 
+83 LINE.NUM " SideSw=0" 9 {Status $TABLE@  $MOVE 
+86 LINE.NUM " Storm=0" 10 {Status $TABLE@  $MOVE 
+89 LINE.NUM " Switch=9" 11 {Status $TABLE@  $MOVE 
+92 LINE.NUM " Door=9" 12 {Status $TABLE@  $MOVE 
+95 LINE.NUM " E-stopON=9" 13 {Status $TABLE@  $MOVE 
+98 LINE.NUM " FenceSecure=9" 14 {Status $TABLE@  $MOVE 
+102 LINE.NUM ~AI_DomeAirTemp @@ 7 3 *sDomeAirTemp  FF.R$ 
+103 LINE.NUM *sDomeAirTemp 3  SWAP $TRIM 
+104 LINE.NUM *_HSV_SEMA Acquire1String " DomeAirTemp="  *_HSV_TEMP $MOVE *sDomeAirTemp  *_HSV_TEMP $CAT *_HSV_TEMP 15 {Status $TABLE@ $MOVE Release1String 
 0 JUMP ;
 : 15_81
 1 LINE.NUM ~AI_CabinetTemp @@ 20 I>F F< IF 

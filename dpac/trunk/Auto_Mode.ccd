@@ -1,5 +1,5 @@
 : 3_0
-79 JUMP ;
+87 JUMP ;
 : 3_41
 
 1 LINE.NUM
@@ -8,7 +8,7 @@
 
 2 LINE.NUM
   ^Timer_HeartbeatWdog   StartTimer
-107 JUMP ;
+117 JUMP ;
 : 3_121
 
 1 LINE.NUM
@@ -160,7 +160,7 @@
 52 JUMP ;
 : 3_254
 1 LINE.NUM 0 ^CmdOPEN @! 
-74 JUMP ;
+82 JUMP ;
 : 3_273
 -18 JUMP ;
 : 3_279
@@ -179,7 +179,7 @@
 -2 JUMP ;
 : 3_288
 1 LINE.NUM 0 ^CmdCLOSE @! 
-71 JUMP ;
+79 JUMP ;
 : 3_291
 
 1 LINE.NUM
@@ -206,16 +206,16 @@
 -2 JUMP ;
 : 3_318
 1 LINE.NUM 0 ^CmdUPPER_OPEN @! 
-66 JUMP ;
+74 JUMP ;
 : 3_319
 1 LINE.NUM 0 ^CmdUPPER_CLOSE @! 
-67 JUMP ;
+75 JUMP ;
 : 3_320
 1 LINE.NUM 0 ^CmdLOWER_OPEN @! 
-65 JUMP ;
+73 JUMP ;
 : 3_321
 1 LINE.NUM 0 ^CmdLOWER_CLOSE @! 
-66 JUMP ;
+74 JUMP ;
 : 3_327
 
 1 LINE.NUM
@@ -223,7 +223,7 @@
 
 2 LINE.NUM
   100    DELAY
-53 JUMP ;
+61 JUMP ;
 : 3_330
 
 1 LINE.NUM
@@ -231,7 +231,7 @@
 
 2 LINE.NUM
   100    DELAY
-56 JUMP ;
+64 JUMP ;
 : 3_333
 
 1 LINE.NUM
@@ -239,7 +239,7 @@
 
 2 LINE.NUM
   100    DELAY
-53 JUMP ;
+61 JUMP ;
 : 3_336
 
 1 LINE.NUM
@@ -247,7 +247,7 @@
 
 2 LINE.NUM
   100    DELAY
-56 JUMP ;
+64 JUMP ;
 : 3_341
 -35 JUMP ;
 : 3_342
@@ -276,7 +276,7 @@
 -42 JUMP ;
 : 3_409
 1 LINE.NUM 0 ^CmdTOGGLE_LIGHTS @! 
-59 JUMP ;
+67 JUMP ;
 : 3_413
 -44 JUMP ;
 : 3_417
@@ -358,7 +358,7 @@
 : 3_435
 -51 JUMP ;
 : 3_444
-57 JUMP ;
+67 JUMP ;
 : 3_452
 1 LINE.NUM 0 ^CmdIlluminate_On @! 
 1 JUMP ;
@@ -778,42 +778,6 @@
 
 506 LINE.NUM THEN 
 508 LINE.NUM THEN 
-511 LINE.NUM ~DI_SmokeDetectorPWR @@I 0 = IF 
-514 LINE.NUM -1 ^FaultLogged @! 
-515 LINE.NUM " SmokeDetectorPower" 0 *FaultList  FindSubString ^FaultLogged @! 
-517 LINE.NUM ^FaultLogged @@ 0 >= IF 
-519 LINE.NUM ELSE 
-521 LINE.NUM " , SmokeDetectorPower " *FaultList $CAT 
-
-522 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-523 LINE.NUM *sTimestamp *FaultList $CAT 
-
-524 LINE.NUM THEN 
-526 LINE.NUM THEN 
-529 LINE.NUM ~DI_SmokeDetector @@I 0 = IF 
-532 LINE.NUM -1 ^FaultLogged @! 
-533 LINE.NUM " SmokeDetector" 0 *FaultList  FindSubString ^FaultLogged @! 
-535 LINE.NUM ^FaultLogged @@ 0 >= IF 
-537 LINE.NUM ELSE 
-539 LINE.NUM " , SmokeDetector " *FaultList $CAT 
-
-540 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-541 LINE.NUM *sTimestamp *FaultList $CAT 
-
-542 LINE.NUM THEN 
-544 LINE.NUM THEN 
-547 LINE.NUM ~DI_SmokeDetectorHeat @@I 1 = IF 
-550 LINE.NUM -1 ^FaultLogged @! 
-551 LINE.NUM " SmokeDetectorHeat" 0 *FaultList  FindSubString ^FaultLogged @! 
-553 LINE.NUM ^FaultLogged @@ 0 >= IF 
-555 LINE.NUM ELSE 
-557 LINE.NUM " , SmokeDetectorHeat " *FaultList $CAT 
-
-558 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-559 LINE.NUM *sTimestamp *FaultList $CAT 
-
-560 LINE.NUM THEN 
-562 LINE.NUM THEN 
 1 JUMP ;
 : 3_500
 -67 JUMP ;
@@ -823,12 +787,10 @@
 3 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
 4 LINE.NUM THEN 
 6 LINE.NUM *FaultList " " $= IF 
-7 LINE.NUM " None" *FaultList  $MOVE 
-8 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
-9 LINE.NUM " " *FaultList  $MOVE 
-10 LINE.NUM ELSE 
-11 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
-12 LINE.NUM THEN 
+7 LINE.NUM " None" *Master_Handle  PRT$ DROP  
+8 LINE.NUM ELSE 
+9 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+10 LINE.NUM THEN 
 -2 JUMP ;
 : 3_504
 1 LINE.NUM " " *Response  $MOVE 
@@ -936,6 +898,73 @@
 9 LINE.NUM THEN THEN 
 11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
 -22 JUMP ;
+: 3_539
+1 LINE.NUM 0 ^CmdClearErrors @! 
+1 JUMP ;
+: 3_540
+1 LINE.NUM 0 ^CmdGetErrors @! 
+3 JUMP ;
+: 3_546
+1 LINE.NUM " " *ErrorList  $MOVE 
+1 JUMP ;
+: 3_548
+-82 JUMP ;
+: 3_550
+1 LINE.NUM " " *Response  $MOVE 
+2 LINE.NUM " Success=True" *Response  $MOVE 
+4 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-2 JUMP ;
+: 3_552
+3 LINE.NUM ~DI_SmokeDetectorPWR @@I 0 = IF 
+6 LINE.NUM -1 ^ErrorLogged @! 
+7 LINE.NUM " SmokeDetectorPower" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+9 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+11 LINE.NUM ELSE 
+13 LINE.NUM " , SmokeDetectorPower " *ErrorList $CAT 
+
+14 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+15 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+16 LINE.NUM THEN 
+18 LINE.NUM THEN 
+21 LINE.NUM ~DI_SmokeDetector @@I 0 = IF 
+24 LINE.NUM -1 ^ErrorLogged @! 
+25 LINE.NUM " SmokeDetector" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+27 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+29 LINE.NUM ELSE 
+31 LINE.NUM " , SmokeDetector " *ErrorList $CAT 
+
+32 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+33 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+34 LINE.NUM THEN 
+36 LINE.NUM THEN 
+39 LINE.NUM ~DI_SmokeDetectorHeat @@I 1 = IF 
+42 LINE.NUM -1 ^ErrorLogged @! 
+43 LINE.NUM " SmokeDetectorHeat" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+45 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+47 LINE.NUM ELSE 
+49 LINE.NUM " , SmokeDetectorHeat " *ErrorList $CAT 
+
+50 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+51 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+52 LINE.NUM THEN 
+54 LINE.NUM THEN 
+0 JUMP ;
+: 3_555
+1 LINE.NUM *ErrorList 0 2 *ErrorListSubString  $SUB 
+2 LINE.NUM *ErrorListSubString " , " $= IF 
+3 LINE.NUM *ErrorList 2 200 *ErrorList  $SUB 
+4 LINE.NUM THEN 
+6 LINE.NUM *ErrorList " " $= IF 
+7 LINE.NUM " None" *Master_Handle  PRT$ DROP  
+8 LINE.NUM ELSE 
+9 LINE.NUM *ErrorList *Master_Handle  PRT$ DROP  
+10 LINE.NUM THEN 
+0 JUMP ;
+: 3_556
+-86 JUMP ;
 : 3_38
 TRUE
 
@@ -943,7 +972,7 @@ TRUE
   ^CmdHEARTBEAT @@ 
   1    =
 LAND
-IF -64 ELSE 0 THEN JUMP ;
+IF -72 ELSE 0 THEN JUMP ;
 : 3_45
 TRUE
 
@@ -957,119 +986,119 @@ TRUE
 1 LINE.NUM
   ~DI_SW_Stop   ?OFF
 LAND
-IF -69 ELSE -3 THEN JUMP ;
+IF -77 ELSE -3 THEN JUMP ;
 : 3_66
 TRUE
 
 1 LINE.NUM
   ^CmdOPEN @@   0<>
 LAND
-IF -66 ELSE 0 THEN JUMP ;
+IF -74 ELSE 0 THEN JUMP ;
 : 3_94
 TRUE
 
 1 LINE.NUM
   ^CmdCLOSE @@   0<>
 LAND
-IF -24 ELSE 0 THEN JUMP ;
+IF -32 ELSE 0 THEN JUMP ;
 : 3_114
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_OPEN @@   0<>
 LAND
-IF -58 ELSE 1 THEN JUMP ;
+IF -66 ELSE 1 THEN JUMP ;
 : 3_123
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -82 ELSE -83 THEN JUMP ;
+IF -90 ELSE -91 THEN JUMP ;
 : 3_127
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_CLOSE @@   0<>
 LAND
-IF -59 ELSE 1 THEN JUMP ;
+IF -67 ELSE 1 THEN JUMP ;
 : 3_135
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -82 ELSE -83 THEN JUMP ;
+IF -90 ELSE -91 THEN JUMP ;
 : 3_140
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_OPEN @@   0<>
 LAND
-IF -60 ELSE 1 THEN JUMP ;
+IF -68 ELSE 1 THEN JUMP ;
 : 3_143
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -83 ELSE -82 THEN JUMP ;
+IF -91 ELSE -90 THEN JUMP ;
 : 3_153
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_CLOSE @@   0<>
 LAND
-IF -61 ELSE 11 THEN JUMP ;
+IF -69 ELSE 11 THEN JUMP ;
 : 3_160
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -82 ELSE -83 THEN JUMP ;
+IF -90 ELSE -91 THEN JUMP ;
 : 3_282
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -73 ELSE -74 THEN JUMP ;
+IF -81 ELSE -82 THEN JUMP ;
 : 3_290
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -72 ELSE -71 THEN JUMP ;
+IF -80 ELSE -79 THEN JUMP ;
 : 3_328
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -64 ELSE -10 THEN JUMP ;
+IF -72 ELSE -10 THEN JUMP ;
 : 3_331
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -64 ELSE -7 THEN JUMP ;
+IF -72 ELSE -7 THEN JUMP ;
 : 3_334
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -64 ELSE -10 THEN JUMP ;
+IF -72 ELSE -10 THEN JUMP ;
 : 3_337
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -64 ELSE -7 THEN JUMP ;
+IF -72 ELSE -7 THEN JUMP ;
 : 3_365
 TRUE
 
@@ -1080,7 +1109,7 @@ LAND
 2 LINE.NUM
   ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-IF -74 ELSE 8 THEN JUMP ;
+IF -82 ELSE 8 THEN JUMP ;
 : 3_385
 TRUE
 
@@ -1091,77 +1120,91 @@ LAND
 2 LINE.NUM
   ~DI_UpperCloseLimitSwitch   ?OFF
 LAND
-IF -58 ELSE 0 THEN JUMP ;
+IF -66 ELSE 0 THEN JUMP ;
 : 3_386
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -61 ELSE -60 THEN JUMP ;
+IF -69 ELSE -68 THEN JUMP ;
 : 3_394
 TRUE
 
 1 LINE.NUM
   ^Timer_WxWdog   T0=
 LAND
-IF -3 ELSE 8 THEN JUMP ;
+IF -3 ELSE 10 THEN JUMP ;
 : 3_406
 TRUE
 
 1 LINE.NUM
   ^CmdTOGGLE_LIGHTS @@   0<>
 LAND
-IF -60 ELSE 2 THEN JUMP ;
+IF -68 ELSE 2 THEN JUMP ;
 : 3_415
 TRUE
 
 1 LINE.NUM
   ^LightToggle @@   0<>
 LAND
-IF -59 ELSE -58 THEN JUMP ;
+IF -67 ELSE -66 THEN JUMP ;
 : 3_437
 TRUE
 
 1 LINE.NUM
   ^CmdSTOP @@   0<>
 LAND
-IF -58 ELSE -23 THEN JUMP ;
+IF -66 ELSE -23 THEN JUMP ;
 : 3_450
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_On @@   0<>
 LAND
-IF -53 ELSE 0 THEN JUMP ;
+IF -61 ELSE 0 THEN JUMP ;
 : 3_457
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_Off @@   0<>
 LAND
-IF -53 ELSE 2 THEN JUMP ;
+IF -61 ELSE 2 THEN JUMP ;
 : 3_477
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -83 ELSE -49 THEN JUMP ;
+IF -91 ELSE -57 THEN JUMP ;
 : 3_483
 TRUE
 
 1 LINE.NUM
   ^CmdGET_FAULTS @@   0<>
 LAND
-IF -48 ELSE -70 THEN JUMP ;
+IF -56 ELSE 1 THEN JUMP ;
 : 3_484
 TRUE
 
 1 LINE.NUM
   ^CmdCLEAR_FAULTS @@   0<>
 LAND
-IF -48 ELSE -2 THEN JUMP ;
+IF -56 ELSE -2 THEN JUMP ;
+: 3_537
+TRUE
+
+1 LINE.NUM
+  ^CmdClearErrors @@   0<>
+LAND
+IF -40 ELSE 0 THEN JUMP ;
+: 3_538
+TRUE
+
+1 LINE.NUM
+  ^CmdGetErrors @@   0<>
+LAND
+IF -40 ELSE -81 THEN JUMP ;
 T: T3
 DUMMY
 3_0
@@ -1242,6 +1285,14 @@ DUMMY
 3_526
 3_529
 3_532
+3_539
+3_540
+3_546
+3_548
+3_550
+3_552
+3_555
+3_556
 3_38
 3_45
 3_58
@@ -1273,5 +1324,7 @@ DUMMY
 3_477
 3_483
 3_484
+3_537
+3_538
 T;
 &Auto_Mode ' T3 SETTASK
