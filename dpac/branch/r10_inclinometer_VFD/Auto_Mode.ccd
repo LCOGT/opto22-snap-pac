@@ -1,5 +1,5 @@
 : 3_0
-83 JUMP ;
+91 JUMP ;
 : 3_41
 
 1 LINE.NUM
@@ -155,7 +155,7 @@
 57 JUMP ;
 : 3_254
 1 LINE.NUM 0 ^CmdOPEN @! 
-78 JUMP ;
+86 JUMP ;
 : 3_273
 -18 JUMP ;
 : 3_279
@@ -174,7 +174,7 @@
 -2 JUMP ;
 : 3_288
 1 LINE.NUM 0 ^CmdCLOSE @! 
-75 JUMP ;
+83 JUMP ;
 : 3_291
 
 1 LINE.NUM
@@ -201,16 +201,16 @@
 -2 JUMP ;
 : 3_318
 1 LINE.NUM 0 ^CmdUPPER_OPEN @! 
-86 JUMP ;
+94 JUMP ;
 : 3_319
 1 LINE.NUM 0 ^CmdUPPER_CLOSE @! 
-84 JUMP ;
+92 JUMP ;
 : 3_320
 1 LINE.NUM 0 ^CmdLOWER_OPEN @! 
-69 JUMP ;
+77 JUMP ;
 : 3_321
 1 LINE.NUM 0 ^CmdLOWER_CLOSE @! 
-70 JUMP ;
+78 JUMP ;
 : 3_327
 
 1 LINE.NUM
@@ -218,7 +218,7 @@
 
 2 LINE.NUM
   100    DELAY
-57 JUMP ;
+65 JUMP ;
 : 3_330
 
 1 LINE.NUM
@@ -226,7 +226,7 @@
 
 2 LINE.NUM
   100    DELAY
-60 JUMP ;
+68 JUMP ;
 : 3_333
 
 1 LINE.NUM
@@ -234,7 +234,7 @@
 
 2 LINE.NUM
   100    DELAY
-57 JUMP ;
+65 JUMP ;
 : 3_336
 
 1 LINE.NUM
@@ -242,7 +242,7 @@
 
 2 LINE.NUM
   100    DELAY
-60 JUMP ;
+68 JUMP ;
 : 3_341
 -35 JUMP ;
 : 3_342
@@ -269,7 +269,7 @@
 -41 JUMP ;
 : 3_409
 1 LINE.NUM 0 ^CmdTOGGLE_LIGHTS @! 
-64 JUMP ;
+72 JUMP ;
 : 3_413
 -43 JUMP ;
 : 3_417
@@ -339,7 +339,7 @@
 : 3_435
 -50 JUMP ;
 : 3_444
-65 JUMP ;
+75 JUMP ;
 : 3_452
 1 LINE.NUM 0 ^CmdIlluminate_On @! 
 1 JUMP ;
@@ -567,12 +567,10 @@
 5 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
 6 LINE.NUM THEN 
 8 LINE.NUM *FaultList " " $= IF 
-9 LINE.NUM " None" *FaultList  $MOVE 
-10 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
-11 LINE.NUM " " *FaultList  $MOVE 
-12 LINE.NUM ELSE 
-13 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
-14 LINE.NUM THEN 
+9 LINE.NUM " None" *Master_Handle  PRT$ DROP  
+10 LINE.NUM ELSE 
+11 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+12 LINE.NUM THEN 
 1 JUMP ;
 : 3_550
 -80 JUMP ;
@@ -933,6 +931,73 @@
 576 LINE.NUM THEN 
 578 LINE.NUM THEN 
 -4 JUMP ;
+: 3_565
+-83 JUMP ;
+: 3_566
+1 LINE.NUM *ErrorList 0 2 *ErrorListSubString  $SUB 
+2 LINE.NUM *ErrorListSubString " , " $= IF 
+3 LINE.NUM *ErrorList 2 200 *ErrorList  $SUB 
+4 LINE.NUM THEN 
+6 LINE.NUM *ErrorList " " $= IF 
+7 LINE.NUM " None" *Master_Handle  PRT$ DROP  
+8 LINE.NUM ELSE 
+9 LINE.NUM *ErrorList *Master_Handle  PRT$ DROP  
+10 LINE.NUM THEN 
+-2 JUMP ;
+: 3_568
+3 LINE.NUM ~DI_SmokeDetectorPWR @@I 0 = IF 
+6 LINE.NUM -1 ^ErrorLogged @! 
+7 LINE.NUM " SmokeDetectorPower" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+9 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+11 LINE.NUM ELSE 
+13 LINE.NUM " , SmokeDetectorPower " *ErrorList $CAT 
+
+14 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+15 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+16 LINE.NUM THEN 
+18 LINE.NUM THEN 
+21 LINE.NUM ~DI_SmokeDetector @@I 0 = IF 
+24 LINE.NUM -1 ^ErrorLogged @! 
+25 LINE.NUM " SmokeDetector" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+27 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+29 LINE.NUM ELSE 
+31 LINE.NUM " , SmokeDetector " *ErrorList $CAT 
+
+32 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+33 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+34 LINE.NUM THEN 
+36 LINE.NUM THEN 
+39 LINE.NUM ~DI_SmokeDetectorHeat @@I 1 = IF 
+42 LINE.NUM -1 ^ErrorLogged @! 
+43 LINE.NUM " SmokeDetectorHeat" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+45 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+47 LINE.NUM ELSE 
+49 LINE.NUM " , SmokeDetectorHeat " *ErrorList $CAT 
+
+50 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+51 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+52 LINE.NUM THEN 
+54 LINE.NUM THEN 
+-2 JUMP ;
+: 3_570
+1 LINE.NUM " " *Response  $MOVE 
+2 LINE.NUM " Success=True" *Response  $MOVE 
+4 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+0 JUMP ;
+: 3_572
+-87 JUMP ;
+: 3_574
+1 LINE.NUM " " *ErrorList  $MOVE 
+-3 JUMP ;
+: 3_578
+1 LINE.NUM 0 ^CmdGetErrors @! 
+-5 JUMP ;
+: 3_579
+1 LINE.NUM 0 ^CmdClearErrors @! 
+-3 JUMP ;
 : 3_38
 TRUE
 
@@ -940,7 +1005,7 @@ TRUE
   ^CmdHEARTBEAT @@ 
   1    =
 LAND
-IF -68 ELSE 0 THEN JUMP ;
+IF -76 ELSE 0 THEN JUMP ;
 : 3_45
 TRUE
 
@@ -954,119 +1019,119 @@ TRUE
 1 LINE.NUM
   ~DI_SW_Stop   ?OFF
 LAND
-IF -73 ELSE -3 THEN JUMP ;
+IF -81 ELSE -3 THEN JUMP ;
 : 3_66
 TRUE
 
 1 LINE.NUM
   ^CmdOPEN @@   0<>
 LAND
-IF -70 ELSE 0 THEN JUMP ;
+IF -78 ELSE 0 THEN JUMP ;
 : 3_94
 TRUE
 
 1 LINE.NUM
   ^CmdCLOSE @@   0<>
 LAND
-IF -30 ELSE 0 THEN JUMP ;
+IF -38 ELSE 0 THEN JUMP ;
 : 3_114
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_OPEN @@   0<>
 LAND
-IF -62 ELSE 1 THEN JUMP ;
+IF -70 ELSE 1 THEN JUMP ;
 : 3_123
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -86 ELSE -87 THEN JUMP ;
+IF -94 ELSE -95 THEN JUMP ;
 : 3_127
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_CLOSE @@   0<>
 LAND
-IF -63 ELSE 1 THEN JUMP ;
+IF -71 ELSE 1 THEN JUMP ;
 : 3_135
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -86 ELSE -87 THEN JUMP ;
+IF -94 ELSE -95 THEN JUMP ;
 : 3_140
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_OPEN @@   0<>
 LAND
-IF -64 ELSE 1 THEN JUMP ;
+IF -72 ELSE 1 THEN JUMP ;
 : 3_143
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -87 ELSE -86 THEN JUMP ;
+IF -95 ELSE -94 THEN JUMP ;
 : 3_153
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_CLOSE @@   0<>
 LAND
-IF -65 ELSE 11 THEN JUMP ;
+IF -73 ELSE 11 THEN JUMP ;
 : 3_160
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -86 ELSE -87 THEN JUMP ;
+IF -94 ELSE -95 THEN JUMP ;
 : 3_282
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -77 ELSE -78 THEN JUMP ;
+IF -85 ELSE -86 THEN JUMP ;
 : 3_290
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -76 ELSE -75 THEN JUMP ;
+IF -84 ELSE -83 THEN JUMP ;
 : 3_328
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -68 ELSE -10 THEN JUMP ;
+IF -76 ELSE -10 THEN JUMP ;
 : 3_331
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -68 ELSE -7 THEN JUMP ;
+IF -76 ELSE -7 THEN JUMP ;
 : 3_334
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -68 ELSE -10 THEN JUMP ;
+IF -76 ELSE -10 THEN JUMP ;
 : 3_337
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -68 ELSE -7 THEN JUMP ;
+IF -76 ELSE -7 THEN JUMP ;
 : 3_365
 TRUE
 
@@ -1077,7 +1142,7 @@ LAND
 2 LINE.NUM
   ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-IF -78 ELSE 8 THEN JUMP ;
+IF -86 ELSE 8 THEN JUMP ;
 : 3_385
 TRUE
 
@@ -1088,98 +1153,112 @@ LAND
 2 LINE.NUM
   ~DI_UpperCloseLimitSwitch   ?OFF
 LAND
-IF -63 ELSE 0 THEN JUMP ;
+IF -71 ELSE 0 THEN JUMP ;
 : 3_386
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -66 ELSE -65 THEN JUMP ;
+IF -74 ELSE -73 THEN JUMP ;
 : 3_394
 TRUE
 
 1 LINE.NUM
   ^Timer_WxWdog   T0=
 LAND
-IF -3 ELSE 11 THEN JUMP ;
+IF -3 ELSE 13 THEN JUMP ;
 : 3_406
 TRUE
 
 1 LINE.NUM
   ^CmdTOGGLE_LIGHTS @@   0<>
 LAND
-IF -65 ELSE 2 THEN JUMP ;
+IF -73 ELSE 2 THEN JUMP ;
 : 3_415
 TRUE
 
 1 LINE.NUM
   ^LightToggle @@   0<>
 LAND
-IF -64 ELSE -63 THEN JUMP ;
+IF -72 ELSE -71 THEN JUMP ;
 : 3_437
 TRUE
 
 1 LINE.NUM
   ^CmdSTOP @@   0<>
 LAND
-IF -63 ELSE -23 THEN JUMP ;
+IF -71 ELSE -23 THEN JUMP ;
 : 3_450
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_On @@   0<>
 LAND
-IF -58 ELSE 0 THEN JUMP ;
+IF -66 ELSE 0 THEN JUMP ;
 : 3_457
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_Off @@   0<>
 LAND
-IF -58 ELSE 4 THEN JUMP ;
+IF -66 ELSE 4 THEN JUMP ;
 : 3_477
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -87 ELSE -55 THEN JUMP ;
+IF -95 ELSE -63 THEN JUMP ;
 : 3_482
 TRUE
 
 1 LINE.NUM
   ^VFD_FAULT_RESET @@   0<>
 LAND
-IF -54 ELSE 4 THEN JUMP ;
+IF -62 ELSE 6 THEN JUMP ;
 : 3_509
 TRUE
 
 1 LINE.NUM
   ~DI_VFDfault   ?OFF
 LAND
-IF -45 ELSE -14 THEN JUMP ;
+IF -53 ELSE -14 THEN JUMP ;
 : 3_520
 TRUE
 
 1 LINE.NUM
   ~DI_VFDfault   ?OFF
 LAND
-IF -45 ELSE -17 THEN JUMP ;
+IF -53 ELSE -17 THEN JUMP ;
 : 3_538
 TRUE
 
 1 LINE.NUM
   ^CmdCLEAR_FAULTS @@   0<>
 LAND
-IF -41 ELSE 0 THEN JUMP ;
+IF -49 ELSE 0 THEN JUMP ;
 : 3_539
 TRUE
 
 1 LINE.NUM
   ^CmdGET_FAULTS @@   0<>
 LAND
-IF -41 ELSE -79 THEN JUMP ;
+IF -49 ELSE 1 THEN JUMP ;
+: 3_580
+TRUE
+
+1 LINE.NUM
+  ^CmdGetErrors @@   0<>
+LAND
+IF -37 ELSE -88 THEN JUMP ;
+: 3_581
+TRUE
+
+1 LINE.NUM
+  ^CmdClearErrors @@   0<>
+LAND
+IF -37 ELSE -2 THEN JUMP ;
 T: T3
 DUMMY
 3_0
@@ -1264,6 +1343,14 @@ DUMMY
 3_550
 3_551
 3_558
+3_565
+3_566
+3_568
+3_570
+3_572
+3_574
+3_578
+3_579
 3_38
 3_45
 3_58
@@ -1298,5 +1385,7 @@ DUMMY
 3_520
 3_538
 3_539
+3_580
+3_581
 T;
 &Auto_Mode ' T3 SETTASK

@@ -19,8 +19,10 @@ CREATE V.ARRAY
 ^AQ_Go_Fast_Ok ,
 ^AutoModeStarted ,
 ^CmdCLEAR_FAULTS ,
+^CmdClearErrors ,
 ^CmdCLOSE ,
 ^CmdGET_FAULTS ,
+^CmdGetErrors ,
 ^CmdHEARTBEAT ,
 ^CmdIlluminate_Off ,
 ^CmdIlluminate_On ,
@@ -33,6 +35,7 @@ CREATE V.ARRAY
 ^CmdUPPER_CLOSE ,
 ^CmdUPPER_OPEN ,
 ^CountK1 ,
+^ErrorLogged ,
 ^FanCtrlMax ,
 ^FaultListLength ,
 ^FaultLogged ,
@@ -105,6 +108,8 @@ CREATE V.ARRAY
 ^WxLoopNum ,
 ^WxOKposition ,
 ^WxStarted ,
+*ErrorList ,
+*ErrorListSubString ,
 *FaultList ,
 *FaultListSubString ,
 *MasterCommand ,
@@ -233,8 +238,10 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^AQ_Go_Fast_Ok @!
 0 ^AutoModeStarted @!
 0 ^CmdCLEAR_FAULTS @!
+0 ^CmdClearErrors @!
 0 ^CmdCLOSE @!
 0 ^CmdGET_FAULTS @!
+0 ^CmdGetErrors @!
 0 ^CmdHEARTBEAT @!
 0 ^CmdIlluminate_Off @!
 0 ^CmdIlluminate_On @!
@@ -247,6 +254,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^CmdUPPER_CLOSE @!
 0 ^CmdUPPER_OPEN @!
 0 ^CountK1 @!
+0 ^ErrorLogged @!
 0 ^FanCtrlMax @!
 0 ^FaultListLength @!
 -1 ^FaultLogged @!
@@ -305,8 +313,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0.50000000 ^Time_defContactorOperate @!
 1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
-60.000000 ^Time_defLowerClose @!
-60.000000 ^Time_defLowerOpen @!
+90.000000 ^Time_defLowerClose @!
+90.000000 ^Time_defLowerOpen @!
 30.000000 ^Time_defOpenClear @!
 180.00000 ^Time_defUpperOperate @!
 5.0000000 ^Time_defWxWdogTimer @!
@@ -331,6 +339,10 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^WxOKposition @!
 0 ^WxStarted @!
 0 0 -1 }SLOT08_OFF InitTable
+" "
+ *ErrorList $MOVE
+" "
+ *ErrorListSubString $MOVE
 " "
  *FaultList $MOVE
 " "

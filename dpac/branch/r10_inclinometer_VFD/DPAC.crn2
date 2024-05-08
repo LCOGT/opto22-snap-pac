@@ -17,8 +17,10 @@
 0 IVAR ^AQ_Go_Fast_Ok
 0 IVAR ^AutoModeStarted
 0 IVAR ^CmdCLEAR_FAULTS
+0 IVAR ^CmdClearErrors
 0 IVAR ^CmdCLOSE
 0 IVAR ^CmdGET_FAULTS
+0 IVAR ^CmdGetErrors
 0 IVAR ^CmdHEARTBEAT
 0 IVAR ^CmdIlluminate_Off
 0 IVAR ^CmdIlluminate_On
@@ -31,6 +33,7 @@
 0 IVAR ^CmdUPPER_CLOSE
 0 IVAR ^CmdUPPER_OPEN
 0 IVAR ^CountK1
+0 IVAR ^ErrorLogged
 0 IVAR ^FanCtrlMax
 0 IVAR ^FaultListLength
 0 IVAR ^FaultLogged
@@ -114,6 +117,8 @@
 0 IVAR ^WxLoopNum
 0 IVAR ^WxOKposition
 0 IVAR ^WxStarted
+100 0 $VAR *ErrorList 
+10 0 $VAR *ErrorListSubString 
 1000 0 $VAR *FaultList 
 20 0 $VAR *FaultListSubString 
 3 0 $VAR *MasterCommand 
@@ -140,7 +145,7 @@
 1024 0 COMVAR *Master_Handle 
 1024 0 COMVAR *Wx_Handle 
 4 0 ITABLE }SLOT08_OFF
-20 30 0 $TABLE {Status 
+20 35 0 $TABLE {Status 
 
 $0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
