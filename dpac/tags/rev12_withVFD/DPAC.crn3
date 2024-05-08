@@ -1,0 +1,408 @@
+CREATE T.ARRAY
+&Auto_Mode ,
+&Check_Wx ,
+&Fault_Mode ,
+&Function_Close ,
+&Function_LowerClose ,
+&Function_LowerOpen ,
+&Function_Open ,
+&Function_UpperClose ,
+&Function_UpperOpen ,
+&Main ,
+&Manual_Mode ,
+&Master_Comm ,
+&Powerup ,
+&Status_Monitor ,
+&White_Lights ,
+ 0 ,
+CREATE V.ARRAY
+^AQ_Go_Fast_Ok ,
+^AutoModeStarted ,
+^CmdCLEAR_FAULTS ,
+^CmdClearErrors ,
+^CmdCLOSE ,
+^CmdGET_FAULTS ,
+^CmdGetErrors ,
+^CmdHEARTBEAT ,
+^CmdIlluminate_Off ,
+^CmdIlluminate_On ,
+^CmdLOWER_CLOSE ,
+^CmdLOWER_OPEN ,
+^CmdOPEN ,
+^CmdSTATUS ,
+^CmdSTOP ,
+^CmdTOGGLE_LIGHTS ,
+^CmdUPPER_CLOSE ,
+^CmdUPPER_OPEN ,
+^CountK1 ,
+^ErrorLogged ,
+^FanCtrlMax ,
+^FaultListLength ,
+^FaultLogged ,
+^FaultModeStarted ,
+^FLT_ClearSW ,
+^FLT_CloseTimeout ,
+^FLT_CloseUpperFailedToStart ,
+^FLT_DisabledCircuit ,
+^FLT_DriveRunning ,
+^FLT_LowerCloseTimeout ,
+^FLT_LowerOpenTimeout ,
+^FLT_OpenClearTimeout ,
+^FLT_OpenUpperFailedToStart ,
+^FLT_PumpContactorStuckOn ,
+^FLT_PumpMotorOverload ,
+^FLT_PumpMTRcontactorNotOperating ,
+^FLT_SLOT08fuse ,
+^FLT_SLOT09fuse ,
+^FLT_UpCloseTimeout ,
+^FLT_UpOpenOT ,
+^FLT_UpOpenTimeout ,
+^FLT_VFDoverload ,
+^FPAC_scratchpad ,
+^Function_Close_Started ,
+^Function_LowerClose_Started ,
+^Function_LowerOpen_Started ,
+^Function_Open_Started ,
+^Function_UpperClose_Started ,
+^Function_UpperOpen_Started ,
+^GetScratchBits ,
+^LightToggle ,
+^LightToggleOld ,
+^ListeningForMaster ,
+^LowerShutterIsOpenViaInclinometer ,
+^MainChartStarted ,
+^ManModeStarted ,
+^Master_CommClosed ,
+^Master_CommStarted ,
+^Master_Handle_CharNumWaiting ,
+^MasterCommandNum ,
+^MasterCommandStringRcvd ,
+^MasterCommEstablished ,
+^nPeriodPosition1 ,
+^nPeriodPosition2 ,
+^nSubstringLength ,
+^PanelFanErrorFlag ,
+^Status_AutoMode ,
+^Status_DisabledMode ,
+^Status_FaultMode ,
+^Status_ManualMode ,
+^Status_Monitor_Started ,
+^StatusTransmit_Status ,
+^Time_defContactorOperate ,
+^Time_defContactorRelease ,
+^Time_defHeartbeatWdog ,
+^Time_defLowerClose ,
+^Time_defLowerOpen ,
+^Time_defOpenClear ,
+^Time_defUpperOperate ,
+^Time_defWxWdogTimer ,
+^VFD_FAULT_RESET ,
+^White_Lights_Chart ,
+^WTlightSwitchState ,
+^WTswitchOldState ,
+^Wx_Handle_CharCountWaiting ,
+^WxClosed ,
+^WxCommEstablished ,
+^WxGETstringSent ,
+^WxHTML_received ,
+^WxLoopNum ,
+^WxOKposition ,
+^WxStarted ,
+*ErrorList ,
+*ErrorListSubString ,
+*FaultList ,
+*FaultListSubString ,
+*MasterCommand ,
+*Response ,
+*s1stOctet ,
+*s2ndOctet ,
+*s3rdOctet ,
+*s4thOctet ,
+*s_DomeClose ,
+*s_DomeOpen ,
+*s_DomeStop ,
+*s_LightSW ,
+*S_WatchDogTimer ,
+*sDomeAirTemp ,
+*sEncl ,
+*sIP_PAC ,
+*sSite ,
+*sStatus_Shutter1 ,
+*sStatus_Shutter2 ,
+*sTimestamp ,
+*SWversion ,
+*WxGETstring ,
+*WxHTML ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*Master_Handle ,
+*Wx_Handle ,
+ 0 ,
+CREATE TI.ARRAY
+^Socket_Timer ,
+^Socket_Timer_2 ,
+^SynchClockTimer ,
+^Timer_Close ,
+^Timer_HeartbeatWdog ,
+^Timer_LowerContactor ,
+^Timer_LowerOperate ,
+^Timer_OpenClear ,
+^Timer_UpperContactor ,
+^Timer_UpperOperate ,
+^Timer_WxWdog ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+}SLOT08_OFF ,
+{Status ,
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%A_1mFPAC ,
+%Local_IO ,
+ 0 ,
+CREATE P.ARRAY
+~DI_CabinetDoorSwitch ,
+~DI_Card08Fuse ,
+~DI_Card09Fuse ,
+~DI_DriveRun ,
+~DI_LambertCircuitBreaker ,
+~DI_LambertPWR ,
+~DI_LowerCloseLimitSwitch ,
+~DI_LowerOpenLimitSwitch ,
+~DI_PumpMotorCircuitBreaker ,
+~DI_PumpMotorContactor ,
+~DI_PumpMotorOverload ,
+~DI_SmokeDetector ,
+~DI_SmokeDetectorHeat ,
+~DI_SmokeDetectorPWR ,
+~DI_SW_Auto ,
+~DI_SW_LowerClose ,
+~DI_SW_LowerOpen ,
+~DI_SW_Standby ,
+~DI_SW_Stop ,
+~DI_SW_UpperClose ,
+~DI_SW_UpperOpen ,
+~DI_SW_WhiteLights ,
+~DI_UpperCloseLimitSwitch ,
+~DI_UpperCloseOvrTrvl ,
+~DI_UpperMotorCircuitBreaker ,
+~DI_UpperOpenLimitSwitch ,
+~DI_UpperOpenOvrTrvl ,
+~DI_UpperShutterClearSwitch ,
+~DI_VFDfault ,
+~DI_VFDoverload ,
+~DI_WhiteLightsCircuitBreaker ,
+~DI_WirelessFault ,
+~DO_Card08Fuse ,
+~DO_Card09Fuse ,
+~DO_DomeLights ,
+~DO_Illuminate ,
+~DO_LowerCloseValve ,
+~DO_LowerOpenValve ,
+~DO_PumpMotor ,
+~DO_UpperClose ,
+~DO_UpperOpen ,
+~DO_VFDfaultReset ,
+~AI_CabinetFanTach ,
+~AI_CabinetTemp ,
+~AI_DomeAirTemp ,
+~AI_LowerShutterAngle ,
+~AO_CabinetFanCtrl ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+$0000000000000000.. %A_1mFPAC ENABLES!
+" %A_1mFPAC  (1/2)" *_HSV_INIT_IO $MOVE 1 ^_HNV_INIT_IO @!
+%A_1mFPAC ENABLE
+" %Local_IO  (2/2)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%Local_IO ENABLE
+ 0 ~DI_Card08Fuse IN.I!POINT
+ 0 ~DO_Card08Fuse @!
+ 0 ~DO_UpperOpen @!
+ 0 ~DO_UpperClose @!
+ 0 ~DO_Card09Fuse @!
+ 0 ~DO_PumpMotor @!
+ 0 ~DO_DomeLights @!
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^AQ_Go_Fast_Ok @!
+0 ^AutoModeStarted @!
+0 ^CmdCLEAR_FAULTS @!
+0 ^CmdClearErrors @!
+0 ^CmdCLOSE @!
+0 ^CmdGET_FAULTS @!
+0 ^CmdGetErrors @!
+0 ^CmdHEARTBEAT @!
+0 ^CmdIlluminate_Off @!
+0 ^CmdIlluminate_On @!
+0 ^CmdLOWER_CLOSE @!
+0 ^CmdLOWER_OPEN @!
+0 ^CmdOPEN @!
+0 ^CmdSTATUS @!
+0 ^CmdSTOP @!
+0 ^CmdTOGGLE_LIGHTS @!
+0 ^CmdUPPER_CLOSE @!
+0 ^CmdUPPER_OPEN @!
+0 ^CountK1 @!
+0 ^ErrorLogged @!
+0 ^FanCtrlMax @!
+0 ^FaultListLength @!
+-1 ^FaultLogged @!
+0 ^FaultModeStarted @!
+0 ^FLT_ClearSW @!
+0 ^FLT_CloseTimeout @!
+0 ^FLT_CloseUpperFailedToStart @!
+0 ^FLT_DisabledCircuit @!
+0 ^FLT_DriveRunning @!
+0 ^FLT_LowerCloseTimeout @!
+0 ^FLT_LowerOpenTimeout @!
+0 ^FLT_OpenClearTimeout @!
+0 ^FLT_OpenUpperFailedToStart @!
+0 ^FLT_PumpContactorStuckOn @!
+0 ^FLT_PumpMotorOverload @!
+0 ^FLT_PumpMTRcontactorNotOperating @!
+0 ^FLT_SLOT08fuse @!
+0 ^FLT_SLOT09fuse @!
+0 ^FLT_UpCloseTimeout @!
+0 ^FLT_UpOpenOT @!
+0 ^FLT_UpOpenTimeout @!
+0 ^FLT_VFDoverload @!
+0.. ^FPAC_scratchpad @!
+0 ^Function_Close_Started @!
+0 ^Function_LowerClose_Started @!
+0 ^Function_LowerOpen_Started @!
+0 ^Function_Open_Started @!
+0 ^Function_UpperClose_Started @!
+0 ^Function_UpperOpen_Started @!
+0 ^GetScratchBits @!
+0 ^LightToggle @!
+0 ^LightToggleOld @!
+0 ^ListeningForMaster @!
+0 ^LowerShutterIsOpenViaInclinometer @!
+0 ^MainChartStarted @!
+0 ^ManModeStarted @!
+0 ^Master_CommClosed @!
+0 ^Master_CommStarted @!
+0 ^Master_Handle_CharNumWaiting @!
+0 ^MasterCommandNum @!
+0 ^MasterCommandStringRcvd @!
+0 ^MasterCommEstablished @!
+0 ^nPeriodPosition1 @!
+0 ^nPeriodPosition2 @!
+0 ^nSubstringLength @!
+0 ^PanelFanErrorFlag @!
+0.0 ^Socket_Timer @!
+0.0 ^Socket_Timer_2 @!
+0 ^Status_AutoMode @!
+0 ^Status_DisabledMode @!
+0 ^Status_FaultMode @!
+0 ^Status_ManualMode @!
+0 ^Status_Monitor_Started @!
+0 ^StatusTransmit_Status @!
+0.0 ^SynchClockTimer @!
+0.50000000 ^Time_defContactorOperate @!
+1000 ^Time_defContactorRelease @!
+90.000000 ^Time_defHeartbeatWdog @!
+90.000000 ^Time_defLowerClose @!
+90.000000 ^Time_defLowerOpen @!
+30.000000 ^Time_defOpenClear @!
+180.00000 ^Time_defUpperOperate @!
+5.0000000 ^Time_defWxWdogTimer @!
+0.0 ^Timer_Close @!
+0.0 ^Timer_HeartbeatWdog @!
+0.0 ^Timer_LowerContactor @!
+0.0 ^Timer_LowerOperate @!
+0.0 ^Timer_OpenClear @!
+0.0 ^Timer_UpperContactor @!
+0.0 ^Timer_UpperOperate @!
+0.0 ^Timer_WxWdog @!
+0 ^VFD_FAULT_RESET @!
+0 ^White_Lights_Chart @!
+0 ^WTlightSwitchState @!
+0 ^WTswitchOldState @!
+0 ^Wx_Handle_CharCountWaiting @!
+0 ^WxClosed @!
+0 ^WxCommEstablished @!
+0 ^WxGETstringSent @!
+0 ^WxHTML_received @!
+0 ^WxLoopNum @!
+0 ^WxOKposition @!
+0 ^WxStarted @!
+0 0 -1 }SLOT08_OFF InitTable
+" "
+ *ErrorList $MOVE
+" "
+ *ErrorListSubString $MOVE
+" "
+ *FaultList $MOVE
+" "
+ *FaultListSubString $MOVE
+" xxx"
+ *MasterCommand $MOVE
+" "
+ *Response $MOVE
+" "
+ *s1stOctet $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s3rdOctet $MOVE
+" "
+ *s4thOctet $MOVE
+" "
+ *s_DomeClose $MOVE
+" "
+ *s_DomeOpen $MOVE
+" "
+ *s_DomeStop $MOVE
+" "
+ *s_LightSW $MOVE
+" "
+ *S_WatchDogTimer $MOVE
+" "
+ *sDomeAirTemp $MOVE
+" "
+ *sEncl $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sSite $MOVE
+" UNKNOWN"
+ *sStatus_Shutter1 $MOVE
+" UNKNOWN"
+ *sStatus_Shutter2 $MOVE
+" "
+ *sTimestamp $MOVE
+" "
+ *SWversion $MOVE
+" GET /OKTOOPEN.html HTTP/1.0"
+ *WxGETstring $MOVE
+" "
+ *WxHTML $MOVE
+" tcp:22004"
+ *Master_Handle $MOVE
+" tcp:10.0.8.50:80"
+ *Wx_Handle $MOVE
+ " "
+0 -1 {Status Init$Table
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;
