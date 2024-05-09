@@ -1,0 +1,379 @@
+: 1_0
+18 JUMP ;
+: 1_12
+
+1 LINE.NUM
+  10    DELAY
+18 JUMP ;
+: 1_24
+
+1 LINE.NUM
+  10    DELAY
+18 JUMP ;
+: 1_25
+
+1 LINE.NUM
+  10    DELAY
+18 JUMP ;
+: 1_32
+
+1 LINE.NUM
+  &Auto_Mode   STOP.T
+
+2 LINE.NUM
+  &Fault_Mode   STOP.T
+
+3 LINE.NUM
+  100    DELAY
+
+4 LINE.NUM
+  ^Status_DisabledMode   FALSE@!
+
+5 LINE.NUM
+  ^Status_ManualMode   TRUE@!
+
+6 LINE.NUM
+  ^Status_AutoMode   FALSE@!
+
+7 LINE.NUM
+  ^Status_FaultMode   FALSE@!
+11 JUMP ;
+: 1_35
+
+1 LINE.NUM
+  &Auto_Mode   STOP.T
+
+2 LINE.NUM
+  &Manual_Mode   STOP.T
+
+3 LINE.NUM
+  &Fault_Mode   STOP.T
+
+4 LINE.NUM
+  100    DELAY
+
+5 LINE.NUM
+  ^Status_DisabledMode   TRUE@!
+
+6 LINE.NUM
+  ^Status_ManualMode   FALSE@!
+
+7 LINE.NUM
+  ^Status_AutoMode   FALSE@!
+
+8 LINE.NUM
+  ^Status_FaultMode   FALSE@!
+7 JUMP ;
+: 1_37
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+
+2 LINE.NUM
+  ~DO_UpperClose   OFF
+
+3 LINE.NUM
+  ~DO_PumpMotor   OFF
+
+4 LINE.NUM
+  ~DO_LowerOpenValve   OFF
+
+5 LINE.NUM
+  ~DO_LowerCloseValve   OFF
+12 JUMP ;
+: 1_40
+
+1 LINE.NUM
+  &Manual_Mode   STOP.T
+
+2 LINE.NUM
+  &Fault_Mode   STOP.T
+
+3 LINE.NUM
+  100    DELAY
+
+4 LINE.NUM
+  ^Status_DisabledMode   FALSE@!
+
+5 LINE.NUM
+  ^Status_ManualMode   FALSE@!
+
+6 LINE.NUM
+  ^Status_AutoMode   TRUE@!
+
+7 LINE.NUM
+  ^Status_FaultMode   FALSE@!
+9 JUMP ;
+: 1_43
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+
+2 LINE.NUM
+  ~DO_UpperClose   OFF
+
+3 LINE.NUM
+  ~DO_PumpMotor   OFF
+
+4 LINE.NUM
+  ~DO_LowerOpenValve   OFF
+
+5 LINE.NUM
+  ~DO_LowerCloseValve   OFF
+5 JUMP ;
+: 1_44
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+
+2 LINE.NUM
+  ~DO_UpperClose   OFF
+
+3 LINE.NUM
+  ~DO_PumpMotor   OFF
+
+4 LINE.NUM
+  ~DO_LowerOpenValve   OFF
+
+5 LINE.NUM
+  ~DO_LowerCloseValve   OFF
+
+6 LINE.NUM
+  2000    DELAY
+5 JUMP ;
+: 1_54
+
+1 LINE.NUM
+  &Auto_Mode   STOP.T
+
+2 LINE.NUM
+  &Manual_Mode   STOP.T
+
+3 LINE.NUM
+  100    DELAY
+
+4 LINE.NUM
+  ^FLT_DisabledCircuit   TRUE@!
+
+5 LINE.NUM
+  ^Status_DisabledMode   FALSE@!
+
+6 LINE.NUM
+  ^Status_ManualMode   FALSE@!
+
+7 LINE.NUM
+  ^Status_AutoMode   FALSE@!
+
+8 LINE.NUM
+  ^Status_FaultMode   TRUE@!
+7 JUMP ;
+: 1_56
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+
+2 LINE.NUM
+  ~DO_UpperClose   OFF
+
+3 LINE.NUM
+  ~DO_PumpMotor   OFF
+
+4 LINE.NUM
+  ~DO_LowerOpenValve   OFF
+
+5 LINE.NUM
+  ~DO_LowerCloseValve   OFF
+0 JUMP ;
+: 1_58
+
+1 LINE.NUM
+  &Fault_Mode   START.T
+  ^FaultModeStarted @! 
+6 JUMP ;
+: 1_62
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+3 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+4 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+-8 JUMP ;
+: 1_75
+
+1 LINE.NUM
+  &Manual_Mode   START.T
+  ^ManModeStarted @! 
+4 JUMP ;
+: 1_76
+
+1 LINE.NUM
+  &Auto_Mode   START.T
+  ^AutoModeStarted @! 
+3 JUMP ;
+: 1_81
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+3 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+4 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+-9 JUMP ;
+: 1_82
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+3 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+4 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+-9 JUMP ;
+: 1_83
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+3 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+4 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+-8 JUMP ;
+: 1_1
+TRUE
+
+1 LINE.NUM
+  ~DI_SW_Standby   ?OFF
+LAND
+
+2 LINE.NUM
+  ~DI_SW_Auto   ?OFF
+LAND
+IF -15 ELSE -19 THEN JUMP ;
+: 1_3
+TRUE
+
+1 LINE.NUM
+  ~DI_SW_Standby   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_SW_Auto   ?OFF
+LAND
+
+3 LINE.NUM
+  &Manual_Mode   ?STOPPED
+LAND
+IF -17 ELSE -19 THEN JUMP ;
+: 1_4
+TRUE
+
+1 LINE.NUM
+  ~DI_SW_Standby   ?ON
+LAND
+
+2 LINE.NUM
+  ~DI_SW_Auto   ?ON
+LAND
+
+3 LINE.NUM
+  &Auto_Mode   ?STOPPED
+LAND
+IF -15 ELSE -19 THEN JUMP ;
+: 1_49
+TRUE
+
+1 LINE.NUM
+  ~DI_SW_Standby   ?OFF
+LAND
+
+2 LINE.NUM
+  ~DI_SW_Auto   ?ON
+LAND
+
+3 LINE.NUM
+  &Fault_Mode   ?STOPPED
+LAND
+IF -13 ELSE -4 THEN JUMP ;
+T: T1
+DUMMY
+1_0
+1_12
+1_24
+1_25
+1_32
+1_35
+1_37
+1_40
+1_43
+1_44
+1_54
+1_56
+1_58
+1_62
+1_75
+1_76
+1_81
+1_82
+1_83
+1_1
+1_3
+1_4
+1_49
+T;
+&Main ' T1 SETTASK
