@@ -5609,7 +5609,7 @@ T;
 24 LINE.NUM 0 ^LowerShutterIsOpenViaInclinometer @! 
 25 LINE.NUM THEN 
 26 LINE.NUM ELSE 
-27 LINE.NUM ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  IF 
+27 LINE.NUM ~AI_LowerShutterAngle @@ 1.09500000e+002 F< IF 
 28 LINE.NUM 1 ^LowerShutterIsOpenViaInclinometer @! 
 29 LINE.NUM ELSE 
 30 LINE.NUM 0 ^LowerShutterIsOpenViaInclinometer @! 
@@ -6211,8 +6211,8 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0.50000000 ^Time_defContactorOperate @!
 1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
-65.000000 ^Time_defLowerClose @!
-65.000000 ^Time_defLowerOpen @!
+90.000000 ^Time_defLowerClose @!
+90.000000 ^Time_defLowerOpen @!
 30.000000 ^Time_defOpenClear @!
 180.00000 ^Time_defUpperOperate @!
 5.0000000 ^Time_defWxWdogTimer @!
@@ -6305,8 +6305,8 @@ T;
    &_INIT_IO START.T DROP
    ;
 : DATESTAMP ." 05/08/24 " ;
-: TIMESTAMP ." 15:19:57 " ;
-: CRCSTAMP  ." D8851EF474CCC30B30E74B6393E88C52 " ;
+: TIMESTAMP ." 19:03:23 " ;
+: CRCSTAMP  ." 3733D4D52D60F392E34D41DD0157EEA0 " ;
 MAKECHECK
 CLEAR.BREAKS
 

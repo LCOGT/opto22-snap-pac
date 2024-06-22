@@ -5598,7 +5598,7 @@ T;
 24 LINE.NUM 0 ^LowerShutterIsOpenViaInclinometer @! 
 25 LINE.NUM THEN 
 26 LINE.NUM ELSE 
-27 LINE.NUM ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  IF 
+27 LINE.NUM ~AI_LowerShutterAngle @@ 1.09500000e+002 F< IF 
 28 LINE.NUM 1 ^LowerShutterIsOpenViaInclinometer @! 
 29 LINE.NUM ELSE 
 30 LINE.NUM 0 ^LowerShutterIsOpenViaInclinometer @! 
@@ -6294,7 +6294,7 @@ T;
    &_INIT_IO START.T DROP
    ;
 : DATESTAMP ." 05/08/24 " ;
-: TIMESTAMP ." 16:44:23 " ;
+: TIMESTAMP ." 19:03:23 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS
