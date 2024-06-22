@@ -154,7 +154,7 @@
 15 LINE.NUM ELSE 
 15 LINE.NUM " Shutter1=5" 0 {Status $TABLE@  $MOVE 
 16 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
-19 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = ~AI_LowerShutterAngle @@ 100 I>F F> ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LAND  LOR  IF 
+19 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = ~AI_LowerShutterAngle @@ 1.09500000e+002 F< LOR  IF 
 20 LINE.NUM " Shutter2=0" 1 {Status $TABLE@  $MOVE 
 21 LINE.NUM ELSE 
 21 LINE.NUM ~DI_LowerCloseLimitSwitch @@I 1 = IF 
