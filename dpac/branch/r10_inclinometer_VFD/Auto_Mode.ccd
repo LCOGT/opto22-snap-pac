@@ -882,54 +882,18 @@
 
 486 LINE.NUM THEN 
 488 LINE.NUM THEN 
-491 LINE.NUM ~DI_SmokeDetectorPWR @@I 0 = IF 
-494 LINE.NUM -1 ^FaultLogged @! 
-495 LINE.NUM " SmokeDetectorPower" 0 *FaultList  FindSubString ^FaultLogged @! 
-497 LINE.NUM ^FaultLogged @@ 0 >= IF 
-499 LINE.NUM ELSE 
-501 LINE.NUM " , SmokeDetectorPower " *FaultList $CAT 
+564 LINE.NUM ~DI_VFDfault @@I 0 = IF 
+567 LINE.NUM -1 ^FaultLogged @! 
+568 LINE.NUM " VFDfault" 0 *FaultList  FindSubString ^FaultLogged @! 
+570 LINE.NUM ^FaultLogged @@ 0 >= IF 
+572 LINE.NUM ELSE 
+574 LINE.NUM " , VFDfault " *FaultList $CAT 
 
-502 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-503 LINE.NUM *sTimestamp *FaultList $CAT 
+575 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+576 LINE.NUM *sTimestamp *FaultList $CAT 
 
-504 LINE.NUM THEN 
-506 LINE.NUM THEN 
-509 LINE.NUM ~DI_SmokeDetector @@I 0 = IF 
-512 LINE.NUM -1 ^FaultLogged @! 
-513 LINE.NUM " SmokeDetector" 0 *FaultList  FindSubString ^FaultLogged @! 
-515 LINE.NUM ^FaultLogged @@ 0 >= IF 
-517 LINE.NUM ELSE 
-519 LINE.NUM " , SmokeDetector " *FaultList $CAT 
-
-520 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-521 LINE.NUM *sTimestamp *FaultList $CAT 
-
-522 LINE.NUM THEN 
-524 LINE.NUM THEN 
-527 LINE.NUM ~DI_SmokeDetectorHeat @@I 1 = IF 
-530 LINE.NUM -1 ^FaultLogged @! 
-531 LINE.NUM " SmokeDetectorHeat" 0 *FaultList  FindSubString ^FaultLogged @! 
-533 LINE.NUM ^FaultLogged @@ 0 >= IF 
-535 LINE.NUM ELSE 
-537 LINE.NUM " , SmokeDetectorHeat " *FaultList $CAT 
-
-538 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-539 LINE.NUM *sTimestamp *FaultList $CAT 
-
-540 LINE.NUM THEN 
-542 LINE.NUM THEN 
-563 LINE.NUM ~DI_VFDfault @@I 0 = IF 
-566 LINE.NUM -1 ^FaultLogged @! 
-567 LINE.NUM " VFDfault" 0 *FaultList  FindSubString ^FaultLogged @! 
-569 LINE.NUM ^FaultLogged @@ 0 >= IF 
-571 LINE.NUM ELSE 
-573 LINE.NUM " , VFDfault " *FaultList $CAT 
-
-574 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-575 LINE.NUM *sTimestamp *FaultList $CAT 
-
-576 LINE.NUM THEN 
-578 LINE.NUM THEN 
+577 LINE.NUM THEN 
+579 LINE.NUM THEN 
 -4 JUMP ;
 : 3_565
 -83 JUMP ;
