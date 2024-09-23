@@ -5,21 +5,63 @@ _END NEW $$$.RUN
 1024 0 $VAR *_HSV_TEMP 
 200 0 $VAR *_HSV_INIT_IO 
 0 IVAR ^_HNV_INIT_IO 
+
+\   ++++++++++ SUB name="Timestamp" ++++++++++
+
+0 SUBR &Timestamp
+SUB.CODE null$VAR &Timestamp
+0 IVAR ^nCounter
+15 0 $VAR *sDate 
+10 0 $VAR *sTimeString 
+8 0 ITABLE }nDateTimeArray
+8 10 0 $TABLE {sDateTimeArray
+
+: &Timestamp.0
+0 JUMP ;
+: &Timestamp.2
+4 LINE.NUM " " 0 PARAM  $MOVE 
+5 LINE.NUM *sDate  0 DATE>$ 
+6 LINE.NUM *sDate 6 4 0 PARAM  $SUB 
+7 LINE.NUM " /" 0 PARAM $CAT 
+
+8 LINE.NUM *sDate 0 5 *sDate  $SUB 
+9 LINE.NUM *sDate 0 PARAM $CAT 
+
+10 LINE.NUM " T" 0 PARAM $CAT 
+
+11 LINE.NUM *sTimeString  TIME>$ 
+12 LINE.NUM *sTimeString 0 PARAM $CAT 
+
+0 JUMP ;
+
+CODE
+
+DUMMY
+&Timestamp.0
+&Timestamp.2
+ENDCODE
 0 TASK  &_INIT_IO
 0 TASK &aps2_1m0a_monitor
+0 TASK &Glycol_Cooler
 0 TASK &Master_Comm
 0 TASK &Powerup
 0 IVAR ^CoolantDemand
 0 IVAR ^CoolantSetpoint
 0 IVAR ^CryoTigPWR_Lower_Flag
 0 TVAR ^CryoTigThermalTimer
+0 IVAR ^debug
 0 IVAR ^DewpointMinimum
 0 TVAR ^dtGetChar
 0 IVAR ^ErrorFlag
+0 IVAR ^ErrorLogged
 0 FVAR ^f120
 0 IVAR ^FanSwMode
 0 IVAR ^FaultFlag
+0 IVAR ^FaultLogged
 0 FVAR ^FiveMinutes
+0 IVAR ^FlowSwitchCount
+0 IVAR ^FlowSwitchFlag
+0 IVAR ^GlycolCoolerOverloadFlag
 0 TVAR ^Heartbeat_Timer
 0 FVAR ^HeartbeatPreset
 0 IVAR ^HeartFailure
@@ -40,14 +82,20 @@ _END NEW $$$.RUN
 0 IVAR ^nIP_int
 0 IVAR ^nLength
 0 IVAR ^nOctet3
+0 IVAR ^nPeriodPosition1
+0 IVAR ^nPeriodPosition2
 0 IVAR ^nPosition
+0 IVAR ^nSubstringLength
 0 IVAR ^OverTemp
 0 IVAR ^Position
 0 IVAR ^PriorHeartbeatTime
 0 IVAR ^Response
 0 IVAR ^StartupStatus
+0 TVAR ^SynchClockTimer
 0 FVAR ^TenMinutes
+0 TVAR ^Timer_FlowSwitch
 0 TVAR ^Timer_GetChar
+0 TVAR ^Timer_IgnoreFlowSwitch
 10 0 $VAR *date2String 
 10 0 $VAR *dateDatum 
 12 0 $VAR *DateString 
@@ -56,6 +104,7 @@ _END NEW $$$.RUN
 1024 0 $VAR *EnviroString 
 10 0 $VAR *EnviroTemp 
 1024 0 $VAR *ErrorReport 
+1024 0 $VAR *FaultReport 
 12 0 $VAR *FWVersion 
 2 0 $VAR *hourString 
 6 0 $VAR *ICDVersion 
@@ -63,8 +112,13 @@ _END NEW $$$.RUN
 32 0 $VAR *MasterCommand 
 2 0 $VAR *minString 
 2 0 $VAR *monthString 
+10 0 $VAR *s1stOctet 
+10 0 $VAR *s2ndOctet 
+10 0 $VAR *s3rdOctet 
+10 0 $VAR *s4thOctet 
 300 0 $VAR *sAps2 
 2 0 $VAR *secString 
+10 0 $VAR *sEncl 
 1024 0 $VAR *SentString 
 20 0 $VAR *sGetaps2 
 20 0 $VAR *sIP_Aps2 
@@ -73,7 +127,9 @@ _END NEW $$$.RUN
 5 0 $VAR *sOctet1 
 5 0 $VAR *sOctet2 
 5 0 $VAR *sOctet3 
+10 0 $VAR *sSite 
 1024 0 $VAR *StatusString 
+30 0 $VAR *sTimestamp 
 6 0 $VAR *SWVersion 
 8 0 $VAR *timeDatum 
 12 0 $VAR *TimeString 
@@ -90,14 +146,15 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $80000001 SPOINT 0.0    OUTPUT  3  2 %Local_IO 0 POINT.TNG ~F4_3_Reset
  2 $80000001 APOINT    0.0000 $A5  0  3 %Local_IO 0 POINT.TNG ~Exhaust_Fan_CTRL
  2 $80000001 APOINT    0.0000 $A5  1  3 %Local_IO 0 POINT.TNG ~Intake_Fan_CTRL
- 2 $40000001 APOINT    0.0000 $45  0  4 %Local_IO 0 POINT.TNG ~Exhaust_Fan_SPD
- 2 $40000001 APOINT    0.0000 $45  1  4 %Local_IO 0 POINT.TNG ~Intake_Fan_SPD
+ 2 $40000001 APOINT    0.0000 $45  0  4 %Local_IO 0 POINT.TNG ~Exhaust_Fan_M9_2_SPD
+ 2 $40000001 APOINT    0.0000 $45  1  4 %Local_IO 0 POINT.TNG ~Exhaust_Fan_M9_5_SPD
  2 $40000001 APOINT    0.0000 $45  0  5 %Local_IO 0 POINT.TNG ~Honeysucker_SPD
  2 $40000001 APOINT    0.0000 $46  0  6 %Local_IO 0 POINT.TNG ~CryoTigVolt_Lower_M2_3
  2 $40000001 APOINT    0.0000 $46  1  6 %Local_IO 0 POINT.TNG ~MirrorCellVolt
  4 $40000001 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~F4_3_Status
  4 $40000001 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~CryoTig_Deadman
  4 $40000001 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~GlycolPumpOverload
+ 4 $40000001 SPOINT 0.0     INPUT  3  7 %Local_IO 0 POINT.TNG ~DI_FlowSwitch
  2 $40000001 APOINT -200.0000 $A  0  8 %Local_IO 0 POINT.TNG ~MasterTemp
  2 $40000001 APOINT -200.0000 $A  0  9 %Local_IO 0 POINT.TNG ~GlycolReturnTemp
  2 $40000001 APOINT -200.0000 $A  1  9 %Local_IO 0 POINT.TNG ~GlycolSupplyTemp
@@ -237,6 +294,39 @@ DUMMY
 2_10
 T;
 &aps2_1m0a_monitor ' T2 SETTASK
+: 3_0
+0 JUMP ;
+: 3_1
+1 LINE.NUM 1 I>F  FDELAY 
+3 LINE.NUM ^Timer_IgnoreFlowSwitch @@F 0 I>F F= IF 
+4 LINE.NUM ~DI_FlowSwitch @@I 0 = IF 
+5 LINE.NUM ^FlowSwitchCount @@ 1 +  ^FlowSwitchCount @! 
+6 LINE.NUM ELSE 
+7 LINE.NUM 0 ^FlowSwitchCount @! 
+8 LINE.NUM THEN 
+9 LINE.NUM THEN 
+12 LINE.NUM ^FlowSwitchCount @@ 10 >= IF 
+13 LINE.NUM 0 ~GlycolCoolerPWR @! 
+14 LINE.NUM 1 ^FlowSwitchFlag @! 
+15 LINE.NUM ELSE 
+16 LINE.NUM 0 ^FlowSwitchFlag @! 
+17 LINE.NUM THEN 
+0 JUMP ;
+: 3_4
+1 LINE.NUM ~GlycolPumpOverload @@I 0 = IF 
+2 LINE.NUM 1 ^GlycolCoolerOverloadFlag @! 
+3 LINE.NUM 0 ~GlycolCoolerPWR @! 
+4 LINE.NUM ELSE 
+5 LINE.NUM 0 ^GlycolCoolerOverloadFlag @! 
+6 LINE.NUM THEN 
+-2 JUMP ;
+T: T3
+DUMMY
+3_0
+3_1
+3_4
+T;
+&Glycol_Cooler ' T3 SETTASK
 : 1_0
 3 JUMP ;
 : 1_5
@@ -395,9 +485,11 @@ T;
 34 JUMP ;
 : 1_126
 1 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
-2 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-3 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-4 LINE.NUM " " *MasterCommand  $MOVE 
+2 LINE.NUM *FaultReport *StatusString $CAT 
+
+3 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+4 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+5 LINE.NUM " " *MasterCommand  $MOVE 
 11 JUMP ;
 : 1_140
 1 LINE.NUM " Success=True, ICDVersion=" *StatusString  $MOVE 
@@ -442,109 +534,128 @@ T;
 29 LINE.NUM ^HeartbeatPreset @@ ^Heartbeat_Timer @@F F- 6 2 *ElapsedString  FF.R$ 
 30 LINE.NUM *ElapsedString *StatusString $CAT 
 
-32 LINE.NUM " , Fault=FALSE" *StatusString $CAT 
+32 LINE.NUM *FaultReport  $LEN 0 > IF 
+33 LINE.NUM " , Fault=TRUE" *StatusString $CAT 
 
-37 LINE.NUM " , Error=FALSE" *StatusString $CAT 
+34 LINE.NUM ELSE 
+35 LINE.NUM " , Fault=FALSE" *StatusString $CAT 
 
-40 LINE.NUM *StatusString *EnviroString  $MOVE 
-42 LINE.NUM " , OutletFanTach=" *EnviroString $CAT 
+36 LINE.NUM THEN 
+38 LINE.NUM *ErrorReport  $LEN 0 > IF 
+39 LINE.NUM " , Error=TRUE" *StatusString $CAT 
 
-43 LINE.NUM ~Exhaust_Fan_SPD @@ 1.33000004e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-44 LINE.NUM *EnviroTemp *EnviroString $CAT 
+40 LINE.NUM ELSE 
+41 LINE.NUM " , Error=FALSE" *StatusString $CAT 
 
-45 LINE.NUM " , InletFanTach=" *EnviroString $CAT 
+42 LINE.NUM THEN 
+44 LINE.NUM *StatusString *EnviroString  $MOVE 
+46 LINE.NUM " , ExhaustFanTachM9_2=" *EnviroString $CAT 
 
-46 LINE.NUM ~Intake_Fan_SPD @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-47 LINE.NUM *EnviroTemp *EnviroString $CAT 
+47 LINE.NUM ~Exhaust_Fan_M9_2_SPD @@ 1.33000004e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+48 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-48 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
+49 LINE.NUM " , ExhaustFanTachM9_5=" *EnviroString $CAT 
 
-49 LINE.NUM ~Honeysucker_SPD @@ 3.23000002e+000 F/ 4 0 *EnviroTemp  FF.R$ 
-50 LINE.NUM *EnviroTemp *EnviroString $CAT 
+50 LINE.NUM ~Exhaust_Fan_M9_5_SPD @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+51 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-51 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
+52 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
 
-52 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
-53 LINE.NUM *EnviroTemp *EnviroString $CAT 
+53 LINE.NUM ~Honeysucker_SPD @@ 3.23000002e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+54 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-54 LINE.NUM " , MirrorCellVoltage=" *EnviroString $CAT 
+55 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
 
-55 LINE.NUM ~MirrorCellVolt @@ 5 1 *EnviroTemp  FF.R$ 
-56 LINE.NUM *EnviroTemp *EnviroString $CAT 
+56 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+57 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-57 LINE.NUM " , GlycolReturnTemp=" *EnviroString $CAT 
+58 LINE.NUM " , MirrorCellVoltage=" *EnviroString $CAT 
 
-58 LINE.NUM ~GlycolReturnTemp @@ 5 1 *EnviroTemp  FF.R$ 
-59 LINE.NUM *EnviroTemp *EnviroString $CAT 
+59 LINE.NUM ~MirrorCellVolt @@ 5 1 *EnviroTemp  FF.R$ 
+60 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-60 LINE.NUM " , GlycolSupplyTemp=" *EnviroString $CAT 
+61 LINE.NUM " , GlycolReturnTemp=" *EnviroString $CAT 
 
-61 LINE.NUM ~GlycolSupplyTemp @@ 5 1 *EnviroTemp  FF.R$ 
-62 LINE.NUM *EnviroTemp *EnviroString $CAT 
+62 LINE.NUM ~GlycolReturnTemp @@ 5 1 *EnviroTemp  FF.R$ 
+63 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-63 LINE.NUM " , CabinetHumidity=" *EnviroString $CAT 
+64 LINE.NUM " , GlycolSupplyTemp=" *EnviroString $CAT 
 
-64 LINE.NUM ~Intake_Fan_Humidity @@ 5 1 *EnviroTemp  FF.R$ 
-65 LINE.NUM *EnviroTemp *EnviroString $CAT 
+65 LINE.NUM ~GlycolSupplyTemp @@ 5 1 *EnviroTemp  FF.R$ 
+66 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-66 LINE.NUM " , CabinetTemperature=" *EnviroString $CAT 
+67 LINE.NUM " , CabinetHumidity=" *EnviroString $CAT 
 
-67 LINE.NUM ~Intake_Fan_Temp @@ 5 1 *EnviroTemp  FF.R$ 
-68 LINE.NUM *EnviroTemp *EnviroString $CAT 
+68 LINE.NUM ~Intake_Fan_Humidity @@ 5 1 *EnviroTemp  FF.R$ 
+69 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-69 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
+70 LINE.NUM " , CabinetTemperature=" *EnviroString $CAT 
 
-70 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
-72 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
-73 LINE.NUM *EnviroTemp *EnviroString $CAT 
+71 LINE.NUM ~Intake_Fan_Temp @@ 5 1 *EnviroTemp  FF.R$ 
+72 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-84 LINE.NUM " , GlycolCoolerDifferentialPressure=" *EnviroString $CAT 
+73 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
 
-85 LINE.NUM ~GlycolCoolerDiffPress @@ 7 2 *EnviroTemp  FF.R$ 
-86 LINE.NUM *EnviroTemp *EnviroString $CAT 
+74 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
+76 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
+77 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-90 LINE.NUM " , LowerCryotigerCurrent=" *EnviroString $CAT 
+88 LINE.NUM " , GlycolCoolerDifferentialPressure=" *EnviroString $CAT 
 
-91 LINE.NUM ~CryoTigCurrent_Lower_M2_3 @@ 4 1 *EnviroTemp  FF.R$ 
-92 LINE.NUM *EnviroTemp *EnviroString $CAT 
+89 LINE.NUM ~GlycolCoolerDiffPress @@ 7 2 *EnviroTemp  FF.R$ 
+90 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-96 LINE.NUM " , GlycolCoolerCurrent=" *EnviroString $CAT 
+94 LINE.NUM " , LowerCryotigerCurrent=" *EnviroString $CAT 
 
-97 LINE.NUM ~GlycolCoolerCurrent @@ 5 1 *EnviroTemp  FF.R$ 
-98 LINE.NUM *EnviroTemp *EnviroString $CAT 
+95 LINE.NUM ~CryoTigCurrent_Lower_M2_3 @@ 4 1 *EnviroTemp  FF.R$ 
+96 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-102 LINE.NUM " , GlycolCoolerFlow=" *EnviroString $CAT 
+100 LINE.NUM " , GlycolCoolerCurrent=" *EnviroString $CAT 
 
-103 LINE.NUM ~GlycolCoolerFlow @@ 1000 I>F F* 10 1 *EnviroTemp  FF.R$ 
-104 LINE.NUM *EnviroTemp *EnviroString $CAT 
+101 LINE.NUM ~GlycolCoolerCurrent @@ 5 1 *EnviroTemp  FF.R$ 
+102 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-108 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
+106 LINE.NUM " , GlycolCoolerFlow=" *EnviroString $CAT 
 
-109 LINE.NUM ~CryoTigOutputPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
-110 LINE.NUM *EnviroTemp *EnviroString $CAT 
+107 LINE.NUM ~GlycolCoolerFlow @@ 1000 I>F F* 10 1 *EnviroTemp  FF.R$ 
+108 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-111 LINE.NUM " , LowerCryotigerReturnPressure=" *EnviroString $CAT 
+112 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
 
-112 LINE.NUM ~CryoTigReturnPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
-113 LINE.NUM *EnviroTemp *EnviroString $CAT 
+113 LINE.NUM ~CryoTigOutputPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+114 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-121 LINE.NUM *EnviroString *SentString  $MOVE 
-123 LINE.NUM ^OverTemp @@ 1 = IF 
-124 LINE.NUM " , OverTemp=TRUE" *StatusString $CAT 
+115 LINE.NUM " , LowerCryotigerReturnPressure=" *EnviroString $CAT 
 
-125 LINE.NUM ELSE 
-126 LINE.NUM " , OverTemp=FALSE" *StatusString $CAT 
+116 LINE.NUM ~CryoTigReturnPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+117 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-127 LINE.NUM THEN 
-129 LINE.NUM " , MergedTemp=" *StatusString $CAT 
+124 LINE.NUM " , GlycolCoolerON=" *EnviroString $CAT 
 
-130 LINE.NUM ^MergedTemp @@ 5 1 *EnviroTemp  FF.R$ 
-131 LINE.NUM *EnviroTemp *StatusString $CAT 
+125 LINE.NUM ~GlycolCoolerPWR @@I 1 = IF 
+126 LINE.NUM " TRUE" *EnviroTemp  $MOVE 
+127 LINE.NUM ELSE 
+128 LINE.NUM " FALSE" *EnviroTemp  $MOVE 
+129 LINE.NUM THEN 
+130 LINE.NUM *EnviroTemp *EnviroString $CAT 
 
-133 LINE.NUM *SentString *StatusString  $MOVE 
-134 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-135 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-136 LINE.NUM " " *MasterCommand  $MOVE 
+133 LINE.NUM *EnviroString *SentString  $MOVE 
+135 LINE.NUM ^OverTemp @@ 1 = IF 
+136 LINE.NUM " , OverTemp=TRUE" *StatusString $CAT 
+
+137 LINE.NUM ELSE 
+138 LINE.NUM " , OverTemp=FALSE" *StatusString $CAT 
+
+139 LINE.NUM THEN 
+141 LINE.NUM " , MergedTemp=" *StatusString $CAT 
+
+142 LINE.NUM ^MergedTemp @@ 5 1 *EnviroTemp  FF.R$ 
+143 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+145 LINE.NUM *SentString *StatusString  $MOVE 
+146 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+147 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+148 LINE.NUM " " *MasterCommand  $MOVE 
 3 JUMP ;
 : 1_142
 
@@ -575,42 +686,42 @@ T;
 -20 JUMP ;
 : 1_186
 4 LINE.NUM 0 ^Response @! 
-6 LINE.NUM " INLET_FAN_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+6 LINE.NUM " EXHAUST_FAN_M9_5_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 7 LINE.NUM ^Position @@ -1 >= IF 
 8 LINE.NUM 10 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 9 LINE.NUM 1 ^Response @! 
 10 LINE.NUM THEN 
-11 LINE.NUM " INLET_FAN_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+11 LINE.NUM " EXHAUST_FAN_M9_5_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 12 LINE.NUM ^Position @@ -1 >= IF 
 13 LINE.NUM 6 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 14 LINE.NUM 1 ^Response @! 
 15 LINE.NUM THEN 
-16 LINE.NUM " INLET_FAN_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+16 LINE.NUM " EXHAUST_FAN_M9_5_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 17 LINE.NUM ^Position @@ -1 >= IF 
 18 LINE.NUM 3 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 19 LINE.NUM 1 ^Response @! 
 20 LINE.NUM THEN 
-21 LINE.NUM " INLET_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+21 LINE.NUM " EXHAUST_FAN_M9_5_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 22 LINE.NUM ^Position @@ -1 >= IF 
 23 LINE.NUM 0 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
 24 LINE.NUM 1 ^Response @! 
 25 LINE.NUM THEN 
-26 LINE.NUM " OUTLET_FAN_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+26 LINE.NUM " EXHAUST_FAN_M9_2_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 27 LINE.NUM ^Position @@ -1 >= IF 
 28 LINE.NUM 10 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 29 LINE.NUM 1 ^Response @! 
 30 LINE.NUM THEN 
-31 LINE.NUM " OUTLET_FAN_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+31 LINE.NUM " EXHAUST_FAN_M9_2_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 32 LINE.NUM ^Position @@ -1 >= IF 
 33 LINE.NUM 6 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 34 LINE.NUM 1 ^Response @! 
 35 LINE.NUM THEN 
-36 LINE.NUM " OUTLET_FAN_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+36 LINE.NUM " EXHAUST_FAN_M9_2_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 37 LINE.NUM ^Position @@ -1 >= IF 
 38 LINE.NUM 3 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 39 LINE.NUM 1 ^Response @! 
 40 LINE.NUM THEN 
-41 LINE.NUM " OUTLET_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+41 LINE.NUM " EXHAUST_FAN_M9_2_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 42 LINE.NUM ^Position @@ -1 >= IF 
 43 LINE.NUM 0 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
 44 LINE.NUM 1 ^Response @! 
@@ -637,29 +748,42 @@ T;
 67 LINE.NUM THEN 
 80 LINE.NUM " GLYCOL_COOLER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
 81 LINE.NUM ^Position @@ -1 >= IF 
-82 LINE.NUM 1 ~GlycolCoolerPWR @! 
-83 LINE.NUM 1 ^Response @! 
-84 LINE.NUM THEN 
-85 LINE.NUM " GLYCOL_COOLER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-86 LINE.NUM ^Position @@ -1 >= IF 
-87 LINE.NUM 0 ~GlycolCoolerPWR @! 
-88 LINE.NUM 1 ^Response @! 
-89 LINE.NUM THEN 
-102 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
-103 LINE.NUM ^Position @@ -1 >= IF 
-104 LINE.NUM 0 ~F4_3_Reset @! 
-105 LINE.NUM 200  DELAY 
-106 LINE.NUM 1 ~F4_3_Reset @! 
-107 LINE.NUM 1 ^Response @! 
-108 LINE.NUM THEN 
-111 LINE.NUM ^Response @@ 1 = IF 
-112 LINE.NUM " Success=TRUE" *SentString  $MOVE 
-114 LINE.NUM ELSE 
-115 LINE.NUM " Success =FALSE" *SentString  $MOVE 
+82 LINE.NUM 30 I>F ^Timer_IgnoreFlowSwitch @! 
+83 LINE.NUM ^Timer_IgnoreFlowSwitch  StartTimer 
+84 LINE.NUM 0 ^FlowSwitchCount @! 
+85 LINE.NUM 1 ~GlycolCoolerPWR @! 
+86 LINE.NUM 1 ^Response @! 
+87 LINE.NUM THEN 
+88 LINE.NUM " GLYCOL_COOLER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+89 LINE.NUM ^Position @@ -1 >= IF 
+90 LINE.NUM 0 ~GlycolCoolerPWR @! 
+91 LINE.NUM 1 ^Response @! 
+92 LINE.NUM THEN 
+105 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+106 LINE.NUM ^Position @@ -1 >= IF 
+107 LINE.NUM 0 ~F4_3_Reset @! 
+108 LINE.NUM 200  DELAY 
+109 LINE.NUM 1 ~F4_3_Reset @! 
+110 LINE.NUM 1 ^Response @! 
+111 LINE.NUM THEN 
+113 LINE.NUM " CLEAR_ERRORS" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+114 LINE.NUM ^Position @@ -1 >= IF 
+115 LINE.NUM " " *ErrorReport  $MOVE 
+116 LINE.NUM 1 ^Response @! 
 117 LINE.NUM THEN 
-118 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
-119 LINE.NUM *MasterCommand *LastCommand  $MOVE 
-120 LINE.NUM " " *MasterCommand  $MOVE 
+119 LINE.NUM " CLEAR_FAULTS" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+120 LINE.NUM ^Position @@ -1 >= IF 
+121 LINE.NUM " " *FaultReport  $MOVE 
+122 LINE.NUM 1 ^Response @! 
+123 LINE.NUM THEN 
+126 LINE.NUM ^Response @@ 1 = IF 
+127 LINE.NUM " Success=TRUE" *SentString  $MOVE 
+129 LINE.NUM ELSE 
+130 LINE.NUM " Success =FALSE" *SentString  $MOVE 
+132 LINE.NUM THEN 
+133 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+134 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+135 LINE.NUM " " *MasterCommand  $MOVE 
 -2 JUMP ;
 : 1_193
 3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
@@ -731,25 +855,42 @@ T;
   ^Timer_GetChar   StartTimer
 10 JUMP ;
 : 1_336
-1 LINE.NUM 0 ^ErrorFlag @! 
-2 LINE.NUM 0 ^FaultFlag @! 
-3 LINE.NUM " " *ErrorReport  $MOVE 
-8 LINE.NUM ~F4_3_Status @@I 0 = IF 
-9 LINE.NUM 1 ^ErrorFlag @! 
-10 LINE.NUM " , ErrorMiscPowerBreakerTripped = TRUE" *ErrorReport $CAT 
+5 LINE.NUM ^FlowSwitchFlag @@ 1 = IF 
+8 LINE.NUM -1 ^FaultLogged @! 
+9 LINE.NUM " GlycolCoolerLowFlow" 0 *FaultReport  FindSubString ^FaultLogged @! 
+11 LINE.NUM ^FaultLogged @@ 0 >= IF 
+13 LINE.NUM ELSE 
+15 LINE.NUM " , GlycolCoolerLowFlow " *FaultReport $CAT 
 
-11 LINE.NUM ELSE 
-12 LINE.NUM " , ErrorMiscPowerBreakerTripped = FALSE" *ErrorReport $CAT 
+16 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+17 LINE.NUM *sTimestamp *FaultReport $CAT 
 
-13 LINE.NUM THEN 
-35 LINE.NUM ~GlycolPumpOverload @@I 0 = IF 
-36 LINE.NUM 1 ^ErrorFlag @! 
-37 LINE.NUM " , GlycolPumpOverload = TRUE" *ErrorReport $CAT 
+18 LINE.NUM THEN 
+20 LINE.NUM THEN 
+22 LINE.NUM ~F4_3_Status @@I 0 = IF 
+25 LINE.NUM -1 ^ErrorLogged @! 
+26 LINE.NUM " 24VdcBreakerTripped" 0 *ErrorReport  FindSubString ^ErrorLogged @! 
+28 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+30 LINE.NUM ELSE 
+32 LINE.NUM " , 24VdcBreakerTripped " *ErrorReport $CAT 
 
-38 LINE.NUM ELSE 
-39 LINE.NUM " , GlycolPumpOverload = FALSE" *ErrorReport $CAT 
+33 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+34 LINE.NUM *sTimestamp *ErrorReport $CAT 
 
-40 LINE.NUM THEN 
+35 LINE.NUM THEN 
+37 LINE.NUM THEN 
+60 LINE.NUM ^GlycolCoolerOverloadFlag @@ 1 = IF 
+63 LINE.NUM -1 ^FaultLogged @! 
+64 LINE.NUM " GlycolCoolerOverload" 0 *FaultReport  FindSubString ^FaultLogged @! 
+66 LINE.NUM ^FaultLogged @@ 0 >= IF 
+68 LINE.NUM ELSE 
+70 LINE.NUM " , GlycolCoolerOverload " *FaultReport $CAT 
+
+71 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+72 LINE.NUM *sTimestamp *FaultReport $CAT 
+
+73 LINE.NUM THEN 
+75 LINE.NUM THEN 
 -19 JUMP ;
 : 1_339
 
@@ -1066,6 +1207,17 @@ T;
 16 LINE.NUM
   &aps2_1m0a_monitor   START.T
   ^nIndex2 @! 
+
+17 LINE.NUM
+  10.0  
+  ^Timer_IgnoreFlowSwitch   SetTimer
+
+18 LINE.NUM
+  ^Timer_IgnoreFlowSwitch   StartTimer
+
+19 LINE.NUM
+  &Glycol_Cooler   START.T
+  ^ErrorFlag @! 
 4 JUMP ;
 : 0_1
 1 LINE.NUM ^Heartbeat_Timer @@F 0 I>F F<= IF 
@@ -1123,10 +1275,115 @@ T;
 21 LINE.NUM ELSE 
 22 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
 23 LINE.NUM THEN THEN 
--3 JUMP ;
+1 JUMP ;
 : 0_24
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+4 LINE.NUM 0 ^nPeriodPosition1 @! 
+5 LINE.NUM 0 ^nPeriodPosition2 @! 
+6 LINE.NUM 46 0 *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+7 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+8 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s1stOctet  $SUB 
+11 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+12 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+13 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+14 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s2ndOctet  $SUB 
+17 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+18 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+19 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+20 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s3rdOctet  $SUB 
+23 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+24 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ 3 *s4thOctet  $SUB 
+28 LINE.NUM *s2ndOctet " 5" $= IF 
+29 LINE.NUM " LSC" *sSite  $MOVE 
+30 LINE.NUM ELSE 
+30 LINE.NUM *s2ndOctet " 6" $= IF 
+31 LINE.NUM " MFG" *sSite  $MOVE 
+32 LINE.NUM ELSE 
+32 LINE.NUM *s2ndOctet " 7" $= IF 
+33 LINE.NUM " BPL" *sSite  $MOVE 
+34 LINE.NUM ELSE 
+34 LINE.NUM *s2ndOctet " 8" $= IF 
+35 LINE.NUM " CPT" *sSite  $MOVE 
+36 LINE.NUM ELSE 
+36 LINE.NUM *s2ndOctet " 9" $= IF 
+37 LINE.NUM " ELP" *sSite  $MOVE 
+38 LINE.NUM ELSE 
+38 LINE.NUM *s2ndOctet " 10" $= IF 
+39 LINE.NUM " COJ" *sSite  $MOVE 
+40 LINE.NUM ELSE 
+40 LINE.NUM *s2ndOctet " 11" $= IF 
+41 LINE.NUM " TLV" *sSite  $MOVE 
+42 LINE.NUM ELSE 
+42 LINE.NUM *s2ndOctet " 12" $= IF 
+43 LINE.NUM " SQA" *sSite  $MOVE 
+44 LINE.NUM ELSE 
+44 LINE.NUM *s2ndOctet " 13" $= IF 
+45 LINE.NUM " NGQ" *sSite  $MOVE 
+46 LINE.NUM ELSE 
+46 LINE.NUM *s2ndOctet " 14" $= IF 
+47 LINE.NUM " TFN" *sSite  $MOVE 
+48 LINE.NUM ELSE 
+48 LINE.NUM *s2ndOctet " 15" $= IF 
+49 LINE.NUM " PTR" *sSite  $MOVE 
+50 LINE.NUM ELSE 
+50 LINE.NUM *s2ndOctet " 16" $= IF 
+51 LINE.NUM " SPT" *sSite  $MOVE 
+52 LINE.NUM ELSE 
+52 LINE.NUM *s2ndOctet " 17" $= IF 
+53 LINE.NUM " WTF" *sSite  $MOVE 
+54 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+57 LINE.NUM *s3rdOctet " 0" $= IF 
+58 LINE.NUM " SSB" *sEncl  $MOVE 
+59 LINE.NUM ELSE 
+59 LINE.NUM *s3rdOctet " 1" $= IF 
+60 LINE.NUM " aqwa" *sEncl  $MOVE 
+61 LINE.NUM ELSE 
+61 LINE.NUM *s3rdOctet " 4" $= IF 
+62 LINE.NUM " aqwb" *sEncl  $MOVE 
+63 LINE.NUM ELSE 
+63 LINE.NUM *s3rdOctet " 10" $= IF 
+64 LINE.NUM " doma" *sEncl  $MOVE 
+65 LINE.NUM ELSE 
+65 LINE.NUM *s3rdOctet " 12" $= IF 
+66 LINE.NUM " domb" *sEncl  $MOVE 
+67 LINE.NUM ELSE 
+67 LINE.NUM *s3rdOctet " 14" $= IF 
+68 LINE.NUM " domc" *sEncl  $MOVE 
+69 LINE.NUM ELSE 
+69 LINE.NUM *s3rdOctet " 16" $= IF 
+70 LINE.NUM " domd" *sEncl  $MOVE 
+71 LINE.NUM ELSE 
+71 LINE.NUM *s3rdOctet " 20" $= IF 
+72 LINE.NUM " clma" *sEncl  $MOVE 
+73 LINE.NUM ELSE 
+73 LINE.NUM *s3rdOctet " 30" $= IF 
+74 LINE.NUM " igla" *sEncl  $MOVE 
+75 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN 
 -3 JUMP ;
+: 0_27
+3 LINE.NUM ^SynchClockTimer @@F 0 I>F F= IF 
+4 LINE.NUM *sSite " BPL" $= IF 
+5 LINE.NUM 5 I>F " udp:172.16.5.50:123"  SYNC.TIME ^debug @! 
+6 LINE.NUM ELSE 
+6 LINE.NUM *sSite " ELP" $= IF 
+7 LINE.NUM 5 I>F " udp:tym.elp.lco.gtn:123"  SYNC.TIME DROP  
+8 LINE.NUM ELSE 
+8 LINE.NUM *sSite " TFN" $= IF 
+9 LINE.NUM 5 I>F " udp:tym.tfn.lco.gtn:123"  SYNC.TIME DROP  
+10 LINE.NUM ELSE 
+10 LINE.NUM *sSite " LSC" $= IF 
+11 LINE.NUM 5 I>F " udp:tym.lsc.lco.gtn:123"  SYNC.TIME DROP  
+12 LINE.NUM ELSE 
+12 LINE.NUM *sSite " CPT" $= IF 
+13 LINE.NUM 5 I>F " udp:tym.cpt.lco.gtn:123"  SYNC.TIME DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM *sSite " COJ" $= IF 
+15 LINE.NUM 5 I>F " udp:tym.coj.lco.gtn:123"  SYNC.TIME DROP  
+16 LINE.NUM THEN THEN THEN THEN THEN THEN 
+18 LINE.NUM 60 I>F ^SynchClockTimer @! 
+19 LINE.NUM ^SynchClockTimer  StartTimer 
+20 LINE.NUM THEN 
+-5 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -1135,10 +1392,12 @@ DUMMY
 0_16
 0_20
 0_24
+0_27
 T;
 &Powerup ' T0 SETTASK
 CREATE T.ARRAY
 &aps2_1m0a_monitor ,
+&Glycol_Cooler ,
 &Master_Comm ,
 &Powerup ,
  0 ,
@@ -1146,12 +1405,18 @@ CREATE V.ARRAY
 ^CoolantDemand ,
 ^CoolantSetpoint ,
 ^CryoTigPWR_Lower_Flag ,
+^debug ,
 ^DewpointMinimum ,
 ^ErrorFlag ,
+^ErrorLogged ,
 ^f120 ,
 ^FanSwMode ,
 ^FaultFlag ,
+^FaultLogged ,
 ^FiveMinutes ,
+^FlowSwitchCount ,
+^FlowSwitchFlag ,
+^GlycolCoolerOverloadFlag ,
 ^HeartbeatPreset ,
 ^HeartFailure ,
 ^indexStep ,
@@ -1171,7 +1436,10 @@ CREATE V.ARRAY
 ^nIP_int ,
 ^nLength ,
 ^nOctet3 ,
+^nPeriodPosition1 ,
+^nPeriodPosition2 ,
 ^nPosition ,
+^nSubstringLength ,
 ^OverTemp ,
 ^Position ,
 ^PriorHeartbeatTime ,
@@ -1186,6 +1454,7 @@ CREATE V.ARRAY
 *EnviroString ,
 *EnviroTemp ,
 *ErrorReport ,
+*FaultReport ,
 *FWVersion ,
 *hourString ,
 *ICDVersion ,
@@ -1193,8 +1462,13 @@ CREATE V.ARRAY
 *MasterCommand ,
 *minString ,
 *monthString ,
+*s1stOctet ,
+*s2ndOctet ,
+*s3rdOctet ,
+*s4thOctet ,
 *sAps2 ,
 *secString ,
+*sEncl ,
 *SentString ,
 *sGetaps2 ,
 *sIP_Aps2 ,
@@ -1203,7 +1477,9 @@ CREATE V.ARRAY
 *sOctet1 ,
 *sOctet2 ,
 *sOctet3 ,
+*sSite ,
 *StatusString ,
+*sTimestamp ,
 *SWVersion ,
 *timeDatum ,
 *TimeString ,
@@ -1217,7 +1493,10 @@ CREATE TI.ARRAY
 ^CryoTigThermalTimer ,
 ^dtGetChar ,
 ^Heartbeat_Timer ,
+^SynchClockTimer ,
+^Timer_FlowSwitch ,
 ^Timer_GetChar ,
+^Timer_IgnoreFlowSwitch ,
  0 ,
 CREATE PTR.ARRAY
  0 ,
@@ -1233,6 +1512,7 @@ CREATE P.ARRAY
 ~CryoTig_Deadman ,
 ~CryoTigPWR_Lower_M2_3 ,
 ~DeadmanBypass ,
+~DI_FlowSwitch ,
 ~DO_XformerPWR ,
 ~F4_3_Reset ,
 ~F4_3_Status ,
@@ -1244,7 +1524,8 @@ CREATE P.ARRAY
 ~CryoTigReturnPress_Lower_M2_3 ,
 ~CryoTigVolt_Lower_M2_3 ,
 ~Exhaust_Fan_CTRL ,
-~Exhaust_Fan_SPD ,
+~Exhaust_Fan_M9_2_SPD ,
+~Exhaust_Fan_M9_5_SPD ,
 ~GlycolCoolerCurrent ,
 ~GlycolCoolerDiffPress ,
 ~GlycolCoolerFlow ,
@@ -1253,7 +1534,6 @@ CREATE P.ARRAY
 ~Honeysucker_SPD ,
 ~Intake_Fan_CTRL ,
 ~Intake_Fan_Humidity ,
-~Intake_Fan_SPD ,
 ~Intake_Fan_Temp ,
 ~MasterTemp ,
 ~MirrorCellVolt ,
@@ -1276,13 +1556,19 @@ CONFIG_PORTS
 20 ^CoolantSetpoint @!
 0 ^CryoTigPWR_Lower_Flag @!
 0.0 ^CryoTigThermalTimer @!
+0 ^debug @!
 0 ^DewpointMinimum @!
 0.0 ^dtGetChar @!
 0 ^ErrorFlag @!
+0 ^ErrorLogged @!
 120.00000 ^f120 @!
 -1 ^FanSwMode @!
 0 ^FaultFlag @!
+0 ^FaultLogged @!
 300.00000 ^FiveMinutes @!
+0 ^FlowSwitchCount @!
+0 ^FlowSwitchFlag @!
+0 ^GlycolCoolerOverloadFlag @!
 0.0 ^Heartbeat_Timer @!
 500.00000 ^HeartbeatPreset @!
 0 ^HeartFailure @!
@@ -1303,14 +1589,20 @@ CONFIG_PORTS
 0 ^nIP_int @!
 0 ^nLength @!
 0 ^nOctet3 @!
+0 ^nPeriodPosition1 @!
+0 ^nPeriodPosition2 @!
 0 ^nPosition @!
+0 ^nSubstringLength @!
 0 ^OverTemp @!
 -1 ^Position @!
 120 ^PriorHeartbeatTime @!
 0 ^Response @!
 0 ^StartupStatus @!
+0.0 ^SynchClockTimer @!
 600.00000 ^TenMinutes @!
+0.0 ^Timer_FlowSwitch @!
 0.0 ^Timer_GetChar @!
+0.0 ^Timer_IgnoreFlowSwitch @!
 " "
  *date2String $MOVE
 " "
@@ -1325,8 +1617,10 @@ CONFIG_PORTS
  *EnviroString $MOVE
 " "
  *EnviroTemp $MOVE
-" ''"
+" "
  *ErrorReport $MOVE
+" "
+ *FaultReport $MOVE
 " Opto R9.2a"
  *FWVersion $MOVE
 " "
@@ -1342,9 +1636,19 @@ CONFIG_PORTS
 " "
  *monthString $MOVE
 " "
+ *s1stOctet $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s3rdOctet $MOVE
+" "
+ *s4thOctet $MOVE
+" "
  *sAps2 $MOVE
 " "
  *secString $MOVE
+" "
+ *sEncl $MOVE
 " Null"
  *SentString $MOVE
 " "
@@ -1361,8 +1665,12 @@ CONFIG_PORTS
  *sOctet2 $MOVE
 " "
  *sOctet3 $MOVE
+" "
+ *sSite $MOVE
 " Status"
  *StatusString $MOVE
+" "
+ *sTimestamp $MOVE
 " -"
  *SWVersion $MOVE
 " "
@@ -1388,8 +1696,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 11/04/22 " ;
-: TIMESTAMP ." 12:02:43 " ;
+: DATESTAMP ." 09/23/24 " ;
+: TIMESTAMP ." 12:42:59 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

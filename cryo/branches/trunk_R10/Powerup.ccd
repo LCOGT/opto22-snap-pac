@@ -58,6 +58,17 @@
 16 LINE.NUM
   &aps2_1m0a_monitor   START.T
   ^nIndex2 @! 
+
+17 LINE.NUM
+  10.0  
+  ^Timer_IgnoreFlowSwitch   SetTimer
+
+18 LINE.NUM
+  ^Timer_IgnoreFlowSwitch   StartTimer
+
+19 LINE.NUM
+  &Glycol_Cooler   START.T
+  ^ErrorFlag @! 
 4 JUMP ;
 : 0_1
 1 LINE.NUM ^Heartbeat_Timer @@F 0 I>F F<= IF 
@@ -115,10 +126,115 @@
 21 LINE.NUM ELSE 
 22 LINE.NUM 0 ~CryoTigPWR_Lower_M2_3 @! 
 23 LINE.NUM THEN THEN 
--3 JUMP ;
+1 JUMP ;
 : 0_24
 1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+4 LINE.NUM 0 ^nPeriodPosition1 @! 
+5 LINE.NUM 0 ^nPeriodPosition2 @! 
+6 LINE.NUM 46 0 *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+7 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+8 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s1stOctet  $SUB 
+11 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+12 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+13 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+14 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s2ndOctet  $SUB 
+17 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+18 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+19 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+20 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s3rdOctet  $SUB 
+23 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+24 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ 3 *s4thOctet  $SUB 
+28 LINE.NUM *s2ndOctet " 5" $= IF 
+29 LINE.NUM " LSC" *sSite  $MOVE 
+30 LINE.NUM ELSE 
+30 LINE.NUM *s2ndOctet " 6" $= IF 
+31 LINE.NUM " MFG" *sSite  $MOVE 
+32 LINE.NUM ELSE 
+32 LINE.NUM *s2ndOctet " 7" $= IF 
+33 LINE.NUM " BPL" *sSite  $MOVE 
+34 LINE.NUM ELSE 
+34 LINE.NUM *s2ndOctet " 8" $= IF 
+35 LINE.NUM " CPT" *sSite  $MOVE 
+36 LINE.NUM ELSE 
+36 LINE.NUM *s2ndOctet " 9" $= IF 
+37 LINE.NUM " ELP" *sSite  $MOVE 
+38 LINE.NUM ELSE 
+38 LINE.NUM *s2ndOctet " 10" $= IF 
+39 LINE.NUM " COJ" *sSite  $MOVE 
+40 LINE.NUM ELSE 
+40 LINE.NUM *s2ndOctet " 11" $= IF 
+41 LINE.NUM " TLV" *sSite  $MOVE 
+42 LINE.NUM ELSE 
+42 LINE.NUM *s2ndOctet " 12" $= IF 
+43 LINE.NUM " SQA" *sSite  $MOVE 
+44 LINE.NUM ELSE 
+44 LINE.NUM *s2ndOctet " 13" $= IF 
+45 LINE.NUM " NGQ" *sSite  $MOVE 
+46 LINE.NUM ELSE 
+46 LINE.NUM *s2ndOctet " 14" $= IF 
+47 LINE.NUM " TFN" *sSite  $MOVE 
+48 LINE.NUM ELSE 
+48 LINE.NUM *s2ndOctet " 15" $= IF 
+49 LINE.NUM " PTR" *sSite  $MOVE 
+50 LINE.NUM ELSE 
+50 LINE.NUM *s2ndOctet " 16" $= IF 
+51 LINE.NUM " SPT" *sSite  $MOVE 
+52 LINE.NUM ELSE 
+52 LINE.NUM *s2ndOctet " 17" $= IF 
+53 LINE.NUM " WTF" *sSite  $MOVE 
+54 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+57 LINE.NUM *s3rdOctet " 0" $= IF 
+58 LINE.NUM " SSB" *sEncl  $MOVE 
+59 LINE.NUM ELSE 
+59 LINE.NUM *s3rdOctet " 1" $= IF 
+60 LINE.NUM " aqwa" *sEncl  $MOVE 
+61 LINE.NUM ELSE 
+61 LINE.NUM *s3rdOctet " 4" $= IF 
+62 LINE.NUM " aqwb" *sEncl  $MOVE 
+63 LINE.NUM ELSE 
+63 LINE.NUM *s3rdOctet " 10" $= IF 
+64 LINE.NUM " doma" *sEncl  $MOVE 
+65 LINE.NUM ELSE 
+65 LINE.NUM *s3rdOctet " 12" $= IF 
+66 LINE.NUM " domb" *sEncl  $MOVE 
+67 LINE.NUM ELSE 
+67 LINE.NUM *s3rdOctet " 14" $= IF 
+68 LINE.NUM " domc" *sEncl  $MOVE 
+69 LINE.NUM ELSE 
+69 LINE.NUM *s3rdOctet " 16" $= IF 
+70 LINE.NUM " domd" *sEncl  $MOVE 
+71 LINE.NUM ELSE 
+71 LINE.NUM *s3rdOctet " 20" $= IF 
+72 LINE.NUM " clma" *sEncl  $MOVE 
+73 LINE.NUM ELSE 
+73 LINE.NUM *s3rdOctet " 30" $= IF 
+74 LINE.NUM " igla" *sEncl  $MOVE 
+75 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN 
 -3 JUMP ;
+: 0_27
+3 LINE.NUM ^SynchClockTimer @@F 0 I>F F= IF 
+4 LINE.NUM *sSite " BPL" $= IF 
+5 LINE.NUM 5 I>F " udp:172.16.5.50:123"  SYNC.TIME ^debug @! 
+6 LINE.NUM ELSE 
+6 LINE.NUM *sSite " ELP" $= IF 
+7 LINE.NUM 5 I>F " udp:tym.elp.lco.gtn:123"  SYNC.TIME DROP  
+8 LINE.NUM ELSE 
+8 LINE.NUM *sSite " TFN" $= IF 
+9 LINE.NUM 5 I>F " udp:tym.tfn.lco.gtn:123"  SYNC.TIME DROP  
+10 LINE.NUM ELSE 
+10 LINE.NUM *sSite " LSC" $= IF 
+11 LINE.NUM 5 I>F " udp:tym.lsc.lco.gtn:123"  SYNC.TIME DROP  
+12 LINE.NUM ELSE 
+12 LINE.NUM *sSite " CPT" $= IF 
+13 LINE.NUM 5 I>F " udp:tym.cpt.lco.gtn:123"  SYNC.TIME DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM *sSite " COJ" $= IF 
+15 LINE.NUM 5 I>F " udp:tym.coj.lco.gtn:123"  SYNC.TIME DROP  
+16 LINE.NUM THEN THEN THEN THEN THEN THEN 
+18 LINE.NUM 60 I>F ^SynchClockTimer @! 
+19 LINE.NUM ^SynchClockTimer  StartTimer 
+20 LINE.NUM THEN 
+-5 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -127,5 +243,6 @@ DUMMY
 0_16
 0_20
 0_24
+0_27
 T;
 &Powerup ' T0 SETTASK
