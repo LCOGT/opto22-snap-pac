@@ -228,7 +228,7 @@ CONFIG_PORTS
  *FWVersion $MOVE
 " "
  *hourString $MOVE
-" 1.1"
+" 1.2"
  *ICDVersion $MOVE
 " "
  *LastCommand $MOVE
@@ -274,7 +274,7 @@ CONFIG_PORTS
  *StatusString $MOVE
 " "
  *sTimestamp $MOVE
-" -"
+" cryoPAC_Rev8"
  *SWVersion $MOVE
 " "
  *timeDatum $MOVE
