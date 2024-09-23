@@ -1,0 +1,820 @@
+: 1_0
+3 JUMP ;
+: 1_5
+
+1 LINE.NUM
+  10    DELAY
+0 JUMP ;
+: 1_9
+
+1 LINE.NUM
+  *Master_Handle   ACCEPT
+  ^MasterCommEstablished @! 
+38 JUMP ;
+: 1_12
+
+1 LINE.NUM
+  10    DELAY
+0 JUMP ;
+: 1_15
+
+1 LINE.NUM
+  *Master_Handle   LISTEN
+  ^ListeningForMaster @! 
+37 JUMP ;
+: 1_20
+
+1 LINE.NUM
+  *Master_Handle   ?STREAM.KEY
+  ^Master_Handle_CharNumWaiting @! 
+38 JUMP ;
+: 1_22
+
+1 LINE.NUM
+  10    DELAY
+-2 JUMP ;
+: 1_29
+
+1 LINE.NUM
+  *Master_Handle   CLOSE
+  ^Master_CommClosed @! 
+-4 JUMP ;
+: 1_34
+
+1 LINE.NUM
+  *MasterCommand 
+  *Master_Handle   GET$
+  ^MasterCommandStringRcvd @! 
+
+2 LINE.NUM
+  0  
+  ^indexStep @!   
+37 JUMP ;
+: 1_41
+
+1 LINE.NUM
+  10    DELAY
+21 JUMP ;
+: 1_60
+
+1 LINE.NUM
+  *Master_Handle   STREAM.CLEAR.BUF
+-4 JUMP ;
+: 1_69
+
+1 LINE.NUM
+  120.0  
+  ^Timer_GetChar   SetTimer
+
+2 LINE.NUM
+  ^Timer_GetChar   StartTimer
+-7 JUMP ;
+: 1_94
+
+1 LINE.NUM
+  ^Heartbeat_Timer   StopTimer
+
+2 LINE.NUM
+  ^Heartbeat_Timer @@F 
+  ^PriorHeartbeatTime F@!   
+
+3 LINE.NUM
+  ^HeartbeatPreset @@ 
+  ^Heartbeat_Timer   SetTimer
+
+4 LINE.NUM
+  ^Heartbeat_Timer   StartTimer
+27 JUMP ;
+: 1_108
+
+1 LINE.NUM
+  " DATETIME" 
+ 
+  ^indexStep @@ 
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+36 JUMP ;
+: 1_112
+1 LINE.NUM ^Position @@ -1 >= IF 
+2 LINE.NUM " Success=True" *StatusString  $MOVE 
+3 LINE.NUM *MasterCommand 9 4 *yearString  $SUB 
+4 LINE.NUM *MasterCommand 14 2 *monthString  $SUB 
+5 LINE.NUM *MasterCommand 17 2 *dayString  $SUB 
+6 LINE.NUM *MasterCommand 20 2 *hourString  $SUB 
+7 LINE.NUM *MasterCommand 23 2 *minString  $SUB 
+8 LINE.NUM *MasterCommand 26 2 *secString  $SUB 
+9 LINE.NUM *monthString *dateDatum  $MOVE 
+10 LINE.NUM " /" *dateDatum $CAT 
+
+11 LINE.NUM *dayString *dateDatum $CAT 
+
+12 LINE.NUM " /" *dateDatum $CAT 
+
+13 LINE.NUM *yearString *dateDatum $CAT 
+
+14 LINE.NUM *dateDatum  SETDATE 
+15 LINE.NUM *hourString *timeDatum  $MOVE 
+16 LINE.NUM " /" *timeDatum $CAT 
+
+17 LINE.NUM *minString *timeDatum $CAT 
+
+18 LINE.NUM " /" *timeDatum $CAT 
+
+19 LINE.NUM *secString *timeDatum $CAT 
+
+20 LINE.NUM *dateDatum  SETTIME 
+21 LINE.NUM ELSE 
+22 LINE.NUM " Success=FALSE" *StatusString  $MOVE 
+23 LINE.NUM THEN 
+24 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+25 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+26 LINE.NUM " " *MasterCommand  $MOVE 
+14 JUMP ;
+: 1_115
+
+1 LINE.NUM
+  " RESET" 
+ 
+  ^indexStep @@ 
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+35 JUMP ;
+: 1_119
+1 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
+2 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+3 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+4 LINE.NUM " " *MasterCommand  $MOVE 
+22 JUMP ;
+: 1_122
+
+1 LINE.NUM
+  " GET_FAULTS" 
+ 
+  ^indexStep @@ 
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+34 JUMP ;
+: 1_126
+1 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
+2 LINE.NUM *FaultReport *StatusString $CAT 
+
+3 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+4 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+5 LINE.NUM " " *MasterCommand  $MOVE 
+11 JUMP ;
+: 1_140
+1 LINE.NUM " Success=True, ICDVersion=" *StatusString  $MOVE 
+2 LINE.NUM *ICDVersion *StatusString $CAT 
+
+3 LINE.NUM " , FWVersion=" *StatusString $CAT 
+
+4 LINE.NUM *FWVersion *StatusString $CAT 
+
+5 LINE.NUM " , SWVersion=" *StatusString $CAT 
+
+6 LINE.NUM *SWVersion *StatusString $CAT 
+
+8 LINE.NUM " , Timestamp=" *StatusString $CAT 
+
+10 LINE.NUM *DateString  -1 DATE>$ 
+11 LINE.NUM *DateString 6 4 *yearString  $SUB 
+12 LINE.NUM *DateString 3 2 *monthString  $SUB 
+13 LINE.NUM *DateString 0 2 *dayString  $SUB 
+14 LINE.NUM *yearString *StatusString $CAT 
+
+15 LINE.NUM " /" *StatusString $CAT 
+
+16 LINE.NUM *monthString *StatusString $CAT 
+
+17 LINE.NUM " /" *StatusString $CAT 
+
+18 LINE.NUM *dayString *StatusString $CAT 
+
+20 LINE.NUM " T" *StatusString $CAT 
+
+21 LINE.NUM *TimeString  TIME>$ 
+22 LINE.NUM *TimeString *StatusString $CAT 
+
+24 LINE.NUM " , SystemUpTime=" *StatusString $CAT 
+
+25 LINE.NUM  GetSystemTime 86400 / I>F 10 0 *ElapsedString  FF.R$ 
+26 LINE.NUM *ElapsedString *StatusString $CAT 
+
+28 LINE.NUM " , HeartBeatDownTimer=" *StatusString $CAT 
+
+29 LINE.NUM ^HeartbeatPreset @@ ^Heartbeat_Timer @@F F- 6 2 *ElapsedString  FF.R$ 
+30 LINE.NUM *ElapsedString *StatusString $CAT 
+
+32 LINE.NUM *FaultReport  $LEN 0 > IF 
+33 LINE.NUM " , Fault=TRUE" *StatusString $CAT 
+
+34 LINE.NUM ELSE 
+35 LINE.NUM " , Fault=FALSE" *StatusString $CAT 
+
+36 LINE.NUM THEN 
+38 LINE.NUM *ErrorReport  $LEN 0 > IF 
+39 LINE.NUM " , Error=TRUE" *StatusString $CAT 
+
+40 LINE.NUM ELSE 
+41 LINE.NUM " , Error=FALSE" *StatusString $CAT 
+
+42 LINE.NUM THEN 
+44 LINE.NUM *StatusString *EnviroString  $MOVE 
+46 LINE.NUM " , ExhaustFanTachM9_2=" *EnviroString $CAT 
+
+47 LINE.NUM ~Exhaust_Fan_M9_2_SPD @@ 1.33000004e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+48 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+49 LINE.NUM " , ExhaustFanTachM9_5=" *EnviroString $CAT 
+
+50 LINE.NUM ~Exhaust_Fan_M9_5_SPD @@ 1.41999996e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+51 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+52 LINE.NUM " , HoneysuckerFanTach=" *EnviroString $CAT 
+
+53 LINE.NUM ~Honeysucker_SPD @@ 3.23000002e+000 F/ 4 0 *EnviroTemp  FF.R$ 
+54 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+55 LINE.NUM " , LowerCryotigerVoltage=" *EnviroString $CAT 
+
+56 LINE.NUM ~CryoTigVolt_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+57 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+58 LINE.NUM " , MirrorCellVoltage=" *EnviroString $CAT 
+
+59 LINE.NUM ~MirrorCellVolt @@ 5 1 *EnviroTemp  FF.R$ 
+60 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+61 LINE.NUM " , GlycolReturnTemp=" *EnviroString $CAT 
+
+62 LINE.NUM ~GlycolReturnTemp @@ 5 1 *EnviroTemp  FF.R$ 
+63 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+64 LINE.NUM " , GlycolSupplyTemp=" *EnviroString $CAT 
+
+65 LINE.NUM ~GlycolSupplyTemp @@ 5 1 *EnviroTemp  FF.R$ 
+66 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+67 LINE.NUM " , CabinetHumidity=" *EnviroString $CAT 
+
+68 LINE.NUM ~Intake_Fan_Humidity @@ 5 1 *EnviroTemp  FF.R$ 
+69 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+70 LINE.NUM " , CabinetTemperature=" *EnviroString $CAT 
+
+71 LINE.NUM ~Intake_Fan_Temp @@ 5 1 *EnviroTemp  FF.R$ 
+72 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+73 LINE.NUM " , CabinetDewpoint=" *EnviroString $CAT 
+
+74 LINE.NUM ~Intake_Fan_Temp @@ 100 I>F ~Intake_Fan_Humidity @@ F- 5.00000000e+000 F/ F- ^DewpointMinimum F@! 
+76 LINE.NUM ^DewpointMinimum @@F 5 1 *EnviroTemp  FF.R$ 
+77 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+88 LINE.NUM " , GlycolCoolerDifferentialPressure=" *EnviroString $CAT 
+
+89 LINE.NUM ~GlycolCoolerDiffPress @@ 7 2 *EnviroTemp  FF.R$ 
+90 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+94 LINE.NUM " , LowerCryotigerCurrent=" *EnviroString $CAT 
+
+95 LINE.NUM ~CryoTigCurrent_Lower_M2_3 @@ 4 1 *EnviroTemp  FF.R$ 
+96 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+100 LINE.NUM " , GlycolCoolerCurrent=" *EnviroString $CAT 
+
+101 LINE.NUM ~GlycolCoolerCurrent @@ 5 1 *EnviroTemp  FF.R$ 
+102 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+106 LINE.NUM " , GlycolCoolerFlow=" *EnviroString $CAT 
+
+107 LINE.NUM ~GlycolCoolerFlow @@ 1000 I>F F* 10 1 *EnviroTemp  FF.R$ 
+108 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+112 LINE.NUM " , LowerCryotigerOutputPressure=" *EnviroString $CAT 
+
+113 LINE.NUM ~CryoTigOutputPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+114 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+115 LINE.NUM " , LowerCryotigerReturnPressure=" *EnviroString $CAT 
+
+116 LINE.NUM ~CryoTigReturnPress_Lower_M2_3 @@ 5 1 *EnviroTemp  FF.R$ 
+117 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+124 LINE.NUM " , GlycolCoolerON=" *EnviroString $CAT 
+
+125 LINE.NUM ~GlycolCoolerPWR @@I 1 = IF 
+126 LINE.NUM " TRUE" *EnviroTemp  $MOVE 
+127 LINE.NUM ELSE 
+128 LINE.NUM " FALSE" *EnviroTemp  $MOVE 
+129 LINE.NUM THEN 
+130 LINE.NUM *EnviroTemp *EnviroString $CAT 
+
+133 LINE.NUM *EnviroString *SentString  $MOVE 
+135 LINE.NUM ^OverTemp @@ 1 = IF 
+136 LINE.NUM " , OverTemp=TRUE" *StatusString $CAT 
+
+137 LINE.NUM ELSE 
+138 LINE.NUM " , OverTemp=FALSE" *StatusString $CAT 
+
+139 LINE.NUM THEN 
+141 LINE.NUM " , MergedTemp=" *StatusString $CAT 
+
+142 LINE.NUM ^MergedTemp @@ 5 1 *EnviroTemp  FF.R$ 
+143 LINE.NUM *EnviroTemp *StatusString $CAT 
+
+145 LINE.NUM *SentString *StatusString  $MOVE 
+146 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+147 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+148 LINE.NUM " " *MasterCommand  $MOVE 
+3 JUMP ;
+: 1_142
+
+1 LINE.NUM
+  " STATUS" 
+ 
+  ^indexStep @@ 
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+32 JUMP ;
+: 1_147
+
+1 LINE.NUM
+  *MasterCommand   $>Upper
+
+2 LINE.NUM
+  " ." 
+ 
+  0  
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+34 JUMP ;
+: 1_154
+-18 JUMP ;
+: 1_156
+-19 JUMP ;
+: 1_183
+-20 JUMP ;
+: 1_186
+4 LINE.NUM 0 ^Response @! 
+6 LINE.NUM " EXHAUST_FAN_M9_5_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+7 LINE.NUM ^Position @@ -1 >= IF 
+8 LINE.NUM 10 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+9 LINE.NUM 1 ^Response @! 
+10 LINE.NUM THEN 
+11 LINE.NUM " EXHAUST_FAN_M9_5_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+12 LINE.NUM ^Position @@ -1 >= IF 
+13 LINE.NUM 6 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+14 LINE.NUM 1 ^Response @! 
+15 LINE.NUM THEN 
+16 LINE.NUM " EXHAUST_FAN_M9_5_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+17 LINE.NUM ^Position @@ -1 >= IF 
+18 LINE.NUM 3 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+19 LINE.NUM 1 ^Response @! 
+20 LINE.NUM THEN 
+21 LINE.NUM " EXHAUST_FAN_M9_5_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+22 LINE.NUM ^Position @@ -1 >= IF 
+23 LINE.NUM 0 I>F 2 I>F ~Intake_Fan_CTRL  F!RAMP 
+24 LINE.NUM 1 ^Response @! 
+25 LINE.NUM THEN 
+26 LINE.NUM " EXHAUST_FAN_M9_2_HI" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+27 LINE.NUM ^Position @@ -1 >= IF 
+28 LINE.NUM 10 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+29 LINE.NUM 1 ^Response @! 
+30 LINE.NUM THEN 
+31 LINE.NUM " EXHAUST_FAN_M9_2_MED" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+32 LINE.NUM ^Position @@ -1 >= IF 
+33 LINE.NUM 6 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+34 LINE.NUM 1 ^Response @! 
+35 LINE.NUM THEN 
+36 LINE.NUM " EXHAUST_FAN_M9_2_LOW" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+37 LINE.NUM ^Position @@ -1 >= IF 
+38 LINE.NUM 3 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+39 LINE.NUM 1 ^Response @! 
+40 LINE.NUM THEN 
+41 LINE.NUM " EXHAUST_FAN_M9_2_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+42 LINE.NUM ^Position @@ -1 >= IF 
+43 LINE.NUM 0 I>F 2 I>F ~Exhaust_Fan_CTRL  F!RAMP 
+44 LINE.NUM 1 ^Response @! 
+45 LINE.NUM THEN 
+46 LINE.NUM " HONEYSUCKER_FAN_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+47 LINE.NUM ^Position @@ -1 >= IF 
+48 LINE.NUM 1 ~Honeysucker_CTRL @! 
+49 LINE.NUM 1 ^Response @! 
+50 LINE.NUM THEN 
+51 LINE.NUM " HONEYSUCKER_FAN_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+52 LINE.NUM ^Position @@ -1 >= IF 
+53 LINE.NUM 0 ~Honeysucker_CTRL @! 
+54 LINE.NUM 1 ^Response @! 
+55 LINE.NUM THEN 
+56 LINE.NUM " LOWER_CRYOTIGER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+57 LINE.NUM ^Position @@ -1 >= IF 
+59 LINE.NUM 1 ^CryoTigPWR_Lower_Flag @! 
+60 LINE.NUM 1 ^Response @! 
+61 LINE.NUM THEN 
+62 LINE.NUM " LOWER_CRYOTIGER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+63 LINE.NUM ^Position @@ -1 >= IF 
+65 LINE.NUM 0 ^CryoTigPWR_Lower_Flag @! 
+66 LINE.NUM 1 ^Response @! 
+67 LINE.NUM THEN 
+80 LINE.NUM " GLYCOL_COOLER_ON" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+81 LINE.NUM ^Position @@ -1 >= IF 
+82 LINE.NUM 30 I>F ^Timer_IgnoreFlowSwitch @! 
+83 LINE.NUM ^Timer_IgnoreFlowSwitch  StartTimer 
+84 LINE.NUM 0 ^FlowSwitchCount @! 
+85 LINE.NUM 1 ~GlycolCoolerPWR @! 
+86 LINE.NUM 1 ^Response @! 
+87 LINE.NUM THEN 
+88 LINE.NUM " GLYCOL_COOLER_OFF" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+89 LINE.NUM ^Position @@ -1 >= IF 
+90 LINE.NUM 0 ~GlycolCoolerPWR @! 
+91 LINE.NUM 1 ^Response @! 
+92 LINE.NUM THEN 
+105 LINE.NUM " RESET_MISC_POWER_BREAKER" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+106 LINE.NUM ^Position @@ -1 >= IF 
+107 LINE.NUM 0 ~F4_3_Reset @! 
+108 LINE.NUM 200  DELAY 
+109 LINE.NUM 1 ~F4_3_Reset @! 
+110 LINE.NUM 1 ^Response @! 
+111 LINE.NUM THEN 
+113 LINE.NUM " CLEAR_ERRORS" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+114 LINE.NUM ^Position @@ -1 >= IF 
+115 LINE.NUM " " *ErrorReport  $MOVE 
+116 LINE.NUM 1 ^Response @! 
+117 LINE.NUM THEN 
+119 LINE.NUM " CLEAR_FAULTS" ^indexStep @@ *MasterCommand  FindSubString ^Position @! 
+120 LINE.NUM ^Position @@ -1 >= IF 
+121 LINE.NUM " " *FaultReport  $MOVE 
+122 LINE.NUM 1 ^Response @! 
+123 LINE.NUM THEN 
+126 LINE.NUM ^Response @@ 1 = IF 
+127 LINE.NUM " Success=TRUE" *SentString  $MOVE 
+129 LINE.NUM ELSE 
+130 LINE.NUM " Success =FALSE" *SentString  $MOVE 
+132 LINE.NUM THEN 
+133 LINE.NUM *SentString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+134 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+135 LINE.NUM " " *MasterCommand  $MOVE 
+-2 JUMP ;
+: 1_193
+3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
+5 LINE.NUM *ErrorReport *StatusString $CAT 
+
+7 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+8 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+9 LINE.NUM " " *MasterCommand  $MOVE 
+1 JUMP ;
+: 1_197
+
+1 LINE.NUM
+  " GET_ERRORS" 
+ 
+  ^indexStep @@ 
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+27 JUMP ;
+: 1_201
+-24 JUMP ;
+: 1_205
+-25 JUMP ;
+: 1_207
+-26 JUMP ;
+: 1_214
+-27 JUMP ;
+: 1_292
+
+1 LINE.NUM
+  " HEARTBEAT" 
+ 
+  ^indexStep @@ 
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+21 JUMP ;
+: 1_297
+
+1 LINE.NUM
+  " ," 
+ 
+  0  
+  *MasterCommand   FindSubString
+  ^MasterCommandStringRcvd @! 
+23 JUMP ;
+: 1_299
+
+1 LINE.NUM
+  1  
+  ^indexStep @!   
+-3 JUMP ;
+: 1_313
+
+1 LINE.NUM
+  *Master_Handle   STREAM.CLEAR.BUF
+-15 JUMP ;
+: 1_320
+
+1 LINE.NUM
+  *Master_Handle   CLOSE
+  ^Master_CommClosed @! 
+-30 JUMP ;
+: 1_332
+
+1 LINE.NUM
+  120.0  
+  ^Timer_GetChar   SetTimer
+
+2 LINE.NUM
+  ^Timer_GetChar   StartTimer
+10 JUMP ;
+: 1_336
+5 LINE.NUM ^FlowSwitchFlag @@ 1 = IF 
+8 LINE.NUM -1 ^FaultLogged @! 
+9 LINE.NUM " GlycolCoolerLowFlow" 0 *FaultReport  FindSubString ^FaultLogged @! 
+11 LINE.NUM ^FaultLogged @@ 0 >= IF 
+13 LINE.NUM ELSE 
+15 LINE.NUM " , GlycolCoolerLowFlow " *FaultReport $CAT 
+
+16 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+17 LINE.NUM *sTimestamp *FaultReport $CAT 
+
+18 LINE.NUM THEN 
+20 LINE.NUM THEN 
+22 LINE.NUM ~F4_3_Status @@I 0 = IF 
+25 LINE.NUM -1 ^ErrorLogged @! 
+26 LINE.NUM " 24VdcBreakerTripped" 0 *ErrorReport  FindSubString ^ErrorLogged @! 
+28 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+30 LINE.NUM ELSE 
+32 LINE.NUM " , 24VdcBreakerTripped " *ErrorReport $CAT 
+
+33 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+34 LINE.NUM *sTimestamp *ErrorReport $CAT 
+
+35 LINE.NUM THEN 
+37 LINE.NUM THEN 
+60 LINE.NUM ^GlycolCoolerOverloadFlag @@ 1 = IF 
+63 LINE.NUM -1 ^FaultLogged @! 
+64 LINE.NUM " GlycolCoolerOverload" 0 *FaultReport  FindSubString ^FaultLogged @! 
+66 LINE.NUM ^FaultLogged @@ 0 >= IF 
+68 LINE.NUM ELSE 
+70 LINE.NUM " , GlycolCoolerOverload " *FaultReport $CAT 
+
+71 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+72 LINE.NUM *sTimestamp *FaultReport $CAT 
+
+73 LINE.NUM THEN 
+75 LINE.NUM THEN 
+-19 JUMP ;
+: 1_339
+
+1 LINE.NUM
+  1500    DELAY
+
+2 LINE.NUM
+  &Master_Comm   STOP.T
+
+3 LINE.NUM
+  500    DELAY
+
+4 LINE.NUM
+  &Powerup   START.T
+  ^StartupStatus @! 
+20 JUMP ;
+: 1_342
+3 LINE.NUM " Success=TRUE" *StatusString  $MOVE 
+5 LINE.NUM *StatusString *Master_Handle  PRT$ ^MasterXmitStatus @! 
+6 LINE.NUM *MasterCommand *LastCommand  $MOVE 
+7 LINE.NUM " " *MasterCommand  $MOVE 
+-19 JUMP ;
+: 1_7
+FALSE
+
+1 LINE.NUM
+  ^MasterCommEstablished @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^MasterCommEstablished @@ 
+  -47    =
+LOR
+IF -31 ELSE -41 THEN JUMP ;
+: 1_14
+FALSE
+
+1 LINE.NUM
+  ^ListeningForMaster @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^ListeningForMaster @@ 
+  -47    =
+LOR
+IF -41 ELSE -40 THEN JUMP ;
+: 1_17
+TRUE
+
+1 LINE.NUM
+  ^Master_Handle_CharNumWaiting @@ 
+  0    <
+LAND
+IF 1 ELSE -38 THEN JUMP ;
+: 1_19
+TRUE
+
+1 LINE.NUM
+  ^Master_Handle_CharNumWaiting @@ 
+  0    >
+LAND
+IF -8 ELSE 14 THEN JUMP ;
+: 1_25
+FALSE
+
+1 LINE.NUM
+  ^Master_Handle_CharNumWaiting @@ 
+  -37    =
+LOR
+
+2 LINE.NUM
+  ^Master_Handle_CharNumWaiting @@ 
+  -39    =
+LOR
+IF -40 ELSE -39 THEN JUMP ;
+: 1_35
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  0    =
+LAND
+IF -12 ELSE 0 THEN JUMP ;
+: 1_39
+FALSE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -37    =
+LOR
+
+2 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -39    =
+LOR
+IF -39 ELSE -38 THEN JUMP ;
+: 1_66
+TRUE
+
+1 LINE.NUM
+  ^Master_Handle_CharNumWaiting @@ 
+  6    <
+LAND
+IF -39 ELSE -41 THEN JUMP ;
+: 1_72
+TRUE
+
+1 LINE.NUM
+  ^Timer_GetChar   T0=
+LAND
+IF -14 ELSE -7 THEN JUMP ;
+: 1_110
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -37 ELSE -26 THEN JUMP ;
+: 1_117
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -36 ELSE -39 THEN JUMP ;
+: 1_124
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -35 ELSE -38 THEN JUMP ;
+: 1_139
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -35 ELSE -27 THEN JUMP ;
+: 1_144
+FALSE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LOR
+IF -43 ELSE -17 THEN JUMP ;
+: 1_195
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -30 ELSE -39 THEN JUMP ;
+: 1_293
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -23 ELSE -24 THEN JUMP ;
+: 1_300
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  -1    >
+LAND
+IF -24 ELSE -26 THEN JUMP ;
+: 1_325
+TRUE
+
+1 LINE.NUM
+  ^MasterCommandStringRcvd @@ 
+  0    <=
+LAND
+IF 1 ELSE -24 THEN JUMP ;
+: 1_330
+TRUE
+
+1 LINE.NUM
+  *Master_Handle   ?OPEN 0>
+LAND
+IF -11 ELSE -53 THEN JUMP ;
+T: T1
+DUMMY
+1_0
+1_5
+1_9
+1_12
+1_15
+1_20
+1_22
+1_29
+1_34
+1_41
+1_60
+1_69
+1_94
+1_108
+1_112
+1_115
+1_119
+1_122
+1_126
+1_140
+1_142
+1_147
+1_154
+1_156
+1_183
+1_186
+1_193
+1_197
+1_201
+1_205
+1_207
+1_214
+1_292
+1_297
+1_299
+1_313
+1_320
+1_332
+1_336
+1_339
+1_342
+1_7
+1_14
+1_17
+1_19
+1_25
+1_35
+1_39
+1_66
+1_72
+1_110
+1_117
+1_124
+1_139
+1_144
+1_195
+1_293
+1_300
+1_325
+1_330
+T;
+&Master_Comm ' T1 SETTASK

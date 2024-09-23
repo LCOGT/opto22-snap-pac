@@ -1,0 +1,301 @@
+CREATE T.ARRAY
+&aps2_1m0a_monitor ,
+&Glycol_Cooler ,
+&Master_Comm ,
+&Powerup ,
+ 0 ,
+CREATE V.ARRAY
+^CoolantDemand ,
+^CoolantSetpoint ,
+^CryoTigPWR_Lower_Flag ,
+^debug ,
+^DewpointMinimum ,
+^ErrorFlag ,
+^ErrorLogged ,
+^f120 ,
+^FanSwMode ,
+^FaultFlag ,
+^FaultLogged ,
+^FiveMinutes ,
+^FlowSwitchCount ,
+^FlowSwitchFlag ,
+^GlycolCoolerOverloadFlag ,
+^HeartbeatPreset ,
+^HeartFailure ,
+^indexStep ,
+^ListeningForMaster ,
+^Master_CommClosed ,
+^Master_Handle_CharNumWaiting ,
+^MasterCommandStringRcvd ,
+^MasterCommEstablished ,
+^MasterXmitStatus ,
+^MergedTemp ,
+^nAps2Status ,
+^nASCII ,
+^nCharCount ,
+^nIndex0 ,
+^nIndex1 ,
+^nIndex2 ,
+^nIP_int ,
+^nLength ,
+^nOctet3 ,
+^nPeriodPosition1 ,
+^nPeriodPosition2 ,
+^nPosition ,
+^nSubstringLength ,
+^OverTemp ,
+^Position ,
+^PriorHeartbeatTime ,
+^Response ,
+^StartupStatus ,
+^TenMinutes ,
+*date2String ,
+*dateDatum ,
+*DateString ,
+*dayString ,
+*ElapsedString ,
+*EnviroString ,
+*EnviroTemp ,
+*ErrorReport ,
+*FaultReport ,
+*FWVersion ,
+*hourString ,
+*ICDVersion ,
+*LastCommand ,
+*MasterCommand ,
+*minString ,
+*monthString ,
+*s1stOctet ,
+*s2ndOctet ,
+*s3rdOctet ,
+*s4thOctet ,
+*sAps2 ,
+*secString ,
+*sEncl ,
+*SentString ,
+*sGetaps2 ,
+*sIP_Aps2 ,
+*sIP_hex ,
+*sIP_PAC ,
+*sOctet1 ,
+*sOctet2 ,
+*sOctet3 ,
+*sSite ,
+*StatusString ,
+*sTimestamp ,
+*SWVersion ,
+*timeDatum ,
+*TimeString ,
+*yearString ,
+*_HSV_SEMA ,
+*_HSV_TEMP ,
+*cAps2 ,
+*Master_Handle ,
+ 0 ,
+CREATE TI.ARRAY
+^CryoTigThermalTimer ,
+^dtGetChar ,
+^Heartbeat_Timer ,
+^SynchClockTimer ,
+^Timer_FlowSwitch ,
+^Timer_GetChar ,
+^Timer_IgnoreFlowSwitch ,
+ 0 ,
+CREATE PTR.ARRAY
+ 0 ,
+CREATE TA.ARRAY 
+{stAps2 ,
+ 0 ,
+CREATE PTRTABLE.ARRAY 
+ 0 ,
+CREATE B.ARRAY
+%Local_IO ,
+ 0 ,
+CREATE P.ARRAY
+~CryoTig_Deadman ,
+~CryoTigPWR_Lower_M2_3 ,
+~DeadmanBypass ,
+~DI_FlowSwitch ,
+~DO_XformerPWR ,
+~F4_3_Reset ,
+~F4_3_Status ,
+~GlycolCoolerPWR ,
+~GlycolPumpOverload ,
+~Honeysucker_CTRL ,
+~CryoTigCurrent_Lower_M2_3 ,
+~CryoTigOutputPress_Lower_M2_3 ,
+~CryoTigReturnPress_Lower_M2_3 ,
+~CryoTigVolt_Lower_M2_3 ,
+~Exhaust_Fan_CTRL ,
+~Exhaust_Fan_M9_2_SPD ,
+~Exhaust_Fan_M9_5_SPD ,
+~GlycolCoolerCurrent ,
+~GlycolCoolerDiffPress ,
+~GlycolCoolerFlow ,
+~GlycolReturnTemp ,
+~GlycolSupplyTemp ,
+~Honeysucker_SPD ,
+~Intake_Fan_CTRL ,
+~Intake_Fan_Humidity ,
+~Intake_Fan_Temp ,
+~MasterTemp ,
+~MirrorCellVolt ,
+ 0 ,
+CREATE PID.ARRAY
+ 0 ,
+CREATE E/R.ARRAY
+ 0 ,
+CREATE E/RGROUP.ARRAY
+ 0 ,
+: CONFIG_PORTS
+;
+: W_INIT_IO
+CONFIG_PORTS
+" %Local_IO  (1/1)" *_HSV_INIT_IO $MOVE 0 ^_HNV_INIT_IO @!
+%Local_IO ENABLE
+ 0 ~DO_XformerPWR @!
+ " Initializing variables" *_HSV_INIT_IO $MOVE
+0 ^CoolantDemand @!
+20 ^CoolantSetpoint @!
+0 ^CryoTigPWR_Lower_Flag @!
+0.0 ^CryoTigThermalTimer @!
+0 ^debug @!
+0 ^DewpointMinimum @!
+0.0 ^dtGetChar @!
+0 ^ErrorFlag @!
+0 ^ErrorLogged @!
+120.00000 ^f120 @!
+-1 ^FanSwMode @!
+0 ^FaultFlag @!
+0 ^FaultLogged @!
+300.00000 ^FiveMinutes @!
+0 ^FlowSwitchCount @!
+0 ^FlowSwitchFlag @!
+0 ^GlycolCoolerOverloadFlag @!
+0.0 ^Heartbeat_Timer @!
+500.00000 ^HeartbeatPreset @!
+0 ^HeartFailure @!
+0 ^indexStep @!
+0 ^ListeningForMaster @!
+0 ^Master_CommClosed @!
+0 ^Master_Handle_CharNumWaiting @!
+0 ^MasterCommandStringRcvd @!
+0 ^MasterCommEstablished @!
+0 ^MasterXmitStatus @!
+0.00000000 ^MergedTemp @!
+0 ^nAps2Status @!
+0 ^nASCII @!
+0 ^nCharCount @!
+0 ^nIndex0 @!
+0 ^nIndex1 @!
+0 ^nIndex2 @!
+0 ^nIP_int @!
+0 ^nLength @!
+0 ^nOctet3 @!
+0 ^nPeriodPosition1 @!
+0 ^nPeriodPosition2 @!
+0 ^nPosition @!
+0 ^nSubstringLength @!
+0 ^OverTemp @!
+-1 ^Position @!
+120 ^PriorHeartbeatTime @!
+0 ^Response @!
+0 ^StartupStatus @!
+0.0 ^SynchClockTimer @!
+600.00000 ^TenMinutes @!
+0.0 ^Timer_FlowSwitch @!
+0.0 ^Timer_GetChar @!
+0.0 ^Timer_IgnoreFlowSwitch @!
+" "
+ *date2String $MOVE
+" "
+ *dateDatum $MOVE
+" "
+ *DateString $MOVE
+" "
+ *dayString $MOVE
+" "
+ *ElapsedString $MOVE
+" Enviro"
+ *EnviroString $MOVE
+" "
+ *EnviroTemp $MOVE
+" "
+ *ErrorReport $MOVE
+" "
+ *FaultReport $MOVE
+" Opto R9.2a"
+ *FWVersion $MOVE
+" "
+ *hourString $MOVE
+" 1.1"
+ *ICDVersion $MOVE
+" "
+ *LastCommand $MOVE
+" "
+ *MasterCommand $MOVE
+" "
+ *minString $MOVE
+" "
+ *monthString $MOVE
+" "
+ *s1stOctet $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s3rdOctet $MOVE
+" "
+ *s4thOctet $MOVE
+" "
+ *sAps2 $MOVE
+" "
+ *secString $MOVE
+" "
+ *sEncl $MOVE
+" Null"
+ *SentString $MOVE
+" "
+ *sGetaps2 $MOVE
+" "
+ *sIP_Aps2 $MOVE
+" "
+ *sIP_hex $MOVE
+" "
+ *sIP_PAC $MOVE
+" "
+ *sOctet1 $MOVE
+" "
+ *sOctet2 $MOVE
+" "
+ *sOctet3 $MOVE
+" "
+ *sSite $MOVE
+" Status"
+ *StatusString $MOVE
+" "
+ *sTimestamp $MOVE
+" -"
+ *SWVersion $MOVE
+" "
+ *timeDatum $MOVE
+" "
+ *TimeString $MOVE
+" "
+ *yearString $MOVE
+" "
+ *cAps2 $MOVE
+" tcp:22004"
+ *Master_Handle $MOVE
+ " "
+0 -1 {stAps2 Init$Table
+ " " *_HSV_INIT_IO $MOVE
+;
+T: T_INIT_IO
+W_INIT_IO
+&Powerup START.T DROP
+T;
+&_INIT_IO ' T_INIT_IO  SETTASK
+   : _RUN
+   CLEARERRORS
+   &_INIT_IO START.T DROP
+   ;
