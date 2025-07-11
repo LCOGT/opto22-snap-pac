@@ -220,7 +220,7 @@
 60 LINE.NUM " , SmokeAlarm " *sErrorList $CAT 
 
 61 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-62 LINE.NUM *sTimestamp *sFaultList $CAT 
+62 LINE.NUM *sTimestamp *sErrorList $CAT 
 
 63 LINE.NUM THEN 
 0 JUMP ;

@@ -23,28 +23,21 @@
 22 LINE.NUM *sTimestamp *sFaultList $CAT 
 
 23 LINE.NUM THEN 
-25 LINE.NUM ~DI_Smoke_SEN @@I 1 = IF 
-26 LINE.NUM " , SmokeAlarm " *sFaultList $CAT 
+33 LINE.NUM ~DI_SmokeHeat_SEN @@I 1 = IF 
+34 LINE.NUM " , SmokeAlarmHeat " *sFaultList $CAT 
 
-27 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-28 LINE.NUM *sTimestamp *sFaultList $CAT 
+35 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+36 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-29 LINE.NUM THEN 
-31 LINE.NUM ~DI_SmokeHeat_SEN @@I 1 = IF 
-32 LINE.NUM " , SmokeAlarmHeat " *sFaultList $CAT 
+37 LINE.NUM THEN 
+39 LINE.NUM *sEnclOpMode " UNKNOWN" $= IF 
+40 LINE.NUM " , EnclOpMode " *sFaultList $CAT 
 
-33 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-34 LINE.NUM *sTimestamp *sFaultList $CAT 
+41 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+42 LINE.NUM *sTimestamp *sFaultList $CAT 
 
-35 LINE.NUM THEN 
-37 LINE.NUM *sEnclOpMode " UNKNOWN" $= IF 
-38 LINE.NUM " , EnclOpMode " *sFaultList $CAT 
-
-39 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-40 LINE.NUM *sTimestamp *sFaultList $CAT 
-
-41 LINE.NUM THEN 
-43 LINE.NUM &TestFaults  STOP.T 
+43 LINE.NUM THEN 
+45 LINE.NUM &TestFaults  STOP.T 
 0 JUMP ;
 T: T34
 DUMMY

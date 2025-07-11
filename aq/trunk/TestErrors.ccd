@@ -65,7 +65,14 @@
 58 LINE.NUM *sTimestamp *sErrorList $CAT 
 
 59 LINE.NUM THEN 
-61 LINE.NUM &TestErrors  STOP.T 
+61 LINE.NUM ~DI_Smoke_SEN @@I 1 = IF 
+62 LINE.NUM " , SmokeAlarm " *sErrorList $CAT 
+
+63 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+64 LINE.NUM *sTimestamp *sErrorList $CAT 
+
+65 LINE.NUM THEN 
+67 LINE.NUM &TestErrors  STOP.T 
 0 JUMP ;
 T: T33
 DUMMY

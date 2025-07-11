@@ -24,6 +24,7 @@ CREATE V.ARRAY
 ^AqDemand ,
 ^AUTOMODE ,
 ^Blue_Light_Time ,
+^BlueLED_Flag ,
 ^CCC_started ,
 ^cdmOPENSLOW ,
 ^CHART_STARTED ,
@@ -333,6 +334,7 @@ CONFIG_PORTS
 9 ^AqDemand @!
 0 ^AUTOMODE @!
 0 ^Blue_Light_Time @!
+0 ^BlueLED_Flag @!
 0 ^CCC_started @!
 0 ^cdmOPENSLOW @!
 0 ^CHART_STARTED @!

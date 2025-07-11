@@ -1,102 +1,100 @@
 : 29_0
 0 JUMP ;
 : 29_1
-7 LINE.NUM 1 I>F ^dtBlink @! 
-8 LINE.NUM ^dtBlink  StartTimer 
-12 LINE.NUM ^dtBlink @@F 0 I>F F= IF 
-13 LINE.NUM ^nBlink @@ 1 XOR  ^nBlink @! 
-14 LINE.NUM THEN 
-22 LINE.NUM ~DI_MuteTest_SW @@I 1 = IF 
-23 LINE.NUM 1 ^nExitLoop @! 
-24 LINE.NUM 3 I>F ^dtTestSWtimer @! 
-25 LINE.NUM ^dtTestSWtimer  StartTimer 
-26 LINE.NUM BEGIN ^nExitLoop @@ 0 > WHILE 
-27 LINE.NUM ~DI_MuteTest_SW  CLR.-LATCH@I IF 
-28 LINE.NUM 0 ~DO_Sounder @! 
-29 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-30 LINE.NUM 0 ~DO_PanelRed_LED @! 
-31 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-32 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-33 LINE.NUM 0 ~DO_DoorRed_LED @! 
-34 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
-35 LINE.NUM 0 ^nExitLoop @! 
-36 LINE.NUM ELSE 
-36 LINE.NUM ^dtTestSWtimer @@F 1 I>F F< IF 
-37 LINE.NUM 1 ~DO_Sounder @! 
-38 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-39 LINE.NUM 1 ~DO_PanelRed_LED @! 
-40 LINE.NUM 1 ~DO_PanelBlue_LED @! 
-41 LINE.NUM 1 ~DO_DoorGreen_LED @! 
-42 LINE.NUM 1 ~DO_DoorRed_LED @! 
-43 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
-44 LINE.NUM ^nFanCtrlMax @@F ~AO_Panel_Fans_VDC @! 
-45 LINE.NUM THEN THEN 
-46 LINE.NUM REPEAT 
-47 LINE.NUM THEN 
-53 LINE.NUM ~DI_ESTOP_OK @@I 0 = IF 
-54 LINE.NUM ^nBlink @@ ~DO_PanelBlue_LED @! 
-55 LINE.NUM ELSE 
-56 LINE.NUM 0 ~DO_PanelBlue_LED @! 
-57 LINE.NUM THEN 
-63 LINE.NUM ^nPanelLED_Enum @@ 0 = IF 
-64 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-65 LINE.NUM 0 ~DO_PanelRed_LED @! 
-66 LINE.NUM ELSE 
-66 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
-67 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-68 LINE.NUM 0 ~DO_PanelRed_LED @! 
-69 LINE.NUM ELSE 
-69 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
-70 LINE.NUM 1 ~DO_PanelGreen_LED @! 
-71 LINE.NUM 1 ~DO_PanelRed_LED @! 
-72 LINE.NUM ELSE 
-72 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
-73 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-74 LINE.NUM 1 ~DO_PanelRed_LED @! 
-75 LINE.NUM ELSE 
-75 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
-76 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
-77 LINE.NUM 0 ~DO_PanelRed_LED @! 
-78 LINE.NUM ELSE 
-78 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
-79 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
-80 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
-81 LINE.NUM ELSE 
-81 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
-82 LINE.NUM 0 ~DO_PanelGreen_LED @! 
-83 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
-84 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
-90 LINE.NUM ^nDoorLED_Enum @@ 0 = IF 
-91 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-92 LINE.NUM 0 ~DO_DoorRed_LED @! 
-93 LINE.NUM ELSE 
-93 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
-94 LINE.NUM 1 ~DO_DoorGreen_LED @! 
-95 LINE.NUM 0 ~DO_DoorRed_LED @! 
-96 LINE.NUM ELSE 
-96 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
-97 LINE.NUM 1 ~DO_DoorGreen_LED @! 
-98 LINE.NUM 1 ~DO_DoorRed_LED @! 
-99 LINE.NUM ELSE 
-99 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
-100 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-101 LINE.NUM 1 ~DO_DoorRed_LED @! 
-102 LINE.NUM ELSE 
-102 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
-103 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
-104 LINE.NUM 0 ~DO_DoorRed_LED @! 
-105 LINE.NUM ELSE 
-105 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
-106 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
-107 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
-108 LINE.NUM ELSE 
-108 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
-109 LINE.NUM 0 ~DO_DoorGreen_LED @! 
-110 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
-111 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
+24 LINE.NUM ~DI_MuteTest_SW @@I 1 = IF 
+25 LINE.NUM 1 ^nExitLoop @! 
+26 LINE.NUM 3 I>F ^dtTestSWtimer @! 
+27 LINE.NUM ^dtTestSWtimer  StartTimer 
+28 LINE.NUM BEGIN ^nExitLoop @@ 0 > WHILE 
+29 LINE.NUM ~DI_MuteTest_SW  CLR.-LATCH@I IF 
+30 LINE.NUM 0 ~DO_Sounder @! 
+31 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+32 LINE.NUM 0 ~DO_PanelRed_LED @! 
+33 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+34 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+35 LINE.NUM 0 ~DO_DoorRed_LED @! 
+36 LINE.NUM |PanelFans 0  $20000.. 3 ROLL !PID 
+37 LINE.NUM 0 ^nExitLoop @! 
+38 LINE.NUM ELSE 
+38 LINE.NUM ^dtTestSWtimer @@F 1 I>F F< IF 
+39 LINE.NUM 1 ~DO_Sounder @! 
+40 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+41 LINE.NUM 1 ~DO_PanelRed_LED @! 
+42 LINE.NUM 1 ~DO_PanelBlue_LED @! 
+43 LINE.NUM 1 ~DO_DoorGreen_LED @! 
+44 LINE.NUM 1 ~DO_DoorRed_LED @! 
+45 LINE.NUM |PanelFans 1  $20000.. 3 ROLL !PID 
+46 LINE.NUM ^nFanCtrlMax @@F ~AO_Panel_Fans_VDC @! 
+47 LINE.NUM THEN THEN 
+48 LINE.NUM REPEAT 
+49 LINE.NUM THEN 
+55 LINE.NUM ~DI_ESTOP_OK @@I 0 = ^BlueLED_Flag @@ 0 = LAND  IF 
+57 LINE.NUM 1 I>F 1 I>F ~DO_PanelBlue_LED  !SQUARE 
+58 LINE.NUM 1 ^BlueLED_Flag @! 
+59 LINE.NUM ELSE 
+59 LINE.NUM ~DI_ESTOP_OK @@I 1 = IF 
+60 LINE.NUM 0 ~DO_PanelBlue_LED @! 
+61 LINE.NUM 0 ^BlueLED_Flag @! 
+62 LINE.NUM THEN THEN 
+68 LINE.NUM ^nPanelLED_Enum @@ 0 = IF 
+69 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+70 LINE.NUM 0 ~DO_PanelRed_LED @! 
+71 LINE.NUM ELSE 
+71 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
+72 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+73 LINE.NUM 0 ~DO_PanelRed_LED @! 
+74 LINE.NUM ELSE 
+74 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
+75 LINE.NUM 1 ~DO_PanelGreen_LED @! 
+76 LINE.NUM 1 ~DO_PanelRed_LED @! 
+77 LINE.NUM ELSE 
+77 LINE.NUM *sLED_Mode " STEADY" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
+78 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+79 LINE.NUM 1 ~DO_PanelRed_LED @! 
+80 LINE.NUM ELSE 
+80 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 1 = LAND  IF 
+81 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
+82 LINE.NUM 0 ~DO_PanelRed_LED @! 
+83 LINE.NUM ELSE 
+83 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 2 = LAND  IF 
+84 LINE.NUM ^nBlink @@ ~DO_PanelGreen_LED @! 
+85 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
+86 LINE.NUM ELSE 
+86 LINE.NUM *sLED_Mode " BLINK" $= ^nPanelLED_Enum @@ 3 = LAND  IF 
+87 LINE.NUM 0 ~DO_PanelGreen_LED @! 
+88 LINE.NUM ^nBlink @@ ~DO_PanelRed_LED @! 
+89 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
+95 LINE.NUM ^nDoorLED_Enum @@ 0 = IF 
+96 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+97 LINE.NUM 0 ~DO_DoorRed_LED @! 
+98 LINE.NUM ELSE 
+98 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
+99 LINE.NUM 1 ~DO_DoorGreen_LED @! 
+100 LINE.NUM 0 ~DO_DoorRed_LED @! 
+101 LINE.NUM ELSE 
+101 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
+102 LINE.NUM 1 ~DO_DoorGreen_LED @! 
+103 LINE.NUM 1 ~DO_DoorRed_LED @! 
+104 LINE.NUM ELSE 
+104 LINE.NUM *sLED_Mode " STEADY" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
+105 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+106 LINE.NUM 1 ~DO_DoorRed_LED @! 
+107 LINE.NUM ELSE 
+107 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 1 = LAND  IF 
+108 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
+109 LINE.NUM 0 ~DO_DoorRed_LED @! 
+110 LINE.NUM ELSE 
+110 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 2 = LAND  IF 
+111 LINE.NUM ^nBlink @@ ~DO_DoorGreen_LED @! 
+112 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
+113 LINE.NUM ELSE 
+113 LINE.NUM *sLED_Mode " BLINK" $= ^nDoorLED_Enum @@ 3 = LAND  IF 
+114 LINE.NUM 0 ~DO_DoorGreen_LED @! 
+115 LINE.NUM ^nBlink @@ ~DO_DoorRed_LED @! 
+116 LINE.NUM THEN THEN THEN THEN THEN THEN THEN 
 0 JUMP ;
 : 29_4
-1 LINE.NUM 100  DELAY 
+1 LINE.NUM 1000  DELAY 
 -2 JUMP ;
 T: T29
 DUMMY
