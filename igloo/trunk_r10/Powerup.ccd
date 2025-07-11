@@ -39,10 +39,10 @@
 82 LINE.NUM " PID_Integral" 15 {stHeader $TABLE@  $MOVE 
 83 LINE.NUM " PID_Derivative" 16 {stHeader $TABLE@  $MOVE 
 84 LINE.NUM " PID_Scanrate" 17 {stHeader $TABLE@  $MOVE 
-86 LINE.NUM " 0.1" 
+86 LINE.NUM " 1" 
 *sICDversion  $MOVE 
 87 LINE.NUM *sFWversion  Rev>$ 
-88 LINE.NUM " 0.1" *sSWversion  $MOVE 
+88 LINE.NUM " 7" *sSWversion  $MOVE 
 90 LINE.NUM 300 I>F ^dtFanMonitor @! 
 91 LINE.NUM ^dtFanMonitor  StartTimer 
 94 LINE.NUM ~DI_NRES_Deadman @@I 1 = IF 
@@ -117,6 +117,7 @@
 212 LINE.NUM *ch_SDcard  CLOSE DROP  
 213 LINE.NUM ELSE 
 215 LINE.NUM THEN 
+220 LINE.NUM |pidTentFans 0  $20000.. 3 ROLL !PID 
 0 JUMP ;
 : 0_3
 3 LINE.NUM " 99.905" *sRTD1_R0  $MOVE 
@@ -143,12 +144,96 @@
 34 LINE.NUM ^nIP_int @@ *sDT_IP  I>IP$ 
 35 LINE.NUM *_HSV_SEMA Acquire1String " tcp:"  *_HSV_TEMP $MOVE *sDT_IP  *_HSV_TEMP $CAT " :502"  *_HSV_TEMP $CAT *_HSV_TEMP *sDT_IP $MOVE Release1String 
 37 LINE.NUM *sDT_IP *chModbusMaster  $MOVE 
-0 JUMP ;
+1 JUMP ;
 : 0_7
 3 LINE.NUM &Housekeeper  START.T DROP  
 4 LINE.NUM &MasterComm  START.T DROP  
 5 LINE.NUM &Modbus_Master  START.T DROP  
-0 JUMP ;
+1 JUMP ;
+: 0_10
+1 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+4 LINE.NUM 0 ^nPeriodPosition1 @! 
+5 LINE.NUM 0 ^nPeriodPosition2 @! 
+6 LINE.NUM 46 0 *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+7 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+8 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s1stOctet  $SUB 
+11 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+12 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+13 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+14 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s2ndOctet  $SUB 
+17 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+18 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+19 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+20 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s3rdOctet  $SUB 
+23 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+24 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ 3 *s4thOctet  $SUB 
+28 LINE.NUM *s2ndOctet " 5" $= IF 
+29 LINE.NUM " LSC" *sSite  $MOVE 
+30 LINE.NUM ELSE 
+30 LINE.NUM *s2ndOctet " 6" $= IF 
+31 LINE.NUM " MFG" *sSite  $MOVE 
+32 LINE.NUM ELSE 
+32 LINE.NUM *s2ndOctet " 7" $= IF 
+33 LINE.NUM " BPL" *sSite  $MOVE 
+34 LINE.NUM ELSE 
+34 LINE.NUM *s2ndOctet " 8" $= IF 
+35 LINE.NUM " CPT" *sSite  $MOVE 
+36 LINE.NUM ELSE 
+36 LINE.NUM *s2ndOctet " 9" $= IF 
+37 LINE.NUM " ELP" *sSite  $MOVE 
+38 LINE.NUM ELSE 
+38 LINE.NUM *s2ndOctet " 10" $= IF 
+39 LINE.NUM " COJ" *sSite  $MOVE 
+40 LINE.NUM ELSE 
+40 LINE.NUM *s2ndOctet " 11" $= IF 
+41 LINE.NUM " TLV" *sSite  $MOVE 
+42 LINE.NUM ELSE 
+42 LINE.NUM *s2ndOctet " 12" $= IF 
+43 LINE.NUM " SQA" *sSite  $MOVE 
+44 LINE.NUM ELSE 
+44 LINE.NUM *s2ndOctet " 13" $= IF 
+45 LINE.NUM " NGQ" *sSite  $MOVE 
+46 LINE.NUM ELSE 
+46 LINE.NUM *s2ndOctet " 14" $= IF 
+47 LINE.NUM " TFN" *sSite  $MOVE 
+48 LINE.NUM ELSE 
+48 LINE.NUM *s2ndOctet " 15" $= IF 
+49 LINE.NUM " PTR" *sSite  $MOVE 
+50 LINE.NUM ELSE 
+50 LINE.NUM *s2ndOctet " 16" $= IF 
+51 LINE.NUM " SPT" *sSite  $MOVE 
+52 LINE.NUM ELSE 
+52 LINE.NUM *s2ndOctet " 17" $= IF 
+53 LINE.NUM " WTF" *sSite  $MOVE 
+54 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+57 LINE.NUM *s3rdOctet " 0" $= IF 
+58 LINE.NUM " SSB" *sEncl  $MOVE 
+59 LINE.NUM ELSE 
+59 LINE.NUM *s3rdOctet " 1" $= IF 
+60 LINE.NUM " aqwa" *sEncl  $MOVE 
+61 LINE.NUM ELSE 
+61 LINE.NUM *s3rdOctet " 4" $= IF 
+62 LINE.NUM " aqwb" *sEncl  $MOVE 
+63 LINE.NUM ELSE 
+63 LINE.NUM *s3rdOctet " 10" $= IF 
+64 LINE.NUM " doma" *sEncl  $MOVE 
+65 LINE.NUM ELSE 
+65 LINE.NUM *s3rdOctet " 12" $= IF 
+66 LINE.NUM " domb" *sEncl  $MOVE 
+67 LINE.NUM ELSE 
+67 LINE.NUM *s3rdOctet " 14" $= IF 
+68 LINE.NUM " domc" *sEncl  $MOVE 
+69 LINE.NUM ELSE 
+69 LINE.NUM *s3rdOctet " 16" $= IF 
+70 LINE.NUM " domd" *sEncl  $MOVE 
+71 LINE.NUM ELSE 
+71 LINE.NUM *s3rdOctet " 20" $= IF 
+72 LINE.NUM " clma" *sEncl  $MOVE 
+73 LINE.NUM ELSE 
+73 LINE.NUM *s3rdOctet " 30" $= IF 
+74 LINE.NUM " igla" *sEncl  $MOVE 
+75 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+-2 JUMP ;
 T: T0
 DUMMY
 0_0
@@ -156,5 +241,6 @@ DUMMY
 0_3
 0_5
 0_7
+0_10
 T;
 &Powerup ' T0 SETTASK

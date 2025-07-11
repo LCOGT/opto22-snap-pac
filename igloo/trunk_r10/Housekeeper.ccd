@@ -282,60 +282,108 @@
 213 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
 214 LINE.NUM THEN 
-217 LINE.NUM 2 }EcbStatus TABLE@ 2 < IF 
-218 LINE.NUM " Datataker_MCB" 0 *sErrorList  FindSubString ^y @! 
-219 LINE.NUM ^y @@ 0 < IF 
-220 LINE.NUM " , Datataker_MCB " *sErrorList $CAT 
-
-221 LINE.NUM *sTimestamp3 *sErrorList $CAT 
-
+219 LINE.NUM 2 }EcbStatus TABLE@ 2 < IF 
+220 LINE.NUM ^ECBch3count @@ 10 < IF 
+221 LINE.NUM ^ECBch3count @@ 1 +  ^ECBch3count @! 
 222 LINE.NUM THEN 
-223 LINE.NUM THEN 
-226 LINE.NUM 3 }EcbStatus TABLE@ 2 < IF 
-227 LINE.NUM " StirFans_M28.2_M28.4_MCB" 0 *sErrorList  FindSubString ^y @! 
-228 LINE.NUM ^y @@ 0 < IF 
-229 LINE.NUM " , StirFans_M28.2_M28.4_MCB " *sErrorList $CAT 
+223 LINE.NUM ELSE 
+224 LINE.NUM 0 ^ECBch3count @! 
+225 LINE.NUM THEN 
+227 LINE.NUM ^ECBch3count @@ 10 >= IF 
+228 LINE.NUM " ECB_Ch.3_Datataker" 0 *sErrorList  FindSubString ^y @! 
+229 LINE.NUM ^y @@ 0 < IF 
+230 LINE.NUM " , ECB_Ch.3_Datataker " *sErrorList $CAT 
 
-230 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+231 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-231 LINE.NUM THEN 
 232 LINE.NUM THEN 
-235 LINE.NUM 4 }EcbStatus TABLE@ 2 < IF 
-236 LINE.NUM " StirFans_M29.2_M29.4_MCB" 0 *sErrorList  FindSubString ^y @! 
-237 LINE.NUM ^y @@ 0 < IF 
-238 LINE.NUM " , StirFans_M29.2_M29.4_MCB " *sErrorList $CAT 
-
-239 LINE.NUM *sTimestamp3 *sErrorList $CAT 
-
+233 LINE.NUM 0 ^ECBch3count @! 
+234 LINE.NUM THEN 
+237 LINE.NUM 3 }EcbStatus TABLE@ 2 < IF 
+238 LINE.NUM ^ECBch4count @@ 10 < IF 
+239 LINE.NUM ^ECBch4count @@ 1 +  ^ECBch4count @! 
 240 LINE.NUM THEN 
-241 LINE.NUM THEN 
-244 LINE.NUM 5 }EcbStatus TABLE@ 2 < IF 
-245 LINE.NUM " TentFans_M30.4_M30.6_MCB" 0 *sErrorList  FindSubString ^y @! 
-246 LINE.NUM ^y @@ 0 < IF 
-247 LINE.NUM " , TentFans_M30.4_M30.6_MCB " *sErrorList $CAT 
+241 LINE.NUM ELSE 
+242 LINE.NUM 0 ^ECBch4count @! 
+243 LINE.NUM THEN 
+245 LINE.NUM ^ECBch4count @@ 10 >= IF 
+246 LINE.NUM " ECB_Ch.4_StirFans_M28.2_M28.4" 0 *sErrorList  FindSubString ^y @! 
+247 LINE.NUM ^y @@ 0 < IF 
+248 LINE.NUM " , ECB_Ch.4_StirFans_M28.2_M28.4 " *sErrorList $CAT 
 
-248 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+249 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-249 LINE.NUM THEN 
 250 LINE.NUM THEN 
-253 LINE.NUM 7 }EcbStatus TABLE@ 2 < IF 
-254 LINE.NUM " TentFans_M31.2_M31.4_MCB" 0 *sErrorList  FindSubString ^y @! 
-255 LINE.NUM ^y @@ 0 < IF 
-256 LINE.NUM " , TentFans_M31.2_M31.4_MCB " *sErrorList $CAT 
-
-257 LINE.NUM *sTimestamp3 *sErrorList $CAT 
-
+251 LINE.NUM 0 ^ECBch4count @! 
+252 LINE.NUM THEN 
+255 LINE.NUM 4 }EcbStatus TABLE@ 2 < IF 
+256 LINE.NUM ^ECBch5count @@ 10 < IF 
+257 LINE.NUM ^ECBch5count @@ 1 +  ^ECBch5count @! 
 258 LINE.NUM THEN 
-259 LINE.NUM THEN 
-262 LINE.NUM 6 }EcbStatus TABLE@ 2 < IF 
-263 LINE.NUM " TentStirFans_MCB" 0 *sErrorList  FindSubString ^y @! 
-264 LINE.NUM ^y @@ 0 < IF 
-265 LINE.NUM " , TentStirFans_MCB " *sErrorList $CAT 
+259 LINE.NUM ELSE 
+260 LINE.NUM 0 ^ECBch5count @! 
+261 LINE.NUM THEN 
+263 LINE.NUM ^ECBch5count @@ 10 >= IF 
+264 LINE.NUM " ECB_Ch.5_StirFans_M29.2_M29.4" 0 *sErrorList  FindSubString ^y @! 
+265 LINE.NUM ^y @@ 0 < IF 
+266 LINE.NUM " , ECB_Ch.5_StirFans_M29.2_M29.4 " *sErrorList $CAT 
 
-266 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+267 LINE.NUM *sTimestamp3 *sErrorList $CAT 
 
-267 LINE.NUM THEN 
 268 LINE.NUM THEN 
+269 LINE.NUM 0 ^ECBch5count @! 
+270 LINE.NUM THEN 
+273 LINE.NUM 5 }EcbStatus TABLE@ 2 < IF 
+274 LINE.NUM ^ECBch6count @@ 10 < IF 
+275 LINE.NUM ^ECBch6count @@ 1 +  ^ECBch6count @! 
+276 LINE.NUM THEN 
+277 LINE.NUM ELSE 
+278 LINE.NUM 0 ^ECBch6count @! 
+279 LINE.NUM THEN 
+281 LINE.NUM ^ECBch6count @@ 10 >= IF 
+282 LINE.NUM " ECB_Ch.6_TentFans_M30.4_M30.6" 0 *sErrorList  FindSubString ^y @! 
+283 LINE.NUM ^y @@ 0 < IF 
+284 LINE.NUM " , ECB_Ch.6_TentFans_M30.4_M30.6 " *sErrorList $CAT 
+
+285 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+
+286 LINE.NUM THEN 
+287 LINE.NUM 0 ^ECBch6count @! 
+288 LINE.NUM THEN 
+291 LINE.NUM 6 }EcbStatus TABLE@ 2 < IF 
+292 LINE.NUM ^ECBch7count @@ 10 < IF 
+293 LINE.NUM ^ECBch7count @@ 1 +  ^ECBch7count @! 
+294 LINE.NUM THEN 
+295 LINE.NUM ELSE 
+296 LINE.NUM 0 ^ECBch7count @! 
+297 LINE.NUM THEN 
+299 LINE.NUM ^ECBch7count @@ 10 >= IF 
+300 LINE.NUM " ECB_Ch.7_TentStirFans" 0 *sErrorList  FindSubString ^y @! 
+301 LINE.NUM ^y @@ 0 < IF 
+302 LINE.NUM " , ECB_Ch.7_TentStirFans " *sErrorList $CAT 
+
+303 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+
+304 LINE.NUM THEN 
+305 LINE.NUM 0 ^ECBch7count @! 
+306 LINE.NUM THEN 
+309 LINE.NUM 7 }EcbStatus TABLE@ 2 < IF 
+310 LINE.NUM ^ECBch8count @@ 10 < IF 
+311 LINE.NUM ^ECBch8count @@ 1 +  ^ECBch8count @! 
+312 LINE.NUM THEN 
+313 LINE.NUM ELSE 
+314 LINE.NUM 0 ^ECBch8count @! 
+315 LINE.NUM THEN 
+317 LINE.NUM ^ECBch8count @@ 10 >= IF 
+318 LINE.NUM " ECB_Ch.8_TentFans_M31.2_M31.4" 0 *sErrorList  FindSubString ^y @! 
+319 LINE.NUM ^y @@ 0 < IF 
+320 LINE.NUM " , ECB_Ch.8_TentFans_M31.2_M31.4 " *sErrorList $CAT 
+
+321 LINE.NUM *sTimestamp3 *sErrorList $CAT 
+
+322 LINE.NUM THEN 
+323 LINE.NUM 0 ^ECBch8count @! 
+324 LINE.NUM THEN 
 8 JUMP ;
 : 2_8
 4 LINE.NUM ^DTlogFlag @@ 1 = IF 
@@ -441,23 +489,18 @@
 117 LINE.NUM " file:a,IglooData.txt" *LogCommHandle  $MOVE 
 118 LINE.NUM THEN 
 119 LINE.NUM THEN 
-8 JUMP ;
+9 JUMP ;
 : 2_15
 1 LINE.NUM 7 {stDTdata $TABLE@  $>F ^fPidInput @! 
 2 LINE.NUM |pidTentFans ^fPidInput @@  $0001.. 3 ROLL !PID 
 0 JUMP ;
 : 2_18
-4 LINE.NUM ~AI_Utility_Volt @@ 190 I>F F< ^Utility_Volt_WatchdogFlag @@ 0 = LAND  IF 
-5 LINE.NUM 120 I>F ^dtAirCon_CR @! 
-6 LINE.NUM 1 ^Utility_Volt_WatchdogFlag @! 
-7 LINE.NUM THEN 
-13 LINE.NUM ^dtAirCon_CR @@F 0 I>F F= ^AirConOffFlag @@ 0 = LAND  IF 
-14 LINE.NUM 1 ~DO_AirCon_CR @! 
-15 LINE.NUM 0 ^Utility_Volt_WatchdogFlag @! 
-16 LINE.NUM ELSE 
-16 LINE.NUM ^dtAirCon_CR @@F 0 I>F F> ^AirConOffFlag @@ 1 = LOR  IF 
-17 LINE.NUM 0 ~DO_AirCon_CR @! 
-18 LINE.NUM THEN THEN 
+14 LINE.NUM ^dtAirCon_CR @@F 0 I>F F= ^AirConOffFlag @@ 0 = LAND  IF 
+15 LINE.NUM 1 ~DO_AirCon_CR @! 
+17 LINE.NUM ELSE 
+17 LINE.NUM ^dtAirCon_CR @@F 0 I>F F> ^AirConOffFlag @@ 1 = LOR  IF 
+18 LINE.NUM 0 ~DO_AirCon_CR @! 
+19 LINE.NUM THEN THEN 
 0 JUMP ;
 : 2_21
 1 LINE.NUM ~DI_NRES_Deadman  CLR.-LATCH@I ^CryoTigThermalTimer @@F 0 I>F F= LAND  IF 
@@ -605,7 +648,7 @@
 173 LINE.NUM ~AO_TentStirFan_Ctrl @@ ^Old_AO_TentStirFan_Ctrl @! 
 175 LINE.NUM THEN 
 177 LINE.NUM THEN 
-0 JUMP ;
+2 JUMP ;
 : 2_35
 5 LINE.NUM ^EcbResetFlag @@ 1 = IF 
 6 LINE.NUM 6.00000024e-001 ~DO_ECB_Tx  PULSEON 
@@ -709,6 +752,30 @@
 
 36 LINE.NUM *sNewLog *sLog  $MOVE 
 -8 JUMP ;
+: 2_46
+3 LINE.NUM ^SynchClockTimer @@F 0 I>F F= IF 
+4 LINE.NUM *sSite " BPL" $= IF 
+5 LINE.NUM 5 I>F " udp:time.nist.gov:123"  SYNC.TIME DROP  
+6 LINE.NUM ELSE 
+6 LINE.NUM *sSite " ELP" $= IF 
+7 LINE.NUM 5 I>F " udp:tym.elp.lco.gtn:123"  SYNC.TIME DROP  
+8 LINE.NUM ELSE 
+8 LINE.NUM *sSite " TFN" $= IF 
+9 LINE.NUM 5 I>F " udp:tym.tfn.lco.gtn:123"  SYNC.TIME DROP  
+10 LINE.NUM ELSE 
+10 LINE.NUM *sSite " LSC" $= IF 
+11 LINE.NUM 5 I>F " udp:tym.lsc.lco.gtn:123"  SYNC.TIME DROP  
+12 LINE.NUM ELSE 
+12 LINE.NUM *sSite " CPT" $= IF 
+13 LINE.NUM 5 I>F " udp:tym.cpt.lco.gtn:123"  SYNC.TIME DROP  
+14 LINE.NUM ELSE 
+14 LINE.NUM *sSite " COJ" $= IF 
+15 LINE.NUM 5 I>F " udp:tym.coj.lco.gtn:123"  SYNC.TIME DROP  
+16 LINE.NUM THEN THEN THEN THEN THEN THEN 
+18 LINE.NUM 60 I>F ^SynchClockTimer @! 
+19 LINE.NUM ^SynchClockTimer  StartTimer 
+20 LINE.NUM THEN 
+-3 JUMP ;
 T: T2
 DUMMY
 2_0
@@ -724,5 +791,6 @@ DUMMY
 2_30
 2_35
 2_40
+2_46
 T;
 &Housekeeper ' T2 SETTASK

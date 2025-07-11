@@ -1,0 +1,241 @@
+: 1_0
+0 JUMP ;
+: 1_1
+
+1 LINE.NUM
+  *DTcommHandle   OPEN
+  ^DTcommStatus @! 
+10 JUMP ;
+: 1_5
+1 LINE.NUM 1000  DELAY 
+-2 JUMP ;
+: 1_21
+1 LINE.NUM *DTcommHandle  CLOSE DROP  
+-3 JUMP ;
+: 1_25
+1 LINE.NUM 12 I>F ^dtAwaitingDT @! 
+2 LINE.NUM ^dtAwaitingDT  StartTimer 
+0 JUMP ;
+: 1_27
+1 LINE.NUM *DTcommHandle  ?STREAM.KEY ^DTcharCount @! 
+7 JUMP ;
+: 1_31
+9 LINE.NUM *DTcommHandle 13  S.!EOL 
+10 LINE.NUM " " *DTmessageReceived  $MOVE 
+11 LINE.NUM " " *sDTerror  $MOVE 
+12 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+13 LINE.NUM 69 0 *DTmessageReceived  FindChar ^DTdataErrorPosition @! 
+14 LINE.NUM ^DTdataErrorPosition @@ 0 >= IF 
+15 LINE.NUM *DTmessageReceived *sDTerror  $MOVE 
+16 LINE.NUM 1 ^DTerrorFlag @! 
+17 LINE.NUM *DTcommHandle 10  S.!EOL 
+18 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+19 LINE.NUM *DTcommHandle 13  S.!EOL 
+20 LINE.NUM *DTmessageReceived *DTcommHandle  GET$ ^nDTreceiveStatus @! 
+21 LINE.NUM THEN 
+35 LINE.NUM 12 I>F ^dtAwaitingDT @! 
+36 LINE.NUM ^dtAwaitingDT  StartTimer 
+11 JUMP ;
+: 1_40
+1 LINE.NUM 10  DELAY 
+-3 JUMP ;
+: 1_53
+-4 JUMP ;
+: 1_55
+1 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
+0 JUMP ;
+: 1_57
+1 LINE.NUM *sTimestamp1 &Timestamp CALL.SUB DROP  
+2 LINE.NUM *sTimestamp1 0 {stDTdata $TABLE@  $MOVE 
+4 LINE.NUM " " *DTdata $MOVE 32 *DTdata  $APPEND 
+5 LINE.NUM *DTmessageReceived *DTdata $CAT 
+
+6 LINE.NUM 32 *DTdata $APPEND 
+
+7 LINE.NUM *DTdata  $LEN ^Length1 @! 
+8 LINE.NUM 1 ^nCounter1 @! 
+9 LINE.NUM 0 ^Position @! 
+10 LINE.NUM 0 ^done @! 
+12 LINE.NUM BEGIN 
+13 LINE.NUM ^Position @@ ^OldPosition @! 
+14 LINE.NUM ^OldPosition @@ ^Length1 @@ 1 -  = IF 
+15 LINE.NUM 1 ^done @! 
+16 LINE.NUM THEN 
+17 LINE.NUM 32 ^OldPosition @@ 1 +  *DTdata  FindChar ^Position @! 
+18 LINE.NUM ^Position @@ ^OldPosition @@ -  1 -  ^SubStringLength @! 
+19 LINE.NUM *DTdata ^OldPosition @@ 1 +  ^SubStringLength @@ ^nCounter1 @@ {stDTdata $TABLE@  $SUB 
+20 LINE.NUM ^nCounter1 @@ 1 +  ^nCounter1 @! 
+21 LINE.NUM ^done @@ 1 = UNTIL 
+23 LINE.NUM 1 ^DTlogFlag @! 
+-3 JUMP ;
+: 1_65
+1 LINE.NUM " BEGIN" *sDTrequest  $MOVE 
+2 LINE.NUM "  /h /e /u /n" *sDTrequest $CAT 
+
+3 LINE.NUM "  RD3S" *sDTrequest $CAT 
+
+5 LINE.NUM "  1PT385(4W," *sDTrequest $CAT 
+
+6 LINE.NUM *sRTD1_R0 *sDTrequest $CAT 
+
+7 LINE.NUM " )" *sDTrequest $CAT 
+
+9 LINE.NUM "  2PT385(4W," *sDTrequest $CAT 
+
+10 LINE.NUM *sRTD2_R0 *sDTrequest $CAT 
+
+11 LINE.NUM " )" *sDTrequest $CAT 
+
+13 LINE.NUM "  3PT385(4W," *sDTrequest $CAT 
+
+14 LINE.NUM *sRTD3_R0 *sDTrequest $CAT 
+
+15 LINE.NUM " )" *sDTrequest $CAT 
+
+17 LINE.NUM "  4PT385(4W," *sDTrequest $CAT 
+
+18 LINE.NUM *sRTD4_R0 *sDTrequest $CAT 
+
+19 LINE.NUM " )" *sDTrequest $CAT 
+
+21 LINE.NUM "  5PT385(4W," *sDTrequest $CAT 
+
+22 LINE.NUM *sRTD5_R0 *sDTrequest $CAT 
+
+23 LINE.NUM " )" *sDTrequest $CAT 
+
+25 LINE.NUM "  6PT385(4W," *sDTrequest $CAT 
+
+26 LINE.NUM *sRTD6_R0 *sDTrequest $CAT 
+
+27 LINE.NUM " )" *sDTrequest $CAT 
+
+29 LINE.NUM "  7PT385(4W," *sDTrequest $CAT 
+
+30 LINE.NUM *sRTD7_R0 *sDTrequest $CAT 
+
+31 LINE.NUM " )" *sDTrequest $CAT 
+
+33 LINE.NUM "  8PT385(4W," *sDTrequest $CAT 
+
+34 LINE.NUM *sRTD8_R0 *sDTrequest $CAT 
+
+35 LINE.NUM " )" *sDTrequest $CAT 
+
+37 LINE.NUM "  9PT385(4W)" *sDTrequest $CAT 
+
+38 LINE.NUM "  10PT385(4W)" *sDTrequest $CAT 
+
+39 LINE.NUM "  12PT385(4W)" *sDTrequest $CAT 
+
+41 LINE.NUM "  END" *sDTrequest $CAT 
+
+42 LINE.NUM *CRLF *sDTrequest $CAT 
+
+44 LINE.NUM *sDTrequest *DTcommHandle  PRT$ DROP  
+45 LINE.NUM " " *sDTrequest  $MOVE 
+46 LINE.NUM 2 I>F  FDELAY 
+47 LINE.NUM *DTcommHandle  STREAM.CLEAR.BUF 
+-8 JUMP ;
+: 1_3
+FALSE
+
+1 LINE.NUM
+  ^DTcommStatus @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^DTcommStatus @@ 
+  -47    =
+LOR
+IF -2 ELSE -11 THEN JUMP ;
+: 1_29
+TRUE
+
+1 LINE.NUM
+  ^DTcharCount @@ 
+  0    >
+LAND
+IF 3 ELSE 0 THEN JUMP ;
+: 1_34
+TRUE
+
+1 LINE.NUM
+  ^DTcharCount @@ 
+  -52    =
+LAND
+IF -12 ELSE 0 THEN JUMP ;
+: 1_35
+TRUE
+
+1 LINE.NUM
+  ^dtAwaitingDT   T0=
+LAND
+IF -13 ELSE 0 THEN JUMP ;
+: 1_36
+FALSE
+
+1 LINE.NUM
+  ^DTcharCount @@ 
+  0    =
+LOR
+
+2 LINE.NUM
+  ^DTcharCount @@ 
+  -37    =
+LOR
+
+3 LINE.NUM
+  ^DTcharCount @@ 
+  -39    =
+LOR
+IF -10 ELSE -14 THEN JUMP ;
+: 1_44
+TRUE
+
+1 LINE.NUM
+  ^DTcharCount @@ 
+  4    <
+LAND
+IF -15 ELSE -12 THEN JUMP ;
+: 1_48
+TRUE
+
+1 LINE.NUM
+  ^nDTreceiveStatus @@ 
+  0    =
+LAND
+IF -10 ELSE 0 THEN JUMP ;
+: 1_49
+TRUE
+
+1 LINE.NUM
+  ^nDTreceiveStatus @@ 
+  -39    =
+LAND
+IF -12 ELSE -17 THEN JUMP ;
+T: T1
+DUMMY
+1_0
+1_1
+1_5
+1_21
+1_25
+1_27
+1_31
+1_40
+1_53
+1_55
+1_57
+1_65
+1_3
+1_29
+1_34
+1_35
+1_36
+1_44
+1_48
+1_49
+T;
+&DatatakerComm ' T1 SETTASK
