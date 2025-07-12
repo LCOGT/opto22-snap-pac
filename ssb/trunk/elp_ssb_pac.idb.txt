@@ -2,9 +2,9 @@
 
 # PAC CONTROL TAG DATABASE DUMP
 # ----------------------------------------------------------------
-# NAME :         C:\Users\jdeve\Desktop\PAC_programs\acp\trunk\elp_ssb_pac.idb
-# VERSION :      R9.5a
-# TIME/DATE :    13:51:19 10/28/2022
+# NAME :         C:\Users\jdeve\Desktop\PAC_programs\acp\branch\rev10\elp_ssb_pac.idb
+# VERSION :      R10.2a
+# TIME/DATE :    15:28:19 10/28/2022
 # 
 # INSTRUCTIONS : This file gets written with the corresponding IDB file.
 #                It is not read by PAC Control. It may be used by other programs to 
@@ -45,26 +45,36 @@
 #                ANALOG_EVENT_REACTION            0x00000010
 #                EVENT_REACTION_GROUP             0x00000080
 #                CHART                            0x00000100
+#                SERIAL_CHANNEL                   0x00000400
 #                
 #                BITMASK 2
 #                -------------------------------------------
-#                BOARD_SMART_DIGITAL              0x00000002
-#                BOARD_REMOTE_SIMPLE_DIGITAL      0x00000004
-#                BOARD_SMART_ANALOG               0x00000008
-#                BOARD_SMART_ANALOG_B200          0x00001000
-#                BOARD_SMART_DIGITAL_SNAP         0x00002000
-#                BOARD_SMART_ANALOG_SNAP          0x00004000
-#                BOARD_SMART_DIGITAL_B100         0X00010000
-#                BOARD_REMOTE_SIMPLE_DIGITAL_SNAP 0X00020000
-#                BOARD_DIGITAL_SNAP_64            0x00040000
-#                BOARD_MIXED_SNAP_64              0x00080000
-#                BOARD_DIGITAL_SNAP_UIO_64        0x00100000
-#                BOARD_MIXED_SNAP_UIO_64          0x00200000
-#                BOARD_MIXED_SNAP_UIO_AD64        0x00400000
-#                BOARD_MIXED_SNAP_SIO_AD64        0x00800000
-#                BOARD_SNAP_PAC_R1                0x10000000
-#                BOARD_SNAP_PAC_R2                0x20000000
-#                BOARD_GENERIC_OPTOMMP            0x40000000
+#                G4EB2                            0x00000001
+#                G4D16R                           0x00000002
+#                G4D32RS                          0x00000004
+#                G4A8R, G4RAX                     0x00000008
+#                B200                             0x00001000
+#                B3000 (digital)                  0x00002000
+#                B3000 (analog)                   0x00004000
+#                B100                             0X00010000
+#                SNAP-BRS                         0X00020000
+#                SNAP-ENET-D64                    0x00040000
+#                SNAP-B3000-ENET, SNAP-ENET-RTC   0x00080000
+#                SNAP-UP1-D64                     0x00100000
+#                SNAP-UP1-ADS                     0x00200000
+#                SNAP-UP1-M64                     0x00400000
+#                SNAP-ENET-S64                    0x00800000
+#                SNAP-PAC-R1                      0x10000000
+#                SNAP-PAC-R2                      0x20000000
+#                Generic memory map device        0x40000000
+#                SNAP-PAC-R1-B                    0x80000000
+#                SNAP-PAC-EB1                     0x00000010
+#                SNAP-PAC-EB2                     0x00000020
+#                SNAP-PAC-SB1                     0x00000100
+#                SNAP-PAC-SB2                     0x00000200
+#                E1                               0x01000000
+#                E2                               0x02000000
+#                GRV-EPIC-PR1                     0x04000000
 # 
 #                BITMASK 3
 #                -------------------------------------------
