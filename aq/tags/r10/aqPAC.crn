@@ -3012,7 +3012,7 @@ T;
 60 LINE.NUM " , SmokeAlarm " *sErrorList $CAT 
 
 61 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-62 LINE.NUM *sTimestamp *sFaultList $CAT 
+62 LINE.NUM *sTimestamp *sErrorList $CAT 
 
 63 LINE.NUM THEN 
 0 JUMP ;
@@ -4102,8 +4102,8 @@ T;
    CLEARERRORS
    &_INIT_IO START.T DROP
    ;
-: DATESTAMP ." 03/11/24 " ;
-: TIMESTAMP ." 11:49:35 " ;
+: DATESTAMP ." 04/02/25 " ;
+: TIMESTAMP ." 10:57:47 " ;
 : CRCSTAMP  ." 00112233445566778899AABBCCDDEEFF " ;
 MAKECHECK
 CLEAR.BREAKS

@@ -25,6 +25,12 @@ CREATE V.ARRAY
 ^DTerrorFlag ,
 ^DTlogFlag ,
 ^EcbBit ,
+^ECBch3count ,
+^ECBch4count ,
+^ECBch5count ,
+^ECBch6count ,
+^ECBch7count ,
+^ECBch8count ,
 ^EcbCmd ,
 ^EcbMsg ,
 ^EcbResetFlag ,
@@ -72,12 +78,16 @@ CREATE V.ARRAY
 ^nLength ,
 ^nModbusMasterReadDelay ,
 ^nOctet3 ,
+^NoTimestampFlag ,
+^nPeriodPosition1 ,
+^nPeriodPosition2 ,
 ^nPortStatus ,
 ^nReceiveStatus ,
 ^NRES_CR_ErrorFlag ,
 ^nStirFansSpd ,
 ^nStringLength ,
 ^nStringPosition ,
+^nSubstringLength ,
 ^Old_AO_PanelFans_CTRL ,
 ^Old_AO_StirFansCTRL ,
 ^Old_AO_TentServoFan_Ctrl ,
@@ -105,6 +115,7 @@ CREATE V.ARRAY
 ^TentStirFanMaxCtrl ,
 ^TentTemp ,
 ^TentTempOK ,
+^TestVar ,
 ^Thermostat_CR_ErrorFlag ,
 ^Utility_Volt_WatchdogFlag ,
 ^WriteToLogFailedFlag ,
@@ -114,6 +125,10 @@ CREATE V.ARRAY
 *DTdata ,
 *DTmessageReceived ,
 *LF ,
+*s1stOctet ,
+*s2ndOctet ,
+*s3rdOctet ,
+*s4thOctet ,
 *sCmd ,
 *sCounter2 ,
 *sCryoTigThermalTimer ,
@@ -129,6 +144,7 @@ CREATE V.ARRAY
 *sDT_IP ,
 *sDTerror ,
 *sDTrequest ,
+*sEncl ,
 *sErrorList ,
 *sFanSpd ,
 *sFaultList ,
@@ -164,6 +180,7 @@ CREATE V.ARRAY
 *sRTD7_R0 ,
 *sRTD8_R0 ,
 *sSDcard ,
+*sSite ,
 *sStirFansSpd ,
 *sSWversion ,
 *Status ,
@@ -198,6 +215,7 @@ CREATE TI.ARRAY
 ^dtHeartbeat ,
 ^dtRequestTimer ,
 ^dtSocket ,
+^SynchClockTimer ,
 ^Timer ,
  0 ,
 CREATE PTR.ARRAY
@@ -309,6 +327,12 @@ CONFIG_PORTS
 0.0 ^dtRequestTimer @!
 0.0 ^dtSocket @!
 0 ^EcbBit @!
+0 ^ECBch3count @!
+0 ^ECBch4count @!
+0 ^ECBch5count @!
+0 ^ECBch6count @!
+0 ^ECBch7count @!
+0 ^ECBch8count @!
 0 ^EcbCmd @!
 0 ^EcbMsg @!
 0 ^EcbResetFlag @!
@@ -356,12 +380,16 @@ CONFIG_PORTS
 0 ^nLength @!
 0 ^nModbusMasterReadDelay @!
 0 ^nOctet3 @!
+0 ^NoTimestampFlag @!
+0 ^nPeriodPosition1 @!
+0 ^nPeriodPosition2 @!
 0 ^nPortStatus @!
 0 ^nReceiveStatus @!
 0 ^NRES_CR_ErrorFlag @!
 0 ^nStirFansSpd @!
 0 ^nStringLength @!
 0 ^nStringPosition @!
+0 ^nSubstringLength @!
 0.00000000 ^Old_AO_PanelFans_CTRL @!
 0.00000000 ^Old_AO_StirFansCTRL @!
 0.00000000 ^Old_AO_TentServoFan_Ctrl @!
@@ -379,6 +407,7 @@ CONFIG_PORTS
 0 ^RedLink_CR_ErrorFlag @!
 0 ^SendData @!
 0 ^SubStringLength @!
+0.0 ^SynchClockTimer @!
 0 ^TentExhaustFanM306_ErrorFlag @!
 0 ^TentExhaustFanM314_ErrorFlag @!
 0 ^TentIntakeFanM304_ErrorFlag @!
@@ -388,6 +417,7 @@ CONFIG_PORTS
 0.00000000 ^TentStirFanMaxCtrl @!
 0.00000000 ^TentTemp @!
 0 ^TentTempOK @!
+-1 ^TestVar @!
 0 ^Thermostat_CR_ErrorFlag @!
 0.0 ^Timer @!
 0 ^Utility_Volt_WatchdogFlag @!
@@ -409,6 +439,14 @@ CONFIG_PORTS
  *DTmessageReceived $MOVE
 " "
  *LF $MOVE
+" "
+ *s1stOctet $MOVE
+" "
+ *s2ndOctet $MOVE
+" "
+ *s3rdOctet $MOVE
+" "
+ *s4thOctet $MOVE
 " "
  *sCmd $MOVE
 " "
@@ -439,6 +477,8 @@ CONFIG_PORTS
  *sDTerror $MOVE
 " "
  *sDTrequest $MOVE
+" "
+ *sEncl $MOVE
 " "
  *sErrorList $MOVE
 " "
@@ -509,6 +549,8 @@ CONFIG_PORTS
  *sRTD8_R0 $MOVE
 " "
  *sSDcard $MOVE
+" "
+ *sSite $MOVE
 " "
  *sStirFansSpd $MOVE
 " "
