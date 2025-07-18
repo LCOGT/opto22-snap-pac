@@ -37,31 +37,27 @@ CREATE V.ARRAY
 ^CountK1 ,
 ^ErrorLogged ,
 ^FanCtrlMax ,
+^FaultListLength ,
 ^FaultLogged ,
 ^FaultModeStarted ,
 ^FLT_ClearSW ,
-^FLT_CloseLS ,
 ^FLT_CloseTimeout ,
 ^FLT_CloseUpperFailedToStart ,
 ^FLT_DisabledCircuit ,
-^FLT_K10overload ,
-^FLT_K1on ,
-^FLT_K2on ,
-^FLT_K9overload ,
+^FLT_DriveRunning ,
 ^FLT_LowerCloseTimeout ,
-^FLT_LowerCloseUnknown ,
 ^FLT_LowerOpenTimeout ,
 ^FLT_OpenClearTimeout ,
 ^FLT_OpenUpperFailedToStart ,
 ^FLT_PumpContactorStuckOn ,
+^FLT_PumpMotorOverload ,
 ^FLT_PumpMTRcontactorNotOperating ,
 ^FLT_SLOT08fuse ,
 ^FLT_SLOT09fuse ,
-^FLT_UpCloseOT ,
 ^FLT_UpCloseTimeout ,
 ^FLT_UpOpenOT ,
 ^FLT_UpOpenTimeout ,
-^FLT_UpperMotorOverload ,
+^FLT_VFDoverload ,
 ^FPAC_scratchpad ,
 ^Function_Close_Started ,
 ^Function_LowerClose_Started ,
@@ -70,9 +66,11 @@ CREATE V.ARRAY
 ^Function_UpperClose_Started ,
 ^Function_UpperOpen_Started ,
 ^GetScratchBits ,
+^InclinometerFaultFlag ,
 ^LightToggle ,
 ^LightToggleOld ,
 ^ListeningForMaster ,
+^LowerShutterIsOpenViaInclinometer ,
 ^MainChartStarted ,
 ^ManModeStarted ,
 ^Master_CommClosed ,
@@ -99,6 +97,7 @@ CREATE V.ARRAY
 ^Time_defOpenClear ,
 ^Time_defUpperOperate ,
 ^Time_defWxWdogTimer ,
+^VFD_FAULT_RESET ,
 ^White_Lights_Chart ,
 ^WTlightSwitchState ,
 ^WTswitchOldState ,
@@ -124,7 +123,7 @@ CREATE V.ARRAY
 *s_DomeOpen ,
 *s_DomeStop ,
 *s_LightSW ,
-*S_WatchdogTimer ,
+*S_WatchDogTimer ,
 *sDomeAirTemp ,
 *sEncl ,
 *sIP_PAC ,
@@ -169,6 +168,7 @@ CREATE P.ARRAY
 ~DI_CabinetDoorSwitch ,
 ~DI_Card08Fuse ,
 ~DI_Card09Fuse ,
+~DI_DriveRun ,
 ~DI_LambertCircuitBreaker ,
 ~DI_LambertPWR ,
 ~DI_LowerCloseLimitSwitch ,
@@ -187,15 +187,14 @@ CREATE P.ARRAY
 ~DI_SW_UpperClose ,
 ~DI_SW_UpperOpen ,
 ~DI_SW_WhiteLights ,
-~DI_UpperCloseContactor ,
 ~DI_UpperCloseLimitSwitch ,
 ~DI_UpperCloseOvrTrvl ,
 ~DI_UpperMotorCircuitBreaker ,
-~DI_UpperMotorOverload ,
-~DI_UpperOpenContactor ,
 ~DI_UpperOpenLimitSwitch ,
 ~DI_UpperOpenOvrTrvl ,
 ~DI_UpperShutterClearSwitch ,
+~DI_VFDfault ,
+~DI_VFDoverload ,
 ~DI_WhiteLightsCircuitBreaker ,
 ~DI_WirelessFault ,
 ~DO_Card08Fuse ,
@@ -207,6 +206,7 @@ CREATE P.ARRAY
 ~DO_PumpMotor ,
 ~DO_UpperClose ,
 ~DO_UpperOpen ,
+~DO_VFDfaultReset ,
 ~AI_CabinetFanTach ,
 ~AI_CabinetTemp ,
 ~AI_DomeAirTemp ,
@@ -257,31 +257,27 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^CountK1 @!
 0 ^ErrorLogged @!
 0 ^FanCtrlMax @!
+0 ^FaultListLength @!
 -1 ^FaultLogged @!
 0 ^FaultModeStarted @!
 0 ^FLT_ClearSW @!
-0 ^FLT_CloseLS @!
 0 ^FLT_CloseTimeout @!
 0 ^FLT_CloseUpperFailedToStart @!
 0 ^FLT_DisabledCircuit @!
-0 ^FLT_K10overload @!
-0 ^FLT_K1on @!
-0 ^FLT_K2on @!
-0 ^FLT_K9overload @!
+0 ^FLT_DriveRunning @!
 0 ^FLT_LowerCloseTimeout @!
-0 ^FLT_LowerCloseUnknown @!
 0 ^FLT_LowerOpenTimeout @!
 0 ^FLT_OpenClearTimeout @!
 0 ^FLT_OpenUpperFailedToStart @!
 0 ^FLT_PumpContactorStuckOn @!
+0 ^FLT_PumpMotorOverload @!
 0 ^FLT_PumpMTRcontactorNotOperating @!
 0 ^FLT_SLOT08fuse @!
 0 ^FLT_SLOT09fuse @!
-0 ^FLT_UpCloseOT @!
 0 ^FLT_UpCloseTimeout @!
 0 ^FLT_UpOpenOT @!
 0 ^FLT_UpOpenTimeout @!
-0 ^FLT_UpperMotorOverload @!
+0 ^FLT_VFDoverload @!
 0.. ^FPAC_scratchpad @!
 0 ^Function_Close_Started @!
 0 ^Function_LowerClose_Started @!
@@ -290,9 +286,11 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^Function_UpperClose_Started @!
 0 ^Function_UpperOpen_Started @!
 0 ^GetScratchBits @!
+0 ^InclinometerFaultFlag @!
 0 ^LightToggle @!
 0 ^LightToggleOld @!
 0 ^ListeningForMaster @!
+0 ^LowerShutterIsOpenViaInclinometer @!
 0 ^MainChartStarted @!
 0 ^ManModeStarted @!
 0 ^Master_CommClosed @!
@@ -315,7 +313,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0 ^StatusTransmit_Status @!
 0.0 ^SynchClockTimer @!
 0.50000000 ^Time_defContactorOperate @!
-500 ^Time_defContactorRelease @!
+1000 ^Time_defContactorRelease @!
 90.000000 ^Time_defHeartbeatWdog @!
 90.000000 ^Time_defLowerClose @!
 90.000000 ^Time_defLowerOpen @!
@@ -330,6 +328,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 0.0 ^Timer_UpperContactor @!
 0.0 ^Timer_UpperOperate @!
 0.0 ^Timer_WxWdog @!
+0 ^VFD_FAULT_RESET @!
 0 ^White_Lights_Chart @!
 0 ^WTlightSwitchState @!
 0 ^WTswitchOldState @!
@@ -371,7 +370,7 @@ $0000000000000000.. %A_1mFPAC ENABLES!
 " "
  *s_LightSW $MOVE
 " "
- *S_WatchdogTimer $MOVE
+ *S_WatchDogTimer $MOVE
 " "
  *sDomeAirTemp $MOVE
 " "

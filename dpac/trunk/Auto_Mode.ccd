@@ -1,5 +1,5 @@
 : 3_0
-87 JUMP ;
+91 JUMP ;
 : 3_41
 
 1 LINE.NUM
@@ -8,13 +8,13 @@
 
 2 LINE.NUM
   ^Timer_HeartbeatWdog   StartTimer
-117 JUMP ;
+71 JUMP ;
 : 3_121
 
 1 LINE.NUM
   &Function_UpperOpen   START.T
   ^Function_UpperOpen_Started @! 
-69 JUMP ;
+66 JUMP ;
 : 3_122
 
 1 LINE.NUM
@@ -34,7 +34,7 @@
 1 LINE.NUM
   &Function_UpperClose   START.T
   ^Function_UpperClose_Started @! 
-68 JUMP ;
+63 JUMP ;
 : 3_134
 
 1 LINE.NUM
@@ -71,13 +71,13 @@
 1 LINE.NUM
   &Function_LowerOpen   START.T
   ^Function_LowerOpen_Started @! 
-66 JUMP ;
+58 JUMP ;
 : 3_157
 
 1 LINE.NUM
   &Function_LowerClose   START.T
   ^Function_LowerClose_Started @! 
-66 JUMP ;
+56 JUMP ;
 : 3_159
 
 1 LINE.NUM
@@ -143,24 +143,19 @@
   ^Time_defContactorRelease @@   DELAY
 0 JUMP ;
 : 3_233
-1 LINE.NUM ~DI_UpperOpenContactor @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~DI_UpperCloseContactor @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
-9 LINE.NUM ELSE 
-10 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM THEN THEN THEN 
+4 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
+9 LINE.NUM THEN THEN 
 -4 JUMP ;
 : 3_240
 1 LINE.NUM 0 ^CmdHEARTBEAT @! 
-52 JUMP ;
+57 JUMP ;
 : 3_254
 1 LINE.NUM 0 ^CmdOPEN @! 
-82 JUMP ;
+86 JUMP ;
 : 3_273
 -18 JUMP ;
 : 3_279
@@ -168,7 +163,7 @@
 1 LINE.NUM
   &Function_Open   START.T
   ^Function_Open_Started @! 
-51 JUMP ;
+52 JUMP ;
 : 3_284
 
 1 LINE.NUM
@@ -179,7 +174,7 @@
 -2 JUMP ;
 : 3_288
 1 LINE.NUM 0 ^CmdCLOSE @! 
-79 JUMP ;
+83 JUMP ;
 : 3_291
 
 1 LINE.NUM
@@ -193,7 +188,7 @@
 1 LINE.NUM
   &Function_Close   START.T
   ^Function_Close_Started @! 
-48 JUMP ;
+47 JUMP ;
 : 3_298
 -24 JUMP ;
 : 3_301
@@ -206,16 +201,16 @@
 -2 JUMP ;
 : 3_318
 1 LINE.NUM 0 ^CmdUPPER_OPEN @! 
-74 JUMP ;
+94 JUMP ;
 : 3_319
 1 LINE.NUM 0 ^CmdUPPER_CLOSE @! 
-75 JUMP ;
+92 JUMP ;
 : 3_320
 1 LINE.NUM 0 ^CmdLOWER_OPEN @! 
-73 JUMP ;
+77 JUMP ;
 : 3_321
 1 LINE.NUM 0 ^CmdLOWER_CLOSE @! 
-74 JUMP ;
+78 JUMP ;
 : 3_327
 
 1 LINE.NUM
@@ -223,7 +218,7 @@
 
 2 LINE.NUM
   100    DELAY
-61 JUMP ;
+65 JUMP ;
 : 3_330
 
 1 LINE.NUM
@@ -231,7 +226,7 @@
 
 2 LINE.NUM
   100    DELAY
-64 JUMP ;
+68 JUMP ;
 : 3_333
 
 1 LINE.NUM
@@ -239,7 +234,7 @@
 
 2 LINE.NUM
   100    DELAY
-61 JUMP ;
+65 JUMP ;
 : 3_336
 
 1 LINE.NUM
@@ -247,17 +242,15 @@
 
 2 LINE.NUM
   100    DELAY
-64 JUMP ;
+68 JUMP ;
 : 3_341
 -35 JUMP ;
 : 3_342
 -36 JUMP ;
-: 3_343
--37 JUMP ;
 : 3_344
--38 JUMP ;
+-37 JUMP ;
 : 3_345
--39 JUMP ;
+-38 JUMP ;
 : 3_387
 
 1 LINE.NUM
@@ -273,12 +266,12 @@
   ^Function_Close_Started @! 
 0 JUMP ;
 : 3_392
--42 JUMP ;
+-41 JUMP ;
 : 3_409
 1 LINE.NUM 0 ^CmdTOGGLE_LIGHTS @! 
-67 JUMP ;
+72 JUMP ;
 : 3_413
--44 JUMP ;
+-43 JUMP ;
 : 3_417
 
 1 LINE.NUM
@@ -293,25 +286,13 @@
 1 LINE.NUM 0 ^CmdSTOP @! 
 2 JUMP ;
 : 3_432
-1 LINE.NUM ~DI_UpperOpenContactor @@I 0 = IF 
-2 LINE.NUM 1 ^FLT_K1on @! 
+1 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+2 LINE.NUM 1 ^FLT_DriveRunning @! 
 4 LINE.NUM ELSE 
-4 LINE.NUM ~DI_UpperCloseContactor @@I 0 = IF 
-5 LINE.NUM 1 ^FLT_K2on @! 
-7 LINE.NUM ELSE 
-7 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
-8 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
-9 LINE.NUM ELSE 
-10 LINE.NUM ~DI_LowerOpenLimitSwitch @@I 1 = IF 
-11 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-12 LINE.NUM ELSE 
-12 LINE.NUM ~DI_LowerCloseLimitSwitch @@I 1 = IF 
-13 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
-14 LINE.NUM ELSE 
-15 LINE.NUM " STOPPED" *sStatus_Shutter2  $MOVE 
-16 LINE.NUM THEN THEN 
-18 LINE.NUM THEN THEN THEN 
-21 JUMP ;
+4 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+5 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
+15 LINE.NUM THEN THEN 
+25 JUMP ;
 : 3_433
 
 1 LINE.NUM
@@ -356,9 +337,9 @@
   ~DO_LowerCloseValve   OFF
 -2 JUMP ;
 : 3_435
--51 JUMP ;
+-50 JUMP ;
 : 3_444
-67 JUMP ;
+75 JUMP ;
 : 3_452
 1 LINE.NUM 0 ^CmdIlluminate_On @! 
 1 JUMP ;
@@ -367,14 +348,12 @@
 1 JUMP ;
 : 3_462
 1 LINE.NUM 1 ~DO_Illuminate @! 
-22 JUMP ;
+9 JUMP ;
 : 3_463
 1 LINE.NUM 0 ~DO_Illuminate @! 
-20 JUMP ;
-: 3_466
--57 JUMP ;
+7 JUMP ;
 : 3_467
--58 JUMP ;
+-56 JUMP ;
 : 3_470
 2 LINE.NUM &Function_UpperOpen  STOP.T 
 3 LINE.NUM &Function_UpperClose  STOP.T 
@@ -389,26 +368,23 @@
 12 LINE.NUM ~DO_LowerOpenValve  OFF 
 13 LINE.NUM ~DO_LowerCloseValve  OFF 
 14 LINE.NUM ^Time_defContactorRelease @@  DELAY 
-15 LINE.NUM ~DI_UpperOpenContactor @@I 0 = IF 
-16 LINE.NUM 1 ^FLT_K1on @! 
+15 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+16 LINE.NUM 1 ^FLT_DriveRunning @! 
 17 LINE.NUM ELSE 
-17 LINE.NUM ~DI_UpperCloseContactor @@I 0 = IF 
-18 LINE.NUM 1 ^FLT_K2on @! 
+17 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+18 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
 19 LINE.NUM ELSE 
-19 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
-20 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
-21 LINE.NUM ELSE 
-23 LINE.NUM THEN THEN THEN 
-27 LINE.NUM *sEncl " doma" $= IF 
-28 LINE.NUM 0 I>F  FDELAY 
+21 LINE.NUM THEN THEN 
+25 LINE.NUM *sEncl " doma" $= IF 
+26 LINE.NUM 0 I>F  FDELAY 
+27 LINE.NUM ELSE 
+27 LINE.NUM *sEncl " domb" $= IF 
+28 LINE.NUM 1.50000000e+000  FDELAY 
 29 LINE.NUM ELSE 
-29 LINE.NUM *sEncl " domb" $= IF 
-30 LINE.NUM 1.50000000e+000  FDELAY 
-31 LINE.NUM ELSE 
-31 LINE.NUM *sEncl " domc" $= IF 
-32 LINE.NUM 3 I>F  FDELAY 
-33 LINE.NUM THEN THEN THEN 
--34 JUMP ;
+29 LINE.NUM *sEncl " domc" $= IF 
+30 LINE.NUM 3 I>F  FDELAY 
+31 LINE.NUM THEN THEN THEN 
+-32 JUMP ;
 : 3_473
 2 LINE.NUM &Function_UpperOpen  STOP.T 
 3 LINE.NUM &Function_UpperClose  STOP.T 
@@ -423,460 +399,43 @@
 12 LINE.NUM ~DO_LowerOpenValve  OFF 
 13 LINE.NUM ~DO_LowerCloseValve  OFF 
 14 LINE.NUM ^Time_defContactorRelease @@  DELAY 
-15 LINE.NUM ~DI_UpperOpenContactor @@I 0 = IF 
-16 LINE.NUM 1 ^FLT_K1on @! 
+15 LINE.NUM ~DI_DriveRun @@I 1 = IF 
+16 LINE.NUM 1 ^FLT_DriveRunning @! 
 17 LINE.NUM ELSE 
-17 LINE.NUM ~DI_UpperCloseContactor @@I 0 = IF 
-18 LINE.NUM 1 ^FLT_K2on @! 
+17 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
+18 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
 19 LINE.NUM ELSE 
-19 LINE.NUM ~DI_PumpMotorContactor @@I 0 = IF 
-20 LINE.NUM 1 ^FLT_PumpContactorStuckOn @! 
-21 LINE.NUM ELSE 
-23 LINE.NUM THEN THEN THEN 
-27 LINE.NUM *sEncl " doma" $= IF 
-28 LINE.NUM 0 I>F  FDELAY 
+21 LINE.NUM THEN THEN 
+25 LINE.NUM *sEncl " doma" $= IF 
+26 LINE.NUM 0 I>F  FDELAY 
+27 LINE.NUM ELSE 
+27 LINE.NUM *sEncl " domb" $= IF 
+28 LINE.NUM 1.50000000e+000  FDELAY 
 29 LINE.NUM ELSE 
-29 LINE.NUM *sEncl " domb" $= IF 
-30 LINE.NUM 1.50000000e+000  FDELAY 
-31 LINE.NUM ELSE 
-31 LINE.NUM *sEncl " domc" $= IF 
-32 LINE.NUM 3 I>F  FDELAY 
-33 LINE.NUM THEN THEN THEN 
--40 JUMP ;
-: 3_487
-1 LINE.NUM 0 ^CmdGET_FAULTS @! 
-4 JUMP ;
-: 3_488
-1 LINE.NUM 0 ^CmdCLEAR_FAULTS @! 
+29 LINE.NUM *sEncl " domc" $= IF 
+30 LINE.NUM 3 I>F  FDELAY 
+31 LINE.NUM THEN THEN THEN 
+-38 JUMP ;
+: 3_483
+1 LINE.NUM 0 ^VFD_FAULT_RESET @! 
 0 JUMP ;
-: 3_492
-1 LINE.NUM " " *FaultList  $MOVE 
-0 JUMP ;
-: 3_494
-1 LINE.NUM " " *Response  $MOVE 
-2 LINE.NUM " Success=True" *Response  $MOVE 
-4 LINE.NUM *Response *Master_Handle  PRT$ DROP  
-0 JUMP ;
-: 3_496
--65 JUMP ;
-: 3_498
-3 LINE.NUM ^FLT_K1on @@ 1 = IF 
-5 LINE.NUM 0 ^FLT_K1on @! 
-8 LINE.NUM -1 ^FaultLogged @! 
-9 LINE.NUM " UpperOpenContactorStuckOn" 0 *FaultList  FindSubString ^FaultLogged @! 
-11 LINE.NUM ^FaultLogged @@ 0 >= IF 
-13 LINE.NUM ELSE 
-15 LINE.NUM " , UpperOpenContactorStuckOn " *FaultList $CAT 
-
-16 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-17 LINE.NUM *sTimestamp *FaultList $CAT 
-
-18 LINE.NUM THEN 
-20 LINE.NUM THEN 
-23 LINE.NUM ^FLT_K2on @@ 1 = IF 
-25 LINE.NUM 0 ^FLT_K2on @! 
-28 LINE.NUM -1 ^FaultLogged @! 
-29 LINE.NUM " UpperCloseContactorStuckOn" 0 *FaultList  FindSubString ^FaultLogged @! 
-31 LINE.NUM ^FaultLogged @@ 0 >= IF 
-33 LINE.NUM ELSE 
-35 LINE.NUM " , UpperCloseContactorStuckOn " *FaultList $CAT 
-
-36 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-37 LINE.NUM *sTimestamp *FaultList $CAT 
-
-38 LINE.NUM THEN 
-40 LINE.NUM THEN 
-43 LINE.NUM ^FLT_PumpContactorStuckOn @@ 1 = IF 
-45 LINE.NUM 0 ^FLT_PumpContactorStuckOn @! 
-48 LINE.NUM -1 ^FaultLogged @! 
-49 LINE.NUM " PumpContactorStuckOn" 0 *FaultList  FindSubString ^FaultLogged @! 
-51 LINE.NUM ^FaultLogged @@ 0 >= IF 
-53 LINE.NUM ELSE 
-55 LINE.NUM " , PumpContactorStuckOn " *FaultList $CAT 
-
-56 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-57 LINE.NUM *sTimestamp *FaultList $CAT 
-
-58 LINE.NUM THEN 
-60 LINE.NUM THEN 
-63 LINE.NUM ^FLT_ClearSW @@ 1 = IF 
-65 LINE.NUM 0 ^FLT_ClearSW @! 
-68 LINE.NUM -1 ^FaultLogged @! 
-69 LINE.NUM " UpperShutterClearSwitch" 0 *FaultList  FindSubString ^FaultLogged @! 
-71 LINE.NUM ^FaultLogged @@ 0 >= IF 
-73 LINE.NUM ELSE 
-75 LINE.NUM " , UpperShutterClearSwitch " *FaultList $CAT 
-
-76 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-77 LINE.NUM *sTimestamp *FaultList $CAT 
-
-78 LINE.NUM THEN 
-80 LINE.NUM THEN 
-83 LINE.NUM ^FLT_CloseTimeout @@ 1 = IF 
-85 LINE.NUM 0 ^FLT_CloseTimeout @! 
-88 LINE.NUM -1 ^FaultLogged @! 
-89 LINE.NUM " CloseTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
-91 LINE.NUM ^FaultLogged @@ 0 >= IF 
-93 LINE.NUM ELSE 
-95 LINE.NUM " , CloseTimeout " *FaultList $CAT 
-
-96 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-97 LINE.NUM *sTimestamp *FaultList $CAT 
-
-98 LINE.NUM THEN 
-100 LINE.NUM THEN 
-103 LINE.NUM ^FLT_CloseUpperFailedToStart @@ 1 = IF 
-105 LINE.NUM 0 ^FLT_CloseUpperFailedToStart @! 
-108 LINE.NUM -1 ^FaultLogged @! 
-109 LINE.NUM " UpperShutterFailedToStartClose" 0 *FaultList  FindSubString ^FaultLogged @! 
-111 LINE.NUM ^FaultLogged @@ 0 >= IF 
-113 LINE.NUM ELSE 
-115 LINE.NUM " , UpperShutterFailedToStartClose " *FaultList $CAT 
-
-116 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-117 LINE.NUM *sTimestamp *FaultList $CAT 
-
-118 LINE.NUM THEN 
-120 LINE.NUM THEN 
-123 LINE.NUM ^FLT_DisabledCircuit @@ 1 = IF 
-125 LINE.NUM 0 ^FLT_DisabledCircuit @! 
-128 LINE.NUM -1 ^FaultLogged @! 
-129 LINE.NUM " OperationModeSwitch" 0 *FaultList  FindSubString ^FaultLogged @! 
-131 LINE.NUM ^FaultLogged @@ 0 >= IF 
-133 LINE.NUM ELSE 
-135 LINE.NUM " , OperationModeSwitch " *FaultList $CAT 
-
-136 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-137 LINE.NUM *sTimestamp *FaultList $CAT 
-
-138 LINE.NUM THEN 
-140 LINE.NUM THEN 
-143 LINE.NUM ^FLT_K10overload @@ 1 = IF 
-145 LINE.NUM 0 ^FLT_K10overload @! 
-148 LINE.NUM -1 ^FaultLogged @! 
-149 LINE.NUM " PumpMotorOverload" 0 *FaultList  FindSubString ^FaultLogged @! 
-151 LINE.NUM ^FaultLogged @@ 0 >= IF 
-153 LINE.NUM ELSE 
-155 LINE.NUM " , PumpMotorOverload " *FaultList $CAT 
-
-156 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-157 LINE.NUM *sTimestamp *FaultList $CAT 
-
-158 LINE.NUM THEN 
-160 LINE.NUM THEN 
-163 LINE.NUM ^FLT_PumpMTRcontactorNotOperating @@ 1 = IF 
-165 LINE.NUM 0 ^FLT_PumpMTRcontactorNotOperating @! 
-168 LINE.NUM -1 ^FaultLogged @! 
-169 LINE.NUM " PumpMotorContactorNotOperating" 0 *FaultList  FindSubString ^FaultLogged @! 
-171 LINE.NUM ^FaultLogged @@ 0 >= IF 
-173 LINE.NUM ELSE 
-175 LINE.NUM " , PumpMotorContactorNotOperating " *FaultList $CAT 
-
-176 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-177 LINE.NUM *sTimestamp *FaultList $CAT 
-
-178 LINE.NUM THEN 
-180 LINE.NUM THEN 
-183 LINE.NUM ^FLT_UpperMotorOverload @@ 1 = IF 
-185 LINE.NUM 0 ^FLT_UpperMotorOverload @! 
-188 LINE.NUM -1 ^FaultLogged @! 
-189 LINE.NUM " UpperMotorOverload" 0 *FaultList  FindSubString ^FaultLogged @! 
-191 LINE.NUM ^FaultLogged @@ 0 >= IF 
-193 LINE.NUM ELSE 
-195 LINE.NUM " , UpperMotorOverload " *FaultList $CAT 
-
-196 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-197 LINE.NUM *sTimestamp *FaultList $CAT 
-
-198 LINE.NUM THEN 
-200 LINE.NUM THEN 
-203 LINE.NUM ^FLT_LowerCloseTimeout @@ 1 = IF 
-205 LINE.NUM 0 ^FLT_LowerCloseTimeout @! 
-208 LINE.NUM -1 ^FaultLogged @! 
-209 LINE.NUM " LowerCloseTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
-211 LINE.NUM ^FaultLogged @@ 0 >= IF 
-213 LINE.NUM ELSE 
-215 LINE.NUM " , LowerCloseTimeout " *FaultList $CAT 
-
-216 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-217 LINE.NUM *sTimestamp *FaultList $CAT 
-
-218 LINE.NUM THEN 
-220 LINE.NUM THEN 
-223 LINE.NUM ^FLT_LowerOpenTimeout @@ 1 = IF 
-225 LINE.NUM 0 ^FLT_LowerOpenTimeout @! 
-228 LINE.NUM -1 ^FaultLogged @! 
-229 LINE.NUM " LowerOpenTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
-231 LINE.NUM ^FaultLogged @@ 0 >= IF 
-233 LINE.NUM ELSE 
-235 LINE.NUM " , LowerOpenTimeout " *FaultList $CAT 
-
-236 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-237 LINE.NUM *sTimestamp *FaultList $CAT 
-
-238 LINE.NUM THEN 
-240 LINE.NUM THEN 
-243 LINE.NUM ^FLT_OpenClearTimeout @@ 1 = IF 
-245 LINE.NUM 0 ^FLT_OpenClearTimeout @! 
-248 LINE.NUM -1 ^FaultLogged @! 
-249 LINE.NUM " UpperOpenFailedToPassClearSwitch" 0 *FaultList  FindSubString ^FaultLogged @! 
-251 LINE.NUM ^FaultLogged @@ 0 >= IF 
-253 LINE.NUM ELSE 
-255 LINE.NUM " , UpperOpenFailedToPassClearSwitch " *FaultList $CAT 
-
-256 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-257 LINE.NUM *sTimestamp *FaultList $CAT 
-
-258 LINE.NUM THEN 
-260 LINE.NUM THEN 
-263 LINE.NUM ^FLT_OpenUpperFailedToStart @@ 1 = IF 
-265 LINE.NUM 0 ^FLT_OpenUpperFailedToStart @! 
-268 LINE.NUM -1 ^FaultLogged @! 
-269 LINE.NUM " OpenUpperFailedToStart" 0 *FaultList  FindSubString ^FaultLogged @! 
-271 LINE.NUM ^FaultLogged @@ 0 >= IF 
-273 LINE.NUM ELSE 
-275 LINE.NUM " , OpenUpperFailedToStart " *FaultList $CAT 
-
-276 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-277 LINE.NUM *sTimestamp *FaultList $CAT 
-
-278 LINE.NUM THEN 
-280 LINE.NUM THEN 
-283 LINE.NUM ^FLT_SLOT08fuse @@ 1 = IF 
-285 LINE.NUM 0 ^FLT_SLOT08fuse @! 
-288 LINE.NUM -1 ^FaultLogged @! 
-289 LINE.NUM " OutputCard08_Fuse" 0 *FaultList  FindSubString ^FaultLogged @! 
-291 LINE.NUM ^FaultLogged @@ 0 >= IF 
-293 LINE.NUM ELSE 
-295 LINE.NUM " , OutputCard08_Fuse " *FaultList $CAT 
-
-296 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-297 LINE.NUM *sTimestamp *FaultList $CAT 
-
-298 LINE.NUM THEN 
-300 LINE.NUM THEN 
-303 LINE.NUM ^FLT_SLOT09fuse @@ 1 = IF 
-305 LINE.NUM 0 ^FLT_SLOT09fuse @! 
-308 LINE.NUM -1 ^FaultLogged @! 
-309 LINE.NUM " OutputCard09_Fuse" 0 *FaultList  FindSubString ^FaultLogged @! 
-311 LINE.NUM ^FaultLogged @@ 0 >= IF 
-313 LINE.NUM ELSE 
-315 LINE.NUM " , OutputCard09_Fuse " *FaultList $CAT 
-
-316 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-317 LINE.NUM *sTimestamp *FaultList $CAT 
-
-318 LINE.NUM THEN 
-320 LINE.NUM THEN 
-323 LINE.NUM ^FLT_UpCloseTimeout @@ 1 = IF 
-325 LINE.NUM 0 ^FLT_UpCloseTimeout @! 
-328 LINE.NUM -1 ^FaultLogged @! 
-329 LINE.NUM " UpperCloseTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
-331 LINE.NUM ^FaultLogged @@ 0 >= IF 
-333 LINE.NUM ELSE 
-335 LINE.NUM " , UpperCloseTimeout " *FaultList $CAT 
-
-336 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-337 LINE.NUM *sTimestamp *FaultList $CAT 
-
-338 LINE.NUM THEN 
-340 LINE.NUM THEN 
-363 LINE.NUM ^FLT_UpOpenTimeout @@ 1 = IF 
-365 LINE.NUM 0 ^FLT_UpOpenTimeout @! 
-368 LINE.NUM -1 ^FaultLogged @! 
-369 LINE.NUM " UpperOpenTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
-371 LINE.NUM ^FaultLogged @@ 0 >= IF 
-373 LINE.NUM ELSE 
-375 LINE.NUM " , UpperOpenTimeout " *FaultList $CAT 
-
-376 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-377 LINE.NUM *sTimestamp *FaultList $CAT 
-
-378 LINE.NUM THEN 
-380 LINE.NUM THEN 
-383 LINE.NUM ~DI_WirelessFault @@I 1 = IF 
-386 LINE.NUM -1 ^FaultLogged @! 
-387 LINE.NUM " WirelessBridge" 0 *FaultList  FindSubString ^FaultLogged @! 
-389 LINE.NUM ^FaultLogged @@ 0 >= IF 
-391 LINE.NUM ELSE 
-393 LINE.NUM " , WirelessBridge " *FaultList $CAT 
-
-394 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-395 LINE.NUM *sTimestamp *FaultList $CAT 
-
-396 LINE.NUM THEN 
-398 LINE.NUM THEN 
-402 LINE.NUM ~DI_WhiteLightsCircuitBreaker @@I 0 = IF 
-405 LINE.NUM -1 ^FaultLogged @! 
-406 LINE.NUM " WhiteLightsCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
-408 LINE.NUM ^FaultLogged @@ 0 >= IF 
-410 LINE.NUM ELSE 
-412 LINE.NUM " , WhiteLightsCircuitBreaker " *FaultList $CAT 
-
-413 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-414 LINE.NUM *sTimestamp *FaultList $CAT 
-
-415 LINE.NUM THEN 
-417 LINE.NUM THEN 
-420 LINE.NUM ~DI_PumpMotorCircuitBreaker @@I 0 = IF 
-423 LINE.NUM -1 ^FaultLogged @! 
-424 LINE.NUM " PumpMotorCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
-426 LINE.NUM ^FaultLogged @@ 0 >= IF 
-428 LINE.NUM ELSE 
-430 LINE.NUM " , PumpMotorCircuitBreaker " *FaultList $CAT 
-
-431 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-432 LINE.NUM *sTimestamp *FaultList $CAT 
-
-433 LINE.NUM THEN 
-435 LINE.NUM THEN 
-438 LINE.NUM ~DI_UpperMotorCircuitBreaker @@I 0 = IF 
-441 LINE.NUM -1 ^FaultLogged @! 
-442 LINE.NUM " UpperMotorCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
-444 LINE.NUM ^FaultLogged @@ 0 >= IF 
-446 LINE.NUM ELSE 
-448 LINE.NUM " , UpperMotorCircuitBreaker " *FaultList $CAT 
-
-449 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-450 LINE.NUM *sTimestamp *FaultList $CAT 
-
-451 LINE.NUM THEN 
-453 LINE.NUM THEN 
-456 LINE.NUM ~DI_LambertCircuitBreaker @@I 0 = IF 
-459 LINE.NUM -1 ^FaultLogged @! 
-460 LINE.NUM " LambertCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
-462 LINE.NUM ^FaultLogged @@ 0 >= IF 
-464 LINE.NUM ELSE 
-466 LINE.NUM " , LambertCircuitBreaker " *FaultList $CAT 
-
-467 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-468 LINE.NUM *sTimestamp *FaultList $CAT 
-
-469 LINE.NUM THEN 
-471 LINE.NUM THEN 
-475 LINE.NUM ~DI_PumpMotorOverload @@I 0 = IF 
-478 LINE.NUM -1 ^FaultLogged @! 
-479 LINE.NUM " PumpMotorOverload" 0 *FaultList  FindSubString ^FaultLogged @! 
-481 LINE.NUM ^FaultLogged @@ 0 >= IF 
-483 LINE.NUM ELSE 
-485 LINE.NUM " , PumpMotorOverload " *FaultList $CAT 
-
-486 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-487 LINE.NUM *sTimestamp *FaultList $CAT 
-
-488 LINE.NUM THEN 
-490 LINE.NUM THEN 
-493 LINE.NUM ~DI_CabinetDoorSwitch @@I 0 = IF 
-496 LINE.NUM -1 ^FaultLogged @! 
-497 LINE.NUM " CabinetDoorOpen" 0 *FaultList  FindSubString ^FaultLogged @! 
-499 LINE.NUM ^FaultLogged @@ 0 >= IF 
-501 LINE.NUM ELSE 
-503 LINE.NUM " , CabinetDoorOpen " *FaultList $CAT 
-
-504 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
-505 LINE.NUM *sTimestamp *FaultList $CAT 
-
-506 LINE.NUM THEN 
-508 LINE.NUM THEN 
+: 3_486
+1 LINE.NUM 2 I>F ~DO_VFDfaultReset  PULSEON 
+2 LINE.NUM 1 I>F  FDELAY 
 1 JUMP ;
-: 3_500
--67 JUMP ;
-: 3_501
-1 LINE.NUM *FaultList 0 2 *FaultListSubString  $SUB 
-2 LINE.NUM *FaultListSubString " , " $= IF 
-3 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
-4 LINE.NUM THEN 
-6 LINE.NUM *FaultList " " $= IF 
-7 LINE.NUM " None" *Master_Handle  PRT$ DROP  
-8 LINE.NUM ELSE 
-9 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
-10 LINE.NUM THEN 
+: 3_487
+-61 JUMP ;
+: 3_492
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM ~DI_VFDfault @@I 0 = IF 
+4 LINE.NUM " Success=True" *Response  $MOVE 
+5 LINE.NUM ELSE 
+5 LINE.NUM ~DI_VFDfault @@I 1 = IF 
+6 LINE.NUM " Success=False" *Response  $MOVE 
+7 LINE.NUM THEN THEN 
+9 LINE.NUM *Response *Master_Handle  PRT$ DROP  
 -2 JUMP ;
-: 3_504
-1 LINE.NUM " " *Response  $MOVE 
-5 LINE.NUM ^Timer_HeartbeatWdog @@F 3 0 *S_WatchdogTimer  FF.R$ 
-7 LINE.NUM *S_WatchdogTimer 3  SWAP $TRIM 
-9 LINE.NUM *S_WatchdogTimer *Response  $MOVE 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
-13 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 
--59 JUMP ;
-: 3_507
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
-5 LINE.NUM &Function_LowerClose  ?STOPPED &Function_LowerOpen  ?STOPPED LAND  &Function_UpperClose  ?STOPPED LAND  &Function_UpperOpen  ?STOPPED LAND  IF 
-9 LINE.NUM " Success=True" *Response  $MOVE 
-10 LINE.NUM ELSE 
-11 LINE.NUM " Success=False" *Response  $MOVE 
-12 LINE.NUM THEN 
-14 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--20 JUMP ;
-: 3_510
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 500  DELAY 
-5 LINE.NUM &Function_Open  ?RUNNING IF 
-6 LINE.NUM " Success=True" *Response  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM &Function_Open  ?STOPPED IF 
-8 LINE.NUM " Success=False" *Response  $MOVE 
-9 LINE.NUM THEN THEN 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--54 JUMP ;
-: 3_513
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 500  DELAY 
-5 LINE.NUM &Function_Close  ?RUNNING IF 
-6 LINE.NUM " Success=True" *Response  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM &Function_Close  ?STOPPED IF 
-8 LINE.NUM " Success=False" *Response  $MOVE 
-9 LINE.NUM THEN THEN 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--49 JUMP ;
-: 3_516
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
-5 LINE.NUM &Function_UpperOpen  ?RUNNING IF 
-6 LINE.NUM " Success=True" *Response  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM &Function_UpperOpen  ?STOPPED IF 
-8 LINE.NUM " Success=False" *Response  $MOVE 
-9 LINE.NUM THEN THEN 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--39 JUMP ;
-: 3_519
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
-5 LINE.NUM &Function_UpperClose  ?RUNNING IF 
-6 LINE.NUM " Success=True" *Response  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM &Function_UpperClose  ?STOPPED IF 
-8 LINE.NUM " Success=False" *Response  $MOVE 
-9 LINE.NUM THEN THEN 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--39 JUMP ;
-: 3_522
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
-5 LINE.NUM &Function_LowerOpen  ?RUNNING IF 
-6 LINE.NUM " Success=True" *Response  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM &Function_LowerOpen  ?STOPPED IF 
-8 LINE.NUM " Success=False" *Response  $MOVE 
-9 LINE.NUM THEN THEN 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--39 JUMP ;
-: 3_526
-1 LINE.NUM " " *Response  $MOVE 
-3 LINE.NUM 1 I>F  FDELAY 
-5 LINE.NUM &Function_LowerClose  ?RUNNING IF 
-6 LINE.NUM " Success=True" *Response  $MOVE 
-7 LINE.NUM ELSE 
-7 LINE.NUM &Function_LowerClose  ?STOPPED IF 
-8 LINE.NUM " Success=False" *Response  $MOVE 
-9 LINE.NUM THEN THEN 
-11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--39 JUMP ;
-: 3_529
+: 3_495
 1 LINE.NUM " " *Response  $MOVE 
 3 LINE.NUM 1 I>F  FDELAY 
 5 LINE.NUM ~DO_Illuminate @@I 0 = IF 
@@ -886,8 +445,8 @@
 8 LINE.NUM " Success=False" *Response  $MOVE 
 9 LINE.NUM THEN THEN 
 11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--20 JUMP ;
-: 3_532
+-8 JUMP ;
+: 3_499
 1 LINE.NUM " " *Response  $MOVE 
 3 LINE.NUM 1 I>F  FDELAY 
 5 LINE.NUM ~DO_Illuminate @@I 1 = IF 
@@ -897,24 +456,459 @@
 8 LINE.NUM " Success=False" *Response  $MOVE 
 9 LINE.NUM THEN THEN 
 11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
--22 JUMP ;
-: 3_539
-1 LINE.NUM 0 ^CmdClearErrors @! 
-1 JUMP ;
+0 JUMP ;
+: 3_500
+-65 JUMP ;
+: 3_502
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 1 I>F  FDELAY 
+5 LINE.NUM &Function_LowerClose  ?RUNNING IF 
+6 LINE.NUM " Success=True" *Response  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM &Function_LowerClose  ?STOPPED IF 
+8 LINE.NUM " Success=False" *Response  $MOVE 
+9 LINE.NUM THEN THEN 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-30 JUMP ;
+: 3_506
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 1 I>F  FDELAY 
+5 LINE.NUM &Function_LowerOpen  ?RUNNING IF 
+6 LINE.NUM " Success=True" *Response  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM &Function_LowerOpen  ?STOPPED IF 
+8 LINE.NUM " Success=False" *Response  $MOVE 
+9 LINE.NUM THEN THEN 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+0 JUMP ;
+: 3_507
+-68 JUMP ;
+: 3_513
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 1 I>F  FDELAY 
+5 LINE.NUM &Function_UpperClose  ?RUNNING IF 
+6 LINE.NUM " Success=True" *Response  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM &Function_UpperClose  ?STOPPED IF 
+8 LINE.NUM " Success=False" *Response  $MOVE 
+9 LINE.NUM THEN THEN 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-34 JUMP ;
+: 3_517
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 1 I>F  FDELAY 
+5 LINE.NUM &Function_UpperOpen  ?RUNNING IF 
+6 LINE.NUM " Success=True" *Response  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM &Function_UpperOpen  ?STOPPED IF 
+8 LINE.NUM " Success=False" *Response  $MOVE 
+9 LINE.NUM THEN THEN 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-36 JUMP ;
+: 3_524
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 500  DELAY 
+5 LINE.NUM &Function_Close  ?RUNNING IF 
+6 LINE.NUM " Success=True" *Response  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM &Function_Close  ?STOPPED IF 
+8 LINE.NUM " Success=False" *Response  $MOVE 
+9 LINE.NUM THEN THEN 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-48 JUMP ;
+: 3_527
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 500  DELAY 
+5 LINE.NUM &Function_Open  ?RUNNING IF 
+6 LINE.NUM " Success=True" *Response  $MOVE 
+7 LINE.NUM ELSE 
+7 LINE.NUM &Function_Open  ?STOPPED IF 
+8 LINE.NUM " Success=False" *Response  $MOVE 
+9 LINE.NUM THEN THEN 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-55 JUMP ;
+: 3_530
+1 LINE.NUM " " *Response  $MOVE 
+3 LINE.NUM 1 I>F  FDELAY 
+5 LINE.NUM &Function_LowerClose  ?STOPPED &Function_LowerOpen  ?STOPPED LAND  &Function_UpperClose  ?STOPPED LAND  &Function_UpperOpen  ?STOPPED LAND  IF 
+9 LINE.NUM " Success=True" *Response  $MOVE 
+10 LINE.NUM ELSE 
+11 LINE.NUM " Success=False" *Response  $MOVE 
+12 LINE.NUM THEN 
+14 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+-24 JUMP ;
+: 3_534
+1 LINE.NUM " " *Response  $MOVE 
+5 LINE.NUM ^Timer_HeartbeatWdog @@F 3 0 *S_WatchDogTimer  FF.R$ 
+7 LINE.NUM *S_WatchDogTimer 3  SWAP $TRIM 
+9 LINE.NUM *S_WatchDogTimer *Response  $MOVE 
+11 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+13 LINE.NUM ^Time_defHeartbeatWdog @@ ^Timer_HeartbeatWdog @! 
+-64 JUMP ;
 : 3_540
-1 LINE.NUM 0 ^CmdGetErrors @! 
-3 JUMP ;
-: 3_546
-1 LINE.NUM " " *ErrorList  $MOVE 
+1 LINE.NUM 0 ^CmdCLEAR_FAULTS @! 
 1 JUMP ;
+: 3_543
+1 LINE.NUM 0 ^CmdGET_FAULTS @! 
+5 JUMP ;
+: 3_546
+1 LINE.NUM " " *FaultList  $MOVE 
+3 LINE.NUM 2 I>F ~DO_VFDfaultReset  PULSEON 
+4 LINE.NUM 1 I>F  FDELAY 
+0 JUMP ;
 : 3_548
--82 JUMP ;
-: 3_550
 1 LINE.NUM " " *Response  $MOVE 
 2 LINE.NUM " Success=True" *Response  $MOVE 
 4 LINE.NUM *Response *Master_Handle  PRT$ DROP  
+1 JUMP ;
+: 3_549
+3 LINE.NUM *FaultList 0 2 *FaultListSubString  $SUB 
+4 LINE.NUM *FaultListSubString " , " $= IF 
+5 LINE.NUM *FaultList 2 200 *FaultList  $SUB 
+6 LINE.NUM THEN 
+8 LINE.NUM *FaultList " " $= IF 
+9 LINE.NUM " None" *Master_Handle  PRT$ DROP  
+10 LINE.NUM ELSE 
+11 LINE.NUM *FaultList *Master_Handle  PRT$ DROP  
+12 LINE.NUM THEN 
+1 JUMP ;
+: 3_550
+-80 JUMP ;
+: 3_551
+-81 JUMP ;
+: 3_558
+3 LINE.NUM ^FLT_DriveRunning @@ 1 = IF 
+5 LINE.NUM 0 ^FLT_DriveRunning @! 
+8 LINE.NUM -1 ^FaultLogged @! 
+9 LINE.NUM " VFD_Running" 0 *FaultList  FindSubString ^FaultLogged @! 
+11 LINE.NUM ^FaultLogged @@ 0 >= IF 
+13 LINE.NUM ELSE 
+15 LINE.NUM " , VFD_Running " *FaultList $CAT 
+
+16 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+17 LINE.NUM *sTimestamp *FaultList $CAT 
+
+18 LINE.NUM THEN 
+20 LINE.NUM THEN 
+23 LINE.NUM ^FLT_PumpContactorStuckOn @@ 1 = IF 
+25 LINE.NUM 0 ^FLT_PumpContactorStuckOn @! 
+28 LINE.NUM -1 ^FaultLogged @! 
+29 LINE.NUM " PumpContactorStuckOn" 0 *FaultList  FindSubString ^FaultLogged @! 
+31 LINE.NUM ^FaultLogged @@ 0 >= IF 
+33 LINE.NUM ELSE 
+35 LINE.NUM " , PumpContactorStuckOn " *FaultList $CAT 
+
+36 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+37 LINE.NUM *sTimestamp *FaultList $CAT 
+
+38 LINE.NUM THEN 
+40 LINE.NUM THEN 
+43 LINE.NUM ^FLT_ClearSW @@ 1 = IF 
+45 LINE.NUM 0 ^FLT_ClearSW @! 
+48 LINE.NUM -1 ^FaultLogged @! 
+49 LINE.NUM " UpperShutterClearSwitch" 0 *FaultList  FindSubString ^FaultLogged @! 
+51 LINE.NUM ^FaultLogged @@ 0 >= IF 
+53 LINE.NUM ELSE 
+55 LINE.NUM " , UpperShutterClearSwitch " *FaultList $CAT 
+
+56 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+57 LINE.NUM *sTimestamp *FaultList $CAT 
+
+58 LINE.NUM THEN 
+60 LINE.NUM THEN 
+63 LINE.NUM ^FLT_CloseTimeout @@ 1 = IF 
+65 LINE.NUM 0 ^FLT_CloseTimeout @! 
+68 LINE.NUM -1 ^FaultLogged @! 
+69 LINE.NUM " CloseTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
+71 LINE.NUM ^FaultLogged @@ 0 >= IF 
+73 LINE.NUM ELSE 
+75 LINE.NUM " , CloseTimeout " *FaultList $CAT 
+
+76 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+77 LINE.NUM *sTimestamp *FaultList $CAT 
+
+78 LINE.NUM THEN 
+80 LINE.NUM THEN 
+83 LINE.NUM ^FLT_CloseUpperFailedToStart @@ 1 = IF 
+85 LINE.NUM 0 ^FLT_CloseUpperFailedToStart @! 
+88 LINE.NUM -1 ^FaultLogged @! 
+89 LINE.NUM " UpperShutterFailedToStartClose" 0 *FaultList  FindSubString ^FaultLogged @! 
+91 LINE.NUM ^FaultLogged @@ 0 >= IF 
+93 LINE.NUM ELSE 
+95 LINE.NUM " , UpperShutterFailedToStartClose " *FaultList $CAT 
+
+96 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+97 LINE.NUM *sTimestamp *FaultList $CAT 
+
+98 LINE.NUM THEN 
+100 LINE.NUM THEN 
+103 LINE.NUM ^FLT_DisabledCircuit @@ 1 = IF 
+105 LINE.NUM 0 ^FLT_DisabledCircuit @! 
+108 LINE.NUM -1 ^FaultLogged @! 
+109 LINE.NUM " OperationModeSwitch" 0 *FaultList  FindSubString ^FaultLogged @! 
+111 LINE.NUM ^FaultLogged @@ 0 >= IF 
+113 LINE.NUM ELSE 
+115 LINE.NUM " , OperationModeSwitch " *FaultList $CAT 
+
+116 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+117 LINE.NUM *sTimestamp *FaultList $CAT 
+
+118 LINE.NUM THEN 
+120 LINE.NUM THEN 
+123 LINE.NUM ^FLT_PumpMotorOverload @@ 1 = IF 
+125 LINE.NUM 0 ^FLT_PumpMotorOverload @! 
+128 LINE.NUM -1 ^FaultLogged @! 
+129 LINE.NUM " PumpMotorOverload" 0 *FaultList  FindSubString ^FaultLogged @! 
+131 LINE.NUM ^FaultLogged @@ 0 >= IF 
+133 LINE.NUM ELSE 
+135 LINE.NUM " , PumpMotorOverload " *FaultList $CAT 
+
+136 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+137 LINE.NUM *sTimestamp *FaultList $CAT 
+
+138 LINE.NUM THEN 
+140 LINE.NUM THEN 
+143 LINE.NUM ^FLT_PumpMTRcontactorNotOperating @@ 1 = IF 
+145 LINE.NUM 0 ^FLT_PumpMTRcontactorNotOperating @! 
+148 LINE.NUM -1 ^FaultLogged @! 
+149 LINE.NUM " PumpMotorContactorNotOperating" 0 *FaultList  FindSubString ^FaultLogged @! 
+151 LINE.NUM ^FaultLogged @@ 0 >= IF 
+153 LINE.NUM ELSE 
+155 LINE.NUM " , PumpMotorContactorNotOperating " *FaultList $CAT 
+
+156 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+157 LINE.NUM *sTimestamp *FaultList $CAT 
+
+158 LINE.NUM THEN 
+160 LINE.NUM THEN 
+163 LINE.NUM ^FLT_VFDoverload @@ 1 = IF 
+165 LINE.NUM 0 ^FLT_VFDoverload @! 
+168 LINE.NUM -1 ^FaultLogged @! 
+169 LINE.NUM " VFDoverload" 0 *FaultList  FindSubString ^FaultLogged @! 
+171 LINE.NUM ^FaultLogged @@ 0 >= IF 
+173 LINE.NUM ELSE 
+175 LINE.NUM " , VFDoverload " *FaultList $CAT 
+
+176 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+177 LINE.NUM *sTimestamp *FaultList $CAT 
+
+178 LINE.NUM THEN 
+180 LINE.NUM THEN 
+183 LINE.NUM ^FLT_LowerCloseTimeout @@ 1 = IF 
+185 LINE.NUM 0 ^FLT_LowerCloseTimeout @! 
+188 LINE.NUM -1 ^FaultLogged @! 
+189 LINE.NUM " LowerCloseTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
+191 LINE.NUM ^FaultLogged @@ 0 >= IF 
+193 LINE.NUM ELSE 
+195 LINE.NUM " , LowerCloseTimeout " *FaultList $CAT 
+
+196 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+197 LINE.NUM *sTimestamp *FaultList $CAT 
+
+198 LINE.NUM THEN 
+200 LINE.NUM THEN 
+203 LINE.NUM ^FLT_LowerOpenTimeout @@ 1 = IF 
+205 LINE.NUM 0 ^FLT_LowerOpenTimeout @! 
+208 LINE.NUM -1 ^FaultLogged @! 
+209 LINE.NUM " LowerOpenTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
+211 LINE.NUM ^FaultLogged @@ 0 >= IF 
+213 LINE.NUM ELSE 
+215 LINE.NUM " , LowerOpenTimeout " *FaultList $CAT 
+
+216 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+217 LINE.NUM *sTimestamp *FaultList $CAT 
+
+218 LINE.NUM THEN 
+220 LINE.NUM THEN 
+223 LINE.NUM ^FLT_OpenClearTimeout @@ 1 = IF 
+225 LINE.NUM 0 ^FLT_OpenClearTimeout @! 
+228 LINE.NUM -1 ^FaultLogged @! 
+229 LINE.NUM " UpperOpenFailedToPassClearSwitch" 0 *FaultList  FindSubString ^FaultLogged @! 
+231 LINE.NUM ^FaultLogged @@ 0 >= IF 
+233 LINE.NUM ELSE 
+235 LINE.NUM " , UpperOpenFailedToPassClearSwitch " *FaultList $CAT 
+
+236 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+237 LINE.NUM *sTimestamp *FaultList $CAT 
+
+238 LINE.NUM THEN 
+240 LINE.NUM THEN 
+243 LINE.NUM ^FLT_OpenUpperFailedToStart @@ 1 = IF 
+245 LINE.NUM 0 ^FLT_OpenUpperFailedToStart @! 
+248 LINE.NUM -1 ^FaultLogged @! 
+249 LINE.NUM " OpenUpperFailedToStart" 0 *FaultList  FindSubString ^FaultLogged @! 
+251 LINE.NUM ^FaultLogged @@ 0 >= IF 
+253 LINE.NUM ELSE 
+255 LINE.NUM " , OpenUpperFailedToStart " *FaultList $CAT 
+
+256 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+257 LINE.NUM *sTimestamp *FaultList $CAT 
+
+258 LINE.NUM THEN 
+260 LINE.NUM THEN 
+263 LINE.NUM ^FLT_SLOT08fuse @@ 1 = IF 
+265 LINE.NUM 0 ^FLT_SLOT08fuse @! 
+268 LINE.NUM -1 ^FaultLogged @! 
+269 LINE.NUM " OutputCard08_Fuse" 0 *FaultList  FindSubString ^FaultLogged @! 
+271 LINE.NUM ^FaultLogged @@ 0 >= IF 
+273 LINE.NUM ELSE 
+275 LINE.NUM " , OutputCard08_Fuse " *FaultList $CAT 
+
+276 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+277 LINE.NUM *sTimestamp *FaultList $CAT 
+
+278 LINE.NUM THEN 
+280 LINE.NUM THEN 
+283 LINE.NUM ^FLT_SLOT09fuse @@ 1 = IF 
+285 LINE.NUM 0 ^FLT_SLOT09fuse @! 
+288 LINE.NUM -1 ^FaultLogged @! 
+289 LINE.NUM " OutputCard09_Fuse" 0 *FaultList  FindSubString ^FaultLogged @! 
+291 LINE.NUM ^FaultLogged @@ 0 >= IF 
+293 LINE.NUM ELSE 
+295 LINE.NUM " , OutputCard09_Fuse " *FaultList $CAT 
+
+296 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+297 LINE.NUM *sTimestamp *FaultList $CAT 
+
+298 LINE.NUM THEN 
+300 LINE.NUM THEN 
+303 LINE.NUM ^FLT_UpCloseTimeout @@ 1 = IF 
+305 LINE.NUM 0 ^FLT_UpCloseTimeout @! 
+308 LINE.NUM -1 ^FaultLogged @! 
+309 LINE.NUM " UpperCloseTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
+311 LINE.NUM ^FaultLogged @@ 0 >= IF 
+313 LINE.NUM ELSE 
+315 LINE.NUM " , UpperCloseTimeout " *FaultList $CAT 
+
+316 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+317 LINE.NUM *sTimestamp *FaultList $CAT 
+
+318 LINE.NUM THEN 
+320 LINE.NUM THEN 
+343 LINE.NUM ^FLT_UpOpenTimeout @@ 1 = IF 
+345 LINE.NUM 0 ^FLT_UpOpenTimeout @! 
+348 LINE.NUM -1 ^FaultLogged @! 
+349 LINE.NUM " UpperOpenTimeout" 0 *FaultList  FindSubString ^FaultLogged @! 
+351 LINE.NUM ^FaultLogged @@ 0 >= IF 
+353 LINE.NUM ELSE 
+355 LINE.NUM " , UpperOpenTimeout " *FaultList $CAT 
+
+356 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+357 LINE.NUM *sTimestamp *FaultList $CAT 
+
+358 LINE.NUM THEN 
+360 LINE.NUM THEN 
+363 LINE.NUM ~DI_WirelessFault @@I 1 = IF 
+366 LINE.NUM -1 ^FaultLogged @! 
+367 LINE.NUM " WirelessBridge" 0 *FaultList  FindSubString ^FaultLogged @! 
+369 LINE.NUM ^FaultLogged @@ 0 >= IF 
+371 LINE.NUM ELSE 
+373 LINE.NUM " , WirelessBridge " *FaultList $CAT 
+
+374 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+375 LINE.NUM *sTimestamp *FaultList $CAT 
+
+376 LINE.NUM THEN 
+378 LINE.NUM THEN 
+382 LINE.NUM ~DI_WhiteLightsCircuitBreaker @@I 0 = IF 
+385 LINE.NUM -1 ^FaultLogged @! 
+386 LINE.NUM " WhiteLightsCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
+388 LINE.NUM ^FaultLogged @@ 0 >= IF 
+390 LINE.NUM ELSE 
+392 LINE.NUM " , WhiteLightsCircuitBreaker " *FaultList $CAT 
+
+393 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+394 LINE.NUM *sTimestamp *FaultList $CAT 
+
+395 LINE.NUM THEN 
+397 LINE.NUM THEN 
+400 LINE.NUM ~DI_PumpMotorCircuitBreaker @@I 0 = IF 
+403 LINE.NUM -1 ^FaultLogged @! 
+404 LINE.NUM " PumpMotorCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
+406 LINE.NUM ^FaultLogged @@ 0 >= IF 
+408 LINE.NUM ELSE 
+410 LINE.NUM " , PumpMotorCircuitBreaker " *FaultList $CAT 
+
+411 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+412 LINE.NUM *sTimestamp *FaultList $CAT 
+
+413 LINE.NUM THEN 
+415 LINE.NUM THEN 
+418 LINE.NUM ~DI_UpperMotorCircuitBreaker @@I 0 = IF 
+421 LINE.NUM -1 ^FaultLogged @! 
+422 LINE.NUM " UpperMotorCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
+424 LINE.NUM ^FaultLogged @@ 0 >= IF 
+426 LINE.NUM ELSE 
+428 LINE.NUM " , UpperMotorCircuitBreaker " *FaultList $CAT 
+
+429 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+430 LINE.NUM *sTimestamp *FaultList $CAT 
+
+431 LINE.NUM THEN 
+433 LINE.NUM THEN 
+436 LINE.NUM ~DI_LambertCircuitBreaker @@I 0 = IF 
+439 LINE.NUM -1 ^FaultLogged @! 
+440 LINE.NUM " LambertCircuitBreaker" 0 *FaultList  FindSubString ^FaultLogged @! 
+442 LINE.NUM ^FaultLogged @@ 0 >= IF 
+444 LINE.NUM ELSE 
+446 LINE.NUM " , LambertCircuitBreaker " *FaultList $CAT 
+
+447 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+448 LINE.NUM *sTimestamp *FaultList $CAT 
+
+449 LINE.NUM THEN 
+451 LINE.NUM THEN 
+455 LINE.NUM ~DI_PumpMotorOverload @@I 0 = IF 
+458 LINE.NUM -1 ^FaultLogged @! 
+459 LINE.NUM " PumpMotorOverload" 0 *FaultList  FindSubString ^FaultLogged @! 
+461 LINE.NUM ^FaultLogged @@ 0 >= IF 
+463 LINE.NUM ELSE 
+465 LINE.NUM " , PumpMotorOverload " *FaultList $CAT 
+
+466 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+467 LINE.NUM *sTimestamp *FaultList $CAT 
+
+468 LINE.NUM THEN 
+470 LINE.NUM THEN 
+473 LINE.NUM ~DI_CabinetDoorSwitch @@I 0 = IF 
+476 LINE.NUM -1 ^FaultLogged @! 
+477 LINE.NUM " CabinetDoorOpen" 0 *FaultList  FindSubString ^FaultLogged @! 
+479 LINE.NUM ^FaultLogged @@ 0 >= IF 
+481 LINE.NUM ELSE 
+483 LINE.NUM " , CabinetDoorOpen " *FaultList $CAT 
+
+484 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+485 LINE.NUM *sTimestamp *FaultList $CAT 
+
+486 LINE.NUM THEN 
+488 LINE.NUM THEN 
+564 LINE.NUM ~DI_VFDfault @@I 0 = IF 
+567 LINE.NUM -1 ^FaultLogged @! 
+568 LINE.NUM " VFDfault" 0 *FaultList  FindSubString ^FaultLogged @! 
+570 LINE.NUM ^FaultLogged @@ 0 >= IF 
+572 LINE.NUM ELSE 
+574 LINE.NUM " , VFDfault " *FaultList $CAT 
+
+575 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+576 LINE.NUM *sTimestamp *FaultList $CAT 
+
+577 LINE.NUM THEN 
+579 LINE.NUM THEN 
+-4 JUMP ;
+: 3_565
+-83 JUMP ;
+: 3_566
+1 LINE.NUM *ErrorList 0 2 *ErrorListSubString  $SUB 
+2 LINE.NUM *ErrorListSubString " , " $= IF 
+3 LINE.NUM *ErrorList 2 200 *ErrorList  $SUB 
+4 LINE.NUM THEN 
+6 LINE.NUM *ErrorList " " $= IF 
+7 LINE.NUM " None" *Master_Handle  PRT$ DROP  
+8 LINE.NUM ELSE 
+9 LINE.NUM *ErrorList *Master_Handle  PRT$ DROP  
+10 LINE.NUM THEN 
 -2 JUMP ;
-: 3_552
+: 3_568
 3 LINE.NUM ~DI_SmokeDetectorPWR @@I 0 = IF 
 6 LINE.NUM -1 ^ErrorLogged @! 
 7 LINE.NUM " SmokeDetectorPower" 0 *ErrorList  FindSubString ^ErrorLogged @! 
@@ -951,20 +945,35 @@
 
 52 LINE.NUM THEN 
 54 LINE.NUM THEN 
+57 LINE.NUM ^InclinometerFaultFlag @@ 1 = IF 
+60 LINE.NUM -1 ^ErrorLogged @! 
+61 LINE.NUM " InclinometerFaulted" 0 *ErrorList  FindSubString ^ErrorLogged @! 
+63 LINE.NUM ^ErrorLogged @@ 0 >= IF 
+65 LINE.NUM ELSE 
+67 LINE.NUM " , InclinometerFaulted " *ErrorList $CAT 
+
+68 LINE.NUM *sTimestamp &Timestamp CALL.SUB DROP  
+69 LINE.NUM *sTimestamp *ErrorList $CAT 
+
+70 LINE.NUM THEN 
+72 LINE.NUM THEN 
+-2 JUMP ;
+: 3_570
+1 LINE.NUM " " *Response  $MOVE 
+2 LINE.NUM " Success=True" *Response  $MOVE 
+4 LINE.NUM *Response *Master_Handle  PRT$ DROP  
 0 JUMP ;
-: 3_555
-1 LINE.NUM *ErrorList 0 2 *ErrorListSubString  $SUB 
-2 LINE.NUM *ErrorListSubString " , " $= IF 
-3 LINE.NUM *ErrorList 2 200 *ErrorList  $SUB 
-4 LINE.NUM THEN 
-6 LINE.NUM *ErrorList " " $= IF 
-7 LINE.NUM " None" *Master_Handle  PRT$ DROP  
-8 LINE.NUM ELSE 
-9 LINE.NUM *ErrorList *Master_Handle  PRT$ DROP  
-10 LINE.NUM THEN 
-0 JUMP ;
-: 3_556
--86 JUMP ;
+: 3_572
+-87 JUMP ;
+: 3_574
+1 LINE.NUM " " *ErrorList  $MOVE 
+-3 JUMP ;
+: 3_578
+1 LINE.NUM 0 ^CmdGetErrors @! 
+-5 JUMP ;
+: 3_579
+1 LINE.NUM 0 ^CmdClearErrors @! 
+-3 JUMP ;
 : 3_38
 TRUE
 
@@ -972,7 +981,7 @@ TRUE
   ^CmdHEARTBEAT @@ 
   1    =
 LAND
-IF -72 ELSE 0 THEN JUMP ;
+IF -76 ELSE 0 THEN JUMP ;
 : 3_45
 TRUE
 
@@ -986,119 +995,119 @@ TRUE
 1 LINE.NUM
   ~DI_SW_Stop   ?OFF
 LAND
-IF -77 ELSE -3 THEN JUMP ;
+IF -81 ELSE -3 THEN JUMP ;
 : 3_66
 TRUE
 
 1 LINE.NUM
   ^CmdOPEN @@   0<>
 LAND
-IF -74 ELSE 0 THEN JUMP ;
+IF -78 ELSE 0 THEN JUMP ;
 : 3_94
 TRUE
 
 1 LINE.NUM
   ^CmdCLOSE @@   0<>
 LAND
-IF -32 ELSE 0 THEN JUMP ;
+IF -38 ELSE 0 THEN JUMP ;
 : 3_114
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_OPEN @@   0<>
 LAND
-IF -66 ELSE 1 THEN JUMP ;
+IF -70 ELSE 1 THEN JUMP ;
 : 3_123
 TRUE
 
 1 LINE.NUM
   &Function_UpperClose   ?RUNNING
 LAND
-IF -90 ELSE -91 THEN JUMP ;
+IF -94 ELSE -95 THEN JUMP ;
 : 3_127
 TRUE
 
 1 LINE.NUM
   ^CmdUPPER_CLOSE @@   0<>
 LAND
-IF -67 ELSE 1 THEN JUMP ;
+IF -71 ELSE 1 THEN JUMP ;
 : 3_135
 TRUE
 
 1 LINE.NUM
   &Function_UpperOpen   ?RUNNING
 LAND
-IF -90 ELSE -91 THEN JUMP ;
+IF -94 ELSE -95 THEN JUMP ;
 : 3_140
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_OPEN @@   0<>
 LAND
-IF -68 ELSE 1 THEN JUMP ;
+IF -72 ELSE 1 THEN JUMP ;
 : 3_143
 TRUE
 
 1 LINE.NUM
   &Function_LowerClose   ?RUNNING
 LAND
-IF -91 ELSE -90 THEN JUMP ;
+IF -95 ELSE -94 THEN JUMP ;
 : 3_153
 TRUE
 
 1 LINE.NUM
   ^CmdLOWER_CLOSE @@   0<>
 LAND
-IF -69 ELSE 11 THEN JUMP ;
+IF -73 ELSE 11 THEN JUMP ;
 : 3_160
 TRUE
 
 1 LINE.NUM
   &Function_LowerOpen   ?RUNNING
 LAND
-IF -90 ELSE -91 THEN JUMP ;
+IF -94 ELSE -95 THEN JUMP ;
 : 3_282
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -81 ELSE -82 THEN JUMP ;
+IF -85 ELSE -86 THEN JUMP ;
 : 3_290
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -80 ELSE -79 THEN JUMP ;
+IF -84 ELSE -83 THEN JUMP ;
 : 3_328
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -72 ELSE -10 THEN JUMP ;
+IF -76 ELSE -10 THEN JUMP ;
 : 3_331
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -72 ELSE -7 THEN JUMP ;
+IF -76 ELSE -7 THEN JUMP ;
 : 3_334
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -72 ELSE -10 THEN JUMP ;
+IF -76 ELSE -10 THEN JUMP ;
 : 3_337
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -72 ELSE -7 THEN JUMP ;
+IF -76 ELSE -7 THEN JUMP ;
 : 3_365
 TRUE
 
@@ -1109,7 +1118,7 @@ LAND
 2 LINE.NUM
   ~DI_LowerCloseLimitSwitch   ?ON
 LAND
-IF -82 ELSE 8 THEN JUMP ;
+IF -86 ELSE 8 THEN JUMP ;
 : 3_385
 TRUE
 
@@ -1120,91 +1129,112 @@ LAND
 2 LINE.NUM
   ~DI_UpperCloseLimitSwitch   ?OFF
 LAND
-IF -66 ELSE 0 THEN JUMP ;
+IF -71 ELSE 0 THEN JUMP ;
 : 3_386
 TRUE
 
 1 LINE.NUM
   &Function_Open   ?RUNNING
 LAND
-IF -69 ELSE -68 THEN JUMP ;
+IF -74 ELSE -73 THEN JUMP ;
 : 3_394
 TRUE
 
 1 LINE.NUM
   ^Timer_WxWdog   T0=
 LAND
-IF -3 ELSE 10 THEN JUMP ;
+IF -3 ELSE 13 THEN JUMP ;
 : 3_406
 TRUE
 
 1 LINE.NUM
   ^CmdTOGGLE_LIGHTS @@   0<>
 LAND
-IF -68 ELSE 2 THEN JUMP ;
+IF -73 ELSE 2 THEN JUMP ;
 : 3_415
 TRUE
 
 1 LINE.NUM
   ^LightToggle @@   0<>
 LAND
-IF -67 ELSE -66 THEN JUMP ;
+IF -72 ELSE -71 THEN JUMP ;
 : 3_437
 TRUE
 
 1 LINE.NUM
   ^CmdSTOP @@   0<>
 LAND
-IF -66 ELSE -23 THEN JUMP ;
+IF -71 ELSE -23 THEN JUMP ;
 : 3_450
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_On @@   0<>
 LAND
-IF -61 ELSE 0 THEN JUMP ;
+IF -66 ELSE 0 THEN JUMP ;
 : 3_457
 TRUE
 
 1 LINE.NUM
   ^CmdIlluminate_Off @@   0<>
 LAND
-IF -61 ELSE 2 THEN JUMP ;
+IF -66 ELSE 4 THEN JUMP ;
 : 3_477
 TRUE
 
 1 LINE.NUM
   &Function_Close   ?RUNNING
 LAND
-IF -91 ELSE -57 THEN JUMP ;
-: 3_483
+IF -95 ELSE -63 THEN JUMP ;
+: 3_482
 TRUE
 
 1 LINE.NUM
-  ^CmdGET_FAULTS @@   0<>
+  ^VFD_FAULT_RESET @@   0<>
 LAND
-IF -56 ELSE 1 THEN JUMP ;
-: 3_484
+IF -62 ELSE 6 THEN JUMP ;
+: 3_509
+TRUE
+
+1 LINE.NUM
+  ~DI_VFDfault   ?OFF
+LAND
+IF -53 ELSE -14 THEN JUMP ;
+: 3_520
+TRUE
+
+1 LINE.NUM
+  ~DI_VFDfault   ?OFF
+LAND
+IF -53 ELSE -17 THEN JUMP ;
+: 3_538
 TRUE
 
 1 LINE.NUM
   ^CmdCLEAR_FAULTS @@   0<>
 LAND
-IF -56 ELSE -2 THEN JUMP ;
-: 3_537
+IF -49 ELSE 0 THEN JUMP ;
+: 3_539
 TRUE
 
 1 LINE.NUM
-  ^CmdClearErrors @@   0<>
+  ^CmdGET_FAULTS @@   0<>
 LAND
-IF -40 ELSE 0 THEN JUMP ;
-: 3_538
+IF -49 ELSE 1 THEN JUMP ;
+: 3_580
 TRUE
 
 1 LINE.NUM
   ^CmdGetErrors @@   0<>
 LAND
-IF -40 ELSE -81 THEN JUMP ;
+IF -37 ELSE -88 THEN JUMP ;
+: 3_581
+TRUE
+
+1 LINE.NUM
+  ^CmdClearErrors @@   0<>
+LAND
+IF -37 ELSE -2 THEN JUMP ;
 T: T3
 DUMMY
 3_0
@@ -1243,7 +1273,6 @@ DUMMY
 3_336
 3_341
 3_342
-3_343
 3_344
 3_345
 3_387
@@ -1263,36 +1292,41 @@ DUMMY
 3_456
 3_462
 3_463
-3_466
 3_467
 3_470
 3_473
+3_483
+3_486
 3_487
-3_488
 3_492
-3_494
-3_496
-3_498
+3_495
+3_499
 3_500
-3_501
-3_504
+3_502
+3_506
 3_507
-3_510
 3_513
-3_516
-3_519
-3_522
-3_526
-3_529
-3_532
-3_539
+3_517
+3_524
+3_527
+3_530
+3_534
 3_540
+3_543
 3_546
 3_548
+3_549
 3_550
-3_552
-3_555
-3_556
+3_551
+3_558
+3_565
+3_566
+3_568
+3_570
+3_572
+3_574
+3_578
+3_579
 3_38
 3_45
 3_58
@@ -1322,9 +1356,12 @@ DUMMY
 3_450
 3_457
 3_477
-3_483
-3_484
-3_537
+3_482
+3_509
+3_520
 3_538
+3_539
+3_580
+3_581
 T;
 &Auto_Mode ' T3 SETTASK

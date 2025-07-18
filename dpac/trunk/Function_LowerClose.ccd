@@ -122,7 +122,7 @@
 : 8_133
 
 1 LINE.NUM
-  ^FLT_K10overload   TRUE@!
+  ^FLT_PumpMotorOverload   TRUE@!
 6 JUMP ;
 : 8_134
 
@@ -172,11 +172,9 @@
 : 8_190
 -30 JUMP ;
 : 8_198
-1 LINE.NUM " CLOSING" *sStatus_Shutter2  $MOVE 
-4 JUMP ;
+16 JUMP ;
 : 8_199
-1 LINE.NUM " CLOSED" *sStatus_Shutter2  $MOVE 
--21 JUMP ;
+15 JUMP ;
 : 8_13
 TRUE
 
@@ -218,7 +216,7 @@ TRUE
 1 LINE.NUM
   ~DI_PumpMotorContactor   ?OFF
 LAND
-IF -8 ELSE 0 THEN JUMP ;
+IF -3 ELSE 0 THEN JUMP ;
 : 8_61
 TRUE
 
@@ -239,7 +237,7 @@ TRUE
 1 LINE.NUM
   ~DI_PumpMotorContactor   ?OFF
 LAND
-IF -29 ELSE -10 THEN JUMP ;
+IF -29 ELSE -30 THEN JUMP ;
 : 8_113
 TRUE
 

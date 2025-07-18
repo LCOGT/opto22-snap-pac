@@ -1,0 +1,190 @@
+: 0_0
+7 JUMP ;
+: 0_5
+
+1 LINE.NUM
+  &Main   START.T
+  ^MainChartStarted @! 
+
+2 LINE.NUM
+  &Master_Comm   START.T
+  ^Master_CommStarted @! 
+
+3 LINE.NUM
+  &White_Lights   START.T
+  ^White_Lights_Chart @! 
+
+4 LINE.NUM
+  &Status_Monitor   START.T
+  ^Status_Monitor_Started @! 
+
+5 LINE.NUM
+  &Powerup   STOP.T
+7 JUMP ;
+: 0_12
+
+1 LINE.NUM
+  ~DO_Card08Fuse   ON
+
+2 LINE.NUM
+  ~DO_Card09Fuse   ON
+0 JUMP ;
+: 0_36
+2 JUMP ;
+: 0_42
+1 LINE.NUM " 14" *SWversion  $MOVE 
+-3 JUMP ;
+: 0_45
+36 LINE.NUM *sIP_PAC  MY.ADDRESS>String 
+39 LINE.NUM 0 ^nPeriodPosition1 @! 
+40 LINE.NUM 0 ^nPeriodPosition2 @! 
+41 LINE.NUM 46 0 *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+42 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+43 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s1stOctet  $SUB 
+46 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+47 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+48 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+49 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s2ndOctet  $SUB 
+52 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+53 LINE.NUM 46 ^nPeriodPosition1 @@ *sIP_PAC  FindChar ^nPeriodPosition2 @! 
+54 LINE.NUM ^nPeriodPosition2 @@ ^nPeriodPosition1 @@ -  ^nSubstringLength @! 
+55 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ ^nSubstringLength @@ *s3rdOctet  $SUB 
+58 LINE.NUM ^nPeriodPosition2 @@ 1 +  ^nPeriodPosition1 @! 
+59 LINE.NUM *sIP_PAC ^nPeriodPosition1 @@ 3 *s4thOctet  $SUB 
+63 LINE.NUM *s2ndOctet " 5" $= IF 
+64 LINE.NUM " LSC" *sSite  $MOVE 
+65 LINE.NUM ELSE 
+65 LINE.NUM *s2ndOctet " 6" $= IF 
+66 LINE.NUM " MFG" *sSite  $MOVE 
+67 LINE.NUM ELSE 
+67 LINE.NUM *s2ndOctet " 7" $= IF 
+68 LINE.NUM " BPL" *sSite  $MOVE 
+69 LINE.NUM ELSE 
+69 LINE.NUM *s2ndOctet " 8" $= IF 
+70 LINE.NUM " CPT" *sSite  $MOVE 
+71 LINE.NUM ELSE 
+71 LINE.NUM *s2ndOctet " 9" $= IF 
+72 LINE.NUM " ELP" *sSite  $MOVE 
+73 LINE.NUM ELSE 
+73 LINE.NUM *s2ndOctet " 10" $= IF 
+74 LINE.NUM " COJ" *sSite  $MOVE 
+75 LINE.NUM ELSE 
+75 LINE.NUM *s2ndOctet " 11" $= IF 
+76 LINE.NUM " TLV" *sSite  $MOVE 
+77 LINE.NUM ELSE 
+77 LINE.NUM *s2ndOctet " 12" $= IF 
+78 LINE.NUM " SQA" *sSite  $MOVE 
+79 LINE.NUM ELSE 
+79 LINE.NUM *s2ndOctet " 13" $= IF 
+80 LINE.NUM " NGQ" *sSite  $MOVE 
+81 LINE.NUM ELSE 
+81 LINE.NUM *s2ndOctet " 14" $= IF 
+82 LINE.NUM " TFN" *sSite  $MOVE 
+83 LINE.NUM ELSE 
+83 LINE.NUM *s2ndOctet " 15" $= IF 
+84 LINE.NUM " PTR" *sSite  $MOVE 
+85 LINE.NUM ELSE 
+85 LINE.NUM *s2ndOctet " 16" $= IF 
+86 LINE.NUM " SPT" *sSite  $MOVE 
+87 LINE.NUM ELSE 
+87 LINE.NUM *s2ndOctet " 17" $= IF 
+88 LINE.NUM " WTF" *sSite  $MOVE 
+89 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+92 LINE.NUM *s3rdOctet " 0" $= IF 
+93 LINE.NUM " SSB" *sEncl  $MOVE 
+94 LINE.NUM ELSE 
+94 LINE.NUM *s3rdOctet " 1" $= IF 
+95 LINE.NUM " aqwa" *sEncl  $MOVE 
+96 LINE.NUM ELSE 
+96 LINE.NUM *s3rdOctet " 4" $= IF 
+97 LINE.NUM " aqwb" *sEncl  $MOVE 
+98 LINE.NUM ELSE 
+98 LINE.NUM *s3rdOctet " 10" $= IF 
+99 LINE.NUM " doma" *sEncl  $MOVE 
+100 LINE.NUM ELSE 
+100 LINE.NUM *s3rdOctet " 12" $= IF 
+101 LINE.NUM " domb" *sEncl  $MOVE 
+102 LINE.NUM ELSE 
+102 LINE.NUM *s3rdOctet " 14" $= IF 
+103 LINE.NUM " domc" *sEncl  $MOVE 
+104 LINE.NUM ELSE 
+104 LINE.NUM *s3rdOctet " 16" $= IF 
+105 LINE.NUM " domd" *sEncl  $MOVE 
+106 LINE.NUM ELSE 
+106 LINE.NUM *s3rdOctet " 20" $= IF 
+107 LINE.NUM " clma" *sEncl  $MOVE 
+108 LINE.NUM ELSE 
+108 LINE.NUM *s3rdOctet " 30" $= IF 
+109 LINE.NUM " igla" *sEncl  $MOVE 
+110 LINE.NUM THEN THEN THEN THEN THEN THEN THEN THEN THEN 
+-2 JUMP ;
+: 0_48
+3 LINE.NUM 0 I>F ~AO_CabinetFanCtrl @! 
+4 LINE.NUM 15 I>F  FDELAY 
+6 LINE.NUM 5 I>F ~AO_CabinetFanCtrl @! 
+7 LINE.NUM 15 I>F  FDELAY 
+9 LINE.NUM ~AI_CabinetFanTach @@ 99 I>F F>= IF 
+10 LINE.NUM 5 ^FanCtrlMax @! 
+11 LINE.NUM ELSE 
+12 LINE.NUM 10 I>F ~AO_CabinetFanCtrl @! 
+13 LINE.NUM 15 I>F  FDELAY 
+14 LINE.NUM ~AI_CabinetFanTach @@ 99 I>F F>= IF 
+15 LINE.NUM 10 ^FanCtrlMax @! 
+16 LINE.NUM ELSE 
+17 LINE.NUM 1 ^PanelFanErrorFlag @! 
+18 LINE.NUM THEN 
+19 LINE.NUM THEN 
+-6 JUMP ;
+: 0_51
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+
+2 LINE.NUM
+  ~DO_UpperClose   OFF
+
+3 LINE.NUM
+  ~DO_PumpMotor   OFF
+
+4 LINE.NUM
+  ~DO_LowerOpenValve   OFF
+
+5 LINE.NUM
+  ~DO_LowerCloseValve   OFF
+-3 JUMP ;
+: 0_53
+
+1 LINE.NUM
+  &Function_LowerClose   STOP.T
+
+2 LINE.NUM
+  &Function_LowerOpen   STOP.T
+
+3 LINE.NUM
+  &Function_UpperClose   STOP.T
+
+4 LINE.NUM
+  &Function_UpperOpen   STOP.T
+
+5 LINE.NUM
+  &Function_Close   STOP.T
+
+6 LINE.NUM
+  &Function_Open   STOP.T
+
+7 LINE.NUM
+  100    DELAY
+-2 JUMP ;
+T: T0
+DUMMY
+0_0
+0_5
+0_12
+0_36
+0_42
+0_45
+0_48
+0_51
+0_53
+T;
+&Powerup ' T0 SETTASK

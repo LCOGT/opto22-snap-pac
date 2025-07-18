@@ -1,0 +1,281 @@
+: 5_0
+33 JUMP ;
+: 5_1
+
+1 LINE.NUM
+  ~DO_UpperOpen   ON
+40 JUMP ;
+: 5_3
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+20 JUMP ;
+: 5_10
+
+1 LINE.NUM
+  &Function_UpperOpen   STOP.T
+40 JUMP ;
+: 5_24
+
+1 LINE.NUM
+  ^Time_defUpperOperate @@ 
+  ^Timer_UpperOperate   SetTimer
+
+2 LINE.NUM
+  ^Time_defContactorOperate @@ 
+  ^Timer_UpperContactor   SetTimer
+
+3 LINE.NUM
+  ^Timer_UpperOperate   StartTimer
+
+4 LINE.NUM
+  ^Timer_UpperContactor   StartTimer
+-4 JUMP ;
+: 5_30
+
+1 LINE.NUM
+  ^FLT_UpOpenTimeout   TRUE@!
+7 JUMP ;
+: 5_42
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+21 JUMP ;
+: 5_50
+
+1 LINE.NUM
+  ^FLT_K1on   TRUE@!
+17 JUMP ;
+: 5_53
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+-2 JUMP ;
+: 5_67
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+33 JUMP ;
+: 5_68
+
+1 LINE.NUM
+  ^FLT_OpenUpperFailedToStart   TRUE@!
+1 JUMP ;
+: 5_73
+
+1 LINE.NUM
+  ^FLT_K1on   TRUE@!
+-9 JUMP ;
+: 5_79
+-10 JUMP ;
+: 5_82
+-11 JUMP ;
+: 5_85
+
+1 LINE.NUM
+  ^FLT_K1on   TRUE@!
+-10 JUMP ;
+: 5_99
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+13 JUMP ;
+: 5_104
+
+1 LINE.NUM
+  ^FLT_K1on   TRUE@!
+1 JUMP ;
+: 5_107
+-15 JUMP ;
+: 5_108
+
+1 LINE.NUM
+  ^FLT_UpperMotorOverload   TRUE@!
+-2 JUMP ;
+: 5_114
+
+1 LINE.NUM
+  ^FLT_UpOpenOT   TRUE@!
+0 JUMP ;
+: 5_115
+-18 JUMP ;
+: 5_118
+
+1 LINE.NUM
+  ^FLT_K1on   TRUE@!
+-3 JUMP ;
+: 5_122
+
+1 LINE.NUM
+  ~DO_UpperOpen   OFF
+7 JUMP ;
+: 5_124
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+12 JUMP ;
+: 5_142
+-22 JUMP ;
+: 5_143
+-23 JUMP ;
+: 5_166
+
+1 LINE.NUM
+  ^FLT_SLOT08fuse   TRUE@!
+0 JUMP ;
+: 5_171
+-25 JUMP ;
+: 5_176
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+8 JUMP ;
+: 5_177
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+9 JUMP ;
+: 5_178
+
+1 LINE.NUM
+  ^Time_defContactorRelease @@   DELAY
+10 JUMP ;
+: 5_2
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenLimitSwitch   ?OFF
+LAND
+IF -8 ELSE -28 THEN JUMP ;
+: 5_14
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenLimitSwitch   ?OFF
+LAND
+IF -31 ELSE 0 THEN JUMP ;
+: 5_27
+TRUE
+
+1 LINE.NUM
+  ^Timer_UpperOperate   T0=
+LAND
+IF -28 ELSE 4 THEN JUMP ;
+: 5_49
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenContactor   ?OFF
+LAND
+IF -27 ELSE -4 THEN JUMP ;
+: 5_63
+TRUE
+
+1 LINE.NUM
+  ^Timer_UpperContactor   T0=
+LAND
+IF -27 ELSE 6 THEN JUMP ;
+: 5_72
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenContactor   ?OFF
+LAND
+IF -26 ELSE -34 THEN JUMP ;
+: 5_86
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenContactor   ?OFF
+LAND
+IF -24 ELSE -33 THEN JUMP ;
+: 5_96
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperMotorOverload   ?OFF
+LAND
+IF -24 ELSE 1 THEN JUMP ;
+: 5_103
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenContactor   ?OFF
+LAND
+IF -24 ELSE -22 THEN JUMP ;
+: 5_110
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenOvrTrvl   ?OFF
+LAND
+IF -19 ELSE -9 THEN JUMP ;
+: 5_119
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenContactor   ?OFF
+LAND
+IF -21 ELSE -23 THEN JUMP ;
+: 5_147
+TRUE
+
+1 LINE.NUM
+  ~DI_UpperOpenContactor   ?OFF
+LAND
+IF -11 ELSE -8 THEN JUMP ;
+: 5_168
+TRUE
+
+1 LINE.NUM
+  ~DI_Card08Fuse   ?ON
+LAND
+IF -34 ELSE -18 THEN JUMP ;
+T: T5
+DUMMY
+5_0
+5_1
+5_3
+5_10
+5_24
+5_30
+5_42
+5_50
+5_53
+5_67
+5_68
+5_73
+5_79
+5_82
+5_85
+5_99
+5_104
+5_107
+5_108
+5_114
+5_115
+5_118
+5_122
+5_124
+5_142
+5_143
+5_166
+5_171
+5_176
+5_177
+5_178
+5_2
+5_14
+5_27
+5_49
+5_63
+5_72
+5_86
+5_96
+5_103
+5_110
+5_119
+5_147
+5_168
+T;
+&Function_UpperOpen ' T5 SETTASK

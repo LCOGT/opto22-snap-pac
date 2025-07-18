@@ -20,17 +20,17 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-47 JUMP ;
+48 JUMP ;
 : 7_34
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-46 JUMP ;
+47 JUMP ;
 : 7_35
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-45 JUMP ;
+46 JUMP ;
 : 7_39
 
 1 LINE.NUM
@@ -69,7 +69,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-40 JUMP ;
+41 JUMP ;
 : 7_79
 
 1 LINE.NUM
@@ -94,7 +94,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-35 JUMP ;
+36 JUMP ;
 : 7_103
 
 1 LINE.NUM
@@ -121,7 +121,7 @@
 : 7_136
 
 1 LINE.NUM
-  ^FLT_K10overload   TRUE@!
+  ^FLT_PumpMotorOverload   TRUE@!
 -4 JUMP ;
 : 7_144
 
@@ -143,7 +143,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-27 JUMP ;
+28 JUMP ;
 : 7_157
 
 1 LINE.NUM
@@ -158,18 +158,16 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-24 JUMP ;
+25 JUMP ;
 : 7_197
 
 1 LINE.NUM
   0    DELAY
 -26 JUMP ;
 : 7_203
-1 LINE.NUM " OPENING" *sStatus_Shutter2  $MOVE 
-9 JUMP ;
+23 JUMP ;
 : 7_204
-1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
--27 JUMP ;
+22 JUMP ;
 : 7_213
 
 1 LINE.NUM
@@ -184,8 +182,7 @@
   ^Time_defContactorRelease @@   DELAY
 18 JUMP ;
 : 7_218
-1 LINE.NUM " OPEN" *sStatus_Shutter2  $MOVE 
-1 JUMP ;
+19 JUMP ;
 : 7_220
 
 1 LINE.NUM
@@ -195,7 +192,7 @@
 
 1 LINE.NUM
   &Function_LowerOpen   STOP.T
-16 JUMP ;
+17 JUMP ;
 : 7_3
 TRUE
 
@@ -244,7 +241,7 @@ TRUE
 1 LINE.NUM
   ~DI_PumpMotorContactor   ?OFF
 LAND
-IF -14 ELSE -2 THEN JUMP ;
+IF -4 ELSE -2 THEN JUMP ;
 : 7_67
 TRUE
 
@@ -258,7 +255,7 @@ TRUE
 1 LINE.NUM
   ~DI_PumpMotorContactor   ?OFF
 LAND
-IF -33 ELSE -15 THEN JUMP ;
+IF -33 ELSE -41 THEN JUMP ;
 : 7_98
 TRUE
 
@@ -303,17 +300,47 @@ TRUE
 LAND
 
 2 LINE.NUM
+  ^InclinometerFaultFlag @@ 
+  1    <
+LAND
+
+3 LINE.NUM
   ~AI_LowerShutterAngle @@ 
   100 I>F   F>
 LAND
-IF -20 ELSE -12 THEN JUMP ;
+IF -20 ELSE 1 THEN JUMP ;
 : 7_221
 TRUE
 
 1 LINE.NUM
   ~DI_PumpMotorContactor   ?OFF
 LAND
-IF -18 ELSE -19 THEN JUMP ;
+IF -18 ELSE -17 THEN JUMP ;
+: 7_232
+TRUE
+
+1 LINE.NUM
+  ~AI_LowerShutterAngle @@ 
+  120.0    F<
+LAND
+
+2 LINE.NUM
+  *sSite
+ 
+  " BPL" 
+   $=
+LAND
+
+3 LINE.NUM
+  ~AI_LowerShutterAngle @@ 
+  110 I>F   F>
+LAND
+
+4 LINE.NUM
+  ^InclinometerFaultFlag @@ 
+  1    <
+LAND
+IF -22 ELSE -14 THEN JUMP ;
 T: T7
 DUMMY
 7_0
@@ -367,5 +394,6 @@ DUMMY
 7_169
 7_212
 7_221
+7_232
 T;
 &Function_LowerOpen ' T7 SETTASK

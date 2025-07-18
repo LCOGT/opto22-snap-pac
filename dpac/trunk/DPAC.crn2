@@ -35,31 +35,27 @@
 0 IVAR ^CountK1
 0 IVAR ^ErrorLogged
 0 IVAR ^FanCtrlMax
+0 IVAR ^FaultListLength
 0 IVAR ^FaultLogged
 0 IVAR ^FaultModeStarted
 0 IVAR ^FLT_ClearSW
-0 IVAR ^FLT_CloseLS
 0 IVAR ^FLT_CloseTimeout
 0 IVAR ^FLT_CloseUpperFailedToStart
 0 IVAR ^FLT_DisabledCircuit
-0 IVAR ^FLT_K10overload
-0 IVAR ^FLT_K1on
-0 IVAR ^FLT_K2on
-0 IVAR ^FLT_K9overload
+0 IVAR ^FLT_DriveRunning
 0 IVAR ^FLT_LowerCloseTimeout
-0 IVAR ^FLT_LowerCloseUnknown
 0 IVAR ^FLT_LowerOpenTimeout
 0 IVAR ^FLT_OpenClearTimeout
 0 IVAR ^FLT_OpenUpperFailedToStart
 0 IVAR ^FLT_PumpContactorStuckOn
+0 IVAR ^FLT_PumpMotorOverload
 0 IVAR ^FLT_PumpMTRcontactorNotOperating
 0 IVAR ^FLT_SLOT08fuse
 0 IVAR ^FLT_SLOT09fuse
-0 IVAR ^FLT_UpCloseOT
 0 IVAR ^FLT_UpCloseTimeout
 0 IVAR ^FLT_UpOpenOT
 0 IVAR ^FLT_UpOpenTimeout
-0 IVAR ^FLT_UpperMotorOverload
+0 IVAR ^FLT_VFDoverload
 0 2IVAR ^FPAC_scratchpad
 0 IVAR ^Function_Close_Started
 0 IVAR ^Function_LowerClose_Started
@@ -68,9 +64,11 @@
 0 IVAR ^Function_UpperClose_Started
 0 IVAR ^Function_UpperOpen_Started
 0 IVAR ^GetScratchBits
+0 IVAR ^InclinometerFaultFlag
 0 IVAR ^LightToggle
 0 IVAR ^LightToggleOld
 0 IVAR ^ListeningForMaster
+0 IVAR ^LowerShutterIsOpenViaInclinometer
 0 IVAR ^MainChartStarted
 0 IVAR ^ManModeStarted
 0 IVAR ^Master_CommClosed
@@ -108,6 +106,7 @@
 0 TVAR ^Timer_UpperContactor
 0 TVAR ^Timer_UpperOperate
 0 TVAR ^Timer_WxWdog
+0 IVAR ^VFD_FAULT_RESET
 0 IVAR ^White_Lights_Chart
 0 IVAR ^WTlightSwitchState
 0 IVAR ^WTswitchOldState
@@ -133,7 +132,7 @@
 10 0 $VAR *s_DomeOpen 
 10 0 $VAR *s_DomeStop 
 10 0 $VAR *s_LightSW 
-10 0 $VAR *S_WatchdogTimer 
+10 0 $VAR *S_WatchDogTimer 
 10 0 $VAR *sDomeAirTemp 
 10 0 $VAR *sEncl 
 20 0 $VAR *sIP_PAC 
@@ -149,7 +148,7 @@
 4 0 ITABLE }SLOT08_OFF
 20 35 0 $TABLE {Status 
 
-$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A080E02 0 M64BOARD %A_1mFPAC
+$0000000000000000.. 32769 1.000000 0.010000 0.000000 2001 $0A070A02 0 M64BOARD %A_1mFPAC
 nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000001 0 11 BOARD.MMP %Local_IO
  4 $40000001 SPOINT 0.0     INPUT  0  0 %Local_IO 0 POINT.TNG ~DI_SW_Stop
  4 $40000001 SPOINT 0.0     INPUT  1  0 %Local_IO 0 POINT.TNG ~DI_SW_UpperOpen
@@ -159,13 +158,13 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $40000001 SPOINT 0.0     INPUT  1  1 %Local_IO 0 POINT.TNG ~DI_SW_LowerClose
  4 $40000001 SPOINT 0.0     INPUT  2  1 %Local_IO 0 POINT.TNG ~DI_WirelessFault
  4 $40000001 SPOINT 0.0     INPUT  3  1 %Local_IO 0 POINT.TNG ~DI_WhiteLightsCircuitBreaker
- 4 $40000001 SPOINT 0.0     INPUT  0  2 %Local_IO 0 POINT.TNG ~DI_UpperCloseContactor
+ 4 $40000001 SPOINT 0.0     INPUT  0  2 %Local_IO 0 POINT.TNG ~DI_DriveRun
  4 $40000001 SPOINT 0.0     INPUT  1  2 %Local_IO 0 POINT.TNG ~DI_UpperOpenOvrTrvl
  4 $40000001 SPOINT 0.0     INPUT  2  2 %Local_IO 0 POINT.TNG ~DI_UpperCloseOvrTrvl
  4 $40000001 SPOINT 0.0     INPUT  3  2 %Local_IO 0 POINT.TNG ~DI_PumpMotorContactor
  4 $40000001 SPOINT 0.0     INPUT  0  3 %Local_IO 0 POINT.TNG ~DI_PumpMotorCircuitBreaker
  4 $40000001 SPOINT 0.0     INPUT  1  3 %Local_IO 0 POINT.TNG ~DI_UpperMotorCircuitBreaker
- 4 $40000001 SPOINT 0.0     INPUT  2  3 %Local_IO 0 POINT.TNG ~DI_UpperMotorOverload
+ 4 $40000001 SPOINT 0.0     INPUT  2  3 %Local_IO 0 POINT.TNG ~DI_VFDoverload
  4 $40000001 SPOINT 0.0     INPUT  3  3 %Local_IO 0 POINT.TNG ~DI_LambertCircuitBreaker
  4 $40000001 SPOINT 0.0     INPUT  0  4 %Local_IO 0 POINT.TNG ~DI_PumpMotorOverload
  4 $40000001 SPOINT 0.0     INPUT  1  4 %Local_IO 0 POINT.TNG ~DI_UpperShutterClearSwitch
@@ -178,7 +177,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $40000001 SPOINT 0.0     INPUT  0  6 %Local_IO 0 POINT.TNG ~DI_SmokeDetector
  4 $40000001 SPOINT 0.0     INPUT  1  6 %Local_IO 0 POINT.TNG ~DI_SmokeDetectorHeat
  4 $40000001 SPOINT 0.0     INPUT  2  6 %Local_IO 0 POINT.TNG ~DI_LambertPWR
- 4 $40000001 SPOINT 0.0     INPUT  3  6 %Local_IO 0 POINT.TNG ~DI_UpperOpenContactor
+ 4 $40000001 SPOINT 0.0     INPUT  3  6 %Local_IO 0 POINT.TNG ~DI_VFDfault
  4 $40000001 SPOINT 0.0     INPUT  0  7 %Local_IO 0 POINT.TNG ~DI_LowerOpenLimitSwitch
  4 $40000001 SPOINT 0.0     INPUT  1  7 %Local_IO 0 POINT.TNG ~DI_LowerCloseLimitSwitch
  4 $40000001 SPOINT 0.0     INPUT  2  7 %Local_IO 0 POINT.TNG ~DI_Card08Fuse
@@ -189,6 +188,7 @@ nullM64BOARD $FFFFFFFE $FFFFFFFE 16 32769 1.000000 0.010000 0.000000 2001 $7F000
  4 $80000001 SPOINT 0.0    OUTPUT  3  8 %Local_IO 0 POINT.TNG ~DO_Illuminate
  4 $80000001 SPOINT 0.0    OUTPUT  0  9 %Local_IO 0 POINT.TNG ~DO_Card09Fuse
  4 $80000001 SPOINT 0.0    OUTPUT  1  9 %Local_IO 0 POINT.TNG ~DO_PumpMotor
+ 4 $80000001 SPOINT 0.0    OUTPUT  2  9 %Local_IO 0 POINT.TNG ~DO_VFDfaultReset
  4 $80000001 SPOINT 0.0    OUTPUT  0 10 %Local_IO 0 POINT.TNG ~DO_DomeLights
  4 $80000001 SPOINT 0.0    OUTPUT  1 10 %Local_IO 0 POINT.TNG ~DO_LowerOpenValve
  4 $80000001 SPOINT 0.0    OUTPUT  2 10 %Local_IO 0 POINT.TNG ~DO_LowerCloseValve
